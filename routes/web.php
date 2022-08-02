@@ -16,6 +16,13 @@ use App\Http\Controllers\admin\AdminController;
 Route::middleware(['globalvalidate'])->group(function () {
     Route::get('/', function () { return view('welcome'); });
 
-    Route::get('/dashboard', [AdminController::class, 'Dashboard']);
+    Route::prefix(ADMINURL)->group(function () {
+        Route::middleware(['adminlogin'])->group(function () {
+            Route::get('/', function () { return view('admin.login'); });
+        });
+        Route::middleware(['adminloginvalidate  '])->group(function () {
+            Route::get('/dashboard', [AdminController::class, 'Dashboard']);
+        });
+    });
 
 });
