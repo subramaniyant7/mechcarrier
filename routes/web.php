@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\admin\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['globalvalidate'])->group(function () {
+    Route::get('/', function () { return view('welcome'); });
+
+    Route::get('/dashboard', [AdminController::class, 'Dashboard']);
+
 });
