@@ -1,5 +1,14 @@
 @extends('admin.layout')
 
+@section('head')
+    <head>
+        <link href="{{ URL::asset(ADMIN . '/plugins/src/apex/apexcharts.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ URL::asset(ADMIN . '/assets/css/light/components/list-group.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ URL::asset(ADMIN . '/assets/css/light/dashboard/dash_2.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ URL::asset(ADMIN . '/assets/css/dark/dashboard/dash_2.css') }}" rel="stylesheet" type="text/css" />
+    </head>
+@stop
+
 @section('content')
     <div class="row layout-top-spacing">
         <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
@@ -8,8 +17,8 @@
                     <h5 class="">Revenue</h5>
                     <div class="task-action">
                         <div class="dropdown">
-                            <a class="dropdown-toggle" href="#" role="button" id="renvenue" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
+                            <a class="dropdown-toggle" href="#" role="button" id="renvenue"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-more-horizontal">
@@ -638,7 +647,8 @@
                     <li class="list-group-item ">
                         <div class="media">
                             <div class="me-3">
-                                <img alt="avatar" src="{{ URL::asset(ADMIN.'/assets/img/netflix.svg')}}" class="img-fluid rounded-circle">
+                                <img alt="avatar" src="{{ URL::asset(ADMIN . '/assets/img/netflix.svg') }}"
+                                    class="img-fluid rounded-circle">
                             </div>
                             <div class="media-body">
                                 <h6 class="tx-inverse">Netflix</h6>
@@ -650,7 +660,7 @@
                     <li class="list-group-item">
                         <div class="media">
                             <div class="me-3">
-                                <img alt="avatar" src="{{ URL::asset(ADMIN.'/assets/img/apple-app-store.svg')}}"
+                                <img alt="avatar" src="{{ URL::asset(ADMIN . '/assets/img/apple-app-store.svg') }}"
                                     class="img-fluid rounded-circle">
                             </div>
                             <div class="media-body">
@@ -699,7 +709,8 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <div class="td-content customer-name"><img src="{{ URL::asset(ADMIN.'/assets/img/profile-13.jpeg')}}"
+                                        <div class="td-content customer-name"><img
+                                                src="{{ URL::asset(ADMIN . '/assets/img/profile-13.jpeg') }}"
                                                 alt="avatar"><span>Luke Ivory</span></div>
                                     </td>
                                     <td>
@@ -719,7 +730,8 @@
 
                                 <tr>
                                     <td>
-                                        <div class="td-content customer-name"><img src="{{ URL::asset(ADMIN.'/assets/img/profile-7.jpeg')}}"
+                                        <div class="td-content customer-name"><img
+                                                src="{{ URL::asset(ADMIN . '/assets/img/profile-7.jpeg') }}"
                                                 alt="avatar"><span>Andy King</span></div>
                                     </td>
                                     <td>
@@ -738,7 +750,8 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="td-content customer-name"><img src="{{ URL::asset(ADMIN.'/assets/img/profile-10.jpeg')}}"
+                                        <div class="td-content customer-name"><img
+                                                src="{{ URL::asset(ADMIN . '/assets/img/profile-10.jpeg') }}"
                                                 alt="avatar"><span>Laurie Fox</span></div>
                                     </td>
                                     <td>
@@ -757,7 +770,8 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="td-content customer-name"><img src="{{ URL::asset(ADMIN.'/assets/img/profile-5.jpeg')}}"
+                                        <div class="td-content customer-name"><img
+                                                src="{{ URL::asset(ADMIN . '/assets/img/profile-5.jpeg') }}"
                                                 alt="avatar"><span>Ryan Collins</span></div>
                                     </td>
                                     <td>
@@ -775,7 +789,8 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="td-content customer-name"><img src="{{ URL::asset(ADMIN.'/assets/img/profile-4.jpeg')}}"
+                                        <div class="td-content customer-name"><img
+                                                src="{{ URL::asset(ADMIN . '/assets/img/profile-4.jpeg') }}"
                                                 alt="avatar"><span>Irene Collins</span></div>
                                     </td>
                                     <td>
@@ -794,7 +809,8 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="td-content customer-name"><img src="{{ URL::asset(ADMIN.'/assets/img/profile-11.jpeg')}}"
+                                        <div class="td-content customer-name"><img
+                                                src="{{ URL::asset(ADMIN . '/assets/img/profile-11.jpeg') }}"
                                                 alt="avatar"><span>Sonia Shaw</span></div>
                                     </td>
                                     <td>
@@ -829,5 +845,9 @@
         </div>
 
     </div>
+@stop
 
+@section('footer')
+    <script src="{{ URL::asset(ADMIN . '/plugins/src/apex/apexcharts.min.js') }}"></script>
+    <script src="{{ URL::asset(ADMIN . '/assets/js/dashboard/dash_2.js') }}"></script>
 @stop

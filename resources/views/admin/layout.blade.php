@@ -49,8 +49,8 @@
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    <script src="{{ URL::asset(ADMIN.'/plugins/src/apex/apexcharts.min.js')}}"></script>
-    <script src="{{ URL::asset(ADMIN.'/assets/js/dashboard/dash_2.js')}}"></script>
+
+    @yield('footer')
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 </body>
