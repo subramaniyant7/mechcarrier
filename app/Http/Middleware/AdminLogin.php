@@ -20,6 +20,6 @@ class AdminLogin
         if (strval($request->session()->get('admin_id')) === '') {
             return $next($request);
         }
-        return redirect(ADMINURL.'/dashboard');
+        return redirect()->route('analysisdashboard');
     }
 }

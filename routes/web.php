@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\SocialMediaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,17 +21,22 @@ Route::middleware(['globalvalidate'])->group(function () {
 
     Route::get('/login/{social}',[FrontendController::class, 'SocialMedia'])
         ->where('social','google|linkedin');
-    Route::get('/login/{social}/callback',[FrontendController::class, 'handleProviderCallback'])
+    Route::get('/login/{social}/callback',[SocialMediaController::class, 'handleProviderCallback'])
         ->where('social','google|linkedin');
 
     Route::prefix(ADMINURL)->group(function () {
         Route::middleware(['adminlogin'])->group(function () {
-            Route::get('/', function () { return view('admin.login'); });
+            Route::get('/', function () { return view('admin.signin'); });
+            Route::post('/admin_authenticate', [AdminController::class, 'AdminAuthenticate']);
+            Route::get('/login/{social}',[AdminController::class, 'SocialMedia'])
+                ->where('social','google|linkedin');
         });
-        // Route::middleware(['adminloginvalidate'])->group(function () {
-            Route::get('/analysisdashboard', [AdminController::class, 'AnalysisDashboard']);
-            Route::get('/salesdashboard', [AdminController::class, 'SalesDashboard']);
-        // });
+         Route::middleware(['adminloginvalidate'])->group(function () {
+            Route::get('/analysisdashboard', [AdminController::class, 'AnalysisDashboard'])->name('analysisdashboard');
+            Route::get('/salesdashboard', [AdminController::class, 'SalesDashboard'])->name('saledashboard');
+            Route::get('/logout', [AdminController::class, 'AdminLogout'])->name('logout');
+
+         });
     });
 
 });

@@ -5,7 +5,7 @@
             <div class="nav-logo">
                 <div class="nav-item theme-logo">
                     <a href="{{ url('/dashboard') }}">
-                        {{-- <img src="{{ URL::asset(ADMIN.'/assets/img/logo.svg')}}" class="navbar-logo" alt="logo"> --}}
+                         <img src="{{ URL::asset('uploads/LOGO.png')}}" class="navbar-logo1" alt="logo">
                     </a>
                 </div>
                 <div class="nav-item theme-text">
