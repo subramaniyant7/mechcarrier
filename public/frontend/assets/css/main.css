@@ -1,0 +1,367 @@
+@import url('https://rsms.me/inter/inter.css');
+
+html {
+    font-family: 'Inter', sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+    html {
+        font-family: 'Inter var', sans-serif;
+    }
+}
+
+/*Header*/
+
+.top-header {
+    padding: 10px 0px;
+}
+
+.top-header ul {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 0px;
+}
+
+.top-header ul li {
+    list-style: none;
+    font-size: 10px;
+    padding-left: 10px;
+}
+
+.top-header ul li a {
+    color: #000000;
+}
+
+.top-header ul li a:hover,
+.top-header ul li a.active {
+    color: #1D56BB;
+    text-decoration: underline;
+}
+
+.header {
+    background-color: #F4F4F4;
+    padding: 13px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #000000;
+    font-weight: 700;
+}
+
+.header h1 svg {
+    padding-right: 5px;
+}
+
+.header h1 span {
+    color: #1D56BB;
+}
+
+.desktop-login-flex {
+    display:
+        flex;
+    justify-content: end;
+}
+
+.nav-link {
+    padding: 0px;
+}
+
+.logo {
+    position: relative;
+    top: 3px;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+    font-weight: 500;
+    font-size: 16px;
+    color: #000000;
+}
+
+.desktop-login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.desktop-login .user-login .login-button {
+    background-color: transparent;
+    padding: 4px 17px;
+    font-weight: 500;
+    font-size: 17px;
+    color: #1D56BB;
+    border: solid 2px #1D56BB;
+    border-radius: 4px;
+}
+
+.desktop-login .user-login .register-button {
+    background-color: #1D56BB;
+    padding: 4px 17px;
+    font-weight: 500;
+    font-size: 17px;
+    color: #fff;
+    border: solid 2px #1D56BB;
+    border-radius: 4px;
+}
+
+/*Footer*/
+.footer {
+    background: #f4f4f4;
+    padding: 30px 0px 15px;
+}
+
+.footer h1 {
+    font-size: 24px;
+    color: #000000;
+    font-weight: 700;
+}
+
+.footer h1 svg {
+    padding-right: 5px;
+}
+
+.footer h1 span {
+    color: #1D56BB;
+}
+
+.footer .logo {
+    padding-bottom: 30px
+}
+
+.footer .socialmedia-icons h3 {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.footer .socialmedia-icons ul {
+    padding-inline-start: 0px;
+    display: flex;
+}
+
+.footer .socialmedia-icons ul li {
+    list-style:
+        none;
+    padding-right: 25px;
+}
+
+.footer ul.quick-links {
+    padding-inline-start: 0px;
+    padding-top: 15px;
+}
+
+.footer ul.quick-links li {
+    list-style:
+        none;
+    line-height: 25px;
+}
+
+.footer ul.quick-links li a {
+    color: #000;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.copyright {
+    padding-top: 30px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.copyright p {
+    margin-bottom: 0;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.footer .apply-on {
+    padding-top: 15px;
+}
+
+.footer .apply-on h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.footer .apply-on p {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.footer .playstore-download {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*login page*/
+.login {
+    padding: 60px 0px;
+}
+
+.login h1 {
+    text-align:
+        center;
+    font-size: 38px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 30px;
+}
+
+.login h1 span {
+    color: #1D56BB;
+}
+
+.login .col-md-6:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-right: solid 1px #B8B8B8;
+}
+
+.key-points {
+    width: 72%;
+}
+
+.key-points h4 {
+    font-weight: 18px;
+    font-weight: 700;
+}
+
+.key-points ul {
+    padding-inline-start: 21px;
+}
+
+.key-points ul li {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 40px;
+}
+
+.login .col-md-6:last-child {
+    -ms-flex: 0 0 30%;
+    flex: 0 0 30%;
+    max-width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login .title h1 {
+    text-align: left;
+}
+
+.login .title p {
+    font-weight: 400;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.login .title p a {
+    color: #1D56BB;
+}
+
+.login form {
+    padding-top: 40px;
+}
+
+.login form label {
+    font-weight: 400;
+    font-size: 16px;
+    color: #000;
+}
+
+.login .form-control {
+    border: solid 1px rgba(40, 40, 40, 0.6);
+}
+
+.login .form-control::placeholder {
+    color: #939393;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.login .col {
+    text-align: right;
+}
+
+.login .col .form-check-label {
+    font-weight: 400;
+    font-size: 14px;
+    color: #000;
+}
+
+.login .col .form-check-input {
+    margin-top: 8px;
+}
+
+.login .col a {
+    font-weight: 400;
+    font-size: 12px;
+    color: #4D4D4D;
+}
+
+.login .error-msg {
+    text-align: left;
+}
+
+.login .error-msg span {
+    font-weight: 400;
+    font-size: 14px;
+    color: #D90909;
+}
+
+.login .login-form .btn-primary {
+    background-color: #1D56BB;
+    border-color: #1D56BB;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 14px;
+    padding: 18px 0px;
+}
+
+.login .help-assistance {
+    padding-top: 30px;
+}
+
+.login .help-assistance p {
+    font-weight: 400;
+    font-size: 13px;
+}
+.login-form .form-outline.password {
+    position: relative;
+}
+.login-form .form-outline.password span svg{
+    position: absolute;
+    top: 45px;
+    right: 10px;
+}
+.login .col .register-privacy .form-check-label {
+    text-align: left;
+    font-size: 12px;
+    padding-left: 2px;
+}
+.row.mb-4.d-flex.company-type .col{
+    text-align: left;
+}
+.row.mb-4.d-flex.company-type .form-button button {
+    padding: 10px;
+    background-color: transparent;
+    width: 49%;
+    border: solid 1px rgb(40,40,40,0.6);
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.row.mb-4.d-flex.company-type .form-button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.row.mb-4.d-flex.company-type .form-button span {
+    position: relative;
+    top: 4px;
+}

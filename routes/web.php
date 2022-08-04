@@ -18,6 +18,7 @@ use App\Http\Controllers\SocialMediaController;
 Route::middleware(['globalvalidate'])->group(function () {
     Route::get('/', function () { return view('welcome'); });
     Route::get('/home', function () { return view('frontend.home'); });
+    Route::get('/login', function () { return view('frontend.login'); });
 
     Route::get('/login/{social}',[FrontendController::class, 'SocialMedia'])
         ->where('social','google|linkedin');
