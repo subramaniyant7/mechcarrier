@@ -34,8 +34,8 @@
                     </div>
                     <div class="desktop-login">
                         <div class="user-login">
-                            <button type="button" class="login-button">Login</button>
-                            <button type="button" class="register-button">Register</button>
+                            <a href="{{ route('login') }}" type="button" class="login-button">Login</a>
+                            <a href="{{ route('register') }}" type="button" class="register-button">Register</a>
                         </div>
                     </div>
                 </div>
