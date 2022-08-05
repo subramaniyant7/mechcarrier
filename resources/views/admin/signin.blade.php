@@ -88,8 +88,8 @@
                             <div class="col-sm-4 col-12">
                                 <div class="mb-4">
                                     <a href="{{ url(ADMINURL.'/login/linkedin') }}" class="btn  btn-social-login w-100">
-                                        <img src="{{ URL::asset(ADMIN.'/assets/img/github-icon.svg')}}" alt="" class="img-fluid">
-                                        <span class="btn-text-inner">Github</span>
+                                        <img src="{{ URL::asset(ADMIN.'/assets/img/linkedin.svg')}}" alt="" class="img-fluid">
+                                        <span class="btn-text-inner">LinkedIn</span>
                                     </a>
                                 </div>
                             </div>
