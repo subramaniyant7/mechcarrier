@@ -18,4 +18,9 @@ class CommonHelperController extends Controller
         return DB::table("admin")->where('admin_email', $email)->get();
     }
 
+    static function getSocialMediaLinks()
+    {
+        return DB::table("social_media_links")->get();
+    }
+
 }

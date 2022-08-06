@@ -1,5 +1,5 @@
 @extends('admin.layout')
-
+@section('title','Sales Dashboard')
 @section('head')
     <head>
         <link href="{{ URL::asset(ADMIN . '/plugins/src/apex/apexcharts.css') }}" rel="stylesheet" type="text/css">

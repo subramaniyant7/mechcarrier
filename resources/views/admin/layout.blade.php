@@ -46,6 +46,7 @@
     <script src="{{ URL::asset(ADMIN.'/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
     <script src="{{ URL::asset(ADMIN.'/plugins/src/mousetrap/mousetrap.min.js')}}"></script>
     <script src="{{ URL::asset(ADMINJS.'/app.js')}}"></script>
+    <script src="{{ URL::asset(ADMIN.'/plugins/src/font-icons/feather/feather.min.js')}}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->

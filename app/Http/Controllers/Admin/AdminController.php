@@ -10,6 +10,7 @@ use Socialite;
 
 class AdminController extends Controller
 {
+    // Admin Login
     public function AdminAuthenticate(Request $request){
         $formData = $request->except('_token');
         if ($formData['admin_email'] != '' && $formData['admin_password'] != '') {
@@ -28,6 +29,7 @@ class AdminController extends Controller
         return back()->withInput()->with('error', 'Invalid Credentials');
     }
 
+    // Social Media Login
     public function SocialMedia(Request $request, $social){
         $request->session()->put('admin_social', $social);
         return Socialite::driver($social)->redirect();
@@ -39,6 +41,22 @@ class AdminController extends Controller
 
     public function SalesDashboard(){
         return view('admin.dashboard.salesdashboard');
+    }
+
+    public function SocialMediaLinks(){
+        $socialMediaLink = CommonHelperController::getSocialMediaLinks();
+        return view('admin.socialmedialinks',compact('socialMediaLink'));
+    }
+
+    public function SaveSocialMediaLinks(Request $request){
+        $formData = $request->except('_token','social_media_id');
+        if($request->social_media_id != ''){
+            $action = updateQuery('social_media_links', 'social_media_id', decryption($request->input('social_media_id')), $formData);
+        }else {
+            $action = insertQuery('social_media_links', $formData);
+        }
+        $notify = notification($action);
+        return back()->with($notify['type'], $notify['msg']);
     }
 
     public function AdminLogout(Request $request)

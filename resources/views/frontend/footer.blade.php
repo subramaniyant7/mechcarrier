@@ -15,7 +15,10 @@
                     <div class="socialmedia-icons">
                         <h3>Follow Us</h3>
                         <ul>
-                            <li><a href="#" target="_blank">
+                            @php
+                                $socialMediaLink = getSocialMediaLinks();
+                            @endphp
+                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_facebook : '#' }}" target="_blank">
                                     <svg width="11" height="20" viewBox="0 0 11 20" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -23,7 +26,8 @@
                                             fill="#0163E0" />
                                     </svg>
                                 </a></li>
-                            <li><a href="#" target="_blank">
+                            <li>
+                                <a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_linkedin : '#' }}" target="_blank">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -35,8 +39,9 @@
                                             fill="#0077B5" />
                                     </svg>
 
-                                </a></li>
-                            <li><a href="#" target="_blank">
+                                </a>
+                            </li>
+                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_instagram : '#' }}" target="_blank">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -51,7 +56,7 @@
                                               stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </a></li>
-                            <li><a href="#" target="_blank">
+                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_twitter : '#' }}" target="_blank">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -60,7 +65,7 @@
                                             stroke-linejoin="round" />
                                     </svg>
                                 </a></li>
-                            <li><a href="#" target="_blank">
+                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_youtube : '#' }}" target="_blank">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -118,7 +123,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="copyright">
-                        <p>All rights reserved © Mech Careet Pvt. Ltd.</p>
+                        <p>All rights reserved © {{SITENAME}} Pvt. Ltd.</p>
                     </div>
                 </div>
             </div>

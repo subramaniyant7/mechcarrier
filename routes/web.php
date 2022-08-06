@@ -36,6 +36,8 @@ Route::middleware(['globalvalidate'])->group(function () {
          Route::middleware(['adminloginvalidate'])->group(function () {
             Route::get('/analysisdashboard', [AdminController::class, 'AnalysisDashboard'])->name('analysisdashboard');
             Route::get('/salesdashboard', [AdminController::class, 'SalesDashboard'])->name('saledashboard');
+            Route::get('/social_media_links', [AdminController::class, 'SocialMediaLinks'])->name('socialmedia');
+            Route::post('/save_social_media_links', [AdminController::class, 'SaveSocialMediaLinks'])->name('savesocialmedia');
             Route::get('/logout', [AdminController::class, 'AdminLogout'])->name('logout');
 
          });
