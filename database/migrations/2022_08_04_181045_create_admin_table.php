@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('admin_password');
             $table->string('admin_mobile')->nullable();
             $table->string('admin_role');
-            $table->integer('admin_isactive');
+            $table->integer('status');
             $table->timestamps();
         });
     }

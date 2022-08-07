@@ -36,6 +36,15 @@ Route::middleware(['globalvalidate'])->group(function () {
          Route::middleware(['adminloginvalidate'])->group(function () {
             Route::get('/analysisdashboard', [AdminController::class, 'AnalysisDashboard'])->name('analysisdashboard');
             Route::get('/salesdashboard', [AdminController::class, 'SalesDashboard'])->name('saledashboard');
+
+            Route::get('/change_password', [AdminController::class, 'ChangePassword'])->name('changepassword');
+            Route::post('/update_password', [AdminController::class, 'UpdatePassword'])->name('updatepassword');
+
+            Route::get('/view_admin', [AdminController::class, 'ViewAdmin'])->name('admin');
+            Route::get('/create_admin', [AdminController::class, 'ManageAdmin'])->name('manageadmin');
+            Route::get('/action_admin/{option}/{id}', [AdminController::class, 'ActionAdmin'])->name('actionadmin');
+            Route::post('/save_admin', [AdminController::class, 'SaveAdminDetails'])->name('saveadmin');
+
             Route::get('/social_media_links', [AdminController::class, 'SocialMediaLinks'])->name('socialmedia');
             Route::post('/save_social_media_links', [AdminController::class, 'SaveSocialMediaLinks'])->name('savesocialmedia');
             Route::get('/logout', [AdminController::class, 'AdminLogout'])->name('logout');

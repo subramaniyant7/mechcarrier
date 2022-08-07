@@ -43,6 +43,74 @@ class AdminController extends Controller
         return view('admin.dashboard.salesdashboard');
     }
 
+    // Action Admin
+    public function ViewAdmin(){
+        $admindetails = CommonHelperController::getAdminDetailsExceptLoggedIn();
+        return view('admin.adminview.viewadmin', compact('admindetails'));
+    }
+
+    public function ManageAdmin()
+    {
+        return view('admin.adminview.actionadmin',['action' => 'add']);
+    }
+
+    public function ActionAdmin($option, $id)
+    {
+        $actionId = decryption($id);
+        $adminData = CommonHelperController::getAdminData($actionId);
+        if (count($adminData) == 0) return redirect(ADMINURL . '/view_admin')->withInput();
+
+        if ($option == 'delete') {
+            $delete = deleteQuery($actionId, 'admin', 'admin_id');
+            $notify = notification($delete);
+            return redirect(ADMINURL . '/view_admin')->with($notify['type'], 'Data Deleted Successfully');
+        }
+        return view('admin.adminview.actionadmin', ['action' => $option, 'data' => $adminData]);
+    }
+
+    public function SaveAdminDetails(Request $request)
+    {
+        $formData =  $request->except(['_token', 'admin_id']);
+        $formData['admin_password'] = md5($request->admin_password);
+        $isAdminExist = CommonHelperController::getAdminByEmail($request->admin_email);
+        if ($request->input('admin_id') == '') {
+            if(count($isAdminExist)) return back()->with('error', 'Email address already exist. Please try with different email address')->withInput();
+            $saveData = insertQuery('admin', $formData);
+        } else {
+            $actionId = decryption($request->input('admin_id'));
+            $saveData = updateQuery('admin', 'admin_id', $actionId, $formData);
+        }
+        $notify = notification($saveData);
+        return redirect(ADMINURL . '/view_admin')->with($notify['type'], $notify['msg']);
+    }
+
+    // Password
+    public function ChangePassword(){
+        return view('admin.changepassword');
+    }
+
+    public function UpdatePassword(Request $request){
+        $formData = $request->except('_token');
+        if($formData['old_password'] == '' || $formData['new_password'] == '' || $formData['confirm_password'] == ''){
+            return back()->with('error','Invalid action. Please try after some time');
+        }
+        if($formData['new_password'] != $formData['confirm_password']) return back()->with('error',"New password and Confirm password doesn't matched");
+
+        $adminId = decryption($request->admin_id);
+        $adminData = CommonHelperController::getAdminData($adminId);
+        if(count($adminData)){
+            $admin = (array)$adminData[0];
+            if($admin['admin_password'] == md5($request->old_password)){
+                $admin['admin_password'] = md5($request->new_password);
+                $update = updateQuery('admin','admin_id', $adminId, $admin);
+                return redirect()->route('logout');
+            }
+            return back()->with('error',"Old password doesn't matched");
+        }
+        return back()->with('error','User not found');
+    }
+
+    // Social Media Links
     public function SocialMediaLinks(){
         $socialMediaLink = CommonHelperController::getSocialMediaLinks();
         return view('admin.socialmedialinks',compact('socialMediaLink'));

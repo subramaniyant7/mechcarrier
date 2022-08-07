@@ -42,17 +42,17 @@
     <!-- END MAIN CONTAINER -->
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="{{ URL::asset(ADMIN.'/plugins/src/global/vendors.min.js')}}"></script>
     <script src="{{ URL::asset(ADMIN.'/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ URL::asset(ADMIN.'/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
     <script src="{{ URL::asset(ADMIN.'/plugins/src/mousetrap/mousetrap.min.js')}}"></script>
     <script src="{{ URL::asset(ADMINJS.'/app.js')}}"></script>
-    <script src="{{ URL::asset(ADMIN.'/plugins/src/font-icons/feather/feather.min.js')}}"></script>
+    <script src="{{ URL::asset(ADMINJS.'/common.js')}}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
-
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
     @yield('footer')
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
 
 </body>
 

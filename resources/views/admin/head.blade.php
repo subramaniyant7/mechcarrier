@@ -16,6 +16,9 @@
 
     <link rel="stylesheet" href="{{ URL::asset(ADMIN . '/plugins/src/font-icons/fontawesome/css/regular.css')}}">
     <link rel="stylesheet" href="{{ URL::asset(ADMIN . '/plugins/src/font-icons/fontawesome/css/fontawesome.css')}}">
+
+    <link rel="stylesheet" href="{{ URL::asset(ADMINCSS . '/common.css')}}">
+    <link rel="stylesheet" href="{{ URL::asset(ADMIN.'/fontawesome/css/all.min.css')}}">
     <!-- END GLOBAL MANDATORY STYLES -->
 
     @yield('head')

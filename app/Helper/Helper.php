@@ -8,6 +8,10 @@ function admintype(){
     return array('Primary Admin','Super Admin','Sub Admin');
 }
 
+function statusClass(){
+    return array('badge badge-light-success','badge badge-light-danger','badge badge-light-secondary','badge badge-light-info');
+}
+
 function statustype(){
     return array('Active','De-Active');
 }
