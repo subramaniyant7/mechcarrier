@@ -1,8 +1,24 @@
 <header>
+    <div class="top-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul>
+                        <li><a href="" target="_blank" class="active">Job Seekers</a></li>
+                        <li><a href="" target="_blank">For Colleges TPO</a></li>
+                        <li><a href="" target="_blank">For training institutes</a></li>
+                        <li><a href="" target="_blank">For employers</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <div class="header">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
+                    <a href="{{ route('home')}}" >
                     <div class="logo">
                         <h1>
                             <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
@@ -13,6 +29,7 @@
                             </svg>
                             Mech<span>Career</span></h1>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-8 desktop-login-flex">
                     <div class="desktop-menu">
@@ -20,13 +37,16 @@
                             <div class="collapse navbar-collapse" id="navbarNav">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Free Job</a>
+                                        <a class="nav-link" href="#">Job Search</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Free Resume Database</a>
+                                        <a class="nav-link" href="#">Free Courses</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Ready screening candidate </a>
+                                        <a class="nav-link" href="#">Career Consulting</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Resume Building</a>
                                     </li>
                                 </ul>
                             </div>
@@ -34,8 +54,8 @@
                     </div>
                     <div class="desktop-login">
                         <div class="user-login">
-                            <a href="{{ route('login') }}" type="button" class="login-button">Login</a>
-                            <a href="{{ route('register') }}" type="button" class="register-button">Register</a>
+                            <a href="{{ route('jobseekerlogin') }}" type="button" class="login-button">Login</a>
+                            <a href="{{ route('jobseekerregister') }}" type="button" class="register-button">Register</a>
                         </div>
                     </div>
                 </div>

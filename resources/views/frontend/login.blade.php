@@ -1,5 +1,5 @@
 @extends('frontend.layout')
-
+@section('title', 'Employees Login')
 @section('content')
 <main>
     <div class="login">

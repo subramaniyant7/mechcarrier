@@ -9,6 +9,10 @@ use Exception;
 
 class FrontendController extends Controller
 {
+    public function HomePage(){
+        return view('frontend.home');
+    }
+
     public function SocialMedia($social){
         return Socialite::driver($social)->redirect();
     }

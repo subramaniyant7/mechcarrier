@@ -16,8 +16,10 @@ use App\Http\Controllers\SocialMediaController;
 */
 
 Route::middleware(['globalvalidate'])->group(function () {
-    Route::get('/', function () { return view('welcome'); });
+    Route::get('/', [FrontendController::class, 'HomePage'])->name('home');
     Route::get('/home', function () { return view('frontend.home'); });
+    Route::get('/jobseeker_login', function () { return view('frontend.jobseeker.login'); })->name('jobseekerlogin');
+    Route::get('/jobseeker_register', function () { return view('frontend.jobseeker.register'); })->name('jobseekerregister');
     Route::get('/login', function () { return view('frontend.login'); })->name('login');
     Route::get('/register', function () { return view('frontend.register'); })->name('register');
 
