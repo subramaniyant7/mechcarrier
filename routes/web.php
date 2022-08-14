@@ -2,8 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\WebpageContent\BannerContentController;
+use App\Http\Controllers\Admin\WebpageContent\CompanyManagementController;
+use App\Http\Controllers\Admin\WebpageContent\HomePageTrainingCenterController;
+use App\Http\Controllers\Admin\WebpageContent\WhyWeController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\SocialMediaController;
+use App\Http\Controllers\AjaxController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,22 +24,31 @@ use App\Http\Controllers\SocialMediaController;
 Route::middleware(['globalvalidate'])->group(function () {
     Route::get('/', [FrontendController::class, 'HomePage'])->name('home');
     Route::get('/home', function () { return view('frontend.home'); });
-    Route::get('/jobseeker_login', function () { return view('frontend.jobseeker.login'); })->name('jobseekerlogin');
-    Route::get('/jobseeker_register', function () { return view('frontend.jobseeker.register'); })->name('jobseekerregister');
-    Route::get('/login', function () { return view('frontend.login'); })->name('login');
-    Route::get('/register', function () { return view('frontend.register'); })->name('register');
 
-    Route::get('/login/{social}',[FrontendController::class, 'SocialMedia'])
-        ->where('social','google|linkedin');
-    Route::get('/login/{social}/callback',[SocialMediaController::class, 'handleProviderCallback'])
-        ->where('social','google|linkedin');
+    Route::middleware(['userlogin'])->group(function () {
+        Route::get('/jobseeker_login', function () { return view('frontend.jobseeker.login'); })->name('jobseekerlogin');
+        Route::get('/jobseeker_register', function () { return view('frontend.jobseeker.register'); })->name('jobseekerregister');
+        Route::get('/login', function () { return view('frontend.login'); })->name('login');
+        Route::get('/register', function () { return view('frontend.register'); })->name('register');
+    });
+
+    Route::middleware(['userloginvalidate'])->group(function () {
+        Route::get('/user_dashboard', [FrontendController::class, 'UserDashboard'])->name('userdashboard');
+        Route::get('/email_verification', [FrontendController::class, 'EmailVerification'])->name('emailverification');
+        Route::get('/email_verification_success', [FrontendController::class, 'EmailVerificationSuccess'])->name('emailverificationsuccess');
+        Route::get('/mobile_verification', [FrontendController::class, 'MobileVerification'])->name('mobileverification');
+        Route::get('/mobile_verification_success', [FrontendController::class, 'MobileVerificationSuccess'])->name('mobileverificationsuccess');
+        Route::get('/user_logout', [FrontendController::class, 'UserLogout'])->name('userlogout');
+    });
+
+    Route::get('/login/{social}',[FrontendController::class, 'SocialMedia'])->where('social','google|linkedin');
+    Route::get('/login/{social}/callback',[SocialMediaController::class, 'handleProviderCallback'])->where('social','google|linkedin');
 
     Route::prefix(ADMINURL)->group(function () {
         Route::middleware(['adminlogin'])->group(function () {
             Route::get('/', function () { return view('admin.signin'); });
             Route::post('/admin_authenticate', [AdminController::class, 'AdminAuthenticate']);
-            Route::get('/login/{social}',[AdminController::class, 'SocialMedia'])
-                ->where('social','google|linkedin');
+            Route::get('/login/{social}',[AdminController::class, 'SocialMedia'])->where('social','google|linkedin');
         });
          Route::middleware(['adminloginvalidate'])->group(function () {
             Route::get('/analysisdashboard', [AdminController::class, 'AnalysisDashboard'])->name('analysisdashboard');
@@ -47,8 +62,42 @@ Route::middleware(['globalvalidate'])->group(function () {
             Route::get('/action_admin/{option}/{id}', [AdminController::class, 'ActionAdmin'])->name('actionadmin');
             Route::post('/save_admin', [AdminController::class, 'SaveAdminDetails'])->name('saveadmin');
 
+            // Mixed Content Save
+            Route::post('/save_mixed_content', [AdminController::class, 'SaveMixedContent'])->name('savemixedcontent');
+
+            // Website Banner Content
+            Route::get('/banner_content', [BannerContentController::class, 'GetBannerContent'])->name('bannnercontent');
+            Route::post('/save_banner_content', [BannerContentController::class, 'SaveBannerContent'])->name('savebannnercontent');
+
+            // Website Company Content
+            Route::get('/view_mapped_company', [CompanyManagementController::class, 'GetCompanyDetails'])->name('viewcompany');
+            Route::get('/create_company_mapping', [CompanyManagementController::class, 'ManageCompanyMapping'])->name('managecompanymapping');
+            Route::get('/get_company_mapping_content', [AjaxController::class, 'CompanyHtmlRender'])->name('getcompanyhtml');
+            Route::get('/action_company_mapping/{option}/{id}', [CompanyManagementController::class, 'ActionCompanyMapping'])->name('actioncompanymapping');
+            Route::post('/save_company_mapping', [CompanyManagementController::class, 'SaveCompanyMapping'])->name('savecompanymapping');
+
+            // Website Why We Content
+            Route::get('/view_whywe', [WhyWeController::class, 'ViewWhyWe'])->name('viewwhywe');
+            Route::get('/create_whywe', [WhyWeController::class, 'ManageWhyWe'])->name('managewhywe');
+            Route::get('/action_whywe/{option}/{id}', [WhyWeController::class, 'ActionWhyWe'])->name('actionwhywe');
+            Route::post('/save_whywe', [WhyWeController::class, 'SaveWhyWe'])->name('savewhywe');
+
+            // Website Training Center
+            Route::get('/view_home_training_center', [HomePageTrainingCenterController::class, 'GetTrainingCenters'])->name('viewtrainingcenter');
+            Route::get('/create_home_training_center', [HomePageTrainingCenterController::class, 'ManageTrainingCenter'])->name('managetrainingcenter');
+            Route::get('/action_home_training_center/{option}/{id}', [HomePageTrainingCenterController::class, 'ActionTrainingCenter'])->name('actiontrainingcenter');
+            Route::post('/save_home_training_center', [HomePageTrainingCenterController::class, 'SaveTrainingCenter'])->name('savetrainingcenter');
+
+            // Website Training Center Content
+            Route::get('/view_training_center_contents/{id}', [HomePageTrainingCenterController::class, 'ViewSpecificTraning'])->name('viewspecifictrainingcentercontent');
+            Route::get('/create_home_training_center_content/{id}', [HomePageTrainingCenterController::class, 'ManageTrainingCenterContent'])->name('managetrainingcentercontent');
+            Route::get('/action_home_training_center_content/{centerid}/{option}/{id}', [HomePageTrainingCenterController::class, 'ActionTrainingCenterContent'])->name('actiontrainingcentercontent');
+            Route::post('/save_home_training_center_content', [HomePageTrainingCenterController::class, 'SaveTrainingCenterContent'])->name('savetrainingcentercontent');
+
+            // Website Social Media Links
             Route::get('/social_media_links', [AdminController::class, 'SocialMediaLinks'])->name('socialmedia');
             Route::post('/save_social_media_links', [AdminController::class, 'SaveSocialMediaLinks'])->name('savesocialmedia');
+
             Route::get('/logout', [AdminController::class, 'AdminLogout'])->name('logout');
 
          });

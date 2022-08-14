@@ -28,7 +28,14 @@ class SocialMediaController extends Controller
                 }
             }else{
                 echo '<pre>';
+
+                if($userSocial->email != ''){
+                    $request->session()->put('frontend_useremail', $userSocial->email);
+                    $request->session()->put('frontend_userid', $userSocial->id);
+                    return redirect()->route('userdashboard');
+                }
                 print_r($userSocial);
+                echo $userSocial->email;
             }
 
         } catch (Exception $e) {

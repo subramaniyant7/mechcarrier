@@ -8,6 +8,14 @@ function admintype(){
     return array('Primary Admin','Super Admin','Sub Admin');
 }
 
+function companytype(){
+    return array('Manual','Company');
+}
+
+function companyTemp(){
+    return array('TCS','Wipro');
+}
+
 function statusClass(){
     return array('badge badge-light-success','badge badge-light-danger','badge badge-light-secondary','badge badge-light-info');
 }
@@ -45,6 +53,9 @@ function insertQuery($table,$data){
     try{
         return DB::table($table)->insert($data);
     }catch(Exception $e){
+        echo '<pre>';
+        print_r($e->getMessage());
+        exit;
         return false;
     }
 }
@@ -89,6 +100,11 @@ function getSocialMedia(){
 function getSocialMediaLinks()
 {
     return DB::table("social_media_links")->get();
+}
+
+function getMixedContentByType($type)
+{
+    return DB::table("mixed_content")->where('mixed_content_type',$type)->get();
 }
 
 ?>

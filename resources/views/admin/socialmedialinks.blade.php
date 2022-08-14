@@ -19,9 +19,9 @@
                     <form action="{{route('savesocialmedia')}}" method="POST">
                         @csrf
                         <div class="form-group row  mb-4">
-                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Facebook</label>
+                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label">Facebook</label>
                             <div class="col-sm-10">
-                                <input type="url" class="form-control form-control-sm" name="social_media_facebook" placeholder="Facebook" required
+                                <input type="url" class="form-control form-control" name="social_media_facebook" placeholder="Facebook" required
                                        value="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_facebook : old('social_media_facebook') }}"
                                 >
                             </div>

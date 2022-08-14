@@ -6,22 +6,22 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1>
-                            India’s 1st Job Portal For <br/> Mechanical Fresher <br/> & Professionals
+                        @php
+                            $bannerContent = getActiveRecord('banner_content');
+                            $title = $description = '';
+                            if(count($bannerContent)){
+                                $title = $bannerContent[0]->banner_title;
+                                $description = $bannerContent[0]->banner_description != '' ? explode(',',$bannerContent[0]->banner_description) : [];
+                            }
+                        @endphp
+                        <h1 style="width: 38%;">
+                            {{ $title }}
                         </h1>
                         <div class="banner-links">
                             <ul>
-                                <li>Design</li>
-                                <li>Quality</li>
-                                <li>Production</li>
-                                <li>R & D</li>
-                                <li>Maintenance</li>
-                                <li>CAE</li>
-                                <li>Service</li>
-                                <li>Sales</li>
-                                <li>Purchase</li>
-                                <li>Marketing</li>
-                                <li>Applications</li>
+                               @foreach($description as $desc)
+                                <li>{{$desc}}</li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -69,46 +69,32 @@
 
         <div class="why-switch-career">
             <div class="container">
+                @php
+                    $whyWe = getActiveRecord('whywe');
+                    $titleWhyWe = getMixedContentByType('whywe');
+                    $whyWeTitle = '';
+                    if(count($titleWhyWe)){
+                        $whyWeTitle = $titleWhyWe[0]->mixed_content_value;
+                    }
+                @endphp
                 <div class="row">
                     <div class="col-md-12">
                         <div class="title">
-                            <h1>Why to switch in Mechcareer</h1>
+                            <h1>{{$whyWeTitle}}</h1>
                         </div>
                     </div>
                 </div>
                 <div class="row">
+                    @foreach($whyWe as $why)
                     <div class="col-md-3">
                         <div class="why-card">
-                            <img src="{{ URL::asset(FRONTEND.'/assets/images/home/why1.svg')}}" />
+                            <img style="width:100%" src="{{ URL::asset('uploads/whywe/'.$why->whywe_image)}}" />
                             <div class="item-title">
-                                <p>specialy for mechanical</p>
+                                <p>{{$why->whywe_name}}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="why-card">
-                            <img src="{{ URL::asset(FRONTEND.'/assets/images/home/why2.svg')}}" />
-                            <div class="item-title">
-                                <p>5000+ employers</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="why-card">
-                            <img src="{{ URL::asset(FRONTEND.'/assets/images/home/why3.svg')}}" />
-                            <div class="item-title">
-                                <p>skill upgrade courses</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="why-card">
-                            <img src="{{ URL::asset(FRONTEND.'/assets/images/home/why4.svg')}}" />
-                            <div class="item-title">
-                                <p>performance tracking</p>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -120,110 +106,64 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="title">
-                            <h1>Featured Companies Actively Hiring</h1>
+                            @php
+                                $titleContent = getMixedContentByType('company_title');
+                                $companyTitle = '';
+                                if(count($titleContent)){
+                                    $companyTitle = $titleContent[0]->mixed_content_value;
+                                }
+                            @endphp
+                            <h1>{{ $companyTitle }}</h1>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="featured-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/fc1.svg')}}" />
+                    @php
+                        $companyMapped = getActiveRecord('company_mapping');
+                        if(count($companyMapped)){
+                            $companyMapped = json_decode(json_encode($companyMapped, true));
+                            usort($companyMapped, function($a, $b){
+                                return strcmp($a->company_position, $b->company_position);
+                            });
+                        }
+                    @endphp
+                    @if(count($companyMapped))
+                        @foreach($companyMapped as $company)
+                            <div class="col-md-3">
+                                <div class="feature-card">
+                                    <div class="featured-image">
+                                        <img style="width: 100%;min-height: 100px;max-height: 100px;" src="{{ URL::asset('uploads/company_mapping/'.$company->company_image)}}" />
+                                    </div>
+                                    <div class="featured-title">
+                                        <h4>{{$company->company_jobcount}} Jobs Available</h4>
+                                        <a href="#" target="_blank">View Jobs <span><img
+                                                    src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="featured-title">
-                                <h4>8 Jobs Available</h4>
-                                <a href="#" target="_blank">View Jobs <span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="featured-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/fc2.svg')}}" />
-                            </div>
-                            <div class="featured-title">
-                                <h4>12 Jobs Available</h4>
-                                <a href="#" target="_blank">View Jobs <span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="featured-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/fc3.svg')}}" />
-                            </div>
-                            <div class="featured-title">
-                                <h4>4 Jobs Available</h4>
-                                <a href="#" target="_blank">View Jobs <span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="featured-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/fc4.svg')}}" />
-                            </div>
-                            <div class="featured-title">
-                                <h4>24 Jobs Available</h4>
-                                <a href="#" target="_blank">View Jobs <span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
+
+                        @endforeach
+                    @endif
+
+                    @if(count($companyMapped) != 8)
+                        @for($i=1;$i<=8-count($companyMapped);$i++)
+                        <div class="col-md-3">
+                            <div class="feature-card">
+                                <div class="featured-image">
+                                    <img style="width: 100%;min-height: 100px;max-height: 100px;" src="{{ URL::asset(FRONTEND.'/assets/images/home/fc1.svg')}}" />
+                                </div>
+                                <div class="featured-title">
+                                    <h4>8 Jobs Available</h4>
+                                    <a href="#" target="_blank">View Jobs <span><img
+                                                src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        @endfor
+                    @endif
+
                 </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="featured-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/fc5.svg')}}" />
-                            </div>
-                            <div class="featured-title">
-                                <h4>8 Jobs Available</h4>
-                                <a href="#" target="_blank">View Jobs <span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="featured-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/fc6.svg')}}" />
-                            </div>
-                            <div class="featured-title">
-                                <h4>12 Jobs Available</h4>
-                                <a href="#" target="_blank">View Jobs <span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="featured-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/fc7.svg')}}" />
-                            </div>
-                            <div class="featured-title">
-                                <h4>4 Jobs Available</h4>
-                                <a href="#" target="_blank">View Jobs <span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="featured-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/fc8.svg')}}" />
-                            </div>
-                            <div class="featured-title">
-                                <h4>24 Jobs Available</h4>
-                                <a href="#" target="_blank">View Jobs <span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="row home-button">
                     <div class="col-md-12">
                         <button type="button" class="home-button"> View all companies </button>
@@ -245,58 +185,115 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="enhance-your-resume-card">
-                            <div class="enhance-your-resume-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er1.svg')}}" />
-                            </div>
-                            <div class="enhance-your-resume-card-title">
-                                <h4>Resume Building</h4>
-                                <p>Grab the attention of employers by building best grab the attention ...</p>
-                                <a href="#" target="_blank">Read More<span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
+{{--                    <div class="col-md-3">--}}
+{{--                        <div class="enhance-your-resume-card">--}}
+{{--                            <div class="enhance-your-resume-image">--}}
+{{--                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er1.svg')}}" />--}}
+{{--                            </div>--}}
+{{--                            <div class="enhance-your-resume-card-title">--}}
+{{--                                <h4>Resume Building</h4>--}}
+{{--                                <p>Grab the attention of employers by building best grab the attention ...</p>--}}
+{{--                                <a href="#" target="_blank">Read More<span><img--}}
+{{--                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-md-3">--}}
+{{--                        <div class="enhance-your-resume-card">--}}
+{{--                            <div class="enhance-your-resume-image">--}}
+{{--                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er2.svg')}}" />--}}
+{{--                            </div>--}}
+{{--                            <div class="enhance-your-resume-card-title">--}}
+{{--                                <h4>Career Booster</h4>--}}
+{{--                                <p>Grab the attention of employers by building best grab the attention ...</p>--}}
+{{--                                <a href="#" target="_blank">Read More<span><img--}}
+{{--                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-md-3">--}}
+{{--                        <div class="enhance-your-resume-card">--}}
+{{--                            <div class="enhance-your-resume-image">--}}
+{{--                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er1.svg')}}" />--}}
+{{--                            </div>--}}
+{{--                            <div class="enhance-your-resume-card-title">--}}
+{{--                                <h4>Resume Building</h4>--}}
+{{--                                <p>Grab the attention of employers by building best grab the attention ...</p>--}}
+{{--                                <a href="#" target="_blank">Read More<span><img--}}
+{{--                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-md-3">--}}
+{{--                        <div class="enhance-your-resume-card">--}}
+{{--                            <div class="enhance-your-resume-image">--}}
+{{--                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er2.svg')}}" />--}}
+{{--                            </div>--}}
+{{--                            <div class="enhance-your-resume-card-title">--}}
+{{--                                <h4>Personal guide</h4>--}}
+{{--                                <p>Grab the attention of employers by building best grab the attention ...</p>--}}
+{{--                                <a href="#" target="_blank">Read More<span><img--}}
+{{--                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner row w-100 mx-auto">
+                                <div class="carousel-item col-md-4 active">
+                                    <div class="enhance-your-resume-card">
+                                        <div class="enhance-your-resume-image">
+                                            <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er1.svg')}}" />
+                                        </div>
+                                        <div class="enhance-your-resume-card-title">
+                                            <h4>Resume Building</h4>
+                                            <p>Grab the attention of employers by building best grab the attention ...</p>
+                                            <a href="#" target="_blank">Read More<span>
+                                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item col-md-4">
+                                    <div class="enhance-your-resume-card">
+                                        <div class="enhance-your-resume-image">
+                                            <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er2.svg')}}" />
+                                        </div>
+                                        <div class="enhance-your-resume-card-title">
+                                            <h4>Career Booster</h4>
+                                            <p>Grab the attention of employers by building best grab the attention ...</p>
+                                            <a href="#" target="_blank">Read More<span><img
+                                                        src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item col-md-4">
+                                    <div class="enhance-your-resume-card">
+                                        <div class="enhance-your-resume-image">
+                                            <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er1.svg')}}" />
+                                        </div>
+                                        <div class="enhance-your-resume-card-title">
+                                            <h4>Resume Building</h4>
+                                            <p>Grab the attention of employers by building best grab the attention ...</p>
+                                            <a href="#" target="_blank">Read More<span><img
+                                                        src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item col-md-4">
+                                    <div class="enhance-your-resume-card">
+                                        <div class="enhance-your-resume-image">
+                                            <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er2.svg')}}" />
+                                        </div>
+                                        <div class="enhance-your-resume-card-title">
+                                            <h4>Personal guide</h4>
+                                            <p>Grab the attention of employers by building best grab the attention ...</p>
+                                            <a href="#" target="_blank">Read More<span><img
+                                                        src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="enhance-your-resume-card">
-                            <div class="enhance-your-resume-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er2.svg')}}" />
-                            </div>
-                            <div class="enhance-your-resume-card-title">
-                                <h4>Career Booster</h4>
-                                <p>Grab the attention of employers by building best grab the attention ...</p>
-                                <a href="#" target="_blank">Read More<span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="enhance-your-resume-card">
-                            <div class="enhance-your-resume-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er1.svg')}}" />
-                            </div>
-                            <div class="enhance-your-resume-card-title">
-                                <h4>Resume Building</h4>
-                                <p>Grab the attention of employers by building best grab the attention ...</p>
-                                <a href="#" target="_blank">Read More<span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="enhance-your-resume-card">
-                            <div class="enhance-your-resume-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er2.svg')}}" />
-                            </div>
-                            <div class="enhance-your-resume-card-title">
-                                <h4>Personal guide</h4>
-                                <p>Grab the attention of employers by building best grab the attention ...</p>
-                                <a href="#" target="_blank">Read More<span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="row home-button">
                     <div class="col-md-12">
@@ -309,77 +306,55 @@
 
         <!--section4-->
 
-        <div class="enhance-your-resume training-partner">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 home-page">
-                        <div class="title">
-                            <h1>Upskill yourself with our Training Partner</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="enhance-your-resume-card">
-                            <div class="enhance-your-resume-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/ty1.svg')}}" />
-                            </div>
-                            <div class="enhance-your-resume-card-title">
-                                <h4>CAD Courses</h4>
-                                <p>Grab the attention of employers by building best grab the attention ...</p>
-                                <a href="#" target="_blank">Read More<span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="enhance-your-resume-card">
-                            <div class="enhance-your-resume-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/ty2.svg')}}" />
-                            </div>
-                            <div class="enhance-your-resume-card-title">
-                                <h4>Product Design Courses</h4>
-                                <p>Grab the attention of employers by building best grab the attention ...</p>
-                                <a href="#" target="_blank">Read More<span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="enhance-your-resume-card">
-                            <div class="enhance-your-resume-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/ty3.svg')}}" />
-                            </div>
-                            <div class="enhance-your-resume-card-title">
-                                <h4>Tool Design Courses</h4>
-                                <p>Grab the attention of employers by building best grab the attention ...</p>
-                                <a href="#" target="_blank">Read More<span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="enhance-your-resume-card">
-                            <div class="enhance-your-resume-image">
-                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/ty4.svg')}}" />
-                            </div>
-                            <div class="enhance-your-resume-card-title">
-                                <h4>Fixture Design Courses</h4>
-                                <p>Grab the attention of employers by building best grab the attention ...</p>
-                                <a href="#" target="_blank">Read More<span><img
-                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row home-button">
-                    <div class="col-md-12">
-                        <button type="button" class="home-button"> Explore All </button>
-                    </div>
-                </div>
-            </div>
+        @if(count($trainingCenter))
+            <div class="enhance-your-resume training-partner">
+                @php
+                    $trainingCenter = json_decode(json_encode($trainingCenter, true), true);
 
-        </div>
+                    usort($trainingCenter, function($a, $b){
+                        return strcmp($a->training_center_position, $b->training_center_position);
+                    });
+                @endphp
+                @foreach($trainingCenter as $trainingCenter)
+                    <div class="container" style="margin-bottom: 3em;">
+                        <div class="row">
+                            <div class="col-md-12 home-page">
+                                <div class="title">
+                                    <h1>{{$trainingCenter['training_center_title']}}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @php
+                                usort($trainingCenter['content'], function($a, $b){
+                                    return strcmp($a['training_center_details_position'], $b['training_center_details_position']);
+                                });
+                            @endphp
+                            @foreach($trainingCenter['content'] as $content)
+                                <div class="col-md-3">
+                                    <div class="enhance-your-resume-card">
+                                        <div class="enhance-your-resume-image">
+                                            <img style="width:100%" src="{{ URL::asset('uploads/hometrainingcenter/contentdetails/'.$content['training_center_details_image'])}}" />
+                                        </div>
+                                        <div class="enhance-your-resume-card-title">
+                                            <h4>{{$content['training_center_details_name']}}</h4>
+                                            <p>{{strlen($content['training_center_details_description']) > 50 ? substr($content['training_center_details_description'],0,50)."..." : $content['training_center_details_description'] }}</p>
+                                            <a href="{{$content['training_center_details_url']}}" target="_blank">Read More<span><img
+                                                        src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="row home-button">
+                            <div class="col-md-12">
+                                <a href="{{ $trainingCenter['training_center_url'] }}" target="_blank" class="home-button"> Explore All </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
 
     </main>
 @stop

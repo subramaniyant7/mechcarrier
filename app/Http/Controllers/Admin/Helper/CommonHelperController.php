@@ -26,6 +26,25 @@ class CommonHelperController extends Controller
         return $admin->get();
     }
 
+    static function getBannerData($id = '')
+    {
+        $admin = DB::table('banner_content');
+        if ($id != '')  $admin->where('banner_id', $id);
+        return $admin->get();
+    }
+
+    static function getMappedCompanyData($id = '')
+    {
+        $company = DB::table('company_mapping');
+        if ($id != '')  $company->where('company_id', $id);
+        return $company->get();
+    }
+
+    static function getMappedCompanyByPosition($position)
+    {
+        return DB::table("company_mapping")->where('company_position',$position)->get();
+    }
+
     static function getAdminDetailsExceptLoggedIn()
     {
         return DB::table("admin")->where('admin_id', '!=', Session::get('admin_id'))->get();
@@ -35,5 +54,47 @@ class CommonHelperController extends Controller
     {
         return DB::table("social_media_links")->get();
     }
+
+    static function getHomeTrainingCenter($id = '')
+    {
+        $training = DB::table('home_training_center');
+        if ($id != '')  $training->where('training_center_id', $id);
+        return $training->get();
+    }
+
+    static function getHomeTrainingCenterByPosition($position)
+    {
+        return DB::table("home_training_center")->where('training_center_position',$position)->get();
+    }
+
+    static function getHomeTrainingCenterDetails($id = '')
+    {
+        $training = DB::table('home_training_center_details');
+        if ($id != '')  $training->where('training_center_detail_id', $id);
+        return $training->get();
+    }
+
+    static function getHomeTrainingCenterByTrainingCenterId($id)
+    {
+        return DB::table("home_training_center_details")->where('training_center_id',$id)->get();
+    }
+
+    static function getHomeTrainingCenterContentByPosition($position,$centerid)
+    {
+        return DB::table("home_training_center_details")->where([['training_center_details_position',$position],['training_center_id',$centerid]])->get();
+    }
+
+    static function getWhyWe($id = '')
+    {
+        $training = DB::table('whywe');
+        if ($id != '')  $training->where('whywe_id', $id);
+        return $training->get();
+    }
+
+    static function getWhyWeByPosition($position)
+    {
+        return DB::table("whywe")->where('whywe_position',$position)->get();
+    }
+
 
 }

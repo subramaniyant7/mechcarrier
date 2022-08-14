@@ -127,6 +127,17 @@ class AdminController extends Controller
         return back()->with($notify['type'], $notify['msg']);
     }
 
+    public function SaveMixedContent(Request $request){
+        $formData = $request->except('_token','mixed_content_id');
+        if($request->input('mixed_content_id') != ''){
+            $action = updateQuery('mixed_content', 'mixed_content_id', decryption($request->input('mixed_content_id')), $formData);
+        }else {
+            $action = insertQuery('mixed_content', $formData);
+        }
+        $notify = notification($action);
+        return back()->with($notify['type'], $notify['msg']);
+    }
+
     public function AdminLogout(Request $request)
     {
         $request->session()->forget('admin_name');

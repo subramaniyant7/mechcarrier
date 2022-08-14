@@ -58,6 +58,42 @@
                 </ul>
             </li>
 
+            <li class="menu
+                {{(request()->segment(2) == 'banner_content' || request()->segment(2) == 'keypoint' ||
+            request()->segment(2) == 'social_media_links') ? 'active' : '' }}">
+                <a href="#websitecontent" data-bs-toggle="collapse" aria-expanded="{{(request()->segment(2) == 'banner_content' || request()->segment(2) == 'view_mapped_company' ||
+                    request()->segment(2) == 'view_home_training_center' || request()->segment(2) == 'view_whywe' ||
+                    request()->segment(2) == 'social_media_links') ? 'true' : '' }}" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span>Wesbite Content</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled {{(request()->segment(2) == 'banner_content' || request()->segment(2) == 'view_mapped_company' ||
+                    request()->segment(2) == 'view_home_training_center' || request()->segment(2) == 'view_whywe' ||
+                    request()->segment(2) == 'social_media_links') ? 'show' : ''}}" id="websitecontent" data-bs-parent="#websitecontent">
+                    <li class="{{request()->segment(2) == 'banner_content' ? 'active' : ''}}">
+                        <a href="{{ route('bannnercontent') }}"> Banner Content </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_mapped_company' ? 'active' : ''}}">
+                        <a href="{{ route('viewcompany') }}"> Company Details </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_home_training_center' ? 'active' : ''}}">
+                        <a href="{{ route('viewtrainingcenter') }}"> Training Center </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_whywe' ? 'active' : ''}}">
+                        <a href="{{ route('viewwhywe') }}"> Why We </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'social_media_links' ? 'active' : ''}}">
+                        <a href="{{ route('socialmedia') }}"> Social Media </a>
+                    </li>
+
+                </ul>
+            </li>
+
             <li class="menu  {{request()->segment(2) == 'view_admin' ? 'active' : ''}}">
                 <a href="{{ route('admin') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -67,23 +103,23 @@
                 </a>
             </li>
 
-            <li class="menu  {{request()->segment(2) == 'social_media_links' ? 'active' : ''}}">
-                <a href="{{ route('socialmedia') }}" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                        <span>Social Media </span>
-                    </div>
-                </a>
-            </li>
+{{--            <li class="menu  {{request()->segment(2) == 'social_media_links' ? 'active' : ''}}">--}}
+{{--                <a href="{{ route('socialmedia') }}" aria-expanded="false" class="dropdown-toggle">--}}
+{{--                    <div class="">--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>--}}
+{{--                        <span>Social Media </span>--}}
+{{--                    </div>--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
-            <li class="menu">
-                <a href="{{ route('socialmedia') }}" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        <span>Misc </span>
-                    </div>
-                </a>
-            </li>
+{{--            <li class="menu">--}}
+{{--                <a href="{{ route('socialmedia') }}" aria-expanded="false" class="dropdown-toggle">--}}
+{{--                    <div class="">--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>--}}
+{{--                        <span>Misc </span>--}}
+{{--                    </div>--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
 {{--            <li class="menu">--}}
 {{--                <a href="#" aria-expanded="false" class="dropdown-toggle">--}}

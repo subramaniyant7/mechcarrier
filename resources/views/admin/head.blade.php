@@ -20,7 +20,9 @@
     <link rel="stylesheet" href="{{ URL::asset(ADMINCSS . '/common.css')}}">
     <link rel="stylesheet" href="{{ URL::asset(ADMIN.'/fontawesome/css/all.min.css')}}">
     <!-- END GLOBAL MANDATORY STYLES -->
-
+    <script>
+        let siteurl = "{{ ADMINURL }}";
+    </script>
     @yield('head')
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 

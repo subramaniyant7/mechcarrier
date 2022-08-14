@@ -66,5 +66,7 @@ class Kernel extends HttpKernel
         'globalvalidate' => \App\Http\Middleware\Globalvalidate::class,
         'adminloginvalidate' => \App\Http\Middleware\AdminLoggedIn::class,
         'adminlogin' => \App\Http\Middleware\AdminLogin::class,
+        'userloginvalidate' => \App\Http\Middleware\FrontendLoggedIn::class,
+        'userlogin' => \App\Http\Middleware\FrontendLogin::class,
     ];
 }
