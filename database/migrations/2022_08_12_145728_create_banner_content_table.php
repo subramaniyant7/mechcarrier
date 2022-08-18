@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id('banner_id');
             $table->string('banner_title');
             $table->text('banner_description');
+            $table->string('banner_image');
+            $table->string('company_logo');
+            $table->string('company_name');
             $table->integer('status');
             $table->timestamps();
         });

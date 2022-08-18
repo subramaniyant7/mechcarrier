@@ -14,6 +14,8 @@ class FrontendController extends Controller
     public function HomePage(){
         $whyWe = getActiveRecord('whywe');
         $trainingCenter = HelperController::GetHomeTrainingCenter();
+        $main = CommonHelperController::getHomeCareerBuildMain();
+        $careerBuild = CommonHelperController::getHomeCareerBuild();
         if(count($trainingCenter)){
             foreach ($trainingCenter as $k => $training){
                 $trainingContent = HelperController::GetHomeTrainingCenterContent($training->training_center_id);
@@ -27,7 +29,7 @@ class FrontendController extends Controller
 //        echo '<pre>';
 //        print_r($trainingCenter);
 //        exit;
-        return view('frontend.home', compact('trainingCenter','whyWe'));
+        return view('frontend.home', compact('trainingCenter','whyWe','main','careerBuild'));
     }
 
     public function UserDashboard(Request $request){

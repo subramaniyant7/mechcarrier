@@ -63,7 +63,7 @@
             request()->segment(2) == 'social_media_links') ? 'active' : '' }}">
                 <a href="#websitecontent" data-bs-toggle="collapse" aria-expanded="{{(request()->segment(2) == 'banner_content' || request()->segment(2) == 'view_mapped_company' ||
                     request()->segment(2) == 'view_home_training_center' || request()->segment(2) == 'view_whywe' ||
-                    request()->segment(2) == 'social_media_links') ? 'true' : '' }}" class="dropdown-toggle">
+                    request()->segment(2) == 'social_media_links' || request()->segment(2) == 'view_careerbuild') ? 'true' : '' }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         <span>Wesbite Content</span>
@@ -74,22 +74,26 @@
                 </a>
                 <ul class="collapse submenu list-unstyled {{(request()->segment(2) == 'banner_content' || request()->segment(2) == 'view_mapped_company' ||
                     request()->segment(2) == 'view_home_training_center' || request()->segment(2) == 'view_whywe' ||
-                    request()->segment(2) == 'social_media_links') ? 'show' : ''}}" id="websitecontent" data-bs-parent="#websitecontent">
+                    request()->segment(2) == 'social_media_links' || request()->segment(2) == 'view_careerbuild') ? 'show' : ''}}" id="websitecontent" data-bs-parent="#websitecontent">
                     <li class="{{request()->segment(2) == 'banner_content' ? 'active' : ''}}">
-                        <a href="{{ route('bannnercontent') }}"> Banner Content </a>
-                    </li>
-                    <li class="{{request()->segment(2) == 'view_mapped_company' ? 'active' : ''}}">
-                        <a href="{{ route('viewcompany') }}"> Company Details </a>
-                    </li>
-                    <li class="{{request()->segment(2) == 'view_home_training_center' ? 'active' : ''}}">
-                        <a href="{{ route('viewtrainingcenter') }}"> Training Center </a>
+                        <a href="{{ route('bannnercontent') }}"> Home Page Banner </a>
                     </li>
                     <li class="{{request()->segment(2) == 'view_whywe' ? 'active' : ''}}">
-                        <a href="{{ route('viewwhywe') }}"> Why We </a>
+                        <a href="{{ route('viewwhywe') }}"> Our Key Points </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_mapped_company' ? 'active' : ''}}">
+                        <a href="{{ route('viewcompany') }}"> Companyies Actively Hiring </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_home_training_center' ? 'active' : ''}}">
+                        <a href="{{ route('viewcareerbuild') }}"> External Course Link </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_careerbuild' ? 'active' : ''}}">
+                        <a href="{{ route('viewcompany') }}"> Career Build </a>
                     </li>
                     <li class="{{request()->segment(2) == 'social_media_links' ? 'active' : ''}}">
                         <a href="{{ route('socialmedia') }}"> Social Media </a>
                     </li>
+
 
                 </ul>
             </li>

@@ -64,12 +64,11 @@
                                     </div>
                                 @else
                                     <div class="user-login">
-                                        <a href="{{route('jobseekerlogin')}}" style="text-decoration: none" class="login-button logout-button">Login</a>
-                                        <div class="dropdown">
-                                            <a href="{{route('jobseekerregister')}}" class="btn btn-primary">Register
-                                               </a>
 
-                                        </div>
+                                        <a href="{{route('jobseekerregister')}}" style="margin-right:10px;color: #000;border: solid 2px #000;text-decoration: none" class="login-button logout-button">Register</a>
+
+                                        <a href="{{route('jobseekerlogin')}}" style="text-decoration: none;background: #1D56BB;border:none;color:#fff;padding:4px 30px;margin:0" class="login-button logout-button">Login</a>
+
                                     </div>
                                 @endif
                             </div>

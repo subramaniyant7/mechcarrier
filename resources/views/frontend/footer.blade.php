@@ -87,6 +87,28 @@
 {{--<script src="{{ URL::asset(FRONTEND.'/assets/js/bootstrap.js')}}" type="text/javascript"></script>--}}
 <script src="{{ URL::asset(FRONTEND.'/assets/js/jquery.js')}}"></script>
 <script src="{{ URL::asset(FRONTEND.'/assets/js/bootstrap.js')}}"></script>
-<script src="{{ URL::asset(FRONTEND.'/assets/js/script.js')}}"></script>
+{{-- <script src="{{ URL::asset(FRONTEND.'/assets/js/script.js')}}"></script> --}}
+<script src="{{ URL::asset(FRONTEND.'/assets/js/owl.carousel.js')}}"></script>
 {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--}}
 {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>--}}
+
+
+<script>
+    $(document).ready(function() {
+      var owl = $('.owl-carousel');
+      owl.owlCarousel({
+        items: 4,
+        loop: true,
+        margin: 10,
+        autoplay: true,
+        autoplayTimeout: 1300,
+        autoplayHoverPause: true
+      });
+      $('.play').on('click', function() {
+        owl.trigger('play.owl.autoplay', [1000])
+      })
+      $('.stop').on('click', function() {
+        owl.trigger('stop.owl.autoplay')
+      })
+    })
+  </script>

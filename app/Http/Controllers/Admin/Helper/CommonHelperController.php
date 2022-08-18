@@ -96,5 +96,24 @@ class CommonHelperController extends Controller
         return DB::table("whywe")->where('whywe_position',$position)->get();
     }
 
+    static function getHomeCareerBuildMain($id = '')
+    {
+        $career = DB::table('home_careerbuild_main');
+        if ($id != '')  $career->where('home_careerbuild_main_id', $id);
+        return $career->get();
+    }
+
+    static function getHomeCareerBuild($id = '')
+    {
+        $career = DB::table('home_careerbuild');
+        if ($id != '')  $career->where('home_careerbuild_id', $id);
+        return $career->get();
+    }
+
+    static function getHomeCareerBuildByPosition($position)
+    {
+        return DB::table("home_careerbuild")->where('home_careerbuild_position',$position)->get();
+    }
+
 
 }

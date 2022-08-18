@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\WebpageContent\BannerContentController;
 use App\Http\Controllers\Admin\WebpageContent\CompanyManagementController;
 use App\Http\Controllers\Admin\WebpageContent\HomePageTrainingCenterController;
 use App\Http\Controllers\Admin\WebpageContent\WhyWeController;
+use App\Http\Controllers\Admin\WebpageContent\CareerBuildController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\AjaxController;
@@ -75,6 +76,13 @@ Route::middleware(['globalvalidate'])->group(function () {
             Route::get('/get_company_mapping_content', [AjaxController::class, 'CompanyHtmlRender'])->name('getcompanyhtml');
             Route::get('/action_company_mapping/{option}/{id}', [CompanyManagementController::class, 'ActionCompanyMapping'])->name('actioncompanymapping');
             Route::post('/save_company_mapping', [CompanyManagementController::class, 'SaveCompanyMapping'])->name('savecompanymapping');
+
+            // Website Career Build
+            Route::get('/view_careerbuild', [CareerBuildController::class, 'ViewCareerBuild'])->name('viewcareerbuild');
+            Route::get('/create_careerbuild', [CareerBuildController::class, 'ManageCareerBuild'])->name('managecareerbuild');
+            Route::get('/action_careerbuild/{option}/{id}', [CareerBuildController::class, 'ActionCareerBuild'])->name('actioncareerbuild');
+            Route::post('/save_careerbuild', [CareerBuildController::class, 'SaveCareerBuild'])->name('savecareerbuild');
+            Route::post('/save_careerbuildmain', [CareerBuildController::class, 'SaveCareerBuildMain'])->name('savecareerbuildmain');
 
             // Website Why We Content
             Route::get('/view_whywe', [WhyWeController::class, 'ViewWhyWe'])->name('viewwhywe');

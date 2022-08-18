@@ -20,7 +20,7 @@ body {
     overflow-x: hidden;
 }
 a {
-    text-decoration: none !important;
+    text-decoration: none;
 }
 .top-header {
     padding: 10px 0;
@@ -246,6 +246,7 @@ a {
 }
 .login .col {
     text-align: right;
+    padding-left: 0px;
 }
 .login .col .form-check-label {
     font-weight: 400;
@@ -298,6 +299,7 @@ a {
 }
 .login-form .mb-4.d-flex.company-type .col {
     text-align: left;
+    padding-left: 0px;
 }
 .login-form .mb-4.d-flex.company-type .form-button button {
     padding: 10px;
@@ -349,10 +351,11 @@ a {
     display: flex;
     align-items: center;
     height: 43px;
-    width: 171px;
+    width: 220px;
     line-height: 34px;
     border: solid 1px #807f7f;
     border-radius: 4px;
+    justify-content: center;
 }
 .socialmedia-login .d-flex {
     justify-content: space-between;
@@ -367,8 +370,6 @@ a {
 }
 .login-form.bg-gray {
     width: auto;
-    max-width: 76%;
-    margin: 0px auto;
 }
 .login-form.bg-gray form {
     background-color: #f0f0f0;
@@ -528,6 +529,8 @@ a {
     color: #1d56bb;
     font-weight: 600;
     font-size: 18px;
+    display: flex;
+    justify-content: center;
 }
 .enhance-your-resume-card-title a img {
     padding-left: 10px;
@@ -538,9 +541,33 @@ a {
 .enhance-your-resume.training-partner .enhance-your-resume-image {
     background-color: #f3f3f5;
     padding: 5px;
+    width: auto;
+    height: auto;
+}
+.enhance-your-resume.training-partner .enhance-your-resume-image .enhance-your-resume-card-title img {
+    position: unset;
 }
 .enhance-your-resume.training-partner .enhance-your-resume-card-title {
     background-color: #fff;
+}
+.enhance-your-resume.bg-offwhite {
+    padding-top: 50px;
+    background-color: #F0F0F0;
+}
+.enhance-your-resume.bg-offwhite .enhance-your-resume-image {
+    position: relative;
+}
+.enhance-your-resume-image span.image-tag {
+    position: absolute;
+    top: 0;
+    display: flex;
+    width: auto;
+    justify-content: end;
+    background-color: #04F0FF;
+    right: 0;
+    font-size: 14px;
+    padding: 7px 14px;
+    color: #000;
 }
 .mech-search {
     padding: 67px 0 80px;
@@ -597,13 +624,15 @@ a {
 }
 .mech-banner {
     padding: 60px 0;
-    background-image: url(../images/home/homepagebanner.webp);
+    background-position: center;
     background-repeat: no-repeat;
 }
 .mech-banner h1 {
     color: #fff;
     font-weight: 600;
     font-size: 42px;
+    width: auto;
+    max-width: 46%;
 }
 .mech-banner .banner-links ul {
     display: flex;
@@ -824,15 +853,19 @@ button.btn.btn-primary.dropdown-toggle {
     background-color: #E8EEF8;
     padding: 25px 20px;
     justify-content: space-between;
+    margin-bottom: 35px;
 }
 .user-dashboard-main .beware .icon {
     position: relative;
     top: 11px;
 }
 .user-dashboard-main .beware .beware-text h3 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 550;
     margin-top: 0px;
+}
+.user-dashboard-main .beware .beware-text p {
+    font-size: 14px;
 }
 
 .beware-button {
@@ -859,20 +892,23 @@ button.btn.btn-primary.dropdown-toggle {
 }
 .job-card {
     background-color:  #F0F0F0;
-    padding: 10px 25px;
+    padding: 15px 25px;
     box-shadow: 1px 2px 9px 0px #ccc;
 }
 .job-card .job-card-title {
     display: flex;
     justify-content: space-between;
 }
+.job-card .job-card-title .d-flex {
+    flex-direction: column;
+}
 .job-card .job-card-title h3{
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 550;
 }
 .job-card .job-card-title p {
     color: #555555;
-    font-size: 16px;
+    font-size: 14px;
 }
 .job-card-details {
     display: flex;
@@ -1124,18 +1160,18 @@ button.btn.btn-primary.dropdown-toggle {
     padding-left: 20px;
 }
 .user-information .personal-info .user-info h3 {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
 }
 .user-information .personal-info .user-info h4 {
-    font-size: 16px;
+    font-size: 15px;
     color: #000;
     margin-bottom: 0px;
 }
 .user-information .personal-info .user-info h5 {
     color: #6C6767;
     margin-top: 6px;
-    font-size: 16px;
+    font-size: 14px;
 }
 .user-expectations .exp-icon{
     display: flex;
@@ -1234,13 +1270,13 @@ button.btn.btn-primary.dropdown-toggle {
 }
 .user-progress-bar .user-progress p{
     font-weight: 400;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .profile-activation {
     display: flex;
     align-items: center;
-    padding: 19px 0px;
+    padding: 13px 0px;
     max-width: 73%;
     margin: auto;
 }
@@ -1290,6 +1326,7 @@ span.switch-handle {
 .user-dashboard-sidebar hr {
     border: 0;
     border-top: 1px solid #B8B8B8;
+    margin: 0.5rem 0;
 }
 .userdashboard-information {
     line-height: 43px;
@@ -1411,10 +1448,43 @@ span.switch-handle {
 }
 .login-form {
     width: auto;
-    max-width: 76%;
-    margin: 0px auto;
+    padding-left: 80px;
 }
 .text-left {
     text-align: left !important;
 }
 /*cardcarousel*/
+.bg-breadcrumb {
+    padding: 30px 0px;
+    background-color: #484747;
+    display: flex;
+}
+.bg-breadcrumb  h1 {
+    color: #fff;
+    font-weight: 500;
+    font-size: 40px;
+}
+.bg-breadcrumb .row {
+    align-items: center;
+}
+.bg-breadcrumb .button-d-flex {
+    display: flex;
+    justify-content: space-around;
+}
+
+.bg-breadcrumb .button-d-flex .breadcrumb-button {
+    text-align: center;
+    line-height: 30px;
+}
+.bg-breadcrumb .button-d-flex .breadcrumb-button button {
+    padding: 4px 59px;
+    background: #E8EEF8;
+    border: solid 1px #E8EEF8;
+    font-size: 17px;
+    margin-bottom: 11px;
+    text-align: center;
+}
+.bg-breadcrumb .button-d-flex .breadcrumb-button p {
+    color: #fff;
+    margin-bottom: 0px;
+}
