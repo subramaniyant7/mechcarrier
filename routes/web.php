@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\WebpageContent\HomePageTrainingCenterController;
 use App\Http\Controllers\Admin\WebpageContent\WhyWeController;
 use App\Http\Controllers\Admin\WebpageContent\CareerBuildController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\JobseekerController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\AjaxController;
 
@@ -26,16 +27,26 @@ Route::middleware(['globalvalidate'])->group(function () {
     Route::get('/', [FrontendController::class, 'HomePage'])->name('home');
     Route::get('/home', function () { return view('frontend.home'); });
 
+    Route::get('/jobsdetails', [FrontendController::class, 'JobsDetails'])->name('jobsdetails');
+    Route::get('/mycourse_services', [FrontendController::class, 'MyCourseandService'])->name('mycourseservice');
+
+    Route::get('/sendemail', [JobseekerController::class, 'SendEmail'])->name('sendemail');
+
     Route::middleware(['userlogin'])->group(function () {
         Route::get('/jobseeker_login', function () { return view('frontend.jobseeker.login'); })->name('jobseekerlogin');
         Route::get('/jobseeker_register', function () { return view('frontend.jobseeker.register'); })->name('jobseekerregister');
+        Route::post('/jobseeker_registration', [JobseekerController::class, 'JobseekerRegister'])->name('jobseekerregistration');
+
+
         Route::get('/login', function () { return view('frontend.login'); })->name('login');
         Route::get('/register', function () { return view('frontend.register'); })->name('register');
     });
 
+    Route::get('/email_verification/{id}', [JobseekerController::class, 'EmailVerification'])->name('emailverification');
+
     Route::middleware(['userloginvalidate'])->group(function () {
         Route::get('/user_dashboard', [FrontendController::class, 'UserDashboard'])->name('userdashboard');
-        Route::get('/email_verification', [FrontendController::class, 'EmailVerification'])->name('emailverification');
+
         Route::get('/email_verification_success', [FrontendController::class, 'EmailVerificationSuccess'])->name('emailverificationsuccess');
         Route::get('/mobile_verification', [FrontendController::class, 'MobileVerification'])->name('mobileverification');
         Route::get('/mobile_verification_success', [FrontendController::class, 'MobileVerificationSuccess'])->name('mobileverificationsuccess');

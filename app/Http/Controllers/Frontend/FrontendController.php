@@ -56,6 +56,14 @@ class FrontendController extends Controller
         return view('frontend.mobile_verification_success');
     }
 
+    public function JobsDetails(Request $request){
+        return view('frontend.jobsdetails');
+    }
+
+    public function MyCourseandService(Request $request){
+        return view('frontend.mycourse_service');
+    }
+
     public function UserLogout(Request $request)
     {
         $request->session()->forget('frontend_useremail');

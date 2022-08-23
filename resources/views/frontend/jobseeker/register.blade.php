@@ -51,37 +51,37 @@
                             <div class="form-text">
                                 <p>or</p>
                             </div>
-                            <form autocomplete="off">
-
+                            <form autocomplete="off" method="POST" action="{{route('jobseekerregistration')}}">
+                                @csrf
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">User Name<span>*</span></label>
                                     <div class="d-flex">
-                                        <input type="text" id="form1Example1" placeholder="First Name" class="form-control" />
-                                        <input type="text" id="form1Example1" placeholder="Last Name" class="form-control" />
+                                        <input type="text" placeholder="First Name" class="form-control" name="user_firstname" required />
+                                        <input type="text" placeholder="Last Name" class="form-control" name="user_lastname" required/>
                                     </div>
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Email <span>*</span></label>
-                                    <input type="email" id="form1Example1" placeholder="Enter your email address" class="form-control" />
+                                    <input type="email" placeholder="Enter your email address" name="user_email" class="form-control" required />
                                 </div>
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Mobile Number <span>*</span></label>
-                                    <input type="number" id="form1Example1" placeholder="Enter yourMobile Number" class="form-control" />
+                                    <input type="number" placeholder="Enter yourMobile Number" name="user_phonenumber" class="form-control" required/>
                                 </div>
 
                                 <div class="form-outline password mb-4">
                                     <label class="form-label" for="form1Example2">Password <span>*</span>
                                     </label>
-                                    <input type="password" id="form1Example2" placeholder="Enter your password" class="form-control"
-                                           autocomplete="new-password"/>
+                                    <input type="password" placeholder="Enter your password" name="user_password" class="form-control"
+                                           autocomplete="new-password" required/>
                                     <span> <img src="{{ URL::asset(FRONTEND.'/assets/images/passwordshowicon.svg')}}" /> </span>
                                 </div>
 
                                 <div class="form-outline password mb-4">
                                     <label class="form-label" for="form1Example2">ConfirmPassword <span>*</span>
                                     </label>
-                                    <input type="password" id="form1Example2" placeholder="RE-Enter your password" class="form-control" />
+                                    <input type="password" placeholder="RE-Enter your password" name="user_confirmpassword" class="form-control" required/>
                                     <span> <img src="{{ URL::asset(FRONTEND.'/assets/images/passwordshowicon.svg')}}" /> </span>
                                 </div>
 
