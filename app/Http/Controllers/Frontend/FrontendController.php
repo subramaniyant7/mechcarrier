@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Helper\CommonHelperController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\Helper\HelperController;
 use Illuminate\Http\Request;
+
 use Socialite;
 use Exception;
 
@@ -33,28 +34,19 @@ class FrontendController extends Controller
     }
 
     public function UserDashboard(Request $request){
-        return view('frontend.users.userdashboard');
-    }
-
-    public function SocialMedia($social){
-        return Socialite::driver($social)->redirect();
+        $userInfo = HelperController::getUserInfo($request->session()->get('frontend_userid'));
+        return view('frontend.users.userdashboard',compact('userInfo'));
     }
 
     public function EmailVerification(){
         return view('frontend.email_verification');
     }
 
-    public function EmailVerificationSuccess(){
-        return view('frontend.email_verification_success');
-    }
 
-    public function MobileVerification(){
-        return view('frontend.mobile_verification');
-    }
 
-    public function MobileVerificationSuccess(){
-        return view('frontend.mobile_verification_success');
-    }
+
+
+
 
     public function JobsDetails(Request $request){
         return view('frontend.jobsdetails');

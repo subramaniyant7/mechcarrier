@@ -5,13 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Socialite;
 use App\Http\Controllers\Admin\Helper\CommonHelperController;
+use App\Http\Controllers\Frontend\Helper\HelperController;
 
 class SocialMediaController extends Controller
 {
-    public function handleProviderCallback(Request $request, $social){
-        try {
-            $userSocial = Socialite::driver($social)->user();
-            if($request->session()->get('admin_social') != ''){
+
+    public function SocialMedia($social)
+    {
+        return Socialite::driver($social)->redirect();
+    }
+
+    public function handleProviderCallback(Request $request, $social)
+    {
+
+        $userSocial = Socialite::driver($social)->user();
+        if ($request->session()->get('admin_social') != '') {
+            try {
                 $request->session()->forget('admin_social');
                 if ($userSocial->email && $userSocial->email != '') {
                     $admin = CommonHelperController::getAdminByEmail($userSocial->email);
@@ -20,26 +29,43 @@ class SocialMediaController extends Controller
                         $request->session()->put('admin_id', $admin[0]->admin_id);
                         $request->session()->put('admin_role', $admin[0]->admin_role);
                         return redirect()->route('analysisdashboard');
-                    }else{
-                        return redirect(ADMINURL)->with('error','Email ID not found. Please contact admin');
+                    } else {
+                        return redirect(ADMINURL)->with('error', 'Email ID not found. Please contact admin');
                     }
-                }else{
-                    return redirect()->with('error','Something went wrong. Please try again');
+                } else {
+                    return redirect(ADMINURL)->with('error', 'Something went wrong. Please try again');
                 }
-            }else{
-                echo '<pre>';
-
-                if($userSocial->email != ''){
-                    $request->session()->put('frontend_useremail', $userSocial->email);
-                    $request->session()->put('frontend_userid', $userSocial->id);
-                    return redirect()->route('userdashboard');
-                }
-                print_r($userSocial);
-                echo $userSocial->email;
+            } catch (\Exception $e) {
+                return redirect(ADMINURL)->with('error', 'Something went wrong. Please try again');
             }
+        } else {
+            try {
+                if ($userSocial->email != '') {
+                    $userInfo = HelperController::isUserExistByEmail($userSocial->email);
 
-        } catch (Exception $e) {
-            dd($e->getMessage());
+                    if (count($userInfo)) {
+                        $userData = ['email' => $userSocial->email, 'userid' => $userInfo[0]->user_id];
+                    }
+                    if (!count($userInfo)) {
+                        $name = explode(' ', $userSocial->name);
+                        $firstname = $lastname = $userSocial->name;
+                        if (count($name) > 1) {
+                            $firstname = $name[0];
+                            $lastname = $name[1];
+                        }
+                        $createUser = ['user_firstname' => $firstname, 'user_lastname' => $lastname, 'user_email' => $userSocial->email, 'user_password' => md5(123456), 'user_email_verified' => 1];
+                        $userInfo = insertQueryId('user_details', $createUser);
+                        $userData = ['email' => $userSocial->email, 'userid' => $userInfo];
+                    }
+                    $request->session()->put('frontend_useremail', $userData['email']);
+                    $request->session()->put('frontend_userid', $userData['userid']);
+                    return redirect()->route('userdashboard');
+                } else {
+                    return redirect()->route('jobseekerregister')->with('error', 'Something went wrong. Please try again');
+                }
+            } catch (\Exception $e) {
+                return redirect()->route('jobseekerregister')->with('error', 'Something went wrong. Please try again');
+            }
         }
     }
 }

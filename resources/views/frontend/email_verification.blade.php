@@ -1,5 +1,5 @@
 @extends('frontend.layout')
-@section('title','Email Registration')
+@section('title', 'Email OTP Verification')
 @section('content')
     <main>
         <div class="email-registration">
@@ -9,22 +9,28 @@
                         <h4>Welcome {{ $userInfo[0]->user_firstname }}</h4>
 
                         <h1>Thank you for registration</h1>
-                        <h2>Please verify your email adreess : Enter OTP send to <span>{{ $userInfo[0]->user_email }}</span></h2>
-                        <img src="{{ URL::asset(FRONTEND.'/assets/images/home/mailicon.svg')}}" />
-                        <div class="d-flex">
-                            <div class="email-registration-form">
-                                <form method="POST" action="{{route('verifyemailotp')}}">
-                                    <input type="text" class="form-control" name="user_email_otp"/>
-                                    <input type="hidden" class="form-control" name="user_identity" value="{{ encryption($userInfo[0]->user_id) }}"/>
+                        <h2>Please verify your email adreess : Enter OTP send to <span>{{ $userInfo[0]->user_email }}</span>
+                        </h2>
+                        <img src="{{ URL::asset(FRONTEND . '/assets/images/home/mailicon.svg') }}" />
+                        <form method="POST" action="{{ route('emailverificationsuccess') }}">
+                            @csrf
+                            <div class="d-flex">
+                                <div class="email-registration-form">
+                                    <input type="text" class="form-control" name="user_email_otp" required />
+                                    <input type="hidden" class="form-control" name="user_identity"
+                                        value="{{ encryption($userInfo[0]->user_id) }}" />
                                     <a href="#">Resend </a>
-                                </form>
+
+                                </div>
                             </div>
-                        </div>
-                        <div class="error-message">
-                            <p>Verification fail, please try again </p>
-                        </div>
-                        <button type="submit" class="btn btn-primary">submit</button> <br/>
-                        <a href="#">Change Email ID</a>
+                            @if (session('error'))
+                                <div class="error-message">
+                                    <p>{{ session('error') }} </p>
+                                </div>
+                            @endif
+                            <button type="submit" class="btn btn-primary">submit</button> <br />
+                            <a href="#">Change Email ID</a>
+                        </form>
                     </div>
                 </div>
             </div>

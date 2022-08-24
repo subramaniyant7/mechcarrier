@@ -8,6 +8,6 @@
     <link rel="stylesheet" href="{{ URL::asset(FRONTEND . '/assets/css/bootstrap.min.css') }}">
     {{-- <link rel="stylesheet" href="{{ URL::asset(FRONTEND.'/assets/css/inter.min.css')}}"> --}}
     <link rel="stylesheet" href="{{ URL::asset(FRONTEND . '/assets/css/main.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset(FRONTEND . '/assets/css/style.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ URL::asset(FRONTEND . '/assets/css/style.css') }}" /> --}}
     <link rel="stylesheet" href="{{ URL::asset(FRONTEND . '/assets/css/owl.carousel.css') }}" />
 </head>

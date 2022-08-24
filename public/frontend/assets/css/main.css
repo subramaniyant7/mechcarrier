@@ -95,6 +95,25 @@ a {
     align-items: center;
 }
 .desktop-login .user-login .login-button {
+    background-color: #1d56bb;
+    padding: 4px 17px;
+    font-weight: 500;
+    font-size: 17px;
+    color: #fff;
+    border: solid 2px #1d56bb;
+    border-radius: 4px;
+}
+.desktop-login .user-login .register-button {
+    background-color: #fff;
+    padding: 4px 17px;
+    font-weight: 500;
+    font-size: 17px;
+    color: #000000;
+    border: solid 2px #000000;
+    border-radius: 4px;
+    margin-right: 15px;
+}
+.desktop-login .user-login.employee-login .login-button {
     background-color: transparent;
     padding: 4px 17px;
     font-weight: 500;
@@ -104,7 +123,7 @@ a {
     border-radius: 4px;
     margin-right: 15px;
 }
-.desktop-login .user-login .register-button {
+.desktop-login .user-login.employee-login .register-button {
     background-color: #1d56bb;
     padding: 4px 17px;
     font-weight: 500;
@@ -112,6 +131,7 @@ a {
     color: #fff;
     border: solid 2px #1d56bb;
     border-radius: 4px;
+    margin-right: 0px;
 }
 .footer {
     background: #f4f4f4;
@@ -513,6 +533,10 @@ a {
     background-color: #e8eef8;
     padding: 20px;
     text-align: center;
+    height: 220px;
+}
+.enhance-your-resume-image img {
+    height: 100%;
 }
 .enhance-your-resume-card-title {
     text-align: center;
@@ -545,6 +569,7 @@ a {
     padding: 5px;
     width: auto;
     height: auto;
+    
 }
 .enhance-your-resume.training-partner .enhance-your-resume-image .enhance-your-resume-card-title img {
     position: unset;
@@ -1712,4 +1737,70 @@ span.switch-handle {
 .user-dashboard-detail-main {
     margin-top: -58px;
     padding-bottom: 40px;
+}
+.mycourse-videopage .video-breadcrumbs {
+    background-color: #E8EEF8;
+    padding: 40px 0px;
+}
+.mycourse-videopage .video-breadcrumbs h1 {
+    color: #000;
+    font-size: 30px;
+}
+.mycourse-videopage .video-breadcrumbs p {
+    color: #000;
+    line-height: 27px;
+    font-size: 14px;
+    padding-left: 20px;
+}
+.mycourse-videopage .video-breadcrumbs .col-md-4 {
+    text-align: right;
+}
+.mycourse-videopage .video-section {
+    padding: 60px 0px;
+}
+.mycourse-videopage .video-section h3 {
+    color: #000;
+    font-size: 20px;
+    padding-bottom: 15px;
+}
+.mycourse-videopage .video-section iframe {
+    width: 100%;
+    margin-bottom: 40px;
+}
+.mycourse-videopage .video-recommended .enhance-your-resume-image {
+    position: relative;
+}
+.mycourse-videopage .video-recommended .enhance-your-resume-card-title button {
+    background-color: #1D56BB;
+    border-color: #1D56BB;
+    padding: 5px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+
+.mycourse-videopage .video-recommended{ 
+    background: #F0F0F0;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    padding: 30px 20px;
+}
+.mycourse-videopage .video-recommended h3 {
+    text-align: center;
+    font-size: 22px;
+    padding-bottom: 10px;
+}
+.mycourse-videopage .video-recommended .enhance-your-resume-card-title {
+    background-color: #fff;
+}
+.mycourse-videopage .video-recommended .view-btn {
+    text-align: center;
+    margin-top: 33px;
+}
+.mycourse-videopage .video-recommended button.view-all {
+    margin-left: auto;
+    margin-right: auto;
+    background: #1D56BB;
+    border-radius: 4px;
+    padding: 9px 30px;
+    border-color: #1D56BB;
 }

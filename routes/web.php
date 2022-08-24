@@ -37,23 +37,23 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::get('/jobseeker_register', function () { return view('frontend.jobseeker.register'); })->name('jobseekerregister');
         Route::post('/jobseeker_registration', [JobseekerController::class, 'JobseekerRegister'])->name('jobseekerregistration');
 
+        Route::get('/email_verification/{id}', [JobseekerController::class, 'EmailVerification'])->name('emailverification');
+        Route::post('/email_verification_success', [JobseekerController::class, 'EmailVerificationSuccess'])->name('emailverificationsuccess');
+        Route::post('/mobile_verification', [JobseekerController::class, 'MobileVerification'])->name('mobileverification');
+        Route::get('/mobile_otpverification/{id}', [JobseekerController::class, 'MobileOTPVerification'])->name('mobileotpverification');
+        Route::post('/mobile_verification_success', [JobseekerController::class, 'MobileVerificationSuccess'])->name('mobileverificationsuccess');
 
         Route::get('/login', function () { return view('frontend.login'); })->name('login');
         Route::get('/register', function () { return view('frontend.register'); })->name('register');
     });
 
-    Route::get('/email_verification/{id}', [JobseekerController::class, 'EmailVerification'])->name('emailverification');
 
     Route::middleware(['userloginvalidate'])->group(function () {
         Route::get('/user_dashboard', [FrontendController::class, 'UserDashboard'])->name('userdashboard');
-
-        Route::get('/email_verification_success', [FrontendController::class, 'EmailVerificationSuccess'])->name('emailverificationsuccess');
-        Route::get('/mobile_verification', [FrontendController::class, 'MobileVerification'])->name('mobileverification');
-        Route::get('/mobile_verification_success', [FrontendController::class, 'MobileVerificationSuccess'])->name('mobileverificationsuccess');
         Route::get('/user_logout', [FrontendController::class, 'UserLogout'])->name('userlogout');
     });
 
-    Route::get('/login/{social}',[FrontendController::class, 'SocialMedia'])->where('social','google|linkedin');
+    Route::get('/login/{social}',[SocialMediaController::class, 'SocialMedia'])->where('social','google|linkedin');
     Route::get('/login/{social}/callback',[SocialMediaController::class, 'handleProviderCallback'])->where('social','google|linkedin');
 
     Route::prefix(ADMINURL)->group(function () {

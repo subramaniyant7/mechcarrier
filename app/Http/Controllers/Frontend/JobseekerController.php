@@ -13,7 +13,7 @@ class JobseekerController extends Controller
     public function SendEmail(Request $request)
     {
         $otp = mt_rand(100000, 999999);
-        $emailContent = ['user_email' =>'tsubramaniyan2@gmail.com', 'user_otp' => $otp];
+        $emailContent = ['user_email' => 'tsubramaniyan2@gmail.com', 'user_otp' => $otp];
         Mail::send('frontend.email.email_jobseeker_register', $emailContent, function ($message) use ($emailContent) {
             $message->to($emailContent['user_email'], 'Admin')->subject('Email OTP Verification - MechCareer');
             $message->from(getenv('MAIL_USERNAME'), 'Admin');
@@ -25,14 +25,14 @@ class JobseekerController extends Controller
     public function JobseekerRegister(Request $request)
     {
         $formData = $request->except('_token', 'user_confirmpassword');
-        $otp = mt_rand(100000, 999999);
-        $emailContent = ['user_email' =>$formData['user_email'], 'user_otp' => $otp];
-        Mail::send('frontend.email.email_jobseeker_register', $emailContent, function ($message) use ($emailContent) {
-            $message->to($emailContent['user_email'], 'Admin')->subject('Email OTP Verification - MechCareer');
-            $message->from(getenv('MAIL_USERNAME'), 'Admin');
-        });
 
-        exit;
+        // $emailContent = ['user_email' =>$formData['user_email'], 'user_otp' => $otp];
+        // Mail::send('frontend.email.email_jobseeker_register', $emailContent, function ($message) use ($emailContent) {
+        //     $message->to($emailContent['user_email'], 'Admin')->subject('Email OTP Verification - MechCareer');
+        //     $message->from(getenv('MAIL_USERNAME'), 'Admin');
+        // });
+
+        // exit;
 
 
         if (
@@ -52,17 +52,86 @@ class JobseekerController extends Controller
         $emailPhone = HelperController::isUserExistByEmailPhone($formData['user_email'], $formData['user_phonenumber']);
         if (count($emailPhone)) return back()->with('error', 'Email and Phone Number already exist');
 
+        $otp = mt_rand(100000, 999999);
+        $formData['user_password'] = md5($request->input('user_password'));
         $createUser = insertQueryId('user_details', $formData);
+
+        $userEmail = [
+            'user_id' => $createUser, 'user_email' => $formData['user_email'],
+            'user_phonenumber' => $formData['user_phonenumber'], 'user_otp' => $otp
+        ];
+
+        $otpInsert = insertQuery('user_email_otp', $userEmail);
+        return redirect()->route('emailverification', ['id' => encryption($createUser)])->with('success', 'We have sent OTP to registered email. Please check you email');
     }
 
     public function EmailVerification($id)
     {
-        try{
+        try {
             $userId = decryption($id);
             $userInfo = HelperController::getUserInfo($userId);
-            if(count($userInfo)) return back()->with('error', 'Invalid action. Please try again / contact administrator');
-            return view('frontend.email_verification',compact('userInfo'));
-        }catch(\Exception $e){
+            $otpExist = HelperController::emailOTPExistByUserId($userId);
+            if (!count($userInfo) || !count($otpExist)) return redirect()->route('jobseekerregister')->with('error', 'Invalid action. Please try again / contact administrator');
+            return view('frontend.email_verification', compact('userInfo'));
+        } catch (\Exception $e) {
+            return back()->with('error', 'Invalid action. Please try again / contact administrator');
+        }
+    }
+
+    public function EmailVerificationSuccess(Request $request)
+    {
+        $formData = $request->except('_token');
+        $userId = decryption($formData['user_identity']);
+        $verifyOTP = HelperController::emailOTPVerify($userId, $formData['user_email_otp']);
+        if (count($verifyOTP)) {
+            updateQuery('user_details', 'user_id', $userId, ['user_email_verified' => 1]);
+            deleteQuery($verifyOTP[0]->user_email_otp_id, 'user_email_otp', 'user_email_otp_id');
+            return view('frontend.email_verification_success', ['userId' => encryption($userId)]);
+        }
+        return back()->with('error', 'Invalid OTP');
+    }
+
+    public function MobileVerification(Request $request)
+    {
+        $formData = $request->except('_token');
+        try {
+            $userId = decryption($formData['user_identity']);
+            $userInfo = HelperController::getUserInfo($userId);
+            $otp = mt_rand(100000, 999999);
+            $userOTP = ['user_id' => $userId, 'user_email' => $userInfo[0]->user_email, 'user_phonenumber' => $userInfo[0]->user_phonenumber, 'user_otp' => $otp];
+            $otpInsert = insertQuery('user_mobile_otp', $userOTP);
+            return redirect()->route('mobileotpverification', ['id' => $formData['user_identity']])->with('success', 'We have sent OTP to registered mobile. Please check you mobile');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Invalid action. Please try again / contact administrator');
+        }
+    }
+
+    public function MobileOTPVerification($id)
+    {
+        try {
+            $userId = decryption($id);
+            $userInfo = HelperController::getUserInfo($userId);
+            $otpExist = HelperController::mobileOTPExistByUserId($userId);
+            if (!count($userInfo) || !count($otpExist)) return redirect()->route('jobseekerregister')->with('error', 'Invalid action. Please try again / contact administrator');
+            return view('frontend.mobile_verification', compact('userInfo'));
+        } catch (\Exception $e) {
+            return redirect()->route('jobseekerregister')->with('error', 'Invalid action. Please try again / contact administrator');
+        }
+    }
+
+    public function MobileVerificationSuccess(Request $request)
+    {
+        $formData = $request->except('_token');
+        try {
+            $userId = decryption($formData['user_identity']);
+            $verifyOTP = HelperController::mobileOTPVerify($userId, $formData['user_phone_otp']);
+            if (count($verifyOTP)) {
+                updateQuery('user_details', 'user_id', $userId, ['user_phonenumber_verified' => 1]);
+                deleteQuery($verifyOTP[0]->user_mobile_otp_id, 'user_mobile_otp', 'user_mobile_otp_id');
+                return view('frontend.mobile_verification_success', ['userId' => encryption($userId)]);
+            }
+            return back()->with('error', 'Invalid OTP');
+        } catch (\Exception $e) {
             return back()->with('error', 'Invalid action. Please try again / contact administrator');
         }
     }

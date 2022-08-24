@@ -1,5 +1,5 @@
 @extends('frontend.layout')
-
+@section('title', 'Mobile OTP Verification Success')
 @section('content')
     <main>
         <div class="email-registration email-success">

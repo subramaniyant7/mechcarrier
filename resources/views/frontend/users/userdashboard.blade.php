@@ -290,7 +290,7 @@
                                             <img src="{{ URL::asset(FRONTEND.'/assets/images/usericonimage.svg')}}" />
                                         </div>
                                         <div class="user-info">
-                                            <h3>Prashant Govare</h3>
+                                            <h3>{{ $userInfo[0]->user_firstname.' '. $userInfo[0]->user_lastname}}</h3>
                                             <h4>Senior product design engineer </h4>
                                             <h5>at ISOPARA engineering services ...</h5>
                                         </div>

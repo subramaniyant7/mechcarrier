@@ -39,4 +39,24 @@ class HelperController extends Controller
         if ($id != '')  $user->where('user_id', $id);
         return $user->get();
     }
+
+    static function emailOTPExistByUserId($id)
+    {
+        return DB::table('user_email_otp')->where('user_id', $id)->get();
+    }
+
+    static function emailOTPVerify($id,$otp)
+    {
+        return DB::table('user_email_otp')->where([['user_id', $id],['user_otp', $otp]])->get();
+    }
+
+    static function mobileOTPVerify($id,$otp)
+    {
+        return DB::table('user_mobile_otp')->where([['user_id', $id],['user_otp', $otp]])->get();
+    }
+
+    static function mobileOTPExistByUserId($id)
+    {
+        return DB::table('user_mobile_otp')->where('user_id', $id)->get();
+    }
 }
