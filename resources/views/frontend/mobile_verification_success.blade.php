@@ -10,7 +10,9 @@
                         <h1>Your Mobile number has been verified</h1>
                         <h2> <span>Thank you for your support now you can proceed for dashbord</span></h2>
                         <br/><br/>
-                        <button type="submit" class="btn btn-primary">Dashboard</button> <br/>
+                        <input type="hidden" class="form-control" name="user_identity"
+                        value="{{ $userId }}" />
+                        <button type="button" class="btn btn-primary dashboardvalidate">Dashboard</button> <br/>
                     </div>
                 </div>
             </div>

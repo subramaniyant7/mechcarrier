@@ -73,7 +73,7 @@
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Mobile Number <span>*</span></label>
-                                    <input type="number" placeholder="Enter yourMobile Number" name="user_phonenumber"
+                                    <input type="number" minlength="10" maxlength="10" placeholder="Enter yourMobile Number" name="user_phonenumber"
                                         class="form-control" required />
                                 </div>
 
@@ -97,7 +97,7 @@
                                 </div>
 
                                 @if (session('error'))
-                                <div class="form-outline">
+                                <div class="form-outline mb-4">
                                     <div class="col">
                                         <div class="error-msg">
                                             <span> Error : {{ session('error') }}</span>

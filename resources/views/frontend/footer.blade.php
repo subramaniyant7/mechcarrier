@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="logo">
-                        <h1><img src="{{ URL::asset(FRONTEND.'/assets/images/logo.svg')}}" />
+                        <h1><img src="{{ URL::asset(FRONTEND . '/assets/images/logo.svg') }}" />
                             Mech<span>Career</span></h1>
                     </div>
                     <div class="socialmedia-icons">
@@ -13,22 +13,27 @@
                             @php
                                 $socialMediaLink = getSocialMediaLinks();
                             @endphp
-                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_facebook : '#' }}" target="_blank">
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/home/socialicon1.svg')}}" />
+                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_facebook : '#' }}"
+                                    target="_blank">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/home/socialicon1.svg') }}" />
                                 </a></li>
                             <li>
-                                <a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_linkedin : '#' }}" target="_blank">
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/home/socialicon2.svg')}}" />
+                                <a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_linkedin : '#' }}"
+                                    target="_blank">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/home/socialicon2.svg') }}" />
                                 </a>
                             </li>
-                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_instagram : '#' }}" target="_blank">
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/home/socialicon3.svg')}}" />
+                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_instagram : '#' }}"
+                                    target="_blank">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/home/socialicon3.svg') }}" />
                                 </a></li>
-                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_twitter : '#' }}" target="_blank">
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/home/socialicon4.svg')}}" />
+                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_twitter : '#' }}"
+                                    target="_blank">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/home/socialicon4.svg') }}" />
                                 </a></li>
-                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_youtube : '#' }}" target="_blank">
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/home/socialicon5.svg')}}" />
+                            <li><a href="{{ count($socialMediaLink) ? $socialMediaLink[0]->social_media_youtube : '#' }}"
+                                    target="_blank">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/home/socialicon5.svg') }}" />
                                 </a></li>
                         </ul>
                     </div>
@@ -65,10 +70,12 @@
                     </div>
                     <div class="playstore-download">
                         <a href="#" target="_blank">
-                            <embed src="{{ URL::asset(FRONTEND.'/assets/images/androidicon.svg')}}" type="image/svg+xml" />
+                            <embed src="{{ URL::asset(FRONTEND . '/assets/images/androidicon.svg') }}"
+                                type="image/svg+xml" />
                         </a>
                         <a href="#" target="_blank">
-                            <embed src="{{ URL::asset(FRONTEND.'/assets/images/appleicon.svg')}}" type="image/svg+xml" />
+                            <embed src="{{ URL::asset(FRONTEND . '/assets/images/appleicon.svg') }}"
+                                type="image/svg+xml" />
                         </a>
                     </div>
                 </div>
@@ -76,7 +83,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="copyright">
-                        <p>All rights reserved © {{SITENAME}} Pvt. Ltd.</p>
+                        <p>All rights reserved © {{ SITENAME }} Pvt. Ltd.</p>
                     </div>
                 </div>
             </div>
@@ -84,31 +91,34 @@
     </div>
 </footer>
 
-{{--<script src="{{ URL::asset(FRONTEND.'/assets/js/bootstrap.js')}}" type="text/javascript"></script>--}}
-<script src="{{ URL::asset(FRONTEND.'/assets/js/jquery.js')}}"></script>
-<script src="{{ URL::asset(FRONTEND.'/assets/js/bootstrap.js')}}"></script>
-{{-- <script src="{{ URL::asset(FRONTEND.'/assets/js/script.js')}}"></script> --}}
-<script src="{{ URL::asset(FRONTEND.'/assets/js/owl.carousel.js')}}"></script>
-{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--}}
-{{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>--}}
+<script src="{{ URL::asset(FRONTEND . '/assets/js/jquery.js') }}"></script>
+<script src="{{ URL::asset(FRONTEND . '/assets/js/popper.min.js') }}"></script>
+<script src="{{ URL::asset(FRONTEND . '/assets/js/bootstrap.js') }}"></script>
+<script src="{{ URL::asset(FRONTEND . '/assets/js/owl.carousel.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+<script src="{{ URL::asset(FRONTEND . '/assets/js/custom.js') }}"></script>
+
+
 
 
 <script>
     $(document).ready(function() {
-      var owl = $('.owl-carousel');
-      owl.owlCarousel({
-        items: 4,
-        loop: true,
-        margin: 10,
-        autoplay: true,
-        autoplayTimeout: 1300,
-        autoplayHoverPause: true
-      });
-      $('.play').on('click', function() {
-        owl.trigger('play.owl.autoplay', [1000])
-      })
-      $('.stop').on('click', function() {
-        owl.trigger('stop.owl.autoplay')
-      })
+        $('.loader').hide();
+        var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            items: 4,
+            loop: true,
+            margin: 10,
+            autoplay: true,
+            autoplayTimeout: 1300,
+            autoplayHoverPause: true
+        });
+        $('.play').on('click', function() {
+            owl.trigger('play.owl.autoplay', [1000])
+        })
+        $('.stop').on('click', function() {
+            owl.trigger('stop.owl.autoplay')
+        })
     })
-  </script>
+</script>

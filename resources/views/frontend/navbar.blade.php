@@ -53,7 +53,7 @@
                                 @if(session('frontend_useremail'))
                                     <img src="{{ URL::asset(FRONTEND.'/assets/images/home/notification.svg')}}" />
                                     <div class="user-login">
-                                        <a href="{{route('userlogout')}}" class="register-button">Logout</a>
+                                        <a href="{{route('userlogout')}}" style="padding-top:0.4em;" class="register-button">Logout</a>
                                         <div class="dropdown">
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Profile
                                                 <span class="caret"></span></button>
@@ -64,11 +64,8 @@
                                     </div>
                                 @else
                                     <div class="user-login">
-
                                         <a href="{{route('jobseekerregister')}}"  class="register-button">Register</a>
-
                                         <a href="{{route('jobseekerlogin')}}" class="login-button">Login</a>
-
                                     </div>
                                 @endif
                             </div>
@@ -77,5 +74,6 @@
                 </div>
             </div>
         </div>
+
 </header>
 

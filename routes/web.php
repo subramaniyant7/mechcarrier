@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\WebpageContent\HomePageTrainingCenterController;
 use App\Http\Controllers\Admin\WebpageContent\WhyWeController;
 use App\Http\Controllers\Admin\WebpageContent\CareerBuildController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\AjaxController as FAjaxController;
 use App\Http\Controllers\Frontend\JobseekerController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\AjaxController;
@@ -28,20 +29,33 @@ Route::middleware(['globalvalidate'])->group(function () {
     Route::get('/home', function () { return view('frontend.home'); });
 
     Route::get('/jobsdetails', [FrontendController::class, 'JobsDetails'])->name('jobsdetails');
+    Route::get('/job_search', [FrontendController::class, 'JobSearch'])->name('jobsearch');
     Route::get('/mycourse_services', [FrontendController::class, 'MyCourseandService'])->name('mycourseservice');
+    Route::get('/mycourse_video', [FrontendController::class, 'MyCourseandVideo'])->name('mycoursevideo');
 
     Route::get('/sendemail', [JobseekerController::class, 'SendEmail'])->name('sendemail');
 
     Route::middleware(['userlogin'])->group(function () {
         Route::get('/jobseeker_login', function () { return view('frontend.jobseeker.login'); })->name('jobseekerlogin');
+        Route::post('/jobseeker_loginvalidate', [JobseekerController::class, 'JobseekerValidate'])->name('jobseekervalidate');
         Route::get('/jobseeker_register', function () { return view('frontend.jobseeker.register'); })->name('jobseekerregister');
         Route::post('/jobseeker_registration', [JobseekerController::class, 'JobseekerRegister'])->name('jobseekerregistration');
 
         Route::get('/email_verification/{id}', [JobseekerController::class, 'EmailVerification'])->name('emailverification');
         Route::post('/email_verification_success', [JobseekerController::class, 'EmailVerificationSuccess'])->name('emailverificationsuccess');
+
+        Route::post('/resendemailotp', [FAjaxController::class, 'ResendEmailOTP'])->name('resendemailotp');
+        Route::post('/updateemail', [FAjaxController::class, 'UpdateEmailAddress'])->name('updateuseremail');
+
         Route::post('/mobile_verification', [JobseekerController::class, 'MobileVerification'])->name('mobileverification');
         Route::get('/mobile_otpverification/{id}', [JobseekerController::class, 'MobileOTPVerification'])->name('mobileotpverification');
+
+        Route::post('/resendmobileotp', [FAjaxController::class, 'ResendMobileOTP'])->name('resendmobileotp');
+        Route::post('/updatemobile', [FAjaxController::class, 'UpdateMobileAddress'])->name('updateusermobile');
+
         Route::post('/mobile_verification_success', [JobseekerController::class, 'MobileVerificationSuccess'])->name('mobileverificationsuccess');
+
+        Route::post('/redirecttodashboard', [FAjaxController::class, 'RedirectToDashboard'])->name('redirecttodashboard');
 
         Route::get('/login', function () { return view('frontend.login'); })->name('login');
         Route::get('/register', function () { return view('frontend.register'); })->name('register');

@@ -52,8 +52,16 @@ class FrontendController extends Controller
         return view('frontend.jobsdetails');
     }
 
+    public function JobSearch(Request $request){
+        return view('frontend.jobseeker_job_search');
+    }
+
     public function MyCourseandService(Request $request){
         return view('frontend.mycourse_service');
+    }
+
+    public function MyCourseandVideo(Request $request){
+        return view('frontend.mycourse_video');
     }
 
     public function UserLogout(Request $request)

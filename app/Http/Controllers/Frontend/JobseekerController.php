@@ -135,4 +135,29 @@ class JobseekerController extends Controller
             return back()->with('error', 'Invalid action. Please try again / contact administrator');
         }
     }
+
+    public function JobseekerValidate(Request $request)
+    {
+        $formData = $request->except('_token');
+        $jobseekerExist = HelperController::loginValidate($formData['user_email'], $formData['user_password']);
+        if (count($jobseekerExist)) {
+            if ($jobseekerExist[0]->status != 1) return back()->with('error', 'Your account is not active. Please contact administrator');
+            if ($jobseekerExist[0]->user_email_verified == 1) {
+                if ($jobseekerExist[0]->user_phonenumber_verified == 1) {
+                    $request->session()->put('frontend_useremail', $jobseekerExist[0]->user_email);
+                    $request->session()->put('frontend_userid', $jobseekerExist[0]->user_id);
+                    return redirect()->route('userdashboard');
+                }
+                $otpExist = HelperController::mobileOTPExistByUserId($jobseekerExist[0]->user_id);
+                if (!count($otpExist)) {
+                    $otp = mt_rand(100000, 999999);
+                    $userOTP = ['user_id' => $jobseekerExist[0]->user_id, 'user_email' => $jobseekerExist[0]->user_email, 'user_phonenumber' => $jobseekerExist[0]->user_phonenumber, 'user_otp' => $otp];
+                    insertQuery('user_mobile_otp', $userOTP);
+                }
+                return redirect()->route('mobileotpverification', ['id' => encryption($jobseekerExist[0]->user_id)]);
+            }
+            return back()->with('error', 'Your Email ID not verified. Please contact administrator');
+        }
+        return back()->with('error', 'Invalid Credentials');
+    }
 }

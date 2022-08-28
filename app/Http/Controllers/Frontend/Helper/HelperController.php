@@ -59,4 +59,9 @@ class HelperController extends Controller
     {
         return DB::table('user_mobile_otp')->where('user_id', $id)->get();
     }
+
+    static function loginValidate($email, $password)
+    {
+        return DB::table('user_details')->where([['user_email', $email],['user_password', md5($password)]])->get();
+    }
 }

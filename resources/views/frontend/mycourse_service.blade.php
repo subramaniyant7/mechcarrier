@@ -1,5 +1,5 @@
 @extends('frontend.layout')
-
+@section('title', 'My Course Service')
 
 @section('content')
 

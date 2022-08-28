@@ -19,7 +19,7 @@
                                     <input type="text" class="form-control" name="user_email_otp" required />
                                     <input type="hidden" class="form-control" name="user_identity"
                                         value="{{ encryption($userInfo[0]->user_id) }}" />
-                                    <a href="#">Resend </a>
+                                    <a href="javascript:void(0)">Resend </a>
 
                                 </div>
                             </div>
@@ -29,7 +29,7 @@
                                 </div>
                             @endif
                             <button type="submit" class="btn btn-primary">submit</button> <br />
-                            <a href="#">Change Email ID</a>
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#emailchangemodal">Change Email ID</a>
                         </form>
                     </div>
                 </div>
@@ -40,6 +40,31 @@
                         <div class="technical-assistance">
                             <p>For technical assitance please call to +91-8329556560</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="emailchangemodal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Change Email ID</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="GET" class="change_email">
+                            @csrf
+                            <input type="email" class="form-control" name="change_user_email" required
+                                placeholder="Enter Emile ID" />
+                            <input type="hidden" class="form-control" name="change_user_identity"
+                                value="{{ encryption($userInfo[0]->user_id) }}" /><br />
+                            <button type="submit" class="btn btn-primary">Update</button> <br />
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
