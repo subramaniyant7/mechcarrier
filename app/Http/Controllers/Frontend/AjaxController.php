@@ -87,6 +87,9 @@ class AjaxController extends Controller
             if (count($userInfo)) {
                 $request->session()->put('frontend_useremail', $userInfo[0]->user_email);
                 $request->session()->put('frontend_userid', $userInfo[0]->user_id);
+                updateQuery('user_details','user_id',$userInfo[0]->user_id,['user_logged_in' => 1]);
+                userLoginActivity(1);
+                deleteQuery($userInfo[0]->user_id,'user_mobile_otp','user_id');
                 $response = ['status' => true, 'redirect' => route('userdashboard')];
             }
         } catch (\Exception $e) {

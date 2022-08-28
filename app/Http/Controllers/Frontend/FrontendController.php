@@ -66,6 +66,8 @@ class FrontendController extends Controller
 
     public function UserLogout(Request $request)
     {
+        updateQuery('user_details','user_id',$request->session()->get('frontend_userid'),['user_logged_in' => 2]);
+        userLoginActivity(2);
         $request->session()->forget('frontend_useremail');
         $request->session()->forget('frontend_userid');
         return redirect(FRONTENDURL);

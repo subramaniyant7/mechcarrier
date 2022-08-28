@@ -107,4 +107,7 @@ function getMixedContentByType($type)
     return DB::table("mixed_content")->where('mixed_content_type',$type)->get();
 }
 
-?>
+function userLoginActivity($data){
+    $userData = ['user_id' => session('frontend_userid'),'user_ip_address' => request()->ip(),'user_logged_in'=> $data];
+    return insertQuery('user_login_history',$userData) ;
+}

@@ -54,6 +54,9 @@ class JobseekerController extends Controller
 
         $otp = mt_rand(100000, 999999);
         $formData['user_password'] = md5($request->input('user_password'));
+        $formData['user_register_type'] = 1;
+        $formData['user_ip_address'] = request()->ip();
+        $formData['user_logged_in'] = 0;
         $createUser = insertQueryId('user_details', $formData);
 
         $userEmail = [
@@ -143,9 +146,11 @@ class JobseekerController extends Controller
         if (count($jobseekerExist)) {
             if ($jobseekerExist[0]->status != 1) return back()->with('error', 'Your account is not active. Please contact administrator');
             if ($jobseekerExist[0]->user_email_verified == 1) {
-                if ($jobseekerExist[0]->user_phonenumber_verified == 1) {
+                if ($jobseekerExist[0]->user_phonenumber_verified == 1 || $jobseekerExist[0]->user_register_type != 1) {
                     $request->session()->put('frontend_useremail', $jobseekerExist[0]->user_email);
                     $request->session()->put('frontend_userid', $jobseekerExist[0]->user_id);
+                    updateQuery('user_details','user_id',$jobseekerExist[0]->user_id,['user_logged_in' => 1]);
+                    userLoginActivity(1);
                     return redirect()->route('userdashboard');
                 }
                 $otpExist = HelperController::mobileOTPExistByUserId($jobseekerExist[0]->user_id);
