@@ -57,10 +57,11 @@ class SocialMediaController extends Controller
                         $userInfo = insertQueryId('user_details', $createUser);
                         $userData = ['email' => $userSocial->email, 'userid' => $userInfo];
                     }
-                    updateQuery('user_details','user_id',$userInfo[0]->user_id,['user_logged_in' => 1]);
-                    userLoginActivity(1);
+
                     $request->session()->put('frontend_useremail', $userData['email']);
                     $request->session()->put('frontend_userid', $userData['userid']);
+                    updateQuery('user_details','user_id',$userInfo[0]->user_id,['user_logged_in' => 1]);
+                    userLoginActivity(1);
                     return redirect()->route('userdashboard');
                 } else {
                     return redirect()->route('jobseekerregister')->with('error', 'Something went wrong. Please try again');
