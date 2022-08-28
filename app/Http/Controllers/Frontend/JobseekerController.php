@@ -26,15 +26,6 @@ class JobseekerController extends Controller
     {
         $formData = $request->except('_token', 'user_confirmpassword');
 
-        // $emailContent = ['user_email' =>$formData['user_email'], 'user_otp' => $otp];
-        // Mail::send('frontend.email.email_jobseeker_register', $emailContent, function ($message) use ($emailContent) {
-        //     $message->to($emailContent['user_email'], 'Admin')->subject('Email OTP Verification - MechCareer');
-        //     $message->from(getenv('MAIL_USERNAME'), 'Admin');
-        // });
-
-        // exit;
-
-
         if (
             $formData['user_firstname'] == '' || $formData['user_lastname'] == '' || $formData['user_email'] == ''
             || $formData['user_phonenumber'] == '' || $formData['user_password'] == ''
@@ -53,6 +44,17 @@ class JobseekerController extends Controller
         if (count($emailPhone)) return back()->with('error', 'Email and Phone Number already exist');
 
         $otp = mt_rand(100000, 999999);
+
+        try {
+            $emailContent = ['user_email' => $formData['user_email'], 'user_otp' => $otp, 'type' => 'Email'];
+            Mail::send('frontend.email.email_jobseeker_register', $emailContent, function ($message) use ($emailContent) {
+                $message->to($emailContent['user_email'], 'Admin')->subject('Email OTP Verification - MechCareer');
+                $message->from(getenv('MAIL_USERNAME'), 'Admin');
+            });
+        } catch (\Exception $e) {
+            return back()->with('errror', 'Something went wrong. Please try again');
+        }
+
         $formData['user_password'] = md5($request->input('user_password'));
         $formData['user_register_type'] = 1;
         $formData['user_ip_address'] = request()->ip();
@@ -101,8 +103,17 @@ class JobseekerController extends Controller
             $userId = decryption($formData['user_identity']);
             $userInfo = HelperController::getUserInfo($userId);
             $otp = mt_rand(100000, 999999);
+            try {
+                $mobileContent = ['user_email' => $userInfo[0]->user_email, 'user_otp' => $otp, 'type' => 'Mobile'];
+                Mail::send('frontend.email.email_jobseeker_register', $mobileContent, function ($message) use ($mobileContent) {
+                    $message->to($mobileContent['user_email'], 'Admin')->subject('Mobile OTP Verification - MechCareer');
+                    $message->from(getenv('MAIL_USERNAME'), 'Admin');
+                });
+            } catch (\Exception $e) {
+                return back()->with('errror', 'Something went wrong. Please try again');
+            }
             $userOTP = ['user_id' => $userId, 'user_email' => $userInfo[0]->user_email, 'user_phonenumber' => $userInfo[0]->user_phonenumber, 'user_otp' => $otp];
-            $otpInsert = insertQuery('user_mobile_otp', $userOTP);
+            insertQuery('user_mobile_otp', $userOTP);
             return redirect()->route('mobileotpverification', ['id' => $formData['user_identity']])->with('success', 'We have sent OTP to registered mobile. Please check you mobile');
         } catch (\Exception $e) {
             return back()->with('error', 'Invalid action. Please try again / contact administrator');
@@ -149,7 +160,7 @@ class JobseekerController extends Controller
                 if ($jobseekerExist[0]->user_phonenumber_verified == 1 || $jobseekerExist[0]->user_register_type != 1) {
                     $request->session()->put('frontend_useremail', $jobseekerExist[0]->user_email);
                     $request->session()->put('frontend_userid', $jobseekerExist[0]->user_id);
-                    updateQuery('user_details','user_id',$jobseekerExist[0]->user_id,['user_logged_in' => 1]);
+                    updateQuery('user_details', 'user_id', $jobseekerExist[0]->user_id, ['user_logged_in' => 1]);
                     userLoginActivity(1);
                     return redirect()->route('userdashboard');
                 }
