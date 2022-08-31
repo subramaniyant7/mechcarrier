@@ -34,6 +34,7 @@ Route::middleware(['globalvalidate'])->group(function () {
     Route::get('/mycourse_video', [FrontendController::class, 'MyCourseandVideo'])->name('mycoursevideo');
 
     Route::get('/sendemail', [JobseekerController::class, 'SendEmail'])->name('sendemail');
+    Route::get('/sendsms', [JobseekerController::class, 'SendSMS'])->name('sendsms');
 
     Route::middleware(['userlogin'])->group(function () {
         Route::get('/jobseeker_login', function () { return view('frontend.jobseeker.login'); })->name('jobseekerlogin');

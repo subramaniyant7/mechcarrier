@@ -111,3 +111,7 @@ function userLoginActivity($data){
     $userData = ['user_id' => session('frontend_userid'),'user_ip_address' => request()->ip(),'user_logged_in'=> $data];
     return insertQuery('user_login_history',$userData) ;
 }
+
+function getSiteInfo(){
+    return DB::table("banner_content")->where('banner_id',1)->get();
+}

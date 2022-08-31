@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\Helper\HelperController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Mail;
 
@@ -20,6 +21,18 @@ class JobseekerController extends Controller
         });
 
         echo 'Email sent';
+    }
+
+    public function SendSMS(Request $request)
+    {
+        $phone = 9789422962;
+        $otp = mt_rand(1000, 9999);
+        $response = Http::get(env('SMS_GATEWAY') . '/request?authkey=' . env('SMS_AUTHKEY') . '&mobile=' . $phone . '&country_code=91&voice=Hello%20your%20OTP%20is%20' . $otp);
+        if ($response->successful()) {
+            $res = $response->json();
+            echo '<pre>';
+            print_r($res);
+        }
     }
 
     public function JobseekerRegister(Request $request)
@@ -102,19 +115,28 @@ class JobseekerController extends Controller
         try {
             $userId = decryption($formData['user_identity']);
             $userInfo = HelperController::getUserInfo($userId);
-            $otp = mt_rand(100000, 999999);
+            $otp = mt_rand(1000, 9999);
             try {
                 $mobileContent = ['user_email' => $userInfo[0]->user_email, 'user_otp' => $otp, 'type' => 'Mobile'];
-                Mail::send('frontend.email.email_jobseeker_register', $mobileContent, function ($message) use ($mobileContent) {
-                    $message->to($mobileContent['user_email'], 'Admin')->subject('Mobile OTP Verification - MechCareer');
-                    $message->from(getenv('MAIL_USERNAME'), 'Admin');
-                });
+
+                $phone = $userInfo[0]->user_phonenumber;
+                $otp = mt_rand(1000, 9999);
+                $response = Http::get(env('SMS_GATEWAY') . '/request?authkey=' . env('SMS_AUTHKEY') . '&mobile=' . $phone . '&country_code=91&voice=Hello%20your%20OTP%20is%20' . $otp);
+                if ($response->successful()) {
+                    $res = $response->json();
+                    if (array_key_exists('LogID', $res) && $res['LogID'] != '') {
+                        $userOTP = ['user_id' => $userId, 'user_email' => $userInfo[0]->user_email, 'user_phonenumber' => $userInfo[0]->user_phonenumber, 'user_otp' => $otp];
+                        insertQuery('user_mobile_otp', $userOTP);
+                        return redirect()->route('mobileotpverification', ['id' => $formData['user_identity']])->with('success', 'We have sent Voice Mail OTP to registered mobile. Please check you mobile');
+                    } else {
+                        return redirect()->route('jobseekerlogin')->with('error', 'Something went wrong. Please try again');
+                    }
+                } else {
+                    return redirect()->route('jobseekerlogin')->with('error', 'Something went wrong. Please try again');
+                }
             } catch (\Exception $e) {
                 return back()->with('errror', 'Something went wrong. Please try again');
             }
-            $userOTP = ['user_id' => $userId, 'user_email' => $userInfo[0]->user_email, 'user_phonenumber' => $userInfo[0]->user_phonenumber, 'user_otp' => $otp];
-            insertQuery('user_mobile_otp', $userOTP);
-            return redirect()->route('mobileotpverification', ['id' => $formData['user_identity']])->with('success', 'We have sent OTP to registered mobile. Please check you mobile');
         } catch (\Exception $e) {
             return back()->with('error', 'Invalid action. Please try again / contact administrator');
         }
