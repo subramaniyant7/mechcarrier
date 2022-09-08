@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WebpageContent\BannerContentController;
 use App\Http\Controllers\Admin\WebpageContent\CompanyManagementController;
 use App\Http\Controllers\Admin\WebpageContent\HomePageTrainingCenterController;
@@ -83,6 +84,12 @@ Route::middleware(['globalvalidate'])->group(function () {
 
             Route::get('/change_password', [AdminController::class, 'ChangePassword'])->name('changepassword');
             Route::post('/update_password', [AdminController::class, 'UpdatePassword'])->name('updatepassword');
+
+            Route::get('/view_users', [UserController::class, 'ViewUser'])->name('viewusers');
+            Route::get('/create_user', [UserController::class, 'ManageUser'])->name('manageuser');
+            Route::get('/action_user/{option}/{id}', [UserController::class, 'ActionUser'])->name('actionuser');
+            Route::post('/save_user', [UserController::class, 'SaveUserDetails'])->name('saveuser');
+
 
             Route::get('/view_admin', [AdminController::class, 'ViewAdmin'])->name('admin');
             Route::get('/create_admin', [AdminController::class, 'ManageAdmin'])->name('manageadmin');

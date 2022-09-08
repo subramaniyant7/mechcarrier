@@ -115,5 +115,22 @@ class CommonHelperController extends Controller
         return DB::table("home_careerbuild")->where('home_careerbuild_position',$position)->get();
     }
 
+    static function getUsers($id = '')
+    {
+        $users = DB::table('user_details');
+        if ($id != '')  $users->where('user_id', $id);
+        return $users->get();
+    }
+
+    static function getUserByEmail($email)
+    {
+        return DB::table("user_details")->where('user_email', $email)->get();
+    }
+
+    static function isUserExistByPhone($phone)
+    {
+        return DB::table("user_details")->where('user_phonenumber', $phone)->get();
+    }
+
 
 }

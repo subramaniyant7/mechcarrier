@@ -25,8 +25,21 @@ function statustype(){
 }
 
 function verifiedStatus(){
-    return array('Activate','De-Activate');
+    return array('Verified','Not Verified');
 }
+
+function registeredFrom(){
+    return array('Form','Google','LinkenIn','Admin');
+}
+
+function loginStatusClass(){
+    return array('badge-primary','badge-danger');
+}
+
+function loginStatus(){
+    return array('Online','Offline');
+}
+
 
 function getActiveRecord($table){
     return DB::table($table)->where('status', 1)->get();
