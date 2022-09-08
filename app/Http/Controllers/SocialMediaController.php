@@ -55,7 +55,7 @@ class SocialMediaController extends Controller
                         }
                         $registerType = $social == 'google' ? 2 : 3;
                         $createUser = ['user_firstname' => $firstname, 'user_lastname' => $lastname, 'user_email' => $userSocial->email, 'user_password' => md5(123456), 'user_email_verified' => 1,
-                                    'user_register_type'=> $registerType, 'user_ip_address' => request()->ip(), 'user_logged_in' => 1];
+                                    'user_phonenumber_verified'=>2,'user_register_type'=> $registerType, 'user_ip_address' => request()->ip(), 'user_logged_in' => 1];
                         $createuserInfo = insertQueryId('user_details', $createUser);
                         $userData = ['email' => $userSocial->email, 'userid' => $createuserInfo];
                         $userInfo = HelperController::isUserExistByEmail($userSocial->email);
