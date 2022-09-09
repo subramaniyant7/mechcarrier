@@ -31,6 +31,9 @@ Route::middleware(['globalvalidate'])->group(function () {
 
     Route::get('/jobsdetails', [FrontendController::class, 'JobsDetails'])->name('jobsdetails');
     Route::get('/job_search', [FrontendController::class, 'JobSearch'])->name('jobsearch');
+    Route::get('/job_search1', [FrontendController::class, 'JobSearch1'])->name('jobsearch1');
+    Route::get('/job_search2', [FrontendController::class, 'JobSearch2'])->name('jobsearch2');
+    Route::get('/profile_creation', [FrontendController::class, 'ProfileCreation'])->name('profilecreation');
     Route::get('/mycourse_services', [FrontendController::class, 'MyCourseandService'])->name('mycourseservice');
     Route::get('/mycourse_video', [FrontendController::class, 'MyCourseandVideo'])->name('mycoursevideo');
 

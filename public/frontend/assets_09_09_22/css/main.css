@@ -6,6 +6,7 @@
     font-style: normal;
     font-display: swap;
 }
+
 @font-face {
     font-family: 'Ubuntu';
     src: url('../fonts/Ubuntu-Medium.woff2') format('woff2'),
@@ -14,42 +15,51 @@
     font-style: normal;
     font-display: swap;
 }
+
 body {
     font-family: 'Inter';
     font-weight: 400;
     overflow-x: hidden;
 }
+
 a {
     text-decoration: none !important;
     color: unset;
 }
+
 .top-header {
     padding: 10px 0;
 }
+
 .top-header ul {
     display: flex;
     justify-content: end;
     margin-bottom: 0;
 }
+
 .top-header ul li {
     list-style: none;
     font-size: 10px;
     padding-left: 10px;
 }
+
 .top-header ul li a {
     color: #000;
 }
+
 .top-header ul li a:hover,
 .top-header ul li a.active {
     color: #1d56bb;
     text-decoration: underline;
 }
+
 .header {
     background-color: #f4f4f4;
     padding: 13px 0;
     display: flex;
     align-items: center;
 }
+
 .header h1 {
     font-size: 20px;
     color: #000;
@@ -58,19 +68,24 @@ a {
     margin-top: 2px;
     align-items: center;
 }
+
 .header h1 img {
     margin-right: 10px;
 }
+
 .header h1 span {
     color: #1d56bb;
 }
+
 .desktop-login-flex {
     display: flex;
     justify-content: end;
 }
+
 .nav-link {
     padding: 0;
 }
+
 .desktop-login-flex .desktop-login .notification-button ul.dropdown-menu.show {
     min-width: 204px;
     padding: 15px;
@@ -78,32 +93,39 @@ a {
     background-color: #1D56BB;
     color: #fff;
 }
+
 .desktop-login-flex .desktop-login .notification-button ul.dropdown-menu.show li:hover a {
     color: #fff;
 }
+
 .logo {
     position: relative;
     top: 3px;
 }
+
 .desktop-menu {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .navbar-expand-lg .navbar-nav .nav-link {
     font-weight: 400;
     font-size: 14px;
     color: #000;
     text-decoration: none;
 }
+
 .navbar-expand-lg .navbar-nav .nav-link:hover {
     text-decoration: none;
 }
+
 .desktop-login {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .desktop-login .user-login .login-button {
     background-color: #1d56bb;
     padding: 4px 17px;
@@ -113,6 +135,7 @@ a {
     border: solid 2px #1d56bb;
     border-radius: 4px;
 }
+
 .desktop-login .user-login .register-button {
     background-color: #fff;
     padding: 4px 17px;
@@ -123,6 +146,7 @@ a {
     border-radius: 4px;
     margin-right: 15px;
 }
+
 .desktop-login .user-login.employee-login .login-button {
     background-color: transparent;
     padding: 4px 17px;
@@ -133,6 +157,7 @@ a {
     border-radius: 4px;
     margin-right: 15px;
 }
+
 .desktop-login .user-login.employee-login .register-button {
     background-color: #1d56bb;
     padding: 4px 17px;
@@ -143,78 +168,97 @@ a {
     border-radius: 4px;
     margin-right: 0px;
 }
+
 .footer {
     background: #f4f4f4;
     padding: 30px 0 15px;
 }
+
 .footer h1 {
     font-size: 24px;
     color: #000;
     font-weight: 700;
 }
+
 .footer h1 img {
     padding-right: 5px;
 }
+
 .footer h1 span {
     color: #1d56bb;
 }
+
 .footer .logo {
     padding-bottom: 30px;
 }
+
 .footer .socialmedia-icons h3 {
     font-weight: 700;
     font-size: 16px;
 }
+
 .footer .socialmedia-icons ul {
     padding-inline-start: 0;
     display: flex;
 }
+
 .footer .socialmedia-icons ul li {
     list-style: none;
     padding-right: 25px;
 }
+
 .footer ul.quick-links {
     padding-inline-start: 0;
     padding-top: 15px;
 }
+
 .footer ul.quick-links li {
     list-style: none;
     line-height: 25px;
 }
+
 .footer ul.quick-links li a {
     color: #000;
     font-size: 15px;
     font-weight: 400;
 }
+
 .copyright {
     padding-top: 30px;
     display: flex;
     width: 100%;
     justify-content: center;
 }
+
 .copyright p {
     margin-bottom: 0;
     font-size: 15px;
     font-weight: 400;
 }
+
 .footer .apply-on {
     padding-top: 15px;
 }
+
 .footer .apply-on h3 {
     font-size: 20px;
     font-weight: 600;
 }
+
 .footer .apply-on p {
     font-size: 15px;
     font-weight: 400;
 }
+
 .footer .playstore-download {
     display: flex;
     justify-content: space-between;
 }
+
 .login {
     padding: 60px 0;
 }
+
 .login h1 {
     text-align: center;
     font-size: 38px;
@@ -222,9 +266,11 @@ a {
     color: #000;
     margin-bottom: 30px;
 }
+
 .login h1 span {
     color: #1d56bb;
 }
+
 .login .col-md-6:first-child {
     display: flex;
     justify-content: center;
@@ -232,75 +278,93 @@ a {
     flex-direction: column;
     border-right: solid 1px #b8b8b8;
 }
+
 .key-points {
     width: 72%;
 }
+
 .key-points h4 {
     font-weight: 18px;
     font-weight: 700;
 }
+
 .key-points ul {
     padding-inline-start: 21px;
 }
+
 .key-points ul li {
     font-size: 18px;
     font-weight: 400;
     line-height: 40px;
 }
+
 .login .title h1 {
     text-align: left;
 }
+
 .login .title p {
     font-weight: 400;
     font-size: 18px;
     margin-bottom: 5px;
 }
+
 .login .title p a {
     color: #1d56bb;
 }
+
 .login form {
     padding-top: 40px;
 }
+
 .login form label {
     font-weight: 400;
     font-size: 14px;
     color: #000;
 }
+
 .login .form-control {
     border: solid 1px rgba(40, 40, 40, 0.6);
     border-radius: 3px;
     height: 43px;
 }
+
 .login .form-control::placeholder {
     color: #939393;
     font-size: 14px;
     line-height: 17px;
 }
+
 .login .col {
     text-align: right;
     padding-left: 0px;
 }
+
 .login .col .form-check-label {
     font-weight: 400;
     font-size: 14px;
     color: #000;
 }
+
 .login .col .form-check-input {
-    margin-top: 8px;
+    margin-top: 5px;
 }
+
 .login .col a {
     font-weight: 400;
     font-size: 12px;
     color: #4d4d4d;
 }
+
 .login .error-msg {
     text-align: left;
 }
+
 .login .error-msg span {
     font-weight: 400;
     font-size: 14px;
     color: #d90909;
 }
+
 .login .login-form .btn-primary {
     background-color: #1d56bb;
     border-color: #1d56bb;
@@ -309,30 +373,37 @@ a {
     line-height: 14px;
     padding: 18px 0;
 }
+
 .login .help-assistance {
     padding-top: 30px;
 }
+
 .login .help-assistance p {
     font-weight: 400;
     font-size: 13px;
 }
+
 .login-form .form-outline.password {
     position: relative;
 }
+
 .login-form .form-outline.password span img {
     position: absolute;
     top: 45px;
     right: 10px;
 }
+
 .login .col .register-privacy .form-check-label {
     text-align: left;
     font-size: 12px;
     padding-left: 2px;
 }
+
 .login-form .mb-4.d-flex.company-type .col {
     text-align: left;
     padding-left: 0px;
 }
+
 .login-form .mb-4.d-flex.company-type .form-button button {
     padding: 10px;
     background-color: transparent;
@@ -342,40 +413,51 @@ a {
     font-size: 16px;
     font-weight: 400;
 }
+
 .login-form .mb-4.d-flex.company-type .form-button {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
+
 .login-form .mb-4.d-flex.company-type .form-button span {
     position: relative;
     top: 4px;
 }
+
 .form-outline.mb-4.d-flex.company-type {
     display: block;
 }
+
 .mt-20 {
     margin-top: 20px;
 }
+
 .mt-30 {
     margin-top: 30px;
 }
+
 .mt-40 {
     margin-top: 40px;
 }
+
 .mt-50 {
     margin-top: 50px;
 }
+
 .mt-60 {
     margin-top: 60px;
 }
+
 .mt-70 {
     margin-top: 70px;
 }
+
 .socialmedia-login {
     padding-top: 40px;
     padding-bottom: 20px;
 }
+
 .socialmedia-login .socialmedia-login-button {
     background-color: #e8eef8;
     padding: 5px 6px;
@@ -388,35 +470,43 @@ a {
     border-radius: 4px;
     justify-content: center;
 }
+
 .socialmedia-login .d-flex {
     justify-content: space-between;
 }
+
 .socialmedia-login .socialmedia-login-button span {
     padding-right: 5px;
     position: relative;
-    top: 7px;
+    top: 4px;
 }
+
 .socialmedia-login .linkedin-login .socialmedia-login-button svg {
     position: relative;
     top: -1px;
 }
+
 .socialmedia-login .linkedin-login .socialmedia-login-button span {
     top: 4px;
 }
+
 .login-form.bg-gray {
     width: auto;
 }
+
 .login-form.bg-gray form {
     background-color: #f0f0f0;
     padding: 30px;
     border: solid 1px #807f7f;
 }
+
 .jobseeker-login.login .col-md-6:last-child .form-text p {
     text-align: center;
     font-size: 16px;
     text-transform: uppercase;
     color: #939393;
 }
+
 .login.jobseeker-register .col-md-6:first-child {
     display: flex;
     justify-content: center;
@@ -424,67 +514,82 @@ a {
     flex-direction: column;
     border-right: solid 1px #b8b8b8;
 }
+
 .login.jobseeker-register h1 {
     text-align: left;
 }
+
 .login.jobseeker-register .help-assistance {
     padding-top: 10px;
     text-align: left;
     width: 68%;
 }
+
 .login.jobseeker-register .help-assistance p {
     font-size: 17px;
     color: #000;
 }
+
 .login.jobseeker-register .help-assistance:last-child p {
     font-size: 13px;
     color: #595959;
 }
+
 .login-form.bg-gray form .form-outline .d-flex input:first-child {
     margin-right: 15px;
 }
+
 .login-form.bg-gray .termsandconditions {
     padding: 11px 0;
     color: #006cba;
 }
+
 .why-switch-career {
     padding: 60px 0;
 }
+
 .why-switch-career .title {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
 }
+
 .why-switch-career .title h1 {
     font-size: 40px;
     font-weight: 700;
     font-family: 'Ubuntu';
 }
+
 .why-switch-career .why-card {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
 }
+
 .why-switch-career .why-card .item-title p {
     font-size: 18px;
     color: #000;
     padding: 13px 0;
 }
+
 .featured-companies {
     padding: 60px 0;
     background-color: #f0f0f0;
 }
+
 .featured-companies .title {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
 }
+
 .featured-companies .title h1 {
     font-size: 40px;
     font-weight: 700;
     font-family: 'Ubuntu';
 }
+
 .featured-companies .feature-card {
     display: flex;
     flex-direction: column;
@@ -494,21 +599,26 @@ a {
     padding: 12px 9px;
     margin-bottom: 40px;
 }
+
 .featured-companies .featured-title {
     text-align: center;
 }
+
 .featured-companies .featured-title h4 {
     color: #555;
     font-size: 16px;
 }
+
 .featured-companies .featured-title a {
     color: #1d56bb;
     font-weight: 500;
 }
+
 .row.home-button {
     text-align: center;
     margin: 15px 0;
 }
+
 .row.home-button .home-button {
     background-color: #1d56bb;
     padding: 13px 42px;
@@ -518,6 +628,7 @@ a {
     font-weight: 500;
     border-radius: 5px;
 }
+
 .home-page .title {
     display: flex;
     justify-content: center;
@@ -525,45 +636,55 @@ a {
     flex-direction: column;
     align-items: center;
 }
+
 .home-page .title h1 {
     font-size: 40px;
     font-weight: 700;
     font-family: 'Ubuntu';
 }
+
 .home-page .title p {
     padding: 10px 0;
     font-size: 25px;
     color: #000;
 }
+
 .enhance-your-resume {
     padding: 60px 0;
 }
+
 .enhance-your-resume-card {
     border: solid 1px #b8b8b8;
     margin-bottom: 25px;
 }
+
 .enhance-your-resume-image {
     background-color: #e8eef8;
     padding: 20px;
     text-align: center;
     height: 220px;
 }
+
 .enhance-your-resume-image img {
     height: 100%;
 }
+
 .enhance-your-resume-card-title {
     text-align: center;
     padding: 20px;
 }
+
 .enhance-your-resume-card-title h4 {
     font-weight: 600;
     font-size: 18px;
     color: #000;
 }
+
 .enhance-your-resume-card-title p {
     font-weight: 400;
     font-size: 14px;
 }
+
 .enhance-your-resume-card-title a {
     color: #1d56bb;
     font-weight: 600;
@@ -571,32 +692,40 @@ a {
     display: flex;
     justify-content: center;
 }
+
 .enhance-your-resume-card-title a img {
     padding-left: 10px;
 }
+
 .enhance-your-resume.training-partner {
     background-color: #f0f0f0;
 }
+
 .enhance-your-resume.training-partner .enhance-your-resume-image {
     background-color: #f3f3f5;
     padding: 5px;
     width: auto;
     height: auto;
-    
+
 }
+
 .enhance-your-resume.training-partner .enhance-your-resume-image .enhance-your-resume-card-title img {
     position: unset;
 }
+
 .enhance-your-resume.training-partner .enhance-your-resume-card-title {
     background-color: #fff;
 }
+
 .enhance-your-resume.bg-offwhite {
     padding-top: 50px;
     background-color: #F0F0F0;
 }
+
 .enhance-your-resume.bg-offwhite .enhance-your-resume-image {
     position: relative;
 }
+
 .enhance-your-resume-image span.image-tag {
     position: absolute;
     top: 0;
@@ -609,24 +738,29 @@ a {
     padding: 7px 14px;
     color: #000;
 }
+
 .mech-search {
     padding: 67px 0 80px;
     background-image: url(../images/home/searchbg.webp);
     background-position: center;
 }
+
 .home-page .title h3 {
     color: #1d56bb;
     font-size: 26px;
 }
+
 .search-form form .form-control {
     border: 0;
     padding-left: 83px;
     height: 47px;
 }
+
 .search-form form .form-control.form-skills {
     border-top-left-radius: 24px;
     border-bottom-left-radius: 24px;
 }
+
 .search-form {
     border: solid 1px #939393;
     border-radius: 50px;
@@ -635,20 +769,24 @@ a {
     margin-right: auto;
     position: relative;
 }
+
 .search-form .d-flex span img {
     position: absolute;
     top: 11px;
     left: 18px;
 }
+
 .search-form .d-flex span.map-icon img {
     left: 50%;
 }
+
 .search-form .d-flex span.line-border {
     border: solid 1px #a7a9be;
     height: 33px;
     position: relative;
     top: 7px;
 }
+
 .search-form .d-flex button.btn-prrimary {
     background-color: #1d56bb;
     border: solid 1px #1d56bb;
@@ -663,18 +801,21 @@ a {
     color: #fff;
     font-size: 18px;
 }
+
 .mech-banner {
     padding: 60px 0;
     background-image: url(../images/home/homepagebanner.webp);
     background-repeat: no-repeat;
     background-position: center;
 }
+
 .mech-banner h1 {
     color: #fff;
     font-weight: 600;
     font-size: 42px;
     width: 38%;
 }
+
 .mech-banner .banner-links ul {
     display: flex;
     background: #1d56bb;
@@ -686,6 +827,7 @@ a {
     line-height: 25px;
     position: relative;
 }
+
 .mech-banner .banner-links ul li {
     color: #fff;
     list-style: none;
@@ -696,62 +838,77 @@ a {
     border-right: solid 1px #fff;
     height: 22px;
 }
+
 .mech-banner .banner-links ul li:last-child {
     border-right: 0;
 }
+
 .desktop-login .user-login .login-button.logout-button {
     color: #000;
     border: solid 2px #000;
     margin-right: 10px;
 }
+
 .desktop-login-flex .desktop-login {
     width: 100%;
     justify-content: end;
 }
+
 .desktop-login-flex .desktop-login .notification-button {
     width: 100%;
     justify-content: end;
     display: flex;
 }
+
 .col-md-8.desktop-login-flex {
     justify-content: flex-start;
 }
+
 .desktop-login-flex .desktop-login .notification-button img {
     padding-right: 25px;
 }
+
 .desktop-login-flex .desktop-login .notification-button .user-login {
     display: flex;
 }
+
 nav.navbar.navbar-expand-lg {
     min-height: unset;
     margin-bottom: 0px;
     margin-top: -3px;
 }
+
 .navbar-expand-lg .navbar-nav {
     list-style: none;
 }
+
 .navbar-expand-lg .navbar-nav .nav-link {
     padding: 0px;
     margin: 0px;
 }
+
 li.nav-item {
     margin-left: 11px;
     margin-right: 11px;
 }
+
 .col-md-4.desktop-login-flex {
     position: relative;
     top: 0px;
 }
+
 button.btn.btn-primary.dropdown-toggle {
     background: #1D56BB;
     border: solid 1px #1D56BB;
     border-radius: 4px;
     padding: 10px 17px;
 }
+
 .email-registration {
     padding: 60px 0px;
 }
-.email-registration .bg-bluelight{
+
+.email-registration .bg-bluelight {
     padding: 20px;
     justify-content: center;
     background-color: #E8EEF8;
@@ -768,6 +925,7 @@ button.btn.btn-primary.dropdown-toggle {
     font-size: 25px;
     padding-left: 25px;
 }
+
 .email-registration .bg-bluelight h1 {
     font-weight: 500;
     font-size: 40px;
@@ -775,40 +933,49 @@ button.btn.btn-primary.dropdown-toggle {
     padding-bottom: 5px;
     color: #000;
 }
+
 .email-registration .bg-bluelight h2 {
     font-weight: 400;
     font-size: 22px !important;
     color: #000;
 }
+
 .email-registration .bg-bluelight h2 span {
     color: #939393;
     font-size: 18px;
 }
+
 .email-registration .bg-bluelight img {
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
 .email-registration .bg-bluelight .d-flex {
     display: flex;
     justify-content: center;
 }
-.email-registration-form form{
+
+.email-registration-form, .mobile-registration-form {
     display: flex;
     flex-direction: row;
-    margin-left: 56px;
+    margin-left: 5em;
+    margin-bottom: 1em;
 }
-.email-registration-form form a {
+
+.email-registration-form a, .mobile-registration-form a {
     padding-left: 28px;
     color: #0163E0;
     text-decoration: underline;
 }
-.email-registration .bg-bluelight .error-message p{
+
+.email-registration .bg-bluelight .error-message p {
     padding-top: 10px;
     padding-bottom: 0px;
     color: #CD0000;
     font-weight: 500;
     font-size: 15px;
 }
+
 .email-registration .bg-bluelight button.btn.btn-primary {
     background: #1D56BB;
     border-color: #1D56BB;
@@ -820,40 +987,49 @@ button.btn.btn-primary.dropdown-toggle {
     line-height: 27px;
     margin: 8px 0px;
 }
+
 .email-registration .bg-bluelight a {
     padding-left: 28px;
     color: #0163E0;
     text-decoration: none !important;
 }
-.email-registration .technical-assistance p{
+
+.email-registration .technical-assistance p {
     padding: 35px 0px;
     text-align: center;
     font-size: 20px;
     font-weight: 400;
     color: #939393;
 }
+
 .email-registration.email-success .bg-bluelight img {
     padding-bottom: 0px;
     position: relative;
     left: 21px;
 }
+
 .email-registration.email-success .bg-bluelight h1 {
-    padding-top:0px;
+    padding-top: 0px;
     margin-top: 10px;
 }
-.email-registration.number-verification h2{
+
+.email-registration.number-verification h2 {
     margin-bottom: 30px;
 }
+
 .email-registration .bg-bluelight .number-d-flex {
     padding-top: 15px;
 }
+
 .email-registration .bg-bluelight .number-d-flex a:first-child {
     border-right: solid 1px #0163E0;
     padding-right: 19px;
 }
+
 .email-registration .bg-bluelight .number-d-flex a {
     padding-left: 20px;
 }
+
 .user-dashboard-search {
     padding: 90px 0px;
     background-image: url(../images/home/userdashboardbg.png);
@@ -861,19 +1037,22 @@ button.btn.btn-primary.dropdown-toggle {
     background-size: cover;
     background-position: center;
 }
-.user-dasboard-form .form-dflex form .d-flex{
+
+.user-dasboard-form .form-dflex form .d-flex {
     display: flex;
     margin-bottom: 24px;
 }
 
-.user-dasboard-form .form-dflex form .d-flex .form-control{
+.user-dasboard-form .form-dflex form .d-flex .form-control {
     border-radius: 4px;
     height: 47px;
 }
+
 .user-dasboard-form .form-dflex form .d-flex .form-control::placeholder {
     color: #767994;
     font-size: 14px;
 }
+
 .user-dasboard-form .form-dflex form .d-flex .btn-primary {
     position: absolute;
     right: 18px;
@@ -884,28 +1063,34 @@ button.btn.btn-primary.dropdown-toggle {
     font-size: 14px;
     border-radius: 2px;
 }
-.user-dasboard-form .form-dflex form .d-flex:last-child .form-control:first-child{
+
+.user-dasboard-form .form-dflex form .d-flex:last-child .form-control:first-child {
     margin-right: 30px;
 }
+
 .user-dashboard-main {
     padding: 60px 0px;
 }
-.user-dashboard-main .beware{
+
+.user-dashboard-main .beware {
     display: flex;
     background-color: #E8EEF8;
     padding: 25px 20px;
     justify-content: space-between;
     margin-bottom: 35px;
 }
+
 .user-dashboard-main .beware .icon {
     position: relative;
     top: 11px;
 }
+
 .user-dashboard-main .beware .beware-text h3 {
     font-size: 16px;
     font-weight: 550;
     margin-top: 0px;
 }
+
 .user-dashboard-main .beware .beware-text p {
     font-size: 14px;
 }
@@ -914,44 +1099,54 @@ button.btn.btn-primary.dropdown-toggle {
     position: relative;
     top: 55px;
 }
+
 .beware-button button {
- padding: 5px 19px;
+    padding: 5px 19px;
     background-color: #1D56BB;
     border-color: #1D56BB;
     font-size: 14px;
     border-radius: 2px;
 }
+
 .recomended-jobs .job-title {
     border-bottom: solid 1px #B8B8B8;
 }
-.recomended-jobs .job-title h2{
+
+.recomended-jobs .job-title h2 {
     margin-bottom: 7px;
     font-size: 25px;
     font-weight: 400;
 }
+
 .job-title {
     margin-bottom: 35px;
 }
+
 .job-card {
-    background-color:  #F0F0F0;
+    background-color: #F0F0F0;
     padding: 15px 25px;
     box-shadow: 1px 2px 9px 0px #ccc;
 }
+
 .job-card .job-card-title {
     display: flex;
     justify-content: space-between;
 }
+
 .job-card .job-card-title .d-flex {
     flex-direction: column;
 }
-.job-card .job-card-title h3{
+
+.job-card .job-card-title h3 {
     font-size: 16px;
     font-weight: 550;
 }
+
 .job-card .job-card-title p {
     color: #555555;
     font-size: 14px;
 }
+
 .job-card-details {
     display: flex;
     justify-content: space-between;
@@ -965,19 +1160,23 @@ button.btn.btn-primary.dropdown-toggle {
     width: 52%;
     align-items: center;
 }
-.job-card-info p{
+
+.job-card-info p {
     font-size: 12px;
     color: #000000;
 }
-.job-card-info p span img{
+
+.job-card-info p span img {
     padding-right: 6px;
     position: relative;
     top: -1px;
 }
+
 .job-posted-date h4 {
     color: #000000;
     font-size: 13px;
 }
+
 .job-posted-date h4 span {
     color: #555555;
 }
@@ -985,24 +1184,28 @@ button.btn.btn-primary.dropdown-toggle {
 .job-posted-date {
     margin-top: -10px;
 }
+
 .job-card-description {
     padding-bottom: 5px;
 }
+
 .job-card-description p {
-    font-size:13px;
+    font-size: 13px;
     font-weight: 400;
     color: #555555;
 }
+
 .job-card-apply {
     display: flex;
     justify-content: space-between;
     padding-bottom: 18px;
 }
 
-.job-card-apply h4{
+.job-card-apply h4 {
     color: #000000;
     font-size: 13px;
 }
+
 .job-card-apply h4 span {
     color: #757575;
     font-size: 13px;
@@ -1011,6 +1214,7 @@ button.btn.btn-primary.dropdown-toggle {
 .job-card-apply h4 img {
     padding-right: 6px;
 }
+
 .job-card-button button {
     padding: 6px 30px;
     background-color: #1d56bb !important;
@@ -1020,19 +1224,23 @@ button.btn.btn-primary.dropdown-toggle {
     font-size: 14px;
     border-radius: 4px;
 }
+
 .job-card-button button.btn.btn-primary.bg-white {
     background-color: #fff !important;
     color: #000 !important;
     border-color: #000 !important;
 }
+
 .recomended-jobs {
     padding-bottom: 35px;
 }
+
 .explore-button {
     display: flex;
     justify-content: center;
     padding: 20px 0px;
 }
+
 .explore-button button {
     background-color: #1D56BB;
     border: solid 1px #1D56BB;
@@ -1040,19 +1248,23 @@ button.btn.btn-primary.dropdown-toggle {
     padding: 14px 40px;
     border-radius: 2px;
 }
+
 .user-dashboard-main .enhance-your-resume {
     padding: 15px 0px;
 }
-.user-dashboard-main .enhance-your-resume .title h1{
+
+.user-dashboard-main .enhance-your-resume .title h1 {
     text-align: center;
     font-size: 30px;
     margin-bottom: 0;
 }
-.user-dashboard-main .enhance-your-resume .title p{
+
+.user-dashboard-main .enhance-your-resume .title p {
     text-align: center;
     font-size: 20px;
     margin-bottom: 0;
 }
+
 .switch {
     position: relative;
     display: inline-block;
@@ -1068,16 +1280,16 @@ button.btn.btn-primary.dropdown-toggle {
     background-image: -moz-linear-gradient(top, #eeeeee, white 25px);
     background-image: -o-linear-gradient(top, #eeeeee, white 25px);
     background-image: linear-gradient(to bottom, #eeeeee, white 25px);
-  }
-  
-  .switch-input {
+}
+
+.switch-input {
     position: absolute;
     top: 0;
     left: 0;
     opacity: 0;
-  }
-  
-  .switch-label {
+}
+
+.switch-label {
     position: relative;
     display: block;
     height: inherit;
@@ -1094,8 +1306,10 @@ button.btn.btn-primary.dropdown-toggle {
     -moz-transition-property: opacity background;
     -o-transition-property: opacity background;
     transition-property: opacity background;
-  }
-  .switch-label:before, .switch-label:after {
+}
+
+.switch-label:before,
+.switch-label:after {
     position: absolute;
     top: 50%;
     margin-top: -.5em;
@@ -1104,32 +1318,37 @@ button.btn.btn-primary.dropdown-toggle {
     -moz-transition: inherit;
     -o-transition: inherit;
     transition: inherit;
-  }
-  .switch-label:before {
+}
+
+.switch-label:before {
     content: attr(data-off);
     right: 11px;
     color: #aaa;
     text-shadow: 0 1px rgba(255, 255, 255, 0.5);
-  }
-  .switch-label:after {
+}
+
+.switch-label:after {
     content: attr(data-on);
     left: 11px;
     color: white;
     text-shadow: 0 1px rgba(0, 0, 0, 0.2);
     opacity: 0;
-  }
-  .switch-input:checked ~ .switch-label {
+}
+
+.switch-input:checked~.switch-label {
     background: #47a8d8;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
-  }
-  .switch-input:checked ~ .switch-label:before {
+}
+
+.switch-input:checked~.switch-label:before {
     opacity: 0;
-  }
-  .switch-input:checked ~ .switch-label:after {
+}
+
+.switch-input:checked~.switch-label:after {
     opacity: 1;
-  }
-  
-  .switch-handle {
+}
+
+.switch-handle {
     position: absolute;
     top: 4px;
     left: 4px;
@@ -1146,8 +1365,9 @@ button.btn.btn-primary.dropdown-toggle {
     -moz-transition: left 0.15s ease-out;
     -o-transition: left 0.15s ease-out;
     transition: left 0.15s ease-out;
-  }
-  .switch-handle:before {
+}
+
+.switch-handle:before {
     content: '';
     position: absolute;
     top: 50%;
@@ -1162,27 +1382,32 @@ button.btn.btn-primary.dropdown-toggle {
     background-image: -moz-linear-gradient(top, #eeeeee, white);
     background-image: -o-linear-gradient(top, #eeeeee, white);
     background-image: linear-gradient(to bottom, #eeeeee, white);
-  }
-  .switch-input:checked ~ .switch-handle {
+}
+
+.switch-input:checked~.switch-handle {
     left: 40px;
     box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .switch-green > .switch-input:checked ~ .switch-label {
+}
+
+.switch-green>.switch-input:checked~.switch-label {
     background: #4fb845;
-  }
-  .user-dashboard {
+}
+
+.user-dashboard {
     position: relative;
 }
-  .user-dashboard-sidebar {
+
+.user-dashboard-sidebar {
     background: #E8EEF8;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     padding: 35px 20px;
 }
+
 .user-information .edit-profile {
     padding-bottom: 30px;
 }
-.user-information .edit-profile a{
+
+.user-information .edit-profile a {
     text-align: right;
     text-decoration: underline;
     color: #0661FF;
@@ -1194,28 +1419,33 @@ button.btn.btn-primary.dropdown-toggle {
     position: relative;
     top: -4px;
 }
+
 .user-information .personal-info {
     display: flex;
 }
 
-.user-information .personal-info .user-info{
+.user-information .personal-info .user-info {
     padding-left: 20px;
 }
+
 .user-information .personal-info .user-info h3 {
     font-size: 22px;
     font-weight: 700;
 }
+
 .user-information .personal-info .user-info h4 {
     font-size: 15px;
     color: #000;
     margin-bottom: 0px;
 }
+
 .user-information .personal-info .user-info h5 {
     color: #6C6767;
     margin-top: 6px;
     font-size: 14px;
 }
-.user-expectations .exp-icon{
+
+.user-expectations .exp-icon {
     display: flex;
     justify-content: space-around;
 }
@@ -1235,6 +1465,7 @@ button.btn.btn-primary.dropdown-toggle {
     width: 25px;
     height: 25px;
 }
+
 .exp-icon-details p {
     font-size: 14px;
     color: #000;
@@ -1244,28 +1475,29 @@ button.btn.btn-primary.dropdown-toggle {
 .user-progress-bar {
     display: flex;
 }
+
 .circle-wrap {
-    margin:20px auto;
+    margin: 20px auto;
     width: 120px;
     height: 120px;
     background: #B0CDFF;
     border-radius: 50%;
     border: 1px solid #cdcbd0;
-  }
-  
-  .circle-wrap .circle .mask,
-  .circle-wrap .circle .fill {
+}
+
+.circle-wrap .circle .mask,
+.circle-wrap .circle .fill {
     width: 120px;
     height: 120px;
     position: absolute;
     border-radius: 50%;
-  }
-  
-  .circle-wrap .circle .mask {
+}
+
+.circle-wrap .circle .mask {
     clip: rect(0px, 150px, 150px, 75px);
-  }
-  
-  .circle-wrap .inside-circle {
+}
+
+.circle-wrap .inside-circle {
     width: 92px;
     height: 92px;
     border-radius: 50%;
@@ -1280,37 +1512,40 @@ button.btn.btn-primary.dropdown-toggle {
     font-weight: 700;
     font-size: 20px;
     /* top: 30px; */
-  }
-  
-  /* color animation */
-  
-  /* 3rd progress bar */
-  .mask .fill {
+}
+
+/* color animation */
+
+/* 3rd progress bar */
+.mask .fill {
     clip: rect(0px, 75px, 150px, 0px);
     background-color: #1D56BB;
-  }
-  
-  .mask.full,
-  .circle .fill {
+}
+
+.mask.full,
+.circle .fill {
     animation: fill ease-in-out 3s;
-    transform:rotate(45deg);
-  }
-  
-  @keyframes fill{
+    transform: rotate(45deg);
+}
+
+@keyframes fill {
     0% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
+
     100% {
-      transform: rotate(45deg);
+        transform: rotate(45deg);
     }
-  }
-  .user-progress-bar .user-progress {
+}
+
+.user-progress-bar .user-progress {
     padding-right: 16px;
     display: flex;
     flex-direction: column;
     text-align: center;
 }
-.user-progress-bar .user-progress p{
+
+.user-progress-bar .user-progress p {
     font-weight: 400;
     font-size: 12px;
 }
@@ -1331,12 +1566,14 @@ label.switch {
     box-shadow: none;
     border: 0px;
 }
+
 .switch-label {
     background: transparent;
     color: #fff;
     padding: 14px 20px;
     box-shadow: none;
 }
+
 .switch-label:before {
     color: #fff;
     font-size: 15px;
@@ -1349,15 +1586,18 @@ span.switch-handle {
     height: 25px;
     top: 3px;
 }
-.switch-input:checked ~ .switch-label {
+
+.switch-input:checked~.switch-label {
     background: #5CB549;
     box-shadow: none;
     position: relative;
     top: -3px;
 }
-.switch-input:checked ~ .switch-label:after {
+
+.switch-input:checked~.switch-label:after {
     font-size: 14px;
 }
+
 .profile-activation h4 {
     padding-left: 12px;
     color: #000000;
@@ -1365,36 +1605,44 @@ span.switch-handle {
     position: relative;
     top: -2px;
 }
+
 .user-dashboard-sidebar hr {
     border: 0;
     border-top: 1px solid #B8B8B8;
     margin: 0.5rem 0;
 }
+
 .userdashboard-information {
     line-height: 43px;
 }
+
 .userdashboard-information ul {
-    padding-inline-start:0px;
+    padding-inline-start: 0px;
 }
+
 .userdashboard-information ul li {
     list-style: none;
     padding-left: 15px;
     font-size: 18px;
     color: #000;
 }
+
 .userdashboard-information ul li span {
     padding-right: 20px;
 }
+
 .userdashboard-information ul li a {
     color: #0079E9;
     text-decoration: underline;
 }
-.user-data-selection form{
+
+.user-data-selection form {
     display: flex;
     flex-direction: column;
     line-height: 22px;
     padding-bottom: 20px;
 }
+
 .user-data-selection form label {
     color: #555555;
     font-size: 14px;
@@ -1409,6 +1657,7 @@ span.switch-handle {
     font-size: 16px;
     color: #000;
 }
+
 .top-hiring-recruiter {
     background: #E8EEF8;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -1418,11 +1667,12 @@ span.switch-handle {
     text-align: center;
     margin: 40px 0px;
 }
+
 .top-hiring-recruiter h2 {
-   font-weight: 600;
-   font-size: 30px;
-   color: #000;
-   margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 30px;
+    color: #000;
+    margin-bottom: 30px;
 }
 
 
@@ -1431,12 +1681,14 @@ span.switch-handle {
     justify-content: space-evenly;
     margin-bottom: 30px;
 }
+
 .mech-advertisment {
     background: #E8EEF8;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     padding: 30px;
     margin: 20px 0px 30px;
 }
+
 .mech-advertisment span {
     text-align: right;
     width: 100%;
@@ -1444,17 +1696,20 @@ span.switch-handle {
     font-size: 16px;
     color: #000;
 }
-.mech-advertisment h2{
+
+.mech-advertisment h2 {
     font-weight: 600;
     font-size: 30px;
     margin-bottom: 20px;
 }
+
 .mech-advertisment ul {
-    padding-inline-start:0px;
+    padding-inline-start: 0px;
     line-height: 39px;
     display: flex;
     flex-direction: column;
 }
+
 .mech-advertisment ul li {
     list-style: none;
     font-size: 18px;
@@ -1472,43 +1727,53 @@ span.switch-handle {
     font-size: 14px;
     border-radius: 2px;
 }
+
 .mech-advertisment a {
     color: #000000;
     font-size: 18px;
     text-align: right;
 }
+
 .user-dashboard-main .container {
     position: relative;
 }
-.user-dashboard-main .col-md-5{
+
+.user-dashboard-main .col-md-5 {
     position: absolute;
     top: -293px;
     right: 0;
 }
+
 .d-flex {
     display: flex;
 }
+
 .login-form {
     width: auto;
     padding-left: 80px;
 }
+
 .text-left {
     text-align: left !important;
 }
+
 /*cardcarousel*/
 .bg-breadcrumb {
     padding: 30px 0px;
     background-color: #484747;
     display: flex;
 }
-.bg-breadcrumb  h1 {
+
+.bg-breadcrumb h1 {
     color: #fff;
     font-weight: 500;
     font-size: 40px;
 }
+
 .bg-breadcrumb .row {
     align-items: center;
 }
+
 .bg-breadcrumb .button-d-flex {
     display: flex;
     justify-content: space-around;
@@ -1518,6 +1783,7 @@ span.switch-handle {
     text-align: center;
     line-height: 30px;
 }
+
 .bg-breadcrumb .button-d-flex .breadcrumb-button button {
     padding: 4px 59px;
     background: #E8EEF8;
@@ -1526,80 +1792,95 @@ span.switch-handle {
     margin-bottom: 11px;
     text-align: center;
 }
+
 .bg-breadcrumb .button-d-flex .breadcrumb-button p {
     color: #fff;
     margin-bottom: 0px;
 }
+
 .user-dashboard-detail-bggray {
     padding: 48px 0px;
     background-color: #939393;
 }
+
 .user-dashboard-detail .job-card-info {
     display: block;
 }
+
 .user-dashboard-detail .job-posted-date {
     display: flex;
     align-items: center;
     padding-top: 12px;
     border-top: solid 0.5px #939393;
 }
+
 .user-dashboard-detail .job-posted-date h4 {
     padding-right: 80px;
 }
+
 .user-dashboard-detail .job-card-apply {
     padding-bottom: 0px;
     align-items: center;
 }
+
 .job-match-score {
     border: 0.5px solid #939393;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
     position: relative;
 }
+
 .job-match-score h4 {
     font-size: 18px;
     font-weight: 550;
     padding: 28px 20px 19px;
 }
+
 .job-match-score .job-match-score-dflex {
     display: flex;
     justify-content: space-between;
     padding: 0px 20px 20px;
 }
+
 .job-match-score .job-match-score-dflex ul {
     display: flex;
     padding-inline-start: 0px;
 }
+
 .job-match-score .job-match-score-dflex ul li {
     list-style: none;
     padding-right: 20px;
     font-size: 14px;
 }
+
 .job-match-score .user-progress-bar .user-progress {
     margin-top: -49%;
 }
+
 .job-match-score .user-progress-bar .user-progress .circle-wrap {
-    margin:4px auto;
+    margin: 4px auto;
     width: 90px;
     height: 90px;
     background: #B0CDFF;
     border-radius: 50%;
     border: 1px solid #cdcbd0;
-  }
-  
+}
+
 .job-match-score .user-progress-bar .user-progress .circle-wrap .circle .mask,
 .job-match-score .user-progress-bar .user-progress .circle-wrap .circle .fill {
     width: 90px;
     height: 90px;
     position: absolute;
     border-radius: 50%;
-  }
-  
+}
+
 .job-match-score .user-progress-bar .user-progress .circle-wrap .circle .mask {
     clip: rect(0px, 162px, 40px, 37px);
 }
+
 .job-match-score .user-progress-bar .user-progress .circle-wrap .circle .mask.full .fill {
     clip: rect(0px, 70px, 21px, 0px);
 }
+
 .job-match-score .user-progress-bar .user-progress .circle-wrap .inside-circle {
     width: 80px;
     height: 80px;
@@ -1607,42 +1888,51 @@ span.switch-handle {
     margin-left: 4px;
     line-height: 85px;
     font-size: 16px;
-  }
-  .job-match-score .user-progress-bar .user-progress .circle-wrap a {
+}
+
+.job-match-score .user-progress-bar .user-progress .circle-wrap a {
     text-decoration: underline;
     font-size: 14px;
     color: #005CFF;
-  }
-  .job-match-score::before {
+}
+
+.job-match-score::before {
     content: '';
     width: 8px;
     height: 125px;
     position: absolute;
     background-color: #00ACEE;
 }
+
 .job-description {
     border: 0.5px solid #D0D0D0;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
     padding: 19px 25px;
     margin: 30px 0px;
 }
+
 .job-description h3 {
     font-size: 20px;
 }
+
 .job-description ul {
     padding-inline-start: 30px;
-    padding-top: 20px;    
+    padding-top: 20px;
 }
+
 .job-description ul li {
     font-size: 14px;
     line-height: 27px;
 }
+
 .job-description ul.qualification {
     padding-inline-start: 5px
 }
-.job-description ul.qualification li{
+
+.job-description ul.qualification li {
     list-style: none;
 }
+
 .job-description ul.qualification li span {
     font-size: 14px;
     color: #939393;
@@ -1650,31 +1940,38 @@ span.switch-handle {
     display: inline-block;
     position: relative;
 }
+
 .job-description ul.qualification li span:after {
     content: ':';
     position: absolute;
-    right : 10px;
+    right: 10px;
     color: #000;
 }
+
 .job-description ul.qualification li.education {
     padding-top: 36px;
 }
+
 .job-description ul.qualification li.education span {
     color: #000;
 }
+
 .key-skills {
     border: 0.5px solid #D0D0D0;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
     padding: 19px 25px;
     margin: 30px 0px;
 }
+
 .key-skills h3 {
     font-size: 20px;
 }
+
 .key-skills ul {
     display: flex;
     padding-inline-start: 9px;
 }
+
 .key-skills ul li {
     list-style: none;
     margin: 5px 18px 0px 0px;
@@ -1684,38 +1981,47 @@ span.switch-handle {
     background-color: #E8EEF8;
     font-size: 15px;
 }
+
 .job-match-score.job-detail-social-icon ul {
     display: flex;
 }
+
 .job-match-score.job-detail-social-icon ul li {
     list-style: none;
     margin-right: 30px;
 }
+
 .job-match-score.job-detail-social-icon h4 {
     font-size: 18px;
     font-weight: 550;
     padding: 17px 28px 10px;
 }
+
 .job-match-score.job-detail-social-icon::before {
     height: 108px;
 }
+
 .about-company {
     border: 0.5px solid #D0D0D0;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
     padding: 19px 25px;
     margin: 30px 0px;
 }
+
 .about-company h3 {
     font-size: 20px;
 }
+
 .about-company p {
     font-size: 14px;
     line-height: 27px;
 }
+
 .similar-jobs {
     background-color: #E8EEF8;
     padding: 25px;
 }
+
 .similar-jobs h3 {
     font-size: 18px;
     text-align: center;
@@ -1726,12 +2032,14 @@ span.switch-handle {
     background: #FFFFFF;
     border: 0.5px solid #939393;
     border-radius: 3px;
-    padding: 15px 20px 5px; 
+    padding: 15px 20px 5px;
     margin-bottom: 20px;
 }
+
 .similar-jobs .similar-jobs-card .similar-job-card-title h4 {
     font-size: 15px;
 }
+
 .similar-jobs .similar-jobs-card .similar-job-card-title p {
     font-size: 13px;
     color: #939393;
@@ -1740,49 +2048,61 @@ span.switch-handle {
 .similar-jobs .similar-jobs-card .similar-job-card-info {
     display: flex;
 }
+
 .similar-jobs .similar-jobs-card .similar-job-card-info p {
     margin-right: 20px;
     color: #000;
 }
+
 .job-details-ad {
     margin-top: 20px;
 }
+
 .user-dashboard-detail-main {
     margin-top: -58px;
     padding-bottom: 40px;
 }
+
 .mycourse-videopage .video-breadcrumbs {
     background-color: #E8EEF8;
     padding: 40px 0px;
 }
+
 .mycourse-videopage .video-breadcrumbs h1 {
     color: #000;
     font-size: 30px;
 }
+
 .mycourse-videopage .video-breadcrumbs p {
     color: #000;
     line-height: 27px;
     font-size: 14px;
     padding-left: 20px;
 }
+
 .mycourse-videopage .video-breadcrumbs .col-md-4 {
     text-align: right;
 }
+
 .mycourse-videopage .video-section {
     padding: 60px 0px;
 }
+
 .mycourse-videopage .video-section h3 {
     color: #000;
     font-size: 20px;
     padding-bottom: 15px;
 }
+
 .mycourse-videopage .video-section iframe {
     width: 100%;
     margin-bottom: 40px;
 }
+
 .mycourse-videopage .video-recommended .enhance-your-resume-image {
     position: relative;
 }
+
 .mycourse-videopage .video-recommended .enhance-your-resume-card-title button {
     background-color: #1D56BB;
     border-color: #1D56BB;
@@ -1792,23 +2112,27 @@ span.switch-handle {
 }
 
 
-.mycourse-videopage .video-recommended{ 
+.mycourse-videopage .video-recommended {
     background: #F0F0F0;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
     padding: 30px 20px;
 }
+
 .mycourse-videopage .video-recommended h3 {
     text-align: center;
     font-size: 22px;
     padding-bottom: 10px;
 }
+
 .mycourse-videopage .video-recommended .enhance-your-resume-card-title {
     background-color: #fff;
 }
+
 .mycourse-videopage .video-recommended .view-btn {
     text-align: center;
     margin-top: 33px;
 }
+
 .mycourse-videopage .video-recommended button.view-all {
     margin-left: auto;
     margin-right: auto;
@@ -1817,85 +2141,105 @@ span.switch-handle {
     padding: 9px 30px;
     border-color: #1D56BB;
 }
+
 .job-search-page {
     padding: 40px 0px 60px;
 }
+
 .job-search-page h2 {
     color: #000000;
     font-size: 20px;
     padding-bottom: 30px;
 }
+
 .job-search-page h2 span {
     color: #0921FF;
     text-decoration: underline;
 }
+
 .job-search-page .job-card {
     margin-bottom: 30px;
 }
+
 .job-search-page .job-card .job-card-description p span {
     color: #005CFF;
 }
+
 .job-search-page .pagination {
     text-align: center;
     margin-bottom: 0px;
 }
+
 .job-search-page .pagination nav {
     margin: 0px auto;
 }
+
 .job-search-page .page-item.disabled .page-link,
 .job-search-page .page-item:last-child .page-link {
     color: #000 !important;
 }
+
 .job-search-page .page-link {
     color: #0D82E1 !important;
     border: 0px !important;
     font-size: 17px;
 }
+
 .job-search-page .page-link:hover,
 .job-search-page .page-link:focus {
     background: transparent;
 }
+
 .job-search-page .recomended-jobs {
     padding-bottom: 10px;
 }
-.job-search-page .page-item.active .page-link{
+
+.job-search-page .page-item.active .page-link {
     color: #fff !important;
     background-color: #0D82E1;
     border-color: #0D82E1;
 }
+
 .searchfilter-sidebar {
     background-color: #fff;
     padding: 20px 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
 .searchfilter-dflex {
     display: flex;
     justify-content: space-between;
     padding-bottom: 20px;
     align-items: center;
 }
+
 .searchfilter-dflex p {
     color: #000;
     margin-bottom: 0px;
 }
+
 .searchfilter-dflex p img {
     padding-right: 5px;
 }
+
 .searchfilter-dflex h4 {
     color: #000;
     font-size: 14px;
 }
+
 .searchfilter-sidebar .searchfilters-list h4 {
     color: #000000;
     font-size: 15px;
-    border-bottom:  0.5px solid #C1BFBF;
+    border-bottom: 0.5px solid #C1BFBF;
     padding-bottom: 5px;
     margin-bottom: 23px;
     font-weight: bold;
 }
+
 .searchfilter-sidebar .searchfilters-list ul {
     padding-inline-start: 15px;
 }
+
 .searchfilter-sidebar .searchfilters-list ul li {
     list-style: none;
     line-height: 31px;
@@ -1911,26 +2255,32 @@ span.switch-handle {
     top: -2px;
     margin-right: 12px;
 }
+
 .searchfilter-sidebar .searchfilters-list ul li .form-check-label {
     font-size: 14px;
 }
+
 .job-search-page .container:first-child {
     padding: 20px 0px 40px;
- }
- .job-search-page .user-dasboard-form .form-dflex form .d-flex .form-control {
-     border: 0.8px solid #939393;
-     box-shadow: 0px 3px 7px 2px rgba(0, 0, 0, 0.1);
-     border-radius: 4px;
-     margin-bottom: 26px;
- }
- .job-search-page .container:first-child .col-md-5 {
-     text-align: center;
- }
- .job-search-bg {
+}
+
+.job-search-page .user-dasboard-form .form-dflex form .d-flex .form-control {
+    border: 0.8px solid #939393;
+    box-shadow: 0px 3px 7px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin-bottom: 26px;
+}
+
+.job-search-page .container:first-child .col-md-5 {
+    text-align: center;
+}
+
+.job-search-bg {
     background-color: #939393;
     padding: 40px 0px;
     margin-bottom: 25px;
 }
+
 .job-search-page .jobsearch-title h3 {
     font-size: 20px;
     color: #000;
@@ -1941,434 +2291,46 @@ span.switch-handle {
 .job-search-page .jobsearch-title {
     margin-top: -49px;
 }
-.profile-creation-top {
-    padding: 30px 0px;
-    background-image: url(../images/profilecreation/topbg.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.profile-creation-top .profile-image {
-    position: relative;
-    text-align: center;
-    padding-top: 15px;
-}
-.profile-creation-top .profile-image img:nth-child(2) {
-    position: absolute;
-    left: 108px;
-    top: 19px;
-    background-color: #B0CDFF;
-    padding: 5px;
-    border-radius: 50%;
-}
-.profile-creation-top .profile-image h4 {
-    color: #fff;
-    font-size: 20px;
-    position: relative;
-    top: 6px;
-}
-/****/
-.profile-creation-top .profile-contact ul {
-    line-height: 35px;
-    padding-inline-start: 0px;
-    display: flex;
-    flex-direction: column;
-}
-.profile-creation-top .profile-contact ul li{
-    list-style: none;
-    color: #fff;
-    display: flex;
-    font-size: 14px;
-}
-.profile-creation-top .profile-contact ul li img {
-    padding-right: 10px;
-}
-.profile-creation-top .profile-contact ul li span {
-    margin-left: 15px;
-}
-.profile-creation-top .profile-contact ul li span img {
-    padding-right: 0px !important;
-}
-.profile-creation-top .profile-contact ul li.phone img {
-    padding-right: 10px;
-}
-.profile-creation-top .profile-contact ul li.phone span {
-    color: #1CD1F9;
-}
-.profile-creation-top .profile-contact ul li.workexp img {
-    position: relative;
-    left: -6px;
-} 
-.profile-creation-top .user-progress-bar {
-    justify-content: space-around;
- }
- .profile-creation-top .user-progress-bar .user-progress p {
-    color: #fff;
-    font-size: 18px;
-    font-family: ubuntu;
-    margin-bottom: 5px;
- }
- .profile-creation-top .user-progress-bar .circle-wrap {
-    margin: 20px auto;
-    width: 150px;
-    height: 150px;
-    background: #B0CDFF;
-    border-radius: 50%;
-    border: 1px solid #cdcbd0;
-  }
-  
-.profile-creation-top .user-progress-bar .circle-wrap .circle .mask,
-.profile-creation-top .user-progress-bar .circle-wrap .circle .fill {
-    width: 150px;
-    height: 150px;
-    position: absolute;
-    border-radius: 50%;
-  }
-  
-.profile-creation-top .user-progress-bar .circle-wrap .inside-circle {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    background: #fff;
-    line-height: 124px;
-    text-align: center;
-    margin-top: 1px;
-    margin-left: 10px;
-    color: #000;
-    position: absolute;
-    z-index: 100;
-    font-weight: 700;
-    font-size: 29px;
-    top: 29px;
-  }
-  .profile-creation-top .user-progress-bar .user-progress h6 {
-    color: #2DCDFF;
-    font-size: 12px;
-    margin:0px ;
-}
-.profile-creation-body {
-    padding: 40px 0px;
-}
-.profile-creation-body .profile-title {
-    padding: 0px 0px 25px 0px;
-}
-.profile-creation-body .profile-title h3 {
-    font-size: 24px;
-}
-.profile-creation-body .profile-title h3 span {
-    font-size: 18px;
-    color: #939393;
-}
-.profile-creation-body .profile-sidebar {
-    padding: 10px 20px;
-    background-color: #E8EEF8;
-}
-.profile-creation-body .profile-sidebar h6 {
-    font-size: 11px;
-    text-align: center;
-}
-.profile-creation-body .profile-sidebar h4 {
-    text-align: center;
-    padding: 15px 0px 15px;
-    font-size: 22px;
-}
-.profile-creation-body .profile-sidebar ul {
-    padding-inline-start: 0px;
-    line-height: 50px;
-}
-.profile-creation-body .profile-sidebar ul li {
-    list-style: none;
-    position: relative;
-}
 
-.profile-creation-body .profile-sidebar ul li img {
-    padding-right: 5px;
-}
-.profile-creation-body .profile-sidebar ul li span {
-    position: absolute;
-    right: 0;
-}
 
-.resume-upload {
-    background: #F4F4F4;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 20px  30px 25px;
-    margin-bottom: 30px;
-}
-
-.resume-upload .d-flex {
-    justify-content: space-between;
-}
-.resume-upload .d-flex h4 {
-    color: #000;
-    font-size: 18px;
-}
-
-.resume-upload .d-flex a {
-    color: #005CFF;
-    font-size: 13px;
-    text-decoration: underline !important;
-}
-.resume-upload p {
-    color: #676767;
-    font-size: 13px;
-    padding-left: 20px;
-    margin-bottom: 20px;
-}
-.resume-upload form {
-    text-align: center;
-}
-.resume-upload form label {
-    background: #FFFFFF;
-    border-radius: 4px;
-    color: #005CFF;
-    font-size: 14px;
-    padding: 7px 20px;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
-    margin-bottom: 20px;
-}
-.resume-upload .form-dflex {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    position: relative;
-}
-.resume-upload .form-dflex span {
-    color: #939393;
-    font-size: 12px;
-}
-.resume-upload .form-dflex img {
-    position: absolute;
-    right: 0;
-    bottom: 7px;
-}
-.resume-upload.resume-headline .d-flex {
-    justify-content: flex-start;
-}
-.resume-upload.resume-headline .d-flex span {
-    padding-left: 20px;
-    color: #005CFF;
-    font-size: 15px;
-}
-.resume-upload.resume-headline form textarea {
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
     width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    resize: none;
-    border: 0.5px solid #939393;
-    border-radius: 4px;
+    height: 100%;
+    z-index: 9999;
+    background: #80808036;
 }
-.resume-upload.resume-headline form textarea::placeholder,
-.resume-upload.resume-headline form input::placeholder{
-    font-size: 13px;
-    color: #939393;
-}
-.resume-upload.resume-headline form {
-    position: relative;
-}
-.resume-upload.resume-headline form span {
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    bottom: 49px;
-    right: 14px;
-    font-size: 12px;
-    color: #AEAEAE;
+    top: 50%;
+    left: 50%;
+
 }
-.resume-upload.resume-headline form .form-buttons {
-    width: 100%;
-    text-align: center;
-    margin-top: 10px;
-}
-.resume-upload.resume-headline form .form-buttons .btn-cancel {
-    background: #FFFFFF;
-    border: 0.5px solid #939393;
-    border-radius: 4px;
-    font-size: 14px;
-    padding: 8px 20px;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
-    margin-right: 10px;
-}
-.resume-upload.resume-headline form .form-buttons .btn-save {
-    background: #1D56BB;
-    border: 0.5px solid #1D56BB;
-    color: #fff;
-    border-radius: 4px;
-    font-size: 14px;
-    padding: 8px 20px;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
-}
-.resume-upload.resume-headline form input {
-    margin-top: 10px;
-}
-.resume-upload.resume-headline.keyskills ul {
-    display: flex;
-    padding-inline-start: 0px;
-    margin-top: 10px;
-}
-.resume-upload.resume-headline.keyskills ul li {
-    list-style: none;
-    background: #FFFFFF;
-    border: 0.8px solid #005CFF;
-    border-radius: 4px;
-    margin-right: 10px;
-    padding: 6px 10px;
-    font-size: 14px;
-}
-.resume-upload.resume-headline.employement h5 {
-    margin-top: 20px;
-    font-size: 18px;
-    margin-left: 20px;
-}
-.resume-upload.resume-headline.employement h5 span {
-    color: #005CFF;
-    font-size: 14px;
-}
-.resume-upload.resume-headline.employement p {
-    color: #000;
-}
-.resume-upload.resume-headline.employement p span {
-    color: #000;
-    font-size: 15px;
-}
-.resume-upload.resume-headline.employement .chevron-up {
-    width: 100%;
-    text-align: center;
+
+.lds-dual-ring:after {
+    content: " ";
     display: block;
-}
-.resume-upload.resume-headline.employement form {
-    background: #FFFFFF;
-    border: 0.5px solid #939393;
-    padding: 20px 30px;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #1d56bb transparent #1d56bb transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
 }
 
-.resume-upload.resume-headline.employement form .col-md-12.delete {
-    text-align: right;
-}
-.resume-upload.resume-headline.employement form .col-md-12.delete a {
-    color: #005CFF;
-    font-size: 14px;
-}
-.resume-upload.resume-headline.employement form p {
-    text-align: left;
-    font-size: 15px;
-    color: #000;
-}
-.resume-upload.resume-headline.employement form  label {
-    background: transparent;
-    border-radius: 0px;
-    box-shadow: none;
-    border: 0px;
-    padding: unset;
-    margin-bottom: 5px;
-    color: #000;
-    width: 100%;
-    text-align: left;
-    margin-top: 9px;
-}
-.resume-upload.resume-headline.employement form .form-checkbox {
-    text-align: initial;
-}
-.resume-upload.resume-headline.employement form .form-checkbox p {
-    padding-left: 0px;
-}
-.resume-upload.resume-headline.employement form .form-checkbox .form-check {
-    padding-left: 20px;
-    padding-right: 20px;
-}
-.resume-upload.resume-headline.employement form .form-checkbox .form-check input {
-    margin-top: 0px !important;
-}
-.resume-upload.resume-headline.employement form .form-checkbox .form-check label {
-    position: relative;
-    top: -14px;
-    left: 6px;
-}
-.resume-upload.resume-headline.employement form .row {
-    margin-bottom: 10px;
-}
-.resume-upload.resume-headline.employement form .row.form-selectbox .d-flex select:first-child {
-    border-right: 0px;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-}
-.resume-upload.resume-headline.employement form .row.form-selectbox .d-flex select:last-child {
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-}
-.resume-upload.resume-headline.employement form input {
-    margin-top: 0px;
-}
-.resume-upload.resume-headline.employement form .row.one-select .col-md-6:last-child select{
-    border-right: solid 1px #ccc;
-}
-.resume-upload.resume-headline.current-location form h4 {
-    text-align: left;
-    font-size: 18px;
-    margin-top: 15px;
-}
-.resume-upload.resume-headline.current-location form .d-flex select:first-child {
-    margin-right: 20px;
-}
-.resume-upload.resume-headline.employement .education-list h5 {
-    font-size: 16px;
-    margin-bottom: 0px;
-    margin-top: 10px;
-}
-.resume-upload.resume-headline.employement.personal-details ul {
-    display: flex;
-    padding-inline-start: 21px;
-}
-.resume-upload.resume-headline.employement.personal-details .education-list {
-    padding-top: 30px;
-}
-.resume-upload.resume-headline.employement.personal-details ul li {
-    list-style: none;
-    font-size: 14px;
-    padding-right: 30px;
-    color: #939393;
-}
-.resume-upload.resume-headline.employement.personal-details ul li span {
-    color: #000;
-}
-.resume-upload.resume-headline.employement.personal-details .education-list p{
-    font-size: 14px;
-    padding-right: 30px;
-    color: #939393;
-}
-.resume-upload.resume-headline.employement.personal-details .education-list p span {
-    color: #000;
-}
-.resume-upload.resume-headline.employement.personal-details .education-list table {
-    margin-left: 20px;
-    width: 70%;
-}
-.resume-upload.resume-headline.employement.personal-details .education-list table thead {
-    border-bottom: 0.5px solid #939393;
-}
-.resume-upload.resume-headline.employement.personal-details .education-list table thead tr th{
-    padding: 10px;
-    color: #939393;
-    font-size: 14px;
-}
-.resume-upload.resume-headline.employement.personal-details .education-list table tbody tr td{
-    padding: 10px;
-    color: #000;
-    font-size: 14px;
-}
-.resume-upload.resume-headline.employement.personal-details form .row.dob select {
-    margin-right: 10px;
-}
-.resume-upload.resume-headline.employement.personal-details form .row.languages label {
-   margin-bottom: 20px;
-}
-.resume-upload.resume-headline.employement.personal-details form .row.languages .d-flex {
-   justify-content: center;
-   margin-top: 35px;
-}
-.resume-upload.resume-headline.employement.personal-details form .row.add-another {
-    padding: 13px 0px;
-    margin-bottom: 0;
-    text-align: left;
-}
-.resume-upload.resume-headline.employement.personal-details form .row.add-another a {
-    color: #005CFF;
-    font-size: 14px;
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

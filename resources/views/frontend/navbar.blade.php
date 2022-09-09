@@ -31,7 +31,7 @@
                                 <div class="collapse navbar-collapse" id="navbarNav">
                                     <ul class="navbar-nav">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Job Search</a>
+                                            <a class="nav-link" href="{{ route('jobsearch') }}">Job Search</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="#">Free Course</a>

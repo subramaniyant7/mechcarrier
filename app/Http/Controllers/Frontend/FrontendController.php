@@ -42,18 +42,24 @@ class FrontendController extends Controller
         return view('frontend.email_verification');
     }
 
-
-
-
-
-
-
     public function JobsDetails(Request $request){
         return view('frontend.jobsdetails');
     }
 
     public function JobSearch(Request $request){
         return view('frontend.jobseeker_job_search');
+    }
+
+    public function JobSearch1(Request $request){
+        return view('frontend.jobseeker_job_search1');
+    }
+
+    public function JobSearch2(Request $request){
+        return view('frontend.jobseeker_job_search2');
+    }
+
+    public function ProfileCreation(Request $request){
+        return view('frontend.profile_creation');
     }
 
     public function MyCourseandService(Request $request){
