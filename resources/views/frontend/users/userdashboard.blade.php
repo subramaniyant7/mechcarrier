@@ -287,7 +287,7 @@
                                     </div>
                                     <div class="personal-info">
                                         <div class="user-image">
-                                            <img src="{{ URL::asset(FRONTEND.'/assets/images/usericonimage.svg')}}" />
+                                            <img src="{{ URL::asset(FRONTEND.'/assets/images/profile_pic.svg')}}" />
                                         </div>
                                         <div class="user-info">
                                             <h3>{{ $userInfo[0]->user_firstname.' '. $userInfo[0]->user_lastname}}</h3>

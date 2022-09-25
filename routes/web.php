@@ -88,12 +88,16 @@ Route::middleware(['globalvalidate'])->group(function () {
             Route::get('/change_password', [AdminController::class, 'ChangePassword'])->name('changepassword');
             Route::post('/update_password', [AdminController::class, 'UpdatePassword'])->name('updatepassword');
 
+            // Users
+            Route::get('/download_sample_file', [UserController::class, 'DownloadSampleFile'])->name('downloadsamplefile');
+            Route::get('/import_users', [UserController::class, 'ImportUsers'])->name('importusers');
+            Route::post('/import_users', [UserController::class, 'SaveImportUsers'])->name('saveimportusers');
             Route::get('/view_users', [UserController::class, 'ViewUser'])->name('viewusers');
             Route::get('/create_user', [UserController::class, 'ManageUser'])->name('manageuser');
             Route::get('/action_user/{option}/{id}', [UserController::class, 'ActionUser'])->name('actionuser');
             Route::post('/save_user', [UserController::class, 'SaveUserDetails'])->name('saveuser');
 
-
+            // Admin
             Route::get('/view_admin', [AdminController::class, 'ViewAdmin'])->name('admin');
             Route::get('/create_admin', [AdminController::class, 'ManageAdmin'])->name('manageadmin');
             Route::get('/action_admin/{option}/{id}', [AdminController::class, 'ActionAdmin'])->name('actionadmin');

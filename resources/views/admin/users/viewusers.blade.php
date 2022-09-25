@@ -25,8 +25,12 @@
                 <li class="breadcrumb-item"><a href="{{ route('analysisdashboard') }}">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Users</li>
             </ol>
-            <a href="{{ route('manageuser') }}" class="btn btn-primary btn-rounded mb-2 me-4"><i
-                    class="fa-solid fa-plus"></i> User</a>
+            <div>
+                <a href="{{ route('importusers') }}" class="btn btn-primary btn-rounded mb-2 me-4"><i
+                        class="fa-solid fa-upload"></i> Import</a>
+                <a href="{{ route('manageuser') }}" class="btn btn-primary btn-rounded mb-2 me-4"><i
+                        class="fa-solid fa-plus"></i> User</a>
+            </div>
         </nav>
     </div>
     <!-- /BREADCRUMB -->
@@ -61,14 +65,18 @@
                                 <td> {{ $user->user_phonenumber }} </td>
 
                                 <td>
-                                    <span class="shadow-none badge {{ loginStatusClass()[$user->user_email_verified - 1] }}">
-                                        <i class="fa fa-{{ $user->user_email_verified == 1 ? 'check' : 'times'}}" aria-hidden="true"></i>
+                                    <span
+                                        class="shadow-none badge {{ loginStatusClass()[$user->user_email_verified - 1] }}">
+                                        <i class="fa fa-{{ $user->user_email_verified == 1 ? 'check' : 'times' }}"
+                                            aria-hidden="true"></i>
                                     </span>
                                 </td>
 
                                 <td>
-                                    <span class="shadow-none badge {{ loginStatusClass()[$user->user_phonenumber_verified - 1] }}" >
-                                        <i class="fa fa-{{ $user->user_phonenumber_verified == 1 ? 'check' : 'times'}}" aria-hidden="true"></i>
+                                    <span
+                                        class="shadow-none badge {{ loginStatusClass()[$user->user_phonenumber_verified - 1] }}">
+                                        <i class="fa fa-{{ $user->user_phonenumber_verified == 1 ? 'check' : 'times' }}"
+                                            aria-hidden="true"></i>
                                     </span>
                                 </td>
                                 <td> {{ registeredFrom()[$user->user_register_type - 1] }} </td>

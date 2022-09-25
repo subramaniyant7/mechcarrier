@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\Helper\HelperController;
 use Illuminate\Http\Request;
 use Mail;
+use Illuminate\Support\Facades\Http;
 
 class AjaxController extends Controller
 {
@@ -62,7 +63,21 @@ class AjaxController extends Controller
         try {
             $userId = $request->input('userIdentity');
             $otpExist = HelperController::mobileOTPExistByUserId(decryption($userId));
-            if (count($otpExist)) $response = ['status' => true, 'message' => 'Please check your mobile we have re-sent the OTP.'];
+            if (count($otpExist)) {
+                $response = Http::get(env('SMS_GATEWAY') . '/request?authkey=' . env('SMS_AUTHKEY') . '&mobile=' . $otpExist[0]->user_phonenumber . '&country_code=91&voice=Hello%20your%20OTP%20is%20' . $otpExist[0]->user_otp);
+                if ($response->successful()) {
+                    $res = $response->json();
+                    if (array_key_exists('LogID', $res) && $res['LogID'] != '') {
+                        $response = ['status' => true, 'message' => 'Please check your mobile we have re-sent the OTP.'];
+                    } else {
+                         $response = ['status' => false, 'message' => 'Something went wrong. Please try again.'];
+                    }
+                } else {
+                     $response = ['status' => false, 'message' => 'Something went wrong. Please try again.'];
+                }
+            }else{
+                $response = ['status' => false, 'message' => 'Invalid action'];
+            }
         } catch (\Exception $e) {
         }
         return response()->json($response);

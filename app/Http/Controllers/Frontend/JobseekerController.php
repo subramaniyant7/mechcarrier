@@ -60,7 +60,7 @@ class JobseekerController extends Controller
 
         try {
             $emailContent = ['user_email' => $formData['user_email'], 'user_otp' => $otp, 'type' => 'Email'];
-            Mail::send('frontend.email.email_jobseeker_register', $emailContent, function ($message) use ($emailContent) {
+            Mail::send('frontend.email.jobseeker_otp_email', $emailContent, function ($message) use ($emailContent) {
                 $message->to($emailContent['user_email'], 'Admin')->subject('Email OTP Verification - MechCareer');
                 $message->from(getenv('MAIL_USERNAME'), 'Admin');
             });

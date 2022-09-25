@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h4>Welcome {{ $userInfo[0]->user_firstname }}</h4>
-
+                        <img src="{{ URL::asset(FRONTEND.'/assets/images/mobileverify.svg') }}" />
                         <h1>Mobile number verification</h1>
                         <h2>Please verify your mobile number : Enter OTP send to
                             <span>{{ $userInfo[0]->user_phonenumber }}</span>
