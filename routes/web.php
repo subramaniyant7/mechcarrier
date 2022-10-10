@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\IndustryController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\DesignationController;
 use App\Http\Controllers\Admin\WebpageContent\BannerContentController;
 use App\Http\Controllers\Admin\WebpageContent\CompanyManagementController;
 use App\Http\Controllers\Admin\WebpageContent\HomePageTrainingCenterController;
@@ -27,13 +30,15 @@ use App\Http\Controllers\AjaxController;
 
 Route::middleware(['globalvalidate'])->group(function () {
     Route::get('/', [FrontendController::class, 'HomePage'])->name('home');
-    Route::get('/home', function () { return view('frontend.home'); });
+    Route::get('/home', function () {
+        return view('frontend.home');
+    });
 
     Route::get('/jobsdetails', [FrontendController::class, 'JobsDetails'])->name('jobsdetails');
     Route::get('/job_search', [FrontendController::class, 'JobSearch'])->name('jobsearch');
     Route::get('/job_search1', [FrontendController::class, 'JobSearch1'])->name('jobsearch1');
     Route::get('/job_search2', [FrontendController::class, 'JobSearch2'])->name('jobsearch2');
-    Route::get('/profile_creation', [FrontendController::class, 'ProfileCreation'])->name('profilecreation');
+
     Route::get('/mycourse_services', [FrontendController::class, 'MyCourseandService'])->name('mycourseservice');
     Route::get('/mycourse_video', [FrontendController::class, 'MyCourseandVideo'])->name('mycoursevideo');
 
@@ -41,9 +46,13 @@ Route::middleware(['globalvalidate'])->group(function () {
     Route::get('/sendsms', [JobseekerController::class, 'SendSMS'])->name('sendsms');
 
     Route::middleware(['userlogin'])->group(function () {
-        Route::get('/jobseeker_login', function () { return view('frontend.jobseeker.login'); })->name('jobseekerlogin');
+        Route::get('/jobseeker_login', function () {
+            return view('frontend.jobseeker.login');
+        })->name('jobseekerlogin');
         Route::post('/jobseeker_loginvalidate', [JobseekerController::class, 'JobseekerValidate'])->name('jobseekervalidate');
-        Route::get('/jobseeker_register', function () { return view('frontend.jobseeker.register'); })->name('jobseekerregister');
+        Route::get('/jobseeker_register', function () {
+            return view('frontend.jobseeker.register');
+        })->name('jobseekerregister');
         Route::post('/jobseeker_registration', [JobseekerController::class, 'JobseekerRegister'])->name('jobseekerregistration');
 
         Route::get('/email_verification/{id}', [JobseekerController::class, 'EmailVerification'])->name('emailverification');
@@ -62,26 +71,62 @@ Route::middleware(['globalvalidate'])->group(function () {
 
         Route::post('/redirecttodashboard', [FAjaxController::class, 'RedirectToDashboard'])->name('redirecttodashboard');
 
-        Route::get('/login', function () { return view('frontend.login'); })->name('login');
-        Route::get('/register', function () { return view('frontend.register'); })->name('register');
+        Route::get('/login', function () {
+            return view('frontend.login');
+        })->name('login');
+        Route::get('/register', function () {
+            return view('frontend.register');
+        })->name('register');
     });
 
 
     Route::middleware(['userloginvalidate'])->group(function () {
         Route::get('/user_dashboard', [FrontendController::class, 'UserDashboard'])->name('userdashboard');
+        Route::get('/profile_creation', [FrontendController::class, 'ProfileCreation'])->name('profilecreation');
+        Route::post('/upload_resume', [FAjaxController::class, 'UpdateResume'])->name('updateresume');
+        Route::get('/download_resume', [FrontendController::class, 'DownloadResume'])->name('downloadresume');
+        Route::post('/delete_resume', [FAjaxController::class, 'DeleteResume'])->name('deleteresume');
+        Route::get('/getemploymenthtml', [FAjaxController::class, 'GetEmploymentHtml'])->name('getemploymenthtml');
+        Route::get('/geteducationhtml', [FAjaxController::class, 'GetEducationHtml'])->name('geteducationhtml');
+        Route::get('/getitskillhtml', [FAjaxController::class, 'GetItSkillHtml'])->name('getitskillhtml');
+
+
+        Route::post('/action_education', [FAjaxController::class, 'ActionEducation'])->name('actioneducation');
+        Route::get('/delete_education/{id}', [FrontendController::class, 'DeleteEducation'])->name('deleteeducation');
+
+        Route::post('/action_itskill', [FAjaxController::class, 'ActionItSkill'])->name('actionitskill');
+        Route::get('/delete_itskill/{id}', [FrontendController::class, 'DeleteITSkill'])->name('deleteitskill');
+
+
+        Route::post('/actioncurrentlocation', [FAjaxController::class, 'ActionCurrentLocation'])->name('actioncurrentlocation');
+
+
+
+        Route::post('/getcompany', [FAjaxController::class, 'GetCompany'])->name('getcompany');
+        Route::post('/action_employment', [FAjaxController::class, 'ActionEmployment'])->name('actionemployment');
+        Route::get('/delete_employment/{id}', [FrontendController::class, 'DeleteEmployment'])->name('deleteemployment');
+
+
+        Route::post('/update_resume_headline', [FAjaxController::class, 'UpdateResumeHeadline'])->name('updateresumeheadline');
+        Route::post('/create_keyskils', [FAjaxController::class, 'CreateKeySkils'])->name('createkeyskils');
+        Route::post('/delete_keyskils', [FAjaxController::class, 'DeleteKeySkils'])->name('deletekeyskils');
+
+
         Route::get('/user_logout', [FrontendController::class, 'UserLogout'])->name('userlogout');
     });
 
-    Route::get('/login/{social}',[SocialMediaController::class, 'SocialMedia'])->where('social','google|linkedin');
-    Route::get('/login/{social}/callback',[SocialMediaController::class, 'handleProviderCallback'])->where('social','google|linkedin');
+    Route::get('/login/{social}', [SocialMediaController::class, 'SocialMedia'])->where('social', 'google|linkedin');
+    Route::get('/login/{social}/callback', [SocialMediaController::class, 'handleProviderCallback'])->where('social', 'google|linkedin');
 
     Route::prefix(ADMINURL)->group(function () {
         Route::middleware(['adminlogin'])->group(function () {
-            Route::get('/', function () { return view('admin.signin'); });
+            Route::get('/', function () {
+                return view('admin.signin');
+            });
             Route::post('/admin_authenticate', [AdminController::class, 'AdminAuthenticate']);
-            Route::get('/login/{social}',[AdminController::class, 'SocialMedia'])->where('social','google|linkedin');
+            Route::get('/login/{social}', [AdminController::class, 'SocialMedia'])->where('social', 'google|linkedin');
         });
-         Route::middleware(['adminloginvalidate'])->group(function () {
+        Route::middleware(['adminloginvalidate'])->group(function () {
             Route::get('/analysisdashboard', [AdminController::class, 'AnalysisDashboard'])->name('analysisdashboard');
             Route::get('/salesdashboard', [AdminController::class, 'SalesDashboard'])->name('saledashboard');
 
@@ -142,13 +187,30 @@ Route::middleware(['globalvalidate'])->group(function () {
             Route::get('/action_home_training_center_content/{centerid}/{option}/{id}', [HomePageTrainingCenterController::class, 'ActionTrainingCenterContent'])->name('actiontrainingcentercontent');
             Route::post('/save_home_training_center_content', [HomePageTrainingCenterController::class, 'SaveTrainingCenterContent'])->name('savetrainingcentercontent');
 
+            // Industry
+            Route::get('/view_industry', [IndustryController::class, 'ViewIndustry'])->name('viewindustry');
+            Route::get('/create_industry', [IndustryController::class, 'ManageIndustry'])->name('manageindustry');
+            Route::get('/action_industry/{option}/{id}', [IndustryController::class, 'ActionIndustry'])->name('actionindustry');
+            Route::post('/save_industry', [IndustryController::class, 'SaveIndustry'])->name('saveindustry');
+
+            // Department
+            Route::get('/view_department', [DepartmentController::class, 'ViewDepartment'])->name('viewdepartment');
+            Route::get('/create_department', [DepartmentController::class, 'ManageDepartment'])->name('managedepartment');
+            Route::get('/action_department/{option}/{id}', [DepartmentController::class, 'ActionDepartment'])->name('actiondepartment');
+            Route::post('/save_department', [DepartmentController::class, 'SaveDepartment'])->name('savedepartment');
+
+            // Department
+            Route::get('/view_designation', [DesignationController::class, 'ViewDesignation'])->name('viewdesignation');
+            Route::get('/create_designation', [DesignationController::class, 'ManageDesignation'])->name('managedesignation');
+            Route::get('/action_designation/{option}/{id}', [DesignationController::class, 'ActionDesignation'])->name('actiondesignation');
+            Route::post('/save_designation', [DesignationController::class, 'SaveDesignation'])->name('savedesignation');
+
+
             // Website Social Media Links
             Route::get('/social_media_links', [AdminController::class, 'SocialMediaLinks'])->name('socialmedia');
             Route::post('/save_social_media_links', [AdminController::class, 'SaveSocialMediaLinks'])->name('savesocialmedia');
 
             Route::get('/logout', [AdminController::class, 'AdminLogout'])->name('logout');
-
-         });
+        });
     });
-
 });

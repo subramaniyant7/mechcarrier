@@ -2,11 +2,14 @@
 <html lang="en">
 @include('frontend.head')
 
+
 <body>
+    @include('frontend.loader')
     @include('frontend.navbar')
-    <div class="loader">
-        <div class="lds-dual-ring"> </div>
-    </div
-    @yield('content') @include('frontend.footer') </body>
+
+
+
+    @yield('content') @include('frontend.footer')
+</body>
 
 </html>

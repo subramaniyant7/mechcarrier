@@ -283,11 +283,11 @@
                             <div class="user-dashboard-sidebar">
                                 <div class="user-information">
                                     <div class="edit-profile">
-                                        <a href="#" target="_blank"> <span><img src="{{ URL::asset(FRONTEND.'/assets/images/editprofileicon.svg')}}" /></span> Edit Profile</a>
+                                        <a href="{{ route('profilecreation') }}" > <span><img src="{{ URL::asset(FRONTEND.'/assets/images/editprofileicon.svg')}}" /></span> Edit Profile</a>
                                     </div>
                                     <div class="personal-info">
                                         <div class="user-image">
-                                            <img src="{{ URL::asset(FRONTEND.'/assets/images/profile_pic.svg')}}" />
+                                            <img style="height:70px;" src="{{ URL::asset(FRONTEND.'/assets/images/profile_pic.svg')}}" />
                                         </div>
                                         <div class="user-info">
                                             <h3>{{ $userInfo[0]->user_firstname.' '. $userInfo[0]->user_lastname}}</h3>

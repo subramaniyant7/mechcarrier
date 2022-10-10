@@ -582,7 +582,7 @@ a {
     padding: 5px;
     width: auto;
     height: auto;
-    
+
 }
 .enhance-your-resume.training-partner .enhance-your-resume-image .enhance-your-resume-card-title img {
     position: unset;
@@ -1069,14 +1069,14 @@ button.btn.btn-primary.dropdown-toggle {
     background-image: -o-linear-gradient(top, #eeeeee, white 25px);
     background-image: linear-gradient(to bottom, #eeeeee, white 25px);
   }
-  
+
   .switch-input {
     position: absolute;
     top: 0;
     left: 0;
     opacity: 0;
   }
-  
+
   .switch-label {
     position: relative;
     display: block;
@@ -1128,7 +1128,7 @@ button.btn.btn-primary.dropdown-toggle {
   .switch-input:checked ~ .switch-label:after {
     opacity: 1;
   }
-  
+
   .switch-handle {
     position: absolute;
     top: 4px;
@@ -1167,7 +1167,7 @@ button.btn.btn-primary.dropdown-toggle {
     left: 40px;
     box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
   }
-  
+
   .switch-green > .switch-input:checked ~ .switch-label {
     background: #4fb845;
   }
@@ -1252,7 +1252,7 @@ button.btn.btn-primary.dropdown-toggle {
     border-radius: 50%;
     border: 1px solid #cdcbd0;
   }
-  
+
   .circle-wrap .circle .mask,
   .circle-wrap .circle .fill {
     width: 120px;
@@ -1260,11 +1260,11 @@ button.btn.btn-primary.dropdown-toggle {
     position: absolute;
     border-radius: 50%;
   }
-  
+
   .circle-wrap .circle .mask {
     clip: rect(0px, 150px, 150px, 75px);
   }
-  
+
   .circle-wrap .inside-circle {
     width: 92px;
     height: 92px;
@@ -1281,21 +1281,21 @@ button.btn.btn-primary.dropdown-toggle {
     font-size: 20px;
     /* top: 30px; */
   }
-  
+
   /* color animation */
-  
+
   /* 3rd progress bar */
   .mask .fill {
     clip: rect(0px, 75px, 150px, 0px);
     background-color: #1D56BB;
   }
-  
+
   .mask.full,
   .circle .fill {
     animation: fill ease-in-out 3s;
     transform:rotate(45deg);
   }
-  
+
   @keyframes fill{
     0% {
       transform: rotate(0deg);
@@ -1585,7 +1585,7 @@ span.switch-handle {
     border-radius: 50%;
     border: 1px solid #cdcbd0;
   }
-  
+
 .job-match-score .user-progress-bar .user-progress .circle-wrap .circle .mask,
 .job-match-score .user-progress-bar .user-progress .circle-wrap .circle .fill {
     width: 90px;
@@ -1593,7 +1593,7 @@ span.switch-handle {
     position: absolute;
     border-radius: 50%;
   }
-  
+
 .job-match-score .user-progress-bar .user-progress .circle-wrap .circle .mask {
     clip: rect(0px, 162px, 40px, 37px);
 }
@@ -1631,7 +1631,7 @@ span.switch-handle {
 }
 .job-description ul {
     padding-inline-start: 30px;
-    padding-top: 20px;    
+    padding-top: 20px;
 }
 .job-description ul li {
     font-size: 14px;
@@ -1726,7 +1726,7 @@ span.switch-handle {
     background: #FFFFFF;
     border: 0.5px solid #939393;
     border-radius: 3px;
-    padding: 15px 20px 5px; 
+    padding: 15px 20px 5px;
     margin-bottom: 20px;
 }
 .similar-jobs .similar-jobs-card .similar-job-card-title h4 {
@@ -1792,7 +1792,7 @@ span.switch-handle {
 }
 
 
-.mycourse-videopage .video-recommended{ 
+.mycourse-videopage .video-recommended{
     background: #F0F0F0;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
     padding: 30px 20px;
@@ -1997,7 +1997,7 @@ span.switch-handle {
 .profile-creation-top .profile-contact ul li.workexp img {
     position: relative;
     left: -6px;
-} 
+}
 .profile-creation-top .user-progress-bar {
     justify-content: space-around;
  }
@@ -2015,7 +2015,7 @@ span.switch-handle {
     border-radius: 50%;
     border: 1px solid #cdcbd0;
   }
-  
+
 .profile-creation-top .user-progress-bar .circle-wrap .circle .mask,
 .profile-creation-top .user-progress-bar .circle-wrap .circle .fill {
     width: 150px;
@@ -2023,7 +2023,7 @@ span.switch-handle {
     position: absolute;
     border-radius: 50%;
   }
-  
+
 .profile-creation-top .user-progress-bar .circle-wrap .inside-circle {
     width: 130px;
     height: 130px;
@@ -2086,6 +2086,7 @@ span.switch-handle {
 .profile-creation-body .profile-sidebar ul li span {
     position: absolute;
     right: 0;
+    top: 18px;
 }
 
 .resume-upload {

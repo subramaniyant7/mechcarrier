@@ -91,9 +91,6 @@ class UserController extends Controller
         return redirect()->route('importusers')->with('success', 'User Imported Successfully');
     }
 
-
-
-
     public function ViewUser()
     {
         $users = CommonHelperController::getUsers();

@@ -132,5 +132,26 @@ class CommonHelperController extends Controller
         return DB::table("user_details")->where('user_phonenumber', $phone)->get();
     }
 
+    static function getIndustry($id = '')
+    {
+        $data = DB::table('industry');
+        if ($id != '')  $data->where('industry_id', $id);
+        return $data->get();
+    }
+
+    static function getDepartment($id = '')
+    {
+        $data = DB::table('department');
+        if ($id != '')  $data->where('department_id', $id);
+        return $data->get();
+    }
+
+    static function getDesignation($id = '')
+    {
+        $data = DB::table('designation');
+        if ($id != '')  $data->where('designation_id', $id);
+        return $data->get();
+    }
+
 
 }

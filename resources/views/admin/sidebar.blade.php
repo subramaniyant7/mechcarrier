@@ -26,7 +26,7 @@
         <div class="shadow-bottom"></div>
         <ul class="list-unstyled menu-categories" id="accordionExample">
             <li class="menu {{
-            (request()->segment(2) == 'analysisdashboard' || request()->segment(2) == 'salesdashboard') ? 'active' : '' }}">
+                (request()->segment(2) == 'analysisdashboard' || request()->segment(2) == 'salesdashboard') ? 'active' : '' }}">
                 <a href="#dashboard" data-bs-toggle="collapse" aria-expanded="{{(request()->segment(2) == 'analysisdashboard' || request()->segment(2) == 'salesdashboard') ? 'true' : 'false'}}"
                     class="dropdown-toggle {{(request()->segment(2) == 'analysisdashboard' || request()->segment(2) == 'salesdashboard') ? '' : 'collapsed'}}">
                     <div class="">
@@ -60,7 +60,7 @@
 
             <li class="menu
                 {{(request()->segment(2) == 'banner_content' || request()->segment(2) == 'keypoint' ||
-            request()->segment(2) == 'social_media_links') ? 'active' : '' }}">
+                request()->segment(2) == 'social_media_links') ? 'active' : '' }}">
                 <a href="#websitecontent" data-bs-toggle="collapse" aria-expanded="{{(request()->segment(2) == 'banner_content' || request()->segment(2) == 'view_mapped_company' ||
                     request()->segment(2) == 'view_home_training_center' || request()->segment(2) == 'view_whywe' ||
                     request()->segment(2) == 'social_media_links' || request()->segment(2) == 'view_careerbuild') ? 'true' : '' }}" class="dropdown-toggle">
@@ -116,6 +116,50 @@
                     </div>
                 </a>
             </li>
+
+
+
+            <li class="menu {{
+                (request()->segment(2) == 'view_industry' || request()->segment(2) == 'view_department' || request()->segment(2) == 'view_designation') ? 'active' : '' }}">
+                <a href="#profile" data-bs-toggle="collapse" aria-expanded="{{(request()->segment(2) == 'view_industry' || request()->segment(2) == 'view_department' || request()->segment(2) == 'view_designation') ? 'true' : 'false'}}"
+                    class="dropdown-toggle {{(request()->segment(2) == 'view_industry' || request()->segment(2) == 'view_department' || request()->segment(2) == 'view_designation') ? '' : 'collapsed'}}">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        <span>Profile</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-chevron-right">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled {{(request()->segment(2) == 'view_industry' || request()->segment(2) == 'view_department'
+                || request()->segment(2) == 'view_designation') ? 'show' : ''}}" id="profile"
+                    data-bs-parent="#accordionExample">
+                    <li class="{{request()->segment(2) == 'view_industry' ? 'active' : ''}}">
+                        <a href="{{ url(ADMINURL.'/view_industry') }}"> Industry </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_department' ? 'active' : ''}}" element="{{request()->segment(1)}}">
+                        <a href="{{ url(ADMINURL.'/view_department') }}"> Department </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_designation' ? 'active' : ''}}" element="{{request()->segment(1)}}">
+                        <a href="{{ url(ADMINURL.'/view_designation') }}"> Designation </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+
+
 
 {{--            <li class="menu  {{request()->segment(2) == 'social_media_links' ? 'active' : ''}}">--}}
 {{--                <a href="{{ route('socialmedia') }}" aria-expanded="false" class="dropdown-toggle">--}}
