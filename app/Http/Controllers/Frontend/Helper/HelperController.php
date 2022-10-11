@@ -99,16 +99,16 @@ class HelperController extends Controller
         return DB::table('user_employment')->where('user_employment_id', $id)->get();
     }
 
-    static function getUserEmploymentCurrentCompany($userid, $empId='')
+    static function getUserEmploymentCurrentCompany($userid, $empId = '')
     {
-        $data = DB::table('user_employment')->where([['user_id', $userid],['user_employment_current_company', 1]]);
-        if($empId != '') $data->where('user_employment_id', '!=', $empId);
+        $data = DB::table('user_employment')->where([['user_id', $userid], ['user_employment_current_company', 1]]);
+        if ($empId != '') $data->where('user_employment_id', '!=', $empId);
         return $data->get();
     }
 
     static function getCompany($value)
     {
-        return DB::table('company_details')->where('company_detail_name', 'like', '%'.$value.'%')->get();
+        return DB::table('company_details')->where('company_detail_name', 'like', '%' . $value . '%')->get();
     }
 
     static function getEducation($id)
@@ -124,5 +124,20 @@ class HelperController extends Controller
     static function getITSkill($id)
     {
         return DB::table('user_itskils')->where('user_itskil_id', $id)->get();
+    }
+
+    static function getUserLanguages($id)
+    {
+        return DB::table('user_languages')->where('user_id', $id)->get();
+    }
+
+    static function getLanguagesById($id)
+    {
+        return DB::table('user_languages')->where('user_language_id', $id)->get();
+    }
+
+    static function getUserCurrentEmployment($id)
+    {
+        return DB::table('user_employment')->where([['user_id', $id], ['user_employment_current_company', 1]])->get();
     }
 }

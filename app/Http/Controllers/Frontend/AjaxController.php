@@ -106,6 +106,40 @@ class AjaxController extends Controller
         return response()->json($response);
     }
 
+
+    public function UpdateProfilePicture(Request $request)
+    {
+        $response = ['status' => false, 'message' => ''];
+        if ($request->hasFile('profile_picture')) {
+            try {
+                $file = $request->file('profile_picture');
+                $destinationPath = public_path('uploads/users/profilepic');
+                $fileName = $file->getClientOriginalName();
+                $fileExtension = explode('.', $fileName);
+                $file_size = $file->getSize();
+                if (
+                    strtolower(end($fileExtension)) != 'jpeg' && strtolower(end($fileExtension)) != 'png' && strtolower(end($fileExtension)) != 'jpg'
+                ) {
+                    $response['message'] = 'Please upload valid Profile Picture';
+                }
+                $userId = $request->session()->get('frontend_userid');
+                $file->move($destinationPath, $userId . '_' . $fileName);
+                $profileInfo = HelperController::getUserProfile($userId);
+                $data = [
+                    'user_id' => $userId, 'user_profile_picture' => $userId . '_' . $fileName ];
+                if (count($profileInfo)) {
+                    updateQuery('user_details', 'user_id', $userId, $data);
+                }
+                $response = ['status' => true, 'message' => 'Profile Picture uploaded Successfully'];
+            } catch (\Exception $e) {
+                $response['message'] = 'Something went wrong. Please trya again';
+            }
+        } else {
+            $response['message'] = 'Please upload valid Profile Picture';
+        }
+        return $response;
+    }
+
     public function UpdateResume(Request $request)
     {
         $response = ['status' => false, 'message' => ''];
@@ -223,6 +257,44 @@ class AjaxController extends Controller
         return $response;
     }
 
+    public function GetNewLanguage(Request $request)
+    {
+        $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
+        try {
+            if ($request->session()->get('frontend_userid') != '') {
+                $html = view('frontend.users.newlanguage')->render();
+                $response = ['status' => true, 'message' => '', 'data' => $html];
+            }
+        } catch (\Exception $e) {
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+
+
+
+    public function GetPersonalDetailHtml(Request $request)
+    {
+        $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
+        try {
+            if ($request->session()->get('frontend_userid') != '') {
+                $data = HelperController::getUserLanguages($request->session()->get('frontend_userid'));
+                $userInfo = HelperController::getUserInfo($request->session()->get('frontend_userid'));
+
+                $html = view('frontend.users.actionpersonaldetails', compact('data', 'userInfo'))->render();
+                $response = ['status' => true, 'message' => '', 'data' => $html];
+            }
+        } catch (\Exception $e) {
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+
+
 
 
 
@@ -307,6 +379,79 @@ class AjaxController extends Controller
         return $response;
     }
 
+    public function ActionPersonalData(Request $request)
+    {
+        $response = ['status' => false, 'message' => ''];
+        try {
+            $userId = $request->session()->get('frontend_userid');
+            $userData = $request->only(
+                'user_gender',
+                'user_marital_status',
+                'user_dob',
+                'user_permanent_address',
+                'user_permanent_address_pin',
+                'user_work_permit'
+            );
+            $languageData = $request->only(
+                'user_language_primary_id',
+                'user_language_proficiency',
+                'user_language_read',
+                'user_language_write',
+                'user_language_speak',
+                'user_language_id',
+                'user_language_read_value',
+                'user_language_write_value',
+                'user_language_speak_value'
+            );
+
+            // echo '<pre>';
+            // print_r($languageData);
+            // exit;
+
+            $totalRecord = count($languageData['user_language_primary_id']);
+
+            foreach ($languageData['user_language_primary_id'] as $k => $langloop) {
+                $update = false;
+                $prepareData = [
+                    'user_id' => $userId, 'user_language_primary_id' => $langloop,
+                    'user_language_proficiency' => isset($languageData['user_language_proficiency'][$k]) ? $languageData['user_language_proficiency'][$k] : '',
+                    'user_language_read' => isset($languageData['user_language_read_value'][$k]) ? $languageData['user_language_read_value'][$k] : 2,
+                    'user_language_write' => isset($languageData['user_language_write_value'][$k]) ? $languageData['user_language_write_value'][$k] : 2,
+                    'user_language_speak' => isset($languageData['user_language_speak_value'][$k]) ? $languageData['user_language_speak_value'][$k] : 2,
+                ];
+                if(isset($languageData['user_language_id'][$k])){
+                    $langExist = HelperController::getLanguagesById($languageData['user_language_id'][$k]);
+                    if(count($langExist)){
+                        $update = true;
+                    }
+                }
+
+                if($update){
+                    updateQuery('user_languages','user_language_id',$languageData['user_language_id'][$k],$prepareData);
+                }else{
+                    insertQuery('user_languages', $prepareData);
+                }
+
+
+            }
+            // echo '<pre>';
+            // print_r($languageData);
+            // exit;
+
+            updateQuery('user_details', 'user_id', $userId, $userData);
+
+
+
+            $response = ['status' => true, 'message' => 'Perosnal Details Successfully saved'];
+        } catch (\Exception $e) {
+            $response = ['status' => false, 'message' => $e->getMessage()];
+        }
+        return $response;
+    }
+
+
+
+
     public function ActionItSkill(Request $request)
     {
         $response = ['status' => false, 'message' => ''];
@@ -324,6 +469,8 @@ class AjaxController extends Controller
         }
         return $response;
     }
+
+
 
     public function ActionCurrentLocation(Request $request)
     {

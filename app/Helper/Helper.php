@@ -258,6 +258,19 @@ function Maritual()
     return ['Single', 'Married', 'Other'];
 }
 
-function Country(){
-    return ['America','Russia','Japan'];
+function Country()
+{
+    return ['America', 'Russia', 'Japan'];
 }
+
+function language()
+{
+    return ['English', 'Tamil', 'Hindi'];
+}
+
+function languageStrength()
+{
+    return ['Basic', 'Good', 'Proficient', 'Master'];
+}
+
+

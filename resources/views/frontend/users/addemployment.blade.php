@@ -93,25 +93,48 @@
         <div class="col-md-6">
             <label>Industry type *</label>
             <select class="form-control" name="user_employment_industry_type" aria-label="Default select example"
-                required>
+                required onchange="showOther(this.value,'user_employment_industry_type')">
                 <option value="">Select</option>
                 @foreach (getActiveRecord('industry') as $industry)
                     <option value="{{ $industry->industry_id }}"
                         {{ count($data) && $data[0]->user_employment_industry_type == $industry->industry_id ? 'selected' : '' }}>
                         {{ $industry->industry_name }}</option>
                 @endforeach
+                <option value="0" {{ count($data) && $data[0]->user_employment_industry_type == 0 ? 'selected' : '' }}>Other</option>
             </select>
         </div>
         <div class="col-md-6">
             <label>Department *</label>
-            <select class="form-control" name="user_employment_department" aria-label="Default select example" required>
+            <select class="form-control" name="user_employment_department" aria-label="Default select example" required
+            onchange="showOther(this.value,'user_employment_department')">
                 <option value="">Select</option>
                 @foreach (getActiveRecord('department') as $department)
                     <option value="{{ $department->department_id }}"
                         {{ count($data) && $data[0]->user_employment_department == $department->department_id ? 'selected' : '' }}>
                         {{ $department->department_name }}</option>
                 @endforeach
+                <option value="0" {{ count($data) && $data[0]->user_employment_department == 0 ? 'selected' : '' }}>Other</option>
             </select>
+        </div>
+    </div>
+
+    <div class="row user_employment_industry_type" style="display: {{ count($data) && $data[0]->user_employment_industry_type_other != '' ? 'block' : 'none' }}">
+        <div class="col-md-12">
+            <label>Industry Name *</label>
+                <input type="text" id="" placeholder="Add Industry name"
+                    name="user_employment_industry_type_other" class="form-control"
+                    {{ count($data) && $data[0]->user_employment_industry_type_other != '' ? 'required' : '' }}
+                    value="{{ count($data) ? $data[0]->user_employment_industry_type_other : '' }}" />
+        </div>
+    </div>
+
+    <div class="row user_employment_department" style="display: {{ count($data) && $data[0]->user_employment_department_other != '' ? 'block' : 'none' }}">
+        <div class="col-md-12">
+            <label>Department Name *</label>
+                <input type="text" id="" placeholder="Add Department name"
+                    name="user_employment_department_other" class="form-control"
+                    {{ count($data) && $data[0]->user_employment_department_other != '' ? 'required' : '' }}
+                    value="{{ count($data) ? $data[0]->user_employment_department_other : '' }}" />
         </div>
     </div>
 
@@ -131,18 +154,31 @@
         </div>
     </div>
 
+
+
     <div class="row">
         <div class="col-md-12">
             <label>Current Designation *</label>
             <select class="form-control" name="user_employment_current_designation" aria-label="Default select example"
-                required>
+                required onchange="showOther(this.value,'user_employment_current_designation')">
                 <option selected value="">Add designation</option>
                 @foreach (getActiveRecord('designation') as $designation)
                     <option value="{{ $designation->designation_id }}"
                         {{ count($data) && $data[0]->user_employment_current_designation == $designation->designation_id ? 'selected' : '' }}>
                         {{ $designation->designation_name }}</option>
                 @endforeach
+                <option value="0" {{ count($data) && $data[0]->user_employment_current_designation == 0 ? 'selected' : '' }}>Other</option>
             </select>
+        </div>
+    </div>
+
+    <div class="row user_employment_current_designation" style="display: {{ count($data) && $data[0]->user_employment_current_designation_other != '' ? 'block' : 'none' }}">
+        <div class="col-md-12">
+            <label>Designation Name *</label>
+                <input type="text" id="" placeholder="Add Designation name"
+                    name="user_employment_current_designation_other" class="form-control"
+                    {{ count($data) && $data[0]->user_employment_current_designation_other != '' ? 'required' : '' }}
+                    value="{{ count($data) ? $data[0]->user_employment_current_designation_other : '' }}" />
         </div>
     </div>
 
@@ -221,13 +257,13 @@
                     <option selected value="">0 Thousand </option>
                     <option value="1"
                         {{ count($data) && $data[0]->user_employment_current_salary_thousand == 1 ? 'selected' : '' }}>
-                        5 Thousand</option>
+                        1 Thousand</option>
                     <option value="2"
                         {{ count($data) && $data[0]->user_employment_current_salary_thousand == 2 ? 'selected' : '' }}>
-                        10 Thousand</option>
+                        2 Thousand</option>
                     <option value="3"
                         {{ count($data) && $data[0]->user_employment_current_salary_thousand == 3 ? 'selected' : '' }}>
-                        15 Thousand</option>
+                        3 Thousand</option>
                 </select>
             </div>
         </div>
@@ -321,4 +357,14 @@
             }
         });
     });
+
+    const showOther = (val, className) => {
+        if(val == 0){
+            $('.'+className).show();
+            $('.'+className).find('input').attr('required','required');
+        }else{
+            $('.'+className).hide();
+            $('.'+className).find('input').removeAttr('required');
+        }
+    }
 </script>

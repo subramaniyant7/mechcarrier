@@ -83,12 +83,18 @@ Route::middleware(['globalvalidate'])->group(function () {
     Route::middleware(['userloginvalidate'])->group(function () {
         Route::get('/user_dashboard', [FrontendController::class, 'UserDashboard'])->name('userdashboard');
         Route::get('/profile_creation', [FrontendController::class, 'ProfileCreation'])->name('profilecreation');
+        Route::post('/upload_profile_picture', [FAjaxController::class, 'UpdateProfilePicture'])->name('uploadprofilepicture');
         Route::post('/upload_resume', [FAjaxController::class, 'UpdateResume'])->name('updateresume');
+
         Route::get('/download_resume', [FrontendController::class, 'DownloadResume'])->name('downloadresume');
         Route::post('/delete_resume', [FAjaxController::class, 'DeleteResume'])->name('deleteresume');
         Route::get('/getemploymenthtml', [FAjaxController::class, 'GetEmploymentHtml'])->name('getemploymenthtml');
         Route::get('/geteducationhtml', [FAjaxController::class, 'GetEducationHtml'])->name('geteducationhtml');
         Route::get('/getitskillhtml', [FAjaxController::class, 'GetItSkillHtml'])->name('getitskillhtml');
+        Route::get('/getpersonaldetailhtml', [FAjaxController::class, 'GetPersonalDetailHtml'])->name('getpersonaldetailhtml');
+        Route::post('/action_personaldetails_data', [FAjaxController::class, 'ActionPersonalData'])->name('actionpersonaldetailsdata');
+
+        Route::get('/newlanguagehtml', [FAjaxController::class, 'GetNewLanguage'])->name('newlanguagehtml');
 
 
         Route::post('/action_education', [FAjaxController::class, 'ActionEducation'])->name('actioneducation');

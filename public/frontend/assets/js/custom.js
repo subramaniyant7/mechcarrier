@@ -156,6 +156,44 @@ $('.dashboardvalidate').click(function () {
     }
 })
 
+$('.user_img').on('change', function (e) {
+    let files = e.target.files;
+    if (files.length) {
+        let file = files[0];
+        let fileName = files[0].name;
+        var form_data = new FormData();
+        var ext = fileName.split('.').pop().toLowerCase();
+        if (jQuery.inArray(ext, ['jpg', 'png', 'jpeg']) == -1) {
+            toastr.error('Please upload valid file format');
+            return false;
+        }
+        let fsize = file.size || file.fileSize;
+        form_data.append("profile_picture", file);
+        $('.loader').show();
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}upload_profile_picture`,
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                if (data.status) {
+                    toastr.success(data.message)
+                    location.reload();
+                }
+                else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    }
+});
+
 
 $('.resume_upload').on('change', function (e) {
     let files = e.target.files;
@@ -546,7 +584,7 @@ $(document).on('click', '.cancel_education', function (e) {
     }
 });
 
-$('.custom_change').change(function(e){
+$('.custom_change').change(function (e) {
     $(this).parents('.current-location').find('.form-buttons').show();
 });
 
@@ -670,3 +708,74 @@ $(document).on('click', '.cancel_itskill', function (e) {
     }
 });
 
+
+
+$('.action_personaldetails').click(function () {
+    $('.loader').show();
+    $.ajax({
+        type: 'get',
+        url: `${siteurl}getpersonaldetailhtml`,
+        success: function (data) {
+            if (data.status) {
+                $('.action_personaldetailsdata').html(data.data);
+            }
+            else toastr.error(data.message);
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+});
+
+
+$(document).on('submit', '#action_personaldetails_data', function (e) {
+    e.preventDefault();
+    let formValue = $(this).serialize();
+    $('.loader').show();
+    $.ajax({
+        type: 'post',
+        url: `${siteurl}action_personaldetails_data`,
+        data: formValue,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                toastr.success(data.message)
+                location.reload();
+            }
+            else toastr.error(data.message);
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+    console.log(formValue);
+});
+
+$(document).on('click', '.cancel_personaldetails', function (e) {
+    $('.action_personaldetailsdata').html('');
+});
+
+$(document).on('click', '.new_language', function (e) {
+    $.ajax({
+        type: 'get',
+        url: `${siteurl}newlanguagehtml`,
+        success: function (data) {
+            if (data.status) {
+                $('.new_lan_html').html(data.data);
+            }
+            else toastr.error(data.message);
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+});

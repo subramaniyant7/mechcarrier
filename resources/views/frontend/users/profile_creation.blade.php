@@ -28,10 +28,17 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="profile-image">
-                            <img style="height:70px;" src="{{ URL::asset(FRONTEND.'/assets/images/profile_pic.svg')}}" />
-                            <img src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/camera.svg') }}" />
+                            @php
+                                $profile = $userInfo['userDetails'][0]->user_profile_picture != '' ? 'uploads/users/profilepic/'.$userInfo['userDetails'][0]->user_profile_picture  : FRONTEND .'/assets/images/profile_pic.svg';
+                            @endphp
+                            <img style="    height: 90px;
+                            width: 56%;
+                            border-radius: 50%;
+                        }" src="{{ URL::asset($profile) }}" />
+                            <img onclick="{ $('.user_img').trigger('click'); }" src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/camera.svg') }}" />
                             <h4>{{ $userInfo['userDetails'][0]->user_firstname . ' ' . $userInfo['userDetails'][0]->user_lastname }}
                             </h4>
+                            <input type="file" class="user_img" name="user_profile" style="display:none;">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -77,14 +84,15 @@
                                 @if (count($userInfo['userProfile']))
                                     @if ($userInfo['userProfile'][0]->user_total_experience_year != '')
                                         <li class="workexp"><img
-                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/workexp.svg') }}" />
-                                            {{ $userInfo['userProfile'][0]->user_total_experience_year }} Years
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/workexp.svg') }}" />{{ $userInfo['userProfile'][0]->user_total_experience_year }} Years {{ $userInfo['userProfile'][0]->user_total_experience_month != 0 ? $userInfo['userProfile'][0]->user_total_experience_month .' Months' : '' }}
                                         </li>
                                     @endif
-                                    @if ($userInfo['userProfile'][0]->user_total_experience_month != '')
+                                @endif
+                                @if (count($currentEmployment))
+                                    @if ($currentEmployment[0]->user_employment_current_salary_lakh != '')
                                         <li class="deposit"><img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/deposit.svg') }}" />
-                                            5.6 Lakhs /
+                                            {{ $currentEmployment[0]->user_employment_current_salary_lakh }} Lakhs {{ $currentEmployment[0]->user_employment_current_salary_thousand . ' Thousand'}} /
                                             Annum </li>
                                     @endif
                                 @endif
@@ -188,6 +196,10 @@
                                                     }
 
                                                     if ($sidebar['key'] == 'userITSkils' && count($userInfo['userITSkils'])) {
+                                                        $verify = 'check';
+                                                    }
+
+                                                    if ($sidebar['key'] == 'personadetail' && (count($userInfo['userLanguages']) && $userInfo['userDetails'][0]->user_gender != '' && $userInfo['userDetails'][0]->user_marital_status != '' && $userInfo['userDetails'][0]->user_dob != '' && $userInfo['userDetails'][0]->user_permanent_address != '' && $userInfo['userDetails'][0]->user_permanent_address_pin != '')) {
                                                         $verify = 'check';
                                                     }
 
@@ -470,186 +482,71 @@
                                 <div class="resume-upload resume-headline employement personal-details">
                                     <div class="d-flex">
                                         <h4>Personal Details </h4>
-                                        <span><img
+                                        <span class="action_personaldetails pointer">
+                                            <img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
                                             Add/edit</span>
                                     </div>
                                     <div class="education-list">
                                         <ul>
-                                            <li>Personal : <span>Male, Married</span> </li>
-                                            <li>Date of Birth : <span> 26 Apr 1991 </span> </li>
+                                            <li>Personal :
+                                                <span>{{ $userInfo['userDetails'][0]->user_gender != ''
+                                                    ? Gender()[$userInfo['userDetails'][0]->user_gender - 1] . ' ,'
+                                                    : '-' }}
+                                                    {{ $userInfo['userDetails'][0]->user_marital_status != '' ? Maritual()[$userInfo['userDetails'][0]->user_marital_status - 1] : '' }}</span>
+                                            </li>
+                                            <li>Date of Birth : <span>
+                                                    {{ $userInfo['userDetails'][0]->user_dob != '' ? date('d F Y', strtotime($userInfo['userDetails'][0]->user_dob)) : '-' }}
+                                                </span> </li>
                                             <li>Work Permit : <span> Germeny</span> </li>
                                         </ul>
-                                        <p>Address : <span> Rz 80 5D, Shankar Park, West Sagarpur, South West Delhi,
-                                                110046</span> </p>
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Languages : </th>
-                                                    <th>Proficiency </th>
-                                                    <th>Read</th>
-                                                    <th>Write</th>
-                                                    <th>Speak</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Hindi </td>
-                                                    <td>Proficient</td>
-                                                    <td><img
-                                                            src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/tablecheck.svg') }}" />
-                                                    </td>
-                                                    <td><img
-                                                            src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/tablecheck.svg') }}" />
-                                                    </td>
-                                                    <td><img
-                                                            src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/tablecheck.svg') }}" />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <p>Address : <span>
+                                                {{ $userInfo['userDetails'][0]->user_permanent_address != ''
+                                                    ? $userInfo['userDetails'][0]->user_permanent_address . ','
+                                                    : '-' }}
+                                                {{ $userInfo['userDetails'][0]->user_permanent_address_pin }}</span> </p>
 
+                                        @if (count($userInfo['userLanguages']))
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Languages : </th>
+                                                        <th>Proficiency </th>
+                                                        <th>Read</th>
+                                                        <th>Write</th>
+                                                        <th>Speak</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($userInfo['userLanguages'] as $language)
+                                                        @php
+                                                            $read = $language->user_language_read == 1 ? 'tablecheck.svg' : 'cancel.svg';
+                                                            $write = $language->user_language_write == 1 ? 'tablecheck.svg' : 'cancel.svg';
+                                                            $speak = $language->user_language_speak == 1 ? 'tablecheck.svg' : 'cancel.svg';
+                                                        @endphp
+                                                        <tr>
+                                                            <td>{{ language()[$language->user_language_primary_id - 1] }}
+                                                            </td>
+                                                            <td>{{ languageStrength()[$language->user_language_proficiency - 1] }}
+                                                            </td>
+                                                            <td><img
+                                                                    src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/' . $read) }}" />
+                                                            </td>
+                                                            <td><img
+                                                                    src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/' . $write) }}" />
+                                                            </td>
+                                                            <td><img
+                                                                    src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/' . $speak) }}" />
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+                                        @endif
+                                        <div class="action_personaldetailsdata"></div>
                                     </div>
-                                    <span class="chevron-up"><img
-                                            src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/chevronup.svg') }}" /></span>
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-12 delete">
-                                                <a href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label>Gender </label>
-                                                <select class="form-control" aria-label="Default select example">
-                                                    <option selected="" value="">Select gender</option>
-                                                    @foreach (Gender() as $k => $gender)
-                                                        <option value="{{ $k + 1 }}"
-                                                            >
-                                                            {{ $gender }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label>Marital Status </label>
-                                                <select class="form-control" aria-label="Default select example">
-                                                    <option selected="">Select status</option>
-                                                    @foreach (Maritual() as $k => $maritual)
-                                                        <option value="{{ $k + 1 }}"
-                                                            >
-                                                            {{ $maritual }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row dob">
-                                            <div class="col-md-6">
-                                                <label>Date of Birth</label>
-                                                <div class="d-flex">
-                                                    <input type="date" name="user_dob"
-                                                    placeholder="Date of Birth" class="form-control">
-                                                </div>
 
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label>Permanent Address</label>
-                                                <input type="text" placeholder="Add permanent address"
-                                                    class="form-control" name="user_permanent_address">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label>Permanent Address</label>
-                                                <input type="text" name="user_permanent_address_pin"
-                                                    placeholder="Add PIN code" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Work Permit for Other Countries</label>
-                                                <select class="form-control" name="user_work_permit" aria-label="Default select example">
-                                                    <option selected="">Select countries ( max 5 )</option>
-                                                    @foreach (Country() as $k => $country)
-                                                        <option value="{{ $k + 1 }}"
-                                                            >
-                                                            {{ $country }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row languages">
-                                            <div class="col-md-3">
-                                                <label>Languages </label>
-                                                <br />
-                                                <select class="form-control" aria-label="Default select example">
-                                                    <option selected="">Add</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label>Proficiency </label>
-                                                <br />
-                                                <select class="form-control" aria-label="Default select example">
-                                                    <option selected="">Select</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2 form-checkbox">
-                                                <p>Read</p>
-                                                <div class="d-flex">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="flexCheckDefault">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 form-checkbox">
-                                                <p>Write</p>
-                                                <div class="d-flex">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="flexCheckDefault">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 form-checkbox">
-                                                <p>Speak</p>
-                                                <div class="d-flex">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="flexCheckDefault">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row add-another">
-                                            <div class="col-md-12">
-                                                <a href="#">Add Another Language</a>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-buttons">
-                                                    <button type="button" class="btn btn-cancel">Cancel</button>
-                                                    <button type="button" class="btn btn-save">Save</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
