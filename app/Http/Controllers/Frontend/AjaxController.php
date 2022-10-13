@@ -314,8 +314,9 @@ class AjaxController extends Controller
     {
         $response = ['status' => false, 'message' => ''];
         try {
-            $formData = $request->except('user_employment_id');
+            $formData = $request->except('user_employment_id','current_company_id');
             $formData['user_id'] = $request->session()->get('frontend_userid');
+            $formData['user_employment_current_companyname'] = $request->input('current_company_id');
             if ($formData['user_employment_current_company'] == 1) {
                 $formData['user_employment_working_year'] = array_search(date('Y'), Year()) + 1;
                 $formData['user_employment_working_month'] = date('m');

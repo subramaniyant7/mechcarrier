@@ -29,13 +29,15 @@
                     <div class="col-md-2">
                         <div class="profile-image">
                             @php
-                                $profile = $userInfo['userDetails'][0]->user_profile_picture != '' ? 'uploads/users/profilepic/'.$userInfo['userDetails'][0]->user_profile_picture  : FRONTEND .'/assets/images/profile_pic.svg';
+                                $profile = $userInfo['userDetails'][0]->user_profile_picture != '' ? 'uploads/users/profilepic/' . $userInfo['userDetails'][0]->user_profile_picture : FRONTEND . '/assets/images/profile_pic.svg';
                             @endphp
                             <img style="    height: 90px;
                             width: 56%;
                             border-radius: 50%;
-                        }" src="{{ URL::asset($profile) }}" />
-                            <img onclick="{ $('.user_img').trigger('click'); }" src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/camera.svg') }}" />
+                        }"
+                                src="{{ URL::asset($profile) }}" />
+                            <img onclick="{ $('.user_img').trigger('click'); }"
+                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/camera.svg') }}" />
                             <h4>{{ $userInfo['userDetails'][0]->user_firstname . ' ' . $userInfo['userDetails'][0]->user_lastname }}
                             </h4>
                             <input type="file" class="user_img" name="user_profile" style="display:none;">
@@ -84,7 +86,9 @@
                                 @if (count($userInfo['userProfile']))
                                     @if ($userInfo['userProfile'][0]->user_total_experience_year != '')
                                         <li class="workexp"><img
-                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/workexp.svg') }}" />{{ $userInfo['userProfile'][0]->user_total_experience_year }} Years {{ $userInfo['userProfile'][0]->user_total_experience_month != 0 ? $userInfo['userProfile'][0]->user_total_experience_month .' Months' : '' }}
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/workexp.svg') }}" />{{ $userInfo['userProfile'][0]->user_total_experience_year }}
+                                            Years
+                                            {{ $userInfo['userProfile'][0]->user_total_experience_month != 0 ? $userInfo['userProfile'][0]->user_total_experience_month . ' Months' : '' }}
                                         </li>
                                     @endif
                                 @endif
@@ -92,7 +96,9 @@
                                     @if ($currentEmployment[0]->user_employment_current_salary_lakh != '')
                                         <li class="deposit"><img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/deposit.svg') }}" />
-                                            {{ $currentEmployment[0]->user_employment_current_salary_lakh }} Lakhs {{ $currentEmployment[0]->user_employment_current_salary_thousand . ' Thousand'}} /
+                                            {{ $currentEmployment[0]->user_employment_current_salary_lakh }} Lakhs
+                                            {{ $currentEmployment[0]->user_employment_current_salary_thousand . ' Thousand' }}
+                                            /
                                             Annum </li>
                                     @endif
                                 @endif
@@ -333,10 +339,15 @@
                                                 $interval = $datetime1->diff($datetime2);
 
                                                 $months = $interval->format('%m') > 0 ? $interval->format('%m months') : '';
+                                                $companyName = '';
+                                                $getCompany = \App\Http\Controllers\Frontend\Helper\HelperController::getCompanyById($employment->user_employment_current_companyname);
+                                                if (count($getCompany)) {
+                                                    $companyName = $getCompany[0]->company_detail_name;
+                                                }
                                             @endphp
                                             <div>
                                                 <h5>
-                                                    {{ $employment->user_employment_current_companyname }} -
+                                                    {{ $companyName }} -
                                                     {{ $employment->user_employment_type == 1 ? 'Full Time' : 'Part Time' }}
                                                     -
                                                     {{ $fromMonth }} {{ $fromYear }} to {{ $toMonth }}

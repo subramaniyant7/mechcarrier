@@ -121,6 +121,11 @@ class HelperController extends Controller
         return DB::table('user_education')->where('user_education_primary_id', $id)->get();
     }
 
+    static function getCompanyById($id)
+    {
+        return DB::table('company_details')->where('company_detail_id', $id)->get();
+    }
+
     static function getITSkill($id)
     {
         return DB::table('user_itskils')->where('user_itskil_id', $id)->get();

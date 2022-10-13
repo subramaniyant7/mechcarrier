@@ -100,54 +100,65 @@
                         {{ count($data) && $data[0]->user_employment_industry_type == $industry->industry_id ? 'selected' : '' }}>
                         {{ $industry->industry_name }}</option>
                 @endforeach
-                <option value="0" {{ count($data) && $data[0]->user_employment_industry_type == 0 ? 'selected' : '' }}>Other</option>
+                <option value="0"
+                    {{ count($data) && $data[0]->user_employment_industry_type == 0 ? 'selected' : '' }}>Other</option>
             </select>
         </div>
         <div class="col-md-6">
             <label>Department *</label>
             <select class="form-control" name="user_employment_department" aria-label="Default select example" required
-            onchange="showOther(this.value,'user_employment_department')">
+                onchange="showOther(this.value,'user_employment_department')">
                 <option value="">Select</option>
                 @foreach (getActiveRecord('department') as $department)
                     <option value="{{ $department->department_id }}"
                         {{ count($data) && $data[0]->user_employment_department == $department->department_id ? 'selected' : '' }}>
                         {{ $department->department_name }}</option>
                 @endforeach
-                <option value="0" {{ count($data) && $data[0]->user_employment_department == 0 ? 'selected' : '' }}>Other</option>
+                <option value="0"
+                    {{ count($data) && $data[0]->user_employment_department == 0 ? 'selected' : '' }}>Other</option>
             </select>
         </div>
     </div>
 
-    <div class="row user_employment_industry_type" style="display: {{ count($data) && $data[0]->user_employment_industry_type_other != '' ? 'block' : 'none' }}">
+    <div class="row user_employment_industry_type"
+        style="display: {{ count($data) && $data[0]->user_employment_industry_type_other != '' ? 'block' : 'none' }}">
         <div class="col-md-12">
             <label>Industry Name *</label>
-                <input type="text" id="" placeholder="Add Industry name"
-                    name="user_employment_industry_type_other" class="form-control"
-                    {{ count($data) && $data[0]->user_employment_industry_type_other != '' ? 'required' : '' }}
-                    value="{{ count($data) ? $data[0]->user_employment_industry_type_other : '' }}" />
+            <input type="text" id="" placeholder="Add Industry name"
+                name="user_employment_industry_type_other" class="form-control"
+                {{ count($data) && $data[0]->user_employment_industry_type_other != '' ? 'required' : '' }}
+                value="{{ count($data) ? $data[0]->user_employment_industry_type_other : '' }}" />
         </div>
     </div>
 
-    <div class="row user_employment_department" style="display: {{ count($data) && $data[0]->user_employment_department_other != '' ? 'block' : 'none' }}">
+    <div class="row user_employment_department"
+        style="display: {{ count($data) && $data[0]->user_employment_department_other != '' ? 'block' : 'none' }}">
         <div class="col-md-12">
             <label>Department Name *</label>
-                <input type="text" id="" placeholder="Add Department name"
-                    name="user_employment_department_other" class="form-control"
-                    {{ count($data) && $data[0]->user_employment_department_other != '' ? 'required' : '' }}
-                    value="{{ count($data) ? $data[0]->user_employment_department_other : '' }}" />
+            <input type="text" id="" placeholder="Add Department name"
+                name="user_employment_department_other" class="form-control"
+                {{ count($data) && $data[0]->user_employment_department_other != '' ? 'required' : '' }}
+                value="{{ count($data) ? $data[0]->user_employment_department_other : '' }}" />
         </div>
     </div>
-
-
 
     <div class="row">
         <div class="col-md-12">
             <label>Current Company Name *</label>
-            <div style="position:relative">
-                <input type="text" id="" placeholder="Add company name"
-                    name="user_employment_current_companyname" class="form-control user_employment_current_companyname"
-                    required value=" {{ count($data) ? $data[0]->user_employment_current_companyname : '' }}" />
-
+            @php
+                $companyName = '';
+                if(count($data)){
+                    $getCompany = \App\Http\Controllers\Frontend\Helper\HelperController::getCompanyById($data[0]->user_employment_current_companyname);
+                    if(count($getCompany)){
+                        $companyName = $getCompany[0]->company_detail_name;
+                    }
+                }
+            @endphp
+            <div style="position:relative" class="autocomplete_ui_parent">
+                <input type="text" id="current_company1" placeholder="Add company name"
+                    name="user_employment_current_companyname" class="form-control autocomplete_actual_id user_employment_current_companyname"
+                    required value="{{$companyName}}" />
+                <input type="hidden" name="current_company_id" class="autocomplete_id" value="{{ count($data) ? $data[0]->user_employment_current_companyname : '' }}">
                 <div class="autocomplete-items" style="display:none">
                 </div>
             </div>
@@ -167,18 +178,21 @@
                         {{ count($data) && $data[0]->user_employment_current_designation == $designation->designation_id ? 'selected' : '' }}>
                         {{ $designation->designation_name }}</option>
                 @endforeach
-                <option value="0" {{ count($data) && $data[0]->user_employment_current_designation == 0 ? 'selected' : '' }}>Other</option>
+                <option value="0"
+                    {{ count($data) && $data[0]->user_employment_current_designation == 0 ? 'selected' : '' }}>Other
+                </option>
             </select>
         </div>
     </div>
 
-    <div class="row user_employment_current_designation" style="display: {{ count($data) && $data[0]->user_employment_current_designation_other != '' ? 'block' : 'none' }}">
+    <div class="row user_employment_current_designation"
+        style="display: {{ count($data) && $data[0]->user_employment_current_designation_other != '' ? 'block' : 'none' }}">
         <div class="col-md-12">
             <label>Designation Name *</label>
-                <input type="text" id="" placeholder="Add Designation name"
-                    name="user_employment_current_designation_other" class="form-control"
-                    {{ count($data) && $data[0]->user_employment_current_designation_other != '' ? 'required' : '' }}
-                    value="{{ count($data) ? $data[0]->user_employment_current_designation_other : '' }}" />
+            <input type="text" id="" placeholder="Add Designation name"
+                name="user_employment_current_designation_other" class="form-control"
+                {{ count($data) && $data[0]->user_employment_current_designation_other != '' ? 'required' : '' }}
+                value="{{ count($data) ? $data[0]->user_employment_current_designation_other : '' }}" />
         </div>
     </div>
 
@@ -359,12 +373,27 @@
     });
 
     const showOther = (val, className) => {
-        if(val == 0){
-            $('.'+className).show();
-            $('.'+className).find('input').attr('required','required');
-        }else{
-            $('.'+className).hide();
-            $('.'+className).find('input').removeAttr('required');
+        if (val == 0) {
+            $('.' + className).show();
+            $('.' + className).find('input').attr('required', 'required');
+        } else {
+            $('.' + className).hide();
+            $('.' + className).find('input').removeAttr('required');
         }
     }
+</script>
+
+<script>
+    var availableTutorials = [
+        "ActionScript",
+        "Bootstrap",
+        "C",
+        "C++",
+        "Java",
+        "Android",
+        "React",
+    ];
+    $('.user_employment_current_companyname1').autocomplete({
+        source: availableTutorials
+    });
 </script>

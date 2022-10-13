@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{{ URL::asset(FRONTEND . '/assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ URL::asset(FRONTEND . '/assets/css/owl.carousel.css') }}" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
-
     <script>
         let siteurl = "{{ FRONTENDURL }}";
     </script>

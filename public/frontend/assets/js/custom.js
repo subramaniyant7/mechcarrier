@@ -465,6 +465,8 @@ $(document).on('keyup', '.user_employment_current_companyname', function (e) {
     console.log('llllll')
     let val = $(this).val();
     let current = this;
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $(this).attr('required','required');
     if (val != '') {
         $.ajax({
             type: 'post',
@@ -475,15 +477,17 @@ $(document).on('keyup', '.user_employment_current_companyname', function (e) {
                 let html = '';
                 if (data.status) {
                     let response = JSON.parse(data.data);
-
                     if (response.length) {
                         response.forEach(res => {
-                            html += '<div>' + res.company_detail_name + '<input type="hidden" value="' + res.company_detail_id + '"></div>'
+                            html += "<div class='option_click' data-id="+res.company_detail_name+">" + res.company_detail_name + '<input type="hidden" value="' + res.company_detail_id + '"></div>'
                         })
-
+                        currentParent.find('.autocomplete-items').css('height','100px');
+                    }else{
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height','42px');
                     }
                     console.log(JSON.parse(data.data))
-                    // $('.autocomplete-items').html(html).show();
+                    currentParent.find('.autocomplete-items').html(html).show();
                 }
                 else toastr.error(data.message);
             },
@@ -494,9 +498,37 @@ $(document).on('keyup', '.user_employment_current_companyname', function (e) {
                 $('.loader').hide();
             }
         });
+    }else{
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
     }
+});
+
+$(document).on('click','.option_click',function(){
+    const inputVal = $(this).find('input').val();
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    console.log(inputVal);
+    console.log($(this).attr('data-id'))
+    currentParent.find('.autocomplete_id').val(inputVal);
+    currentParent.find('.autocomplete_actual_id').val($(this).attr('data-id')).removeAttr('required');
+    currentParent.find('.autocomplete-items').hide().html('');
+});
+
+$(document).on('blur','.user_employment_current_companyname',function(){
+    console.log('blur')
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+
+    setTimeout(() => {
+        const idVal = currentParent.find('.autocomplete_id').val();
+
+        console.log('idVal', idVal)
+        if(idVal == '') { currentParent.find('.autocomplete_actual_id').val('').attr('required','required'); }
+        currentParent.find('.autocomplete-items').hide().html('');
+    },500);
 
 });
+
+
 
 
 $('.create_education').click(function () {
@@ -779,3 +811,6 @@ $(document).on('click', '.new_language', function (e) {
         }
     });
 });
+
+
+
