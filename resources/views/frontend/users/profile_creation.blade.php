@@ -38,11 +38,7 @@
                             @php
                                 $profile = $userInfo['userDetails'][0]->user_profile_picture != '' ? 'uploads/users/profilepic/' . $userInfo['userDetails'][0]->user_profile_picture : FRONTEND . '/assets/images/profile_pic.svg';
                             @endphp
-                            <img style="    height: 90px;
-                            width: 56%;
-                            border-radius: 50%;
-                        }"
-                                src="{{ URL::asset($profile) }}" />
+                            <img style="height: 90px; width: 56%;border-radius: 50%;" src="{{ URL::asset($profile) }}" />
                             <img onclick="{ $('.user_img').trigger('click'); }"
                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/camera.svg') }}" />
                             <h4>{{ $userInfo['userDetails'][0]->user_firstname . ' ' . $userInfo['userDetails'][0]->user_lastname }}
@@ -55,9 +51,7 @@
                             <ul>
                                 <li class="phone"> <img
                                         src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/phone.svg') }}" />
-                                    @if ($userInfo['userDetails'][0]->user_phonenumber != '')
-                                        {{ $userInfo['userDetails'][0]->user_phonenumber }}
-                                    @endif
+
                                     @php
                                         $mobileimg = $emailimg = 'alerticon';
                                         $mobileverifiedText = $emailverifiedText = 'verify';
@@ -71,18 +65,25 @@
                                             $mobileverifiedText = 'verified';
                                         }
                                     @endphp
-                                    <span> <img
-                                            src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/' . $mobileimg . '.svg') }}" />
-                                        {{ $mobileverifiedText }} </span>
+                                    @if ($userInfo['userDetails'][0]->user_phonenumber != '')
+                                        {{ $userInfo['userDetails'][0]->user_phonenumber }}
+                                        <span>
+                                            <img
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/' . $mobileimg . '.svg') }}" />
+                                            {{ $mobileverifiedText }}
+                                        </span>
+                                    @endif
                                 </li>
                                 <li class="email"> <img
                                         src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/mail.svg') }}" />
                                     @if ($userInfo['userDetails'][0]->user_email != '')
                                         {{ $userInfo['userDetails'][0]->user_email }}
+                                        <span>
+                                            <img
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/' . $emailimg . '.svg') }}" />
+                                            {{ $emailverifiedText }}
+                                        </span>
                                     @endif
-                                    <span> <img
-                                            src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/' . $emailimg . '.svg') }}" />
-                                        {{ $emailverifiedText }} </span>
                                 </li>
                                 @if ($userInfo['userDetails'][0]->user_state != '')
                                     <li class="location"><img
@@ -431,7 +432,8 @@
                                             <div class="col-md-6">
                                                 <h4>Preferred Job Location </h4>
                                                 <div class="d-flex">
-                                                    <select class="form-control custom_change" name="user_preferred_location" required
+                                                    <select class="form-control custom_change"
+                                                        name="user_preferred_location" required
                                                         aria-label="Default select example">
                                                         <option selected value="">Select city</option>
                                                         @foreach (city() as $k => $city)
