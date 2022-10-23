@@ -160,7 +160,7 @@ function getUserSidebar()
         ['name' => 'Education', 'key' => 'userEducations'],
         ['name' => 'Profile Summary', 'key' => 'profilesummary'],
         ['name' => 'Current Location', 'key' => 'currentlocation'],
-        ['name' => 'Total Experience', 'key' => 'totalexperience'],
+        // ['name' => 'Total Experience', 'key' => 'totalexperience'],
         ['name' => 'IT Skill', 'key' => 'userITSkils'],
         ['name' => 'Personal Details', 'key' => 'personadetail']
     ];

@@ -52,12 +52,14 @@ class FrontendController extends Controller
     {
         try {
             $userId = $request->session()->get('frontend_userid');
+            $userInfo = HelperController::getUserInfo($userId);
             $profileInfo = HelperController::getUserProfile($userId);
             if (count($profileInfo) && $profileInfo[0]->user_resume != '') {
                 $file_path = public_path('uploads/users/resume/' . $profileInfo[0]->user_resume);
                 $type = $profileInfo[0]->user_resume_format;
+                $resumeName = $userInfo[0]->user_firstname.'_'.$userInfo[0]->user_lastname.'_MechCareer.'.$type;
                 $headers = array('Content-Type' => 'application/' . $type);
-                return response()->download($file_path, 'resume.' . $type, $headers);
+                return response()->download($file_path, $resumeName, $headers);
             }
         } catch (\Exception $e) {
             return back()->with('error', 'Something went wrong. Please try again');

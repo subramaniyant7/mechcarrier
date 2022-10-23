@@ -19,6 +19,13 @@
         opacity: 0.5;
         pointer-events: none;
     }
+
+    .key_hint {
+        text-align: left;
+        padding-top: 0.5em;
+        font-size: 12px;
+        display: none;
+    }
 </style>
 @section('content')
 
@@ -236,7 +243,7 @@
                                         @endif
 
                                     </div>
-                                    <p>Resume is the most important document recruiters look for Recruiters.</p>
+                                    <p>Resume is the most important document recruiters look for Recruitment.</p>
                                     <form>
                                         <input type="file" class="resume_upload" name="uploadfile" id="Resume"
                                             style="display:none;">
@@ -261,7 +268,7 @@
 
                                 <div class="resume-upload resume-headline">
                                     <div class="d-flex">
-                                        <h4>Resume Headline </h4>
+                                        <h4>Profile Headline </h4>
                                         <span class="edit_headline">
                                             <img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
@@ -307,6 +314,7 @@
                                         <input required type="text" minlength="4" maxlength="300"
                                             class="form-control inputinfo hide" name="key_skils"
                                             placeholder="Add Technical Skill ( maximum 10 or 300 charactors)" />
+                                        <div class="key_hint">Note: Can add multiple skills with comma(,) separator</div>
                                         <div class="form-buttons">
                                             <button type="button" class="btn btn-cancel cancelaction">Cancel</button>
                                             <button type="submit" class="btn btn-save">Save</button>
@@ -421,9 +429,18 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h4>Total Experience </h4>
+                                                <h4>Preferred Job Location </h4>
                                                 <div class="d-flex">
-                                                    <select class="form-control custom_change"
+                                                    <select class="form-control custom_change" name="user_preferred_location" required
+                                                        aria-label="Default select example">
+                                                        <option selected value="">Select city</option>
+                                                        @foreach (city() as $k => $city)
+                                                            <option value="{{ $k + 1 }}"
+                                                                {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_location == $k + 1 ? 'selected' : '' }}>
+                                                                {{ $city }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    {{-- <select class="form-control custom_change"
                                                         name="user_total_experience_year" required
                                                         aria-label="Default select example">
                                                         <option selected value="">Year</option>
@@ -444,7 +461,7 @@
                                                                 {{ $month }}
                                                             </option>
                                                         @endforeach
-                                                    </select>
+                                                    </select> --}}
                                                 </div>
 
                                             </div>

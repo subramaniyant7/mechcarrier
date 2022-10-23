@@ -45,7 +45,7 @@
     <div class="row">
         <div class="col-md-12">
             <label>Specialization *</label>
-            <select class="form-control" name="user_education_specialization" aria-label="Default select example"
+            <select class="form-control" name="user_education_specialization" aria-label="Default select"
                 required>
                 <option selected value="">Select Specialization</option>
                 @foreach (specialization() as $k => $education)
@@ -59,7 +59,7 @@
     <div class="row">
         <div class="col-md-12">
             <label>University/Institute *</label>
-            <select class="form-control" name="user_education_university" aria-label="Default select example" required>
+            <select class="form-control" name="user_education_university" aria-label="Default select" required>
                 <option selected value="">Select University/Institute</option>
                 @foreach (university() as $k => $education)
                     <option value="{{ $k + 1 }}"
@@ -74,7 +74,7 @@
             <p>Course type *</p>
             <div class="d-flex">
                 <div class="form-check">
-                    <input class="form-check-input" name="user_education_course_type" required type="checkbox"
+                    <input class="form-check-input" name="user_education_course_type" {{ $type == 'add' ? 'required' : '' }} type="checkbox"
                         value="1" id="flexCheckDefault"
                         {{ count($data) && $data[0]->user_education_course_type == 1 ? 'checked' : '' }}>
                     <label class="form-check-label" for="flexCheckDefault">
@@ -82,7 +82,7 @@
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" name="user_education_course_type" required type="checkbox"
+                    <input class="form-check-input" name="user_education_course_type" {{ $type == 'add' ? 'required' : '' }} type="checkbox"
                         value="2" id="flexCheckDefault"
                         {{ count($data) && $data[0]->user_education_course_type == 2 ? 'checked' : '' }}>
                     <label class="form-check-label" for="flexCheckDefault">
@@ -90,7 +90,7 @@
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" name="user_education_course_type" required type="checkbox"
+                    <input class="form-check-input" name="user_education_course_type" {{ $type == 'add' ? 'required' : '' }} type="checkbox"
                         value="3" id="flexCheckDefault"
                         {{ count($data) && $data[0]->user_education_course_type == 3 ? 'checked' : '' }}>
                     <label class="form-check-label" for="flexCheckDefault">
@@ -143,18 +143,17 @@
 </form>
 
 <script>
-    let currentCompany = $("input[type=checkbox][name=user_education_course_type]");
-    currentCompany.on("click", function() {
+    $(document).on('click', "input[type=checkbox][name=user_education_course_type]", function(){
         let checkedState = this.checked
         let current = this;
-        currentCompany.each(function() {
+        $("input[type=checkbox][name=user_education_course_type]").each(function() {
             if (current != this) {
                 this.checked = !checkedState;
                 $(this).removeAttr('required')
+                $(this).removeAttr('checked')
             } else {
                 $(this).attr('required', 'required')
             }
-
         });
-    });
+    })
 </script>

@@ -144,21 +144,25 @@
 
     <div class="row">
         <div class="col-md-12">
-            <label>Current Company Name *</label>
+            <label
+                class="company_name">{{ count($data) && $data[0]->user_employment_current_company == 1 ? 'Current' : '' }}
+                Company Name *</label>
             @php
                 $companyName = '';
-                if(count($data)){
+                if (count($data)) {
                     $getCompany = \App\Http\Controllers\Frontend\Helper\HelperController::getCompanyById($data[0]->user_employment_current_companyname);
-                    if(count($getCompany)){
+                    if (count($getCompany)) {
                         $companyName = $getCompany[0]->company_detail_name;
                     }
                 }
             @endphp
             <div style="position:relative" class="autocomplete_ui_parent">
                 <input type="text" id="current_company1" placeholder="Add company name"
-                    name="user_employment_current_companyname" class="form-control autocomplete_actual_id user_employment_current_companyname"
-                    required value="{{$companyName}}" />
-                <input type="hidden" name="current_company_id" class="autocomplete_id" value="{{ count($data) ? $data[0]->user_employment_current_companyname : '' }}">
+                    name="user_employment_current_companyname"
+                    class="form-control autocomplete_actual_id user_employment_current_companyname" required
+                    value="{{ $companyName }}" />
+                <input type="hidden" name="current_company_id" class="autocomplete_id"
+                    value="{{ count($data) ? $data[0]->user_employment_current_companyname : '' }}">
                 <div class="autocomplete-items" style="display:none">
                 </div>
             </div>
@@ -169,7 +173,9 @@
 
     <div class="row">
         <div class="col-md-12">
-            <label>Current Designation *</label>
+            <label
+                class="company_designation">{{ count($data) && $data[0]->user_employment_current_company == 1 ? 'Current' : '' }}
+                Designation *</label>
             <select class="form-control" name="user_employment_current_designation" aria-label="Default select example"
                 required onchange="showOther(this.value,'user_employment_current_designation')">
                 <option selected value="">Add designation</option>
@@ -317,40 +323,28 @@
 
 
 <script>
-    // $(document).on("click", "input[type=checkbox][name=user_employment_current_company]", function(e) {
-    //     console.log($(this));
-    //     let this1 = this;
-    //     let mandatory = true;
-    //     $("input[type=checkbox][name=user_employment_current_company]").each(function() {
-    //         // if ($(this).prop('checked') == true) {
-    //         //     console.log('checked');
-    //         //     mandatory = false;
-    //         // }else if(mandatory){
-    //         //     console.log('not checked');
-    //         // }
-    //         if(this1 != $(this)) $(this).prop('checked', false);
-    //         if(this1 == $(this)) $(this).prop('checked', true);
-    //     });
-    // });
-
-    let currentCompany = $("input[type=checkbox][name=user_employment_current_company]");
-    currentCompany.on("click", function() {
+    $(document).on('click', "input[type=checkbox][name=user_employment_current_company]", function() {
         let checkedState = this.checked
         let current = this;
         if (this.value == 1) {
             $("select[name=user_employment_working_year]").removeAttr('required');
             $("select[name=user_employment_working_month]").removeAttr('required');
             $('.worktill').hide();
+            $('.company_name').html('Current Company Name');
+            $('.company_designation').html('Current Designation');
         }
         if (this.value == 2) {
             $("select[name=user_employment_working_year]").attr('required', 'required');
             $("select[name=user_employment_working_month]").attr('required', 'required');
             $('.worktill').show();
+            $('.company_name').html('Company Name');
+            $('.company_designation').html('Company Designation');
         }
-        currentCompany.each(function() {
+        $("input[type=checkbox][name=user_employment_current_company]").each(function() {
             if (current != this) {
                 this.checked = !checkedState;
                 $(this).removeAttr('required')
+                $(this).removeAttr('checked')
             } else {
                 $(this).attr('required', 'required')
             }
@@ -359,13 +353,14 @@
     });
 
     let employmentType = $("input[type=checkbox][name=user_employment_type]");
-    employmentType.on("click", function() {
+    $(document).on('click', "input[type=checkbox][name=user_employment_type]", function() {
         let checkedState = this.checked
         let current = this;
-        employmentType.each(function() {
+        $("input[type=checkbox][name=user_employment_type]").each(function() {
             if (current != this) {
                 this.checked = !checkedState;
                 $(this).removeAttr('required')
+                $(this).removeAttr('checked')
             } else {
                 $(this).attr('required', 'required')
             }
@@ -381,19 +376,4 @@
             $('.' + className).find('input').removeAttr('required');
         }
     }
-</script>
-
-<script>
-    var availableTutorials = [
-        "ActionScript",
-        "Bootstrap",
-        "C",
-        "C++",
-        "Java",
-        "Android",
-        "React",
-    ];
-    $('.user_employment_current_companyname1').autocomplete({
-        source: availableTutorials
-    });
 </script>

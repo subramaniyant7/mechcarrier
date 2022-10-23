@@ -59,7 +59,6 @@ $('.change_email').submit(function (e) {
     }
 });
 
-
 $('.mobile-registration-form a').click(function () {
     let userIdentity = $("input[name=user_identity]").val();
     $('.loader').show();
@@ -194,7 +193,6 @@ $('.user_img').on('change', function (e) {
     }
 });
 
-
 $('.resume_upload').on('change', function (e) {
     let files = e.target.files;
     if (files.length) {
@@ -271,17 +269,16 @@ $('.delete_resume').click(function () {
 $('.edit_headline').click(function () {
     let parent = $(this).closest('.resume-headline');
     let headline = parent.find('.inputinfo').val();
-    console.log(headline.length);
     parent.find('.form-buttons').show();
     parent.find('.text_limit').html(headline.length + '/250').show();
     parent.find('.inline_text').addClass('hide');
     parent.find('.inputinfo').removeClass('hide');
+    parent.find('.key_hint').css('display','block');
 })
 
 $("textarea[name=user_resume_headline]").keyup(function () {
     let inputVal = $(this).val();
     $(this).parent().find('.text_limit').html(inputVal.length + '/250');
-    console.log($(this).val().length);
 });
 
 $('.cancelaction').click(function () {
@@ -290,6 +287,7 @@ $('.cancelaction').click(function () {
     parent.find('.text_limit').hide();
     parent.find('.inline_text').removeClass('hide');
     parent.find('.inputinfo').addClass('hide');
+    parent.find('.key_hint').css('display','none');
 })
 
 $('#update_resume_headline').submit(function (e) {
@@ -442,7 +440,6 @@ $(document).on('submit', '#action_employment', function (e) {
         data: formValue,
         dataType: 'json',
         success: function (data) {
-            console.log(data)
             if (data.status) {
                 toastr.success(data.message)
                 setTimeout(() => {
@@ -458,11 +455,9 @@ $(document).on('submit', '#action_employment', function (e) {
             $('.loader').hide();
         }
     });
-    console.log(formValue);
 });
 
 $(document).on('keyup', '.user_employment_current_companyname', function (e) {
-    console.log('llllll')
     let val = $(this).val();
     let current = this;
     const currentParent = $(this).parents('.autocomplete_ui_parent');
@@ -479,14 +474,13 @@ $(document).on('keyup', '.user_employment_current_companyname', function (e) {
                     let response = JSON.parse(data.data);
                     if (response.length) {
                         response.forEach(res => {
-                            html += "<div class='option_click' data-id="+res.company_detail_name+">" + res.company_detail_name + '<input type="hidden" value="' + res.company_detail_id + '"></div>'
+                            html += "<div class='option_click' data-id='"+ res.company_detail_name +"'>" + res.company_detail_name + '<input type="hidden" value="' + res.company_detail_id + '"></div>'
                         })
                         currentParent.find('.autocomplete-items').css('height','100px');
                     }else{
                         html += "<div>No options found</div>";
                         currentParent.find('.autocomplete-items').css('height','42px');
                     }
-                    console.log(JSON.parse(data.data))
                     currentParent.find('.autocomplete-items').html(html).show();
                 }
                 else toastr.error(data.message);
@@ -507,29 +501,20 @@ $(document).on('keyup', '.user_employment_current_companyname', function (e) {
 $(document).on('click','.option_click',function(){
     const inputVal = $(this).find('input').val();
     const currentParent = $(this).parents('.autocomplete_ui_parent');
-    console.log(inputVal);
-    console.log($(this).attr('data-id'))
     currentParent.find('.autocomplete_id').val(inputVal);
     currentParent.find('.autocomplete_actual_id').val($(this).attr('data-id')).removeAttr('required');
     currentParent.find('.autocomplete-items').hide().html('');
 });
 
 $(document).on('blur','.user_employment_current_companyname',function(){
-    console.log('blur')
     const currentParent = $(this).parents('.autocomplete_ui_parent');
-
     setTimeout(() => {
         const idVal = currentParent.find('.autocomplete_id').val();
-
-        console.log('idVal', idVal)
         if(idVal == '') { currentParent.find('.autocomplete_actual_id').val('').attr('required','required'); }
         currentParent.find('.autocomplete-items').hide().html('');
     },500);
 
 });
-
-
-
 
 $('.create_education').click(function () {
     $.ajax({
@@ -590,7 +575,6 @@ $(document).on('submit', '#action_education', function (e) {
         data: formValue,
         dataType: 'json',
         success: function (data) {
-            console.log(data)
             if (data.status) {
                 toastr.success(data.message)
                 location.reload();
@@ -604,7 +588,6 @@ $(document).on('submit', '#action_education', function (e) {
             $('.loader').hide();
         }
     });
-    console.log(formValue);
 });
 
 $(document).on('click', '.cancel_education', function (e) {
@@ -630,7 +613,6 @@ $(document).on('submit', '#current-location', function (e) {
         data: formValue,
         dataType: 'json',
         success: function (data) {
-            console.log(data)
             if (data.status) {
                 toastr.success(data.message)
                 location.reload();
@@ -644,15 +626,7 @@ $(document).on('submit', '#current-location', function (e) {
             $('.loader').hide();
         }
     });
-    console.log(formValue);
 });
-
-
-
-
-
-
-
 
 $('.create_itskill').click(function () {
     $.ajax({
@@ -703,7 +677,6 @@ $('.edit_itskill').click(function () {
     });
 });
 
-
 $(document).on('submit', '#action_itskill', function (e) {
     e.preventDefault();
     let formValue = $(this).serialize();
@@ -727,9 +700,7 @@ $(document).on('submit', '#action_itskill', function (e) {
             $('.loader').hide();
         }
     });
-    console.log(formValue);
 });
-
 
 $(document).on('click', '.cancel_itskill', function (e) {
     let educationId = $("input[name=user_itskil_id]").val();
@@ -739,8 +710,6 @@ $(document).on('click', '.cancel_itskill', function (e) {
         $(this).parents('.edit_itskill_content').html('');
     }
 });
-
-
 
 $('.action_personaldetails').click(function () {
     $('.loader').show();
@@ -761,7 +730,6 @@ $('.action_personaldetails').click(function () {
         }
     });
 });
-
 
 $(document).on('submit', '#action_personaldetails_data', function (e) {
     e.preventDefault();
@@ -786,7 +754,6 @@ $(document).on('submit', '#action_personaldetails_data', function (e) {
             $('.loader').hide();
         }
     });
-    console.log(formValue);
 });
 
 $(document).on('click', '.cancel_personaldetails', function (e) {
@@ -811,6 +778,3 @@ $(document).on('click', '.new_language', function (e) {
         }
     });
 });
-
-
-
