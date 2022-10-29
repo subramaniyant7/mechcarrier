@@ -110,6 +110,14 @@ class UserController extends Controller
 
         if ($option == 'delete') {
             $delete = deleteQuery($actionId, 'user_details', 'user_id');
+            deleteQuery($actionId,'user_education','user_id');
+            deleteQuery($actionId,'user_email_otp','user_id');
+            deleteQuery($actionId,'user_employment','user_id');
+            deleteQuery($actionId,'user_itskils','user_id');
+            deleteQuery($actionId,'user_key_skils','user_id');
+            deleteQuery($actionId,'user_languages','user_id');
+            deleteQuery($actionId,'user_mobile_otp','user_id');
+            deleteQuery($actionId,'user_profile','user_id');
             $notify = notification($delete);
             return redirect(ADMINURL . '/view_users')->with($notify['type'], 'Data Deleted Successfully');
         }
