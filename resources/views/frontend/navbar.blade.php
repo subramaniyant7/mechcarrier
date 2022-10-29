@@ -18,7 +18,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8  desktop-login-flex">
-                        <a class="nav-link" href="{{ route('home')}}" >
+                        <a class="nav-link" href="{{ session('frontend_useremail') ? route('userdashboard') : route('home') }}" >
                             <div class="logo">
                                 <h1>
                                     <img src="{{ URL::asset(FRONTEND.'/assets/images/logo.svg')}}" />
