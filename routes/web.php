@@ -3,6 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\EducationInfoController;
+use App\Http\Controllers\Admin\CourseBoardController;
+use App\Http\Controllers\Admin\SpecializationController;
+use App\Http\Controllers\Admin\UniversityController;
+use App\Http\Controllers\Admin\GradeController;
+use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\IndustryController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\DesignationController;
@@ -50,9 +58,7 @@ Route::middleware(['globalvalidate'])->group(function () {
             return view('frontend.jobseeker.login');
         })->name('jobseekerlogin');
         Route::post('/jobseeker_loginvalidate', [JobseekerController::class, 'JobseekerValidate'])->name('jobseekervalidate');
-        Route::get('/jobseeker_register', function () {
-            return view('frontend.jobseeker.register');
-        })->name('jobseekerregister');
+        Route::get('/jobseeker_register', function () { return view('frontend.jobseeker.register'); })->name('jobseekerregister');
         Route::post('/jobseeker_registration', [JobseekerController::class, 'JobseekerRegister'])->name('jobseekerregistration');
 
         Route::get('/email_verification/{id}', [JobseekerController::class, 'EmailVerification'])->name('emailverification');
@@ -61,6 +67,7 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::post('/resendemailotp', [FAjaxController::class, 'ResendEmailOTP'])->name('resendemailotp');
         Route::post('/updateemail', [FAjaxController::class, 'UpdateEmailAddress'])->name('updateuseremail');
 
+        Route::get('/mobile_verification_redirect/{id}', [JobseekerController::class, 'MobileVerificationRedirect'])->name('mobileverificationredirect');
         Route::post('/mobile_verification', [JobseekerController::class, 'MobileVerification'])->name('mobileverification');
         Route::get('/mobile_otpverification/{id}', [JobseekerController::class, 'MobileOTPVerification'])->name('mobileotpverification');
 
@@ -139,6 +146,54 @@ Route::middleware(['globalvalidate'])->group(function () {
             Route::get('/change_password', [AdminController::class, 'ChangePassword'])->name('changepassword');
             Route::post('/update_password', [AdminController::class, 'UpdatePassword'])->name('updatepassword');
 
+            // Education Info
+            Route::get('/view_education', [EducationInfoController::class, 'ViewEducation'])->name('education');
+            Route::get('/create_education', [EducationInfoController::class, 'ManageEducation'])->name('manageeducation');
+            Route::get('/action_education/{option}/{id}', [EducationInfoController::class, 'ActionEducation'])->name('actioneducation');
+            Route::post('/save_education', [EducationInfoController::class, 'SaveEducationDetails'])->name('saveeducation');
+
+            // Course Board
+            Route::get('/view_courseboard', [CourseBoardController::class, 'ViewCourseBoard'])->name('courseboard');
+            Route::get('/create_courseboard', [CourseBoardController::class, 'ManageCourseBoard'])->name('managecourseboard');
+            Route::get('/action_courseboard/{option}/{id}', [CourseBoardController::class, 'ActionCourseBoard'])->name('actioncourseboard');
+            Route::post('/save_courseboard', [CourseBoardController::class, 'SaveCourseBoardDetails'])->name('savecourseboard');
+
+            // Specialization
+            Route::get('/view_specialization', [SpecializationController::class, 'ViewSpecialization'])->name('specialization');
+            Route::get('/create_specialization', [SpecializationController::class, 'ManageSpecialization'])->name('managespecialization');
+            Route::get('/action_specialization/{option}/{id}', [SpecializationController::class, 'ActionSpecialization'])->name('actionspecialization');
+            Route::post('/save_specialization', [SpecializationController::class, 'SaveSpecializationDetails'])->name('savespecialization');
+
+            // University
+            Route::get('/view_university', [UniversityController::class, 'ViewUniversity'])->name('university');
+            Route::get('/create_university', [UniversityController::class, 'ManageUniversity'])->name('manageuniversity');
+            Route::get('/action_university/{option}/{id}', [UniversityController::class, 'ActionUniversity'])->name('actionuniversity');
+            Route::post('/save_university', [UniversityController::class, 'SaveUniversityDetails'])->name('saveuniversity');
+
+            // Grade
+            Route::get('/view_grade', [GradeController::class, 'ViewGrade'])->name('grade');
+            Route::get('/create_grade', [GradeController::class, 'ManageGrade'])->name('managegrade');
+            Route::get('/action_grade/{option}/{id}', [GradeController::class, 'ActionGrade'])->name('actiongrade');
+            Route::post('/save_grade', [GradeController::class, 'SaveGradeDetails'])->name('savegrade');
+
+            // Country
+            Route::get('/view_country', [CountryController::class, 'ViewCountry'])->name('country');
+            Route::get('/create_country', [CountryController::class, 'ManageCountry'])->name('managecountry');
+            Route::get('/action_country/{option}/{id}', [CountryController::class, 'ActionCountry'])->name('actioncountry');
+            Route::post('/save_country', [CountryController::class, 'SaveCountryDetails'])->name('savecountry');
+
+            // State
+            Route::get('/view_state', [StateController::class, 'ViewState'])->name('state');
+            Route::get('/create_state', [StateController::class, 'ManageState'])->name('managestate');
+            Route::get('/action_state/{option}/{id}', [StateController::class, 'ActionState'])->name('actionstate');
+            Route::post('/save_state', [StateController::class, 'SaveStateDetails'])->name('savestate');
+
+            // City
+            Route::get('/view_city', [CityController::class, 'ViewCity'])->name('city');
+            Route::get('/create_city', [CityController::class, 'ManageCity'])->name('managecity');
+            Route::get('/action_city/{option}/{id}', [CityController::class, 'ActionCity'])->name('actioncity');
+            Route::post('/save_city', [CityController::class, 'SaveCityDetails'])->name('savecity');
+
             // Users
             Route::get('/download_sample_file', [UserController::class, 'DownloadSampleFile'])->name('downloadsamplefile');
             Route::get('/import_users', [UserController::class, 'ImportUsers'])->name('importusers');
@@ -192,6 +247,8 @@ Route::middleware(['globalvalidate'])->group(function () {
             Route::get('/create_home_training_center_content/{id}', [HomePageTrainingCenterController::class, 'ManageTrainingCenterContent'])->name('managetrainingcentercontent');
             Route::get('/action_home_training_center_content/{centerid}/{option}/{id}', [HomePageTrainingCenterController::class, 'ActionTrainingCenterContent'])->name('actiontrainingcentercontent');
             Route::post('/save_home_training_center_content', [HomePageTrainingCenterController::class, 'SaveTrainingCenterContent'])->name('savetrainingcentercontent');
+
+
 
             // Industry
             Route::get('/view_industry', [IndustryController::class, 'ViewIndustry'])->name('viewindustry');

@@ -48,9 +48,21 @@ class AjaxController extends Controller
                 if (count($emailExist)) {
                     $response = ['status' => false, 'message' => 'Please enter different Email ID. This Email ID already exist'];
                 } else {
+                    $otp = mt_rand(100000, 999999);
+                    try {
+                        $emailContent = ['user_email' => $userEmail, 'user_otp' => $otp, 'type' => 'Email'];
+                        Mail::send('frontend.email.jobseeker_otp_email', $emailContent, function ($message) use ($emailContent) {
+                            $message->to($emailContent['user_email'], 'Admin')->subject('Email OTP Verification - MechCareer');
+                            $message->from(getenv('MAIL_USERNAME'), 'Admin');
+                        });
+                    } catch (\Exception $e) {
+                        $response = ['status' => false, 'message' => 'Something went wrong. Please try again'];
+                        return response()->json($response);
+                    }
+
                     updateQuery('user_details', 'user_id', $userId, ['user_email' => $userEmail]);
-                    updateQuery('user_email_otp', 'user_id', $userId, ['user_email' => $userEmail]);
-                    $response = ['status' => true, 'message' => 'Email Updated successfully'];
+                    updateQuery('user_email_otp', 'user_id', $userId, ['user_email' => $userEmail, 'user_otp' => $otp]);
+                    $response = ['status' => true, 'message' => 'Email Updated successfully and we have sent new OTP for Email Verification'];
                 }
             }
         } catch (\Exception $e) {
@@ -65,10 +77,14 @@ class AjaxController extends Controller
             $userId = $request->input('userIdentity');
             $otpExist = HelperController::mobileOTPExistByUserId(decryption($userId));
             if (count($otpExist)) {
-                $response = Http::get(env('SMS_GATEWAY') . '/request?authkey=' . env('SMS_AUTHKEY') . '&mobile=' . $otpExist[0]->user_phonenumber . '&country_code=91&voice=Hello%20your%20OTP%20is%20' . $otpExist[0]->user_otp);
+                // $response = Http::get(env('SMS_GATEWAY') . '/request?authkey=' . env('SMS_AUTHKEY') . '&mobile=' . $otpExist[0]->user_phonenumber . '&country_code=91&voice=Hello%20your%20OTP%20is%20' . $otpExist[0]->user_otp);
+                $response = Http::get(env('SMS_URL') . '?user=' . env('SMS_USER') . '&password=' . env('SMS_PASSWORD') . '&senderid=' . env('SMS_SENDERID') .
+                    '&channel=trans&DCS=0&flashsms=0&number=91' . $otpExist[0]->user_phonenumber . '&text=' . $otpExist[0]->user_otp . ' is the OTP to verify your mobile number with MechCareer.com.OTP is valid for 10 minutes. Do not share with anyone.');
+
                 if ($response->successful()) {
                     $res = $response->json();
-                    if (array_key_exists('LogID', $res) && $res['LogID'] != '') {
+                    // if (array_key_exists('LogID', $res) && $res['LogID'] != '') {
+                    if (array_key_exists('ErrorCode', $res) && $res['ErrorCode'] == '000') {
                         $response = ['status' => true, 'message' => 'Please check your mobile we have re-sent the OTP.'];
                     } else {
                         $response = ['status' => false, 'message' => 'Something went wrong. Please try again.'];
@@ -92,16 +108,33 @@ class AjaxController extends Controller
             $userPhone = $request->input('userPhone');
             $userInfo = HelperController::getUserInfo($userId);
             if (count($userInfo)) {
-                $emailExist = HelperController::isUserExistByPhone($userPhone);
-                if (count($emailExist)) {
+                $phoneNumberExist = HelperController::isUserExistByPhone($userPhone);
+                if (count($phoneNumberExist)) {
                     $response = ['status' => false, 'message' => 'Please enter different Mobile Number. This Mobile Number already exist'];
                 } else {
-                    updateQuery('user_details', 'user_id', $userId, ['user_phonenumber' => $userPhone]);
-                    updateQuery('user_mobile_otp', 'user_id', $userId, ['user_phonenumber' => $userPhone]);
-                    $response = ['status' => true, 'message' => 'Mobile Number Updated successfully'];
+                    $otp = mt_rand(100000, 999999);
+                    $response = Http::get(env('SMS_URL') . '?user=' . env('SMS_USER') . '&password=' . env('SMS_PASSWORD') . '&senderid=' . env('SMS_SENDERID') .
+                        '&channel=trans&DCS=0&flashsms=0&number=91' . $userPhone . '&text=' . $otp . ' is the OTP to verify your mobile number with MechCareer.com.OTP is valid for 10 minutes. Do not share with anyone.');
+
+                    if ($response->successful()) {
+                        $res = $response->json();
+                        if (array_key_exists('ErrorCode', $res) && $res['ErrorCode'] == '000') {
+                            updateQuery('user_details', 'user_id', $userId, ['user_phonenumber' => $userPhone]);
+                            updateQuery('user_mobile_otp', 'user_id', $userId, ['user_phonenumber' => $userPhone, 'user_otp' => $otp]);
+                            $response = ['status' => true, 'message' => 'Mobile Number Updated successfully and We have sent OTP to that mobilenumber.'];
+                        } else {
+                            $response = ['status' => false, 'message' => 'Something went wrong. Please try again after sometime'];
+                            return response()->json($response);
+                        }
+                    } else {
+                        $response = ['status' => false, 'message' => 'Something went wrong. Please try again after sometime'];
+                        return response()->json($response);
+                    }
                 }
             }
         } catch (\Exception $e) {
+            $response = ['status' => false, 'message' => 'Something went wrong. Please try again after sometime'];
+            return response()->json($response);
         }
         return response()->json($response);
     }
@@ -126,7 +159,8 @@ class AjaxController extends Controller
                 $file->move($destinationPath, $userId . '_' . $fileName);
                 $profileInfo = HelperController::getUserProfile($userId);
                 $data = [
-                    'user_id' => $userId, 'user_profile_picture' => $userId . '_' . $fileName ];
+                    'user_id' => $userId, 'user_profile_picture' => $userId . '_' . $fileName
+                ];
                 if (count($profileInfo)) {
                     updateQuery('user_details', 'user_id', $userId, $data);
                 }
@@ -314,7 +348,7 @@ class AjaxController extends Controller
     {
         $response = ['status' => false, 'message' => ''];
         try {
-            $formData = $request->except('user_employment_id','current_company_id');
+            $formData = $request->except('user_employment_id', 'current_company_id');
             $formData['user_id'] = $request->session()->get('frontend_userid');
             $formData['user_employment_current_companyname'] = $request->input('current_company_id');
             if ($formData['user_employment_current_company'] == 1) {
@@ -420,20 +454,18 @@ class AjaxController extends Controller
                     'user_language_write' => isset($languageData['user_language_write_value'][$k]) ? $languageData['user_language_write_value'][$k] : 2,
                     'user_language_speak' => isset($languageData['user_language_speak_value'][$k]) ? $languageData['user_language_speak_value'][$k] : 2,
                 ];
-                if(isset($languageData['user_language_id'][$k])){
+                if (isset($languageData['user_language_id'][$k])) {
                     $langExist = HelperController::getLanguagesById($languageData['user_language_id'][$k]);
-                    if(count($langExist)){
+                    if (count($langExist)) {
                         $update = true;
                     }
                 }
 
-                if($update){
-                    updateQuery('user_languages','user_language_id',$languageData['user_language_id'][$k],$prepareData);
-                }else{
+                if ($update) {
+                    updateQuery('user_languages', 'user_language_id', $languageData['user_language_id'][$k], $prepareData);
+                } else {
                     insertQuery('user_languages', $prepareData);
                 }
-
-
             }
             // echo '<pre>';
             // print_r($languageData);

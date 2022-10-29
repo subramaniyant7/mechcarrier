@@ -132,6 +132,27 @@ class CommonHelperController extends Controller
         return DB::table("user_details")->where('user_phonenumber', $phone)->get();
     }
 
+    static function getCountry($id = '')
+    {
+        $data = DB::table('country');
+        if ($id != '')  $data->where('country_id', $id);
+        return $data->get();
+    }
+
+    static function getState($id = '')
+    {
+        $data = DB::table('state');
+        if ($id != '')  $data->where('state_id', $id);
+        return $data->get();
+    }
+
+    static function getCity($id = '')
+    {
+        $data = DB::table('city');
+        if ($id != '')  $data->where('city_id', $id);
+        return $data->get();
+    }
+
     static function getIndustry($id = '')
     {
         $data = DB::table('industry');
@@ -150,6 +171,41 @@ class CommonHelperController extends Controller
     {
         $data = DB::table('designation');
         if ($id != '')  $data->where('designation_id', $id);
+        return $data->get();
+    }
+
+    static function getEducation($id = '')
+    {
+        $data = DB::table('education_info');
+        if ($id != '')  $data->where('education_id', $id);
+        return $data->get();
+    }
+
+    static function getCourseBoard($id = '')
+    {
+        $data = DB::table('education_course_board');
+        if ($id != '')  $data->where('course_board_id', $id);
+        return $data->get();
+    }
+
+    static function getSpecialization($id = '')
+    {
+        $data = DB::table('education_specialization');
+        if ($id != '')  $data->where('education_specialization_id', $id);
+        return $data->get();
+    }
+
+    static function getUniversity($id = '')
+    {
+        $data = DB::table('education_university');
+        if ($id != '')  $data->where('education_university_id', $id);
+        return $data->get();
+    }
+
+    static function getGrade($id = '')
+    {
+        $data = DB::table('education_grade');
+        if ($id != '')  $data->where('education_grade_id', $id);
         return $data->get();
     }
 

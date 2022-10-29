@@ -57,7 +57,7 @@
                         <form method="GET" class="change_email">
                             @csrf
                             <input type="email" class="form-control" name="change_user_email" required
-                                placeholder="Enter Emile ID" />
+                                placeholder="Enter Email ID" />
                             <input type="hidden" class="form-control" name="change_user_identity"
                                 value="{{ encryption($userInfo[0]->user_id) }}" /><br />
                             <button type="submit" class="btn btn-primary">Update</button> <br />

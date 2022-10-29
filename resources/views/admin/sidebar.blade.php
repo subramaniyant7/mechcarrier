@@ -85,10 +85,10 @@
                         <a href="{{ route('viewcompany') }}"> Companyies Actively Hiring </a>
                     </li>
                     <li class="{{request()->segment(2) == 'view_home_training_center' ? 'active' : ''}}">
-                        <a href="{{ route('viewcareerbuild') }}"> External Course Link </a>
+                        <a href="{{ route('viewtrainingcenter') }}"> External Course Link </a>
                     </li>
                     <li class="{{request()->segment(2) == 'view_careerbuild' ? 'active' : ''}}">
-                        <a href="{{ route('viewcompany') }}"> Career Build </a>
+                        <a href="{{ route('viewcareerbuild') }}"> Career Build </a>
                     </li>
                     <li class="{{request()->segment(2) == 'social_media_links' ? 'active' : ''}}">
                         <a href="{{ route('socialmedia') }}"> Social Media </a>
@@ -158,6 +158,96 @@
 
 
 
+
+            <li class="menu {{
+                (request()->segment(2) == 'view_country' || request()->segment(2) == 'view_state' || request()->segment(2) == 'view_city') ? 'active' : '' }}">
+                <a href="#location" data-bs-toggle="collapse" aria-expanded="{{(request()->segment(2) == 'view_country' || request()->segment(2) == 'view_state' || request()->segment(2) == 'view_city') ? 'true' : 'false'}}"
+                    class="dropdown-toggle {{(request()->segment(2) == 'view_country' || request()->segment(2) == 'view_state' || request()->segment(2) == 'view_city') ? '' : 'collapsed'}}">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        <span>Location</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-chevron-right">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled {{(request()->segment(2) == 'view_country' || request()->segment(2) == 'view_state'
+                || request()->segment(2) == 'view_city') ? 'show' : ''}}" id="location"
+                    data-bs-parent="#accordionExample">
+                    <li class="{{request()->segment(2) == 'view_country' ? 'active' : ''}}">
+                        <a href="{{ url(ADMINURL.'/view_country') }}"> Country </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_state' ? 'active' : ''}}" element="{{request()->segment(1)}}">
+                        <a href="{{ url(ADMINURL.'/view_state') }}"> State </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_city' ? 'active' : ''}}" element="{{request()->segment(1)}}">
+                        <a href="{{ url(ADMINURL.'/view_city') }}"> City </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+
+            <li class="menu {{
+                (request()->segment(2) == 'view_education' || request()->segment(2) == 'view_courseboard' ||
+                    request()->segment(2) == 'view_specialization' || request()->segment(2) == 'view_university'
+                    || request()->segment(2) == 'view_grade') ? 'active' : '' }}">
+                <a href="#education" data-bs-toggle="collapse" aria-expanded="{{(request()->segment(2) == 'view_education' ||
+                    request()->segment(2) == 'view_courseboard' || request()->segment(2) == 'view_specialization' || request()->segment(2) == 'view_university' ||
+                    request()->segment(2) == 'view_grade') ? 'true' : 'false'}}"
+                    class="dropdown-toggle {{(request()->segment(2) == 'view_education' || request()->segment(2) == 'view_courseboard' ||
+                    request()->segment(2) == 'view_specialization' || request()->segment(2) == 'view_university' ||
+                    request()->segment(2) == 'view_grade') ? '' : 'collapsed'}}">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        <span>Education</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-chevron-right">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled {{(request()->segment(2) == 'view_education' || request()->segment(2) == 'view_courseboard'
+                || request()->segment(2) == 'view_specialization' || request()->segment(2) == 'view_university' ||
+                request()->segment(2) == 'view_grade') ? 'show' : ''}}" id="education"
+                    data-bs-parent="#accordionExample">
+                    <li class="{{request()->segment(2) == 'view_education' ? 'active' : ''}}">
+                        <a href="{{ url(ADMINURL.'/view_education') }}"> Education Info </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_courseboard' ? 'active' : ''}}" element="{{request()->segment(1)}}">
+                        <a href="{{ url(ADMINURL.'/view_courseboard') }}"> Course / Board </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_specialization' ? 'active' : ''}}" element="{{request()->segment(1)}}">
+                        <a href="{{ url(ADMINURL.'/view_specialization') }}"> Specialization </a>
+                    </li>
+                     <li class="{{request()->segment(2) == 'view_university' ? 'active' : ''}}" element="{{request()->segment(1)}}">
+                        <a href="{{ url(ADMINURL.'/view_university') }}"> University </a>
+                    </li>
+                    <li class="{{request()->segment(2) == 'view_grade' ? 'active' : ''}}" element="{{request()->segment(1)}}">
+                        <a href="{{ url(ADMINURL.'/view_grade') }}"> Grade </a>
+                    </li>
+                </ul>
+            </li>
 
 
 

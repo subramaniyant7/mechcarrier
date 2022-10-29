@@ -59,7 +59,7 @@
                         <form method="GET" class="change_mobile">
                             @csrf
                             <input type="number" class="form-control" name="change_user_mobile" required
-                                placeholder="Enter Mobile Numbeer" />
+                                placeholder="Enter Mobile Number" />
                             <input type="hidden" class="form-control" name="change_user_identity"
                                 value="{{ encryption($userInfo[0]->user_id) }}" /><br />
                             <button type="submit" class="btn btn-primary">Update</button> <br />

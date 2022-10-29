@@ -35,6 +35,7 @@ class JobseekerController extends Controller
         }
     }
 
+    // Register New Jobseeker
     public function JobseekerRegister(Request $request)
     {
         $formData = $request->except('_token', 'user_confirmpassword');
@@ -83,6 +84,7 @@ class JobseekerController extends Controller
         return redirect()->route('emailverification', ['id' => encryption($createUser)])->with('success', 'We have sent OTP to registered email. Please check you email');
     }
 
+    // Verify Email OTP
     public function EmailVerification($id)
     {
         try {
@@ -96,6 +98,7 @@ class JobseekerController extends Controller
         }
     }
 
+    // Validate Email OTP
     public function EmailVerificationSuccess(Request $request)
     {
         $formData = $request->except('_token');
@@ -109,9 +112,29 @@ class JobseekerController extends Controller
         return back()->with('error', 'Invalid OTP');
     }
 
+    // Redirect to Mobile Verification
+    public function MobileVerificationRedirect($id)
+    {
+        if ($id != '') {
+            try {
+                $userInfo = HelperController::getUserInfo(decryption($id));
+                if (count($userInfo)) {
+                    return view('frontend.mobileverificationredirect', ['userId' => encryption($userInfo[0]->user_id)]);
+                } else {
+                    return redirect()->route('/');
+                }
+            } catch (\Exception $e) {
+                return redirect()->route('/');
+            }
+        }
+        return redirect()->route('/');
+    }
+
     public function MobileVerification(Request $request)
     {
         $formData = $request->except('_token');
+        // print_r($formData);
+        // exit;
         try {
             $userId = decryption($formData['user_identity']);
             $userInfo = HelperController::getUserInfo($userId);
@@ -120,11 +143,23 @@ class JobseekerController extends Controller
                 $mobileContent = ['user_email' => $userInfo[0]->user_email, 'user_otp' => $otp, 'type' => 'Mobile'];
 
                 $phone = $userInfo[0]->user_phonenumber;
-                $otp = mt_rand(1000, 9999);
-                $response = Http::get(env('SMS_GATEWAY') . '/request?authkey=' . env('SMS_AUTHKEY') . '&mobile=' . $phone . '&country_code=91&voice=Hello%20your%20OTP%20is%20' . $otp);
+                $otp = mt_rand(100000, 999999);
+                // $response = Http::get(env('SMS_GATEWAY') . '/request?authkey=' . env('SMS_AUTHKEY') . '&mobile=' . $phone . '&country_code=91&voice=Hello%20your%20OTP%20is%20' . $otp);
+
+
+                $response = Http::get(env('SMS_URL') . '?user=' . env('SMS_USER') . '&password=' . env('SMS_PASSWORD') . '&senderid=' . env('SMS_SENDERID') .
+                    '&channel=trans&DCS=0&flashsms=0&number=91' . $phone . '&text=' . $otp . ' is the OTP to verify your mobile number with MechCareer.com.OTP is valid for 10 minutes. Do not share with anyone.');
+
+
+
                 if ($response->successful()) {
+                    // echo '<pre>';
+                    // print_r($response->json());
+                    // exit;
                     $res = $response->json();
-                    if (array_key_exists('LogID', $res) && $res['LogID'] != '') {
+                    // if (array_key_exists('LogID', $res) && $res['LogID'] != '') {
+                    if (array_key_exists('ErrorCode', $res) && $res['ErrorCode'] == '000') {
+                        deleteQuery($userId, 'user_mobile_otp', 'user_id');
                         $userOTP = ['user_id' => $userId, 'user_email' => $userInfo[0]->user_email, 'user_phonenumber' => $userInfo[0]->user_phonenumber, 'user_otp' => $otp];
                         insertQuery('user_mobile_otp', $userOTP);
                         return redirect()->route('mobileotpverification', ['id' => $formData['user_identity']])->with('success', 'We have sent Voice Mail OTP to registered mobile. Please check you mobile');
