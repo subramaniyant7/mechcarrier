@@ -802,6 +802,36 @@ button.btn.btn-primary.dropdown-toggle {
     color: #0163E0;
     text-decoration: underline;
 }
+
+.email-registration .email-registration-form .mobileverificationnumber {
+    position: relative;
+    display: flex;
+}
+
+.email-registration .email-registration-form .mobileverificationnumber span.number-prefix {
+    position: absolute;
+    left: 9px;
+    color: #707070;
+    top: 2px;
+    font-size: 14px;
+    padding: 0px 4px;
+}
+
+.email-registration .email-registration-form .mobileverificationnumber span.number-prefix::after {
+    position: absolute;
+    content: '';
+    background-color: #707070;
+    height: 24px;
+    width: 1px;
+    left: 35px;
+    top: 5px;
+    opacity: 0.5;
+}
+
+.mobileverificationnumber input {
+    padding-left: 50px;
+}
+
 .email-registration .bg-bluelight .error-message p{
     padding-top: 10px;
     padding-bottom: 0px;

@@ -67,6 +67,9 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::post('/resendemailotp', [FAjaxController::class, 'ResendEmailOTP'])->name('resendemailotp');
         Route::post('/updateemail', [FAjaxController::class, 'UpdateEmailAddress'])->name('updateuseremail');
 
+        Route::get('/mobile_number/{id}', [JobseekerController::class, 'MobileNumber'])->name('mobilenumber');
+        Route::post('/updatemobile_number', [JobseekerController::class, 'UpdateMobileNumber'])->name('updatemobilenumber');
+
         Route::get('/mobile_verification_redirect/{id}', [JobseekerController::class, 'MobileVerificationRedirect'])->name('mobileverificationredirect');
         Route::post('/mobile_verification', [JobseekerController::class, 'MobileVerification'])->name('mobileverification');
         Route::get('/mobile_otpverification/{id}', [JobseekerController::class, 'MobileOTPVerification'])->name('mobileotpverification');

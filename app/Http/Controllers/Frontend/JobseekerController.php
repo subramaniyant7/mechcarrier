@@ -112,6 +112,35 @@ class JobseekerController extends Controller
         return back()->with('error', 'Invalid OTP');
     }
 
+    // Enter Mobile Number
+    public function MobileNumber($id)
+    {
+        if ($id != '') {
+            $userInfo = HelperController::getUserInfo(decryption($id));
+            if (count($userInfo)) {
+                return view('frontend.mobile_verification_number', compact('userInfo'));
+            } else {
+                return redirect()->route('/');
+            }
+        }
+        return redirect(FRONTENDURL);
+    }
+
+    public function UpdateMobileNumber(Request $request){
+        $formData = $request->except('_token');
+        try{
+            $userId = decryption($formData['user_identity']);
+            $userInfo = HelperController::getUserInfo($userId);
+            if(count($userInfo)){
+                updateQuery('user_details','user_id',$userId,['user_phonenumber' => $formData['mobile_number']]);
+                return redirect()->route('mobileverificationredirect' ,['id' => encryption($userId)]);
+            }
+        }catch(\Exception $e){
+
+        }
+        return redirect(FRONTENDURL);
+    }
+
     // Redirect to Mobile Verification
     public function MobileVerificationRedirect($id)
     {
@@ -121,13 +150,13 @@ class JobseekerController extends Controller
                 if (count($userInfo)) {
                     return view('frontend.mobileverificationredirect', ['userId' => encryption($userInfo[0]->user_id)]);
                 } else {
-                    return redirect()->route('/');
+                    return redirect(FRONTENDURL);
                 }
             } catch (\Exception $e) {
-                return redirect()->route('/');
+                return redirect(FRONTENDURL);
             }
         }
-        return redirect()->route('/');
+        return redirect(FRONTENDURL);
     }
 
     public function MobileVerification(Request $request)
@@ -143,14 +172,13 @@ class JobseekerController extends Controller
                 $mobileContent = ['user_email' => $userInfo[0]->user_email, 'user_otp' => $otp, 'type' => 'Mobile'];
 
                 $phone = $userInfo[0]->user_phonenumber;
+                if(strlen($phone) != 10) return redirect()->route('mobilenumber', ['id' => encryption($userInfo[0]->user_id)])->with('error','Please enter valid mobile number');
                 $otp = mt_rand(100000, 999999);
                 // $response = Http::get(env('SMS_GATEWAY') . '/request?authkey=' . env('SMS_AUTHKEY') . '&mobile=' . $phone . '&country_code=91&voice=Hello%20your%20OTP%20is%20' . $otp);
 
 
                 $response = Http::get(env('SMS_URL') . '?user=' . env('SMS_USER') . '&password=' . env('SMS_PASSWORD') . '&senderid=' . env('SMS_SENDERID') .
                     '&channel=trans&DCS=0&flashsms=0&number=91' . $phone . '&text=' . $otp . ' is the OTP to verify your mobile number with MechCareer.com.OTP is valid for 10 minutes. Do not share with anyone.');
-
-
 
                 if ($response->successful()) {
                     // echo '<pre>';
@@ -164,13 +192,13 @@ class JobseekerController extends Controller
                         insertQuery('user_mobile_otp', $userOTP);
                         return redirect()->route('mobileotpverification', ['id' => $formData['user_identity']])->with('success', 'We have sent Voice Mail OTP to registered mobile. Please check you mobile');
                     } else {
-                        return redirect()->route('jobseekerlogin')->with('error', 'Something went wrong. Please try again');
+                        return redirect()->route('jobseekerlogin')->with('error', 'Something went wrong. Please try again Api Key');
                     }
                 } else {
-                    return redirect()->route('jobseekerlogin')->with('error', 'Something went wrong. Please try again');
+                    return redirect()->route('jobseekerlogin')->with('error', 'Something went wrong. Please try again Api1');
                 }
             } catch (\Exception $e) {
-                return back()->with('errror', 'Something went wrong. Please try again');
+                return back()->with('errror', $e->getMessage());
             }
         } catch (\Exception $e) {
             return back()->with('error', 'Invalid action. Please try again / contact administrator');
