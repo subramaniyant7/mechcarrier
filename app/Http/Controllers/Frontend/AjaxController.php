@@ -644,7 +644,7 @@ class AjaxController extends Controller
                 $splitKeys = explode(',', $request->input('keyskils'));
                 $userId = $request->session()->get('frontend_userid');
                 foreach ($splitKeys as $keys) {
-                    $keyExist = HelperController::getUserSkilsByText($keys);
+                    $keyExist = HelperController::getUserSkilsByText($keys,$userId);
                     if (!count($keyExist)) {
                         $data = ['user_id' => $userId, 'user_key_skil_text' => $keys];
                         insertQuery('user_key_skils', $data);

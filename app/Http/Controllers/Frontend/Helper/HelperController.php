@@ -89,9 +89,9 @@ class HelperController extends Controller
         return DB::table('user_key_skils')->where('user_key_skil_id', $id)->get();
     }
 
-    static function getUserSkilsByText($text)
+    static function getUserSkilsByText($text, $userId)
     {
-        return DB::table('user_key_skils')->where('user_key_skil_text', $text)->get();
+        return DB::table('user_key_skils')->where([['user_key_skil_text', $text], ['user_id', $userId]])->get();
     }
 
     static function getEmployment($id)
@@ -116,14 +116,14 @@ class HelperController extends Controller
         return DB::table('designation')->where('designation_name', 'like', '%' . $value . '%')->get();
     }
 
-    static function getSpecialization($value,$id)
+    static function getSpecialization($value, $id)
     {
-        return DB::table('education_specialization')->where([['education_specialization_name', 'like', '%' . $value . '%'],['education_id',$id]])->get();
+        return DB::table('education_specialization')->where([['education_specialization_name', 'like', '%' . $value . '%'], ['education_id', $id]])->get();
     }
 
-    static function getUniversity($value,$id)
+    static function getUniversity($value, $id)
     {
-        return DB::table('education_university')->where([['education_university_name', 'like', '%' . $value . '%'],['education_id',$id]])->get();
+        return DB::table('education_university')->where([['education_university_name', 'like', '%' . $value . '%'], ['education_id', $id]])->get();
     }
 
     static function getEducation($id)
