@@ -75,11 +75,11 @@ a {
     min-width: 204px;
     padding: 15px;
     line-height: 28px;
-    background-color: #1D56BB;
-    color: #fff;
+    /* background-color: #1D56BB;
+    color: #fff; */
 }
 .desktop-login-flex .desktop-login .notification-button ul.dropdown-menu.show li:hover a {
-    color: #fff;
+    color: #1D56BB;
 }
 .logo {
     position: relative;
@@ -2402,4 +2402,432 @@ span.switch-handle {
 .resume-upload.resume-headline.employement.personal-details form .row.add-another a {
     color: #005CFF;
     font-size: 14px;
+}
+
+
+
+
+/* 48em = 768px */
+
+@media (min-width: 991px) {
+    .desktop-menu li {
+        float: left;
+    }
+
+    .desktop-menu li a {
+        padding: 10px 12px;
+        margin-top: 2px;
+    }
+
+    .desktop-menu .menu {
+        clear: none;
+        float: right;
+        max-height: none;
+    }
+
+    .desktop-menu .menu-icon {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 424px) {
+    .header h1 {
+        font-size: 13px;
+    }
+
+    .desktop-login .user-login.employee-login .login-button,
+    .desktop-login .user-login.employee-login .register-button {
+        padding: 4px 8px !important;
+        font-size: 11px !important;
+    }
+    .email-registration.number-verification.mobile-numberverification-successful h1 {
+        font-size: 24px;
+    }
+    .email-registration.number-verification.mobile-numberverification-successful form .form-check p {
+        margin-right: 15px;
+    }
+    .email-registration .bg-bluelight button.btn.btn-primary {
+        padding: 4px 20px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    body {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .login-form.bg-gray {
+        width: unset;
+        padding-left: 0px;
+    }
+
+    .footer .playstore-download {
+        justify-content: flex-start;
+    }
+
+    .footer .playstore-download a {
+        padding-right: 10px;
+    }
+
+    .copyright p {
+        font-size: 11px;
+    }
+
+    .socialmedia-login .d-flex {
+        display: block !important;
+    }
+
+    .socialmedia-login .socialmedia-login-button {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .login h1 {
+        display: none;
+    }
+
+    .user-image img {
+        width: 100%;
+    }
+
+    .help-assistance {
+        margin-top: 30px;
+    }
+
+    .top-header {
+        display: none;
+    }
+
+    .login .title.mobile {
+        display: block;
+        width: 100%;
+    }
+
+    .login .title.desktop {
+        display: none;
+    }
+
+    .socialmedia-login {
+        padding-top: 0px;
+    }
+
+    .login .title p {
+        font-size: 14px;
+    }
+
+    .login .col-md-6:first-child {
+        border-right: 0px !important;
+    }
+
+    .key-points {
+        display: none;
+    }
+
+    .login.jobseeker-register .help-assistance {
+        display: none;
+    }
+
+    .email-registration .bg-bluelight h4 {
+        font-size: 18px;
+    }
+
+    .email-registration .bg-bluelight h1 {
+        font-size: 26px;
+    }
+
+    .email-registration .bg-bluelight h2 {
+        font-size: 14px !important;
+    }
+
+    .email-registration .bg-bluelight h4 {
+        padding-left: 0px;
+    }
+
+    .email-registration .bg-bluelight .d-flex,
+    .email-registration .bg-bluelight .d-flex .email-registration-form {
+        display: block;
+    }
+
+    .email-registration .bg-bluelight .d-flex .email-registration-form a {
+        font-size: 14px;
+    }
+
+    .email-registration .bg-bluelight .error-message p {
+        padding-top: 0px;
+        margin: 0;
+    }
+
+    .email-registration .bg-bluelight button.btn.btn-primary {
+        padding: 4px 29px;
+        font-size: 14px;
+    }
+
+    .email-registration .bg-bluelight a {
+        padding-left: 0px;
+        font-size: 14px;
+    }
+
+    .email-registration .technical-assistance p {
+        font-size: 10px;
+    }
+
+    .email-registration {
+        margin: 0px 19px;
+    }
+
+    .bg-breadcrumb h1 {
+        font-size: 25px;
+    }
+
+    .bg-breadcrumb .button-d-flex .breadcrumb-button p {
+        font-size: 12px;
+    }
+
+    .home-page .title h1 {
+        font-size: 28px;
+    }
+
+    .mycourse-videopage .video-breadcrumbs .col-md-4 {
+        text-align: center;
+    }
+
+    .mycourse-videopage .video-breadcrumbs h1 {
+        font-size: 26px;
+    }
+
+    .mycourse-videopage .video-breadcrumbs p {
+        padding-left: 0px;
+    }
+
+    .employers-registration-confirmation .col-md-4 img {
+        width: 100%;
+    }
+
+    .employers-registration-confirmation .title h1 {
+        font-size: 26px;
+    }
+
+    .employers-registration-confirmation form .col button {
+        font-size: 14px;
+    }
+
+    .why-mech-career .why-mech-career-main .why-mech-card img {
+        width: 100%;
+    }
+
+    .employers-home .mech-banner h1 {
+        width: unset;
+        font-size: 28px;
+    }
+
+    .why-mech-career .why-mech-career-title h1 {
+        font-size: 28px;
+    }
+
+    .mech-banner .banner-links ul li {
+        display: none;
+    }
+
+    .mech-banner .banner-links ul li:first-child {
+        display: block !important;
+    }
+
+    .mech-banner .banner-links ul li:nth-child(2) {
+        display: block !important;
+    }
+
+    .mech-banner .banner-links ul li:nth-child(3) {
+        display: block !important;
+    }
+
+    .login-form {
+        width: unset;
+        padding-left: 0px;
+    }
+
+    .login-form .mb-4.d-flex.company-type .form-button button {
+        font-size: 14px;
+    }
+
+    .login .help-assistance p {
+        font-size: 10px;
+    }
+
+    .desktop-login-flex .desktop-login .notification-button img {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .header {
+        position: relative;
+    }
+
+    .logo {
+        left: 40px;
+    }
+
+    .desktop-menu .menu-icon {
+        position: absolute;
+        left: 0px;
+        top: -7px;
+    }
+
+    .desktop-login .user-login.employee-login .login-button,
+    .desktop-login .user-login.employee-login .register-button {
+        padding: 4px 9px;
+        font-size: 14px;
+    }
+
+    .desktop-login-flex .desktop-login .notification-button {
+        position: absolute;
+        top: 10px;
+        width: unset;
+    }
+
+    .col-md-4.desktop-login-flex {
+        position: unset;
+    }
+
+    .header {
+        padding: 5px 0px;
+    }
+
+    .desktop-menu .menu-btn:checked~.menu {
+        position: absolute;
+        left: 0px;
+        top: 48px;
+        background-color: #1D56BB;
+        color: #ffff;
+        z-index: 999;
+        width: 100%;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border: solid 1px #000;
+        border-top: 0px;
+    }
+
+    .desktop-menu .menu {
+        z-index: -1;
+    }
+}
+
+@media only screen and (min-width: 991px) and (max-width: 1199px) {
+    .header h1 {
+        font-size: 15px;
+    }
+
+    .desktop-menu li a {
+        padding: 10px 2px;
+    }
+
+    .desktop-login-flex .desktop-login .notification-button img {
+        padding-right: 14px;
+    }
+
+    .desktop-login .user-login.employee-login .login-button {
+        padding: 4px 14px;
+        font-size: 14px;
+    }
+
+    .desktop-login .user-login.employee-login .register-button {
+        padding: 4px 14px;
+        font-size: 14px;
+    }
+
+    .desktop-menu .menu {
+        position: relative;
+        top: -2px;
+        left: 10px;
+    }
+}
+
+/*768 to 1024*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .footer .socialmedia-icons ul li {
+        padding-right: 10px;
+    }
+
+    .footer .playstore-download {
+        display: block;
+    }
+
+    .login-form {
+        width: unset;
+        padding-left: 20px;
+    }
+
+    .socialmedia-login .d-flex {
+        display: block !important;
+    }
+
+    .socialmedia-login .socialmedia-login-button {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .login h1 {
+        font-size: 25px;
+    }
+
+    .enhance-your-resume-image img {
+        width: 100%;
+    }
+
+    .enhance-your-resume .col-md-3 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .why-mech-career .why-mech-career-main .why-mech-card img {
+        width: 100%;
+    }
+
+    .mech-banner .banner-links ul li {
+        padding: 0 8px;
+        font-size: 11px;
+    }
+
+    .login .user-image img {
+        width: 100%;
+    }
+
+    .login .col-md-6:first-child {
+        justify-content: unset;
+    }
+}
+
+/*1023 to 1198*/
+@media only screen and (min-width: 1023px) and (max-width: 1198px) {
+    .navbar-expand-lg .navbar-nav .nav-link {
+        font-size: 13px;
+    }
+
+    li.nav-item {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .login-form.bg-gray {
+        padding-left: 20px;
+        width: unset;
+    }
+
+    .socialmedia-login .socialmedia-login-button {
+        width: 200px;
+    }
+}
+
+/*1199*/
+
+@media only screen and (max-width: 1199px) {
+    .user-image embed {
+        width: 100%;
+    }
 }

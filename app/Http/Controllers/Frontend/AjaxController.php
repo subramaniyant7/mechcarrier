@@ -255,13 +255,23 @@ class AjaxController extends Controller
         try {
             if ($request->session()->get('frontend_userid') != '' && $request->input('type') != '') {
                 $type = $request->input('type');
+                $educationId = '';
+                if ($request->input('educationId') != '') {
+                    $educationId = $request->input('educationId');
+                }
                 $data = [];
                 if ($request->input('dataid') != '') {
                     $educationInfo = HelperController::getEducation(decryption($request->input('dataid')));
                     if (count($educationInfo)) $data = $educationInfo;
                 }
-                $html = view('frontend.users.actioneducation', compact('type', 'data'))->render();
+                // echo $educationId;
+                // exit;
+                $html = view('frontend.users.actioneducation', ['type' => $type, 'data' => $data, 'educationId' => $educationId])->render();
                 $response = ['status' => true, 'message' => '', 'data' => $html];
+
+                // echo '<pre>';
+                // print_r($response);
+                // exit;
             }
         } catch (\Exception $e) {
             $response['message'] = $e->getMessage();
@@ -329,10 +339,35 @@ class AjaxController extends Controller
 
 
 
+    public function GetDesignation(Request $request)
+    {
+        $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
+        if ($request->input('designaionname') != '') {
+            $designationDetails = HelperController::getDesignation($request->input('designaionname'));
+            $response = ['status' => true, 'message' => '', 'data' => json_encode($designationDetails)];
+        }
+        return $response;
+    }
 
+    public function GetSpecialization(Request $request)
+    {
+        $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
+        if ($request->input('name') != '') {
+            $data = HelperController::getSpecialization($request->input('name'),$request->input('id'));
+            $response = ['status' => true, 'message' => '', 'data' => json_encode($data)];
+        }
+        return $response;
+    }
 
-
-
+    public function GetUniversity(Request $request)
+    {
+        $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
+        if ($request->input('name') != '') {
+            $data = HelperController::getUniversity($request->input('name'),$request->input('id'));
+            $response = ['status' => true, 'message' => '', 'data' => json_encode($data)];
+        }
+        return $response;
+    }
 
     public function GetCompany(Request $request)
     {
@@ -348,11 +383,25 @@ class AjaxController extends Controller
     {
         $response = ['status' => false, 'message' => ''];
         try {
-            $formData = $request->except('user_employment_id', 'current_company_id');
+            $formData = $request->except('user_employment_id', 'current_company_id', 'current_designation_id');
             $formData['user_id'] = $request->session()->get('frontend_userid');
-            $formData['user_employment_current_companyname'] = $request->input('current_company_id');
+            if ($request->input('current_company_id') != '') {
+                $formData['user_employment_current_companyname'] = $request->input('current_company_id');
+            }
+
+            if ($request->input('current_designation_id') != '') {
+                $formData['user_employment_current_designation'] = $request->input('current_designation_id');
+            }
+
+            $years = Year();
+            usort($years, function ($a, $b) {
+                if ($a == $b) {
+                    return 0;
+                }
+                return $a > $b ? -1 : 1;
+            });
             if ($formData['user_employment_current_company'] == 1) {
-                $formData['user_employment_working_year'] = array_search(date('Y'), Year()) + 1;
+                $formData['user_employment_working_year'] = array_search(date('Y'), $years) + 1;
                 $formData['user_employment_working_month'] = date('m');
                 if ($request->input('user_employment_id') == '') {
                     $currentCompanyExist = HelperController::getUserEmploymentCurrentCompany($request->session()->get('frontend_userid'));
@@ -363,12 +412,16 @@ class AjaxController extends Controller
                 }
             }
 
-            if ($formData['user_employment_joining_year'] >  $formData['user_employment_working_year']) {
+            // echo '<pre>';
+            // print_r($formData);
+            // exit;
+
+            if ($formData['user_employment_joining_year'] <  $formData['user_employment_working_year']) {
                 $response['message'] = 'Working date should be greater than Joining Date';
                 return $response;
             }
 
-            if (($formData['user_employment_joining_year'] ==  $formData['user_employment_working_year']) && ($formData['user_employment_joining_month'] > $formData['user_employment_working_month'])) {
+            if (($formData['user_employment_joining_year'] ==  $formData['user_employment_working_year']) && ($formData['user_employment_joining_month'] < $formData['user_employment_working_month'])) {
                 $response['message'] = 'Working date should be greater than Joining Date';
                 return $response;
             }
@@ -393,8 +446,16 @@ class AjaxController extends Controller
     {
         $response = ['status' => false, 'message' => ''];
         try {
-            $formData = $request->except('user_education_id');
+            $formData = $request->except('user_education_id', 'current_specialization', 'current_university');
             $formData['user_id'] = $request->session()->get('frontend_userid');
+
+            if ($request->input('current_specialization') != '') {
+                $formData['user_education_specialization'] = $request->input('current_specialization');
+            }
+
+            if ($request->input('current_university') != '') {
+                $formData['user_education_university'] = $request->input('current_university');
+            }
 
             $educationExist = HelperController::getEducationByEducation($formData['user_education_primary_id']);
             if ($request->input('user_education_id') == '' && count($educationExist)) {
@@ -552,6 +613,28 @@ class AjaxController extends Controller
         }
         return $response;
     }
+
+    public function UpdateProfileSummary(Request $request)
+    {
+        $response = ['status' => false, 'message' => ''];
+        try {
+            if ($request->input('summary') != '') {
+                $userId = $request->session()->get('frontend_userid');
+                $profileInfo = HelperController::getUserProfile($userId);
+                $data = ['user_id' => $userId, 'user_profile_summary' => $request->input('summary')];
+                if (count($profileInfo)) {
+                    updateQuery('user_profile', 'user_id', $userId, $data);
+                } else {
+                    insertQuery('user_profile', $data);
+                }
+                $response = ['status' => true, 'message' => 'Data Updated Successfully'];
+            }
+        } catch (\Exception $e) {
+            $response = ['status' => false, 'message' => 'Something went wrong. Please try again'];
+        }
+        return $response;
+    }
+
 
     public function CreateKeySkils(Request $request)
     {

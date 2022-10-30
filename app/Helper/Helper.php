@@ -273,4 +273,21 @@ function languageStrength()
     return ['Basic', 'Good', 'Proficient', 'Master'];
 }
 
+function SalaryLakhs(){
+    $data = [];
+    for ($t = 1; $t <= 20; $t++) {
+        array_push($data, $t);
+    }
+    return $data;
+}
+
+function SalaryThousands(){
+    $data = [];
+    for ($t = 0; $t <= 18; $t++) {
+        if($t ==0) array_push($data, $t+5);
+        else array_push($data,$data[$t-1]+5);
+    }
+    return $data;
+}
+
 

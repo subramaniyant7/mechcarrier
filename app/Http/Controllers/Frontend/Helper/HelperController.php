@@ -111,6 +111,21 @@ class HelperController extends Controller
         return DB::table('company_details')->where('company_detail_name', 'like', '%' . $value . '%')->get();
     }
 
+    static function getDesignation($value)
+    {
+        return DB::table('designation')->where('designation_name', 'like', '%' . $value . '%')->get();
+    }
+
+    static function getSpecialization($value,$id)
+    {
+        return DB::table('education_specialization')->where([['education_specialization_name', 'like', '%' . $value . '%'],['education_id',$id]])->get();
+    }
+
+    static function getUniversity($value,$id)
+    {
+        return DB::table('education_university')->where([['education_university_name', 'like', '%' . $value . '%'],['education_id',$id]])->get();
+    }
+
     static function getEducation($id)
     {
         return DB::table('user_education')->where('user_education_id', $id)->get();
@@ -144,5 +159,65 @@ class HelperController extends Controller
     static function getUserCurrentEmployment($id)
     {
         return DB::table('user_employment')->where([['user_id', $id], ['user_employment_current_company', 1]])->get();
+    }
+
+    static function getDesignationById($id)
+    {
+        return DB::table('designation')->where('designation_id', $id)->get();
+    }
+
+    static function getCourseByEducationId($id)
+    {
+        return DB::table('education_course_board')->where('education_id', $id)->get();
+    }
+
+    static function getSpecializationByEducationId($id)
+    {
+        return DB::table('education_specialization')->where('education_id', $id)->get();
+    }
+
+    static function getUniversityByEducationId($id)
+    {
+        return DB::table('education_university')->where('education_id', $id)->get();
+    }
+
+    static function getGradesByEducationId($id)
+    {
+        return DB::table('education_grade')->where('education_id', $id)->get();
+    }
+
+    static function getEducationInfo($id = '')
+    {
+        $data = DB::table('education_info');
+        if ($id != '')  $data->where('education_id', $id);
+        return $data->get();
+    }
+
+    static function getCourseInfo($id = '')
+    {
+        $data = DB::table('education_course_board');
+        if ($id != '')  $data->where('course_board_id', $id);
+        return $data->get();
+    }
+
+    static function getSpecializationInfo($id = '')
+    {
+        $data = DB::table('education_specialization');
+        if ($id != '')  $data->where('education_specialization_id', $id);
+        return $data->get();
+    }
+
+    static function getUniversityInfo($id = '')
+    {
+        $data = DB::table('education_university');
+        if ($id != '')  $data->where('education_university_id', $id);
+        return $data->get();
+    }
+
+    static function getGradeInfo($id = '')
+    {
+        $data = DB::table('education_grade');
+        if ($id != '')  $data->where('education_grade_id', $id);
+        return $data->get();
     }
 }

@@ -155,7 +155,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3>Edit or create profile <span>( only complete profile recruiter shows intrest to view )
+                            <h3>Edit or create profile <span>( only completed profile recruiter shows interest to view )
                                 </span></h3>
                         </div>
                     </div>
@@ -197,7 +197,7 @@
                                                         $verify = 'check';
                                                     }
 
-                                                    if ($sidebar['key'] == 'profilesummary' && count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_resume_headline != '') {
+                                                    if ($sidebar['key'] == 'profilesummary' && count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_profile_summary != '') {
                                                         $verify = 'check';
                                                     }
 
@@ -266,18 +266,18 @@
                                         @endif
                                     </div>
                                 </div>
-
+                                @php
+                                    $headline = count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_resume_headline : '';
+                                @endphp
                                 <div class="resume-upload resume-headline">
                                     <div class="d-flex">
                                         <h4>Profile Headline </h4>
                                         <span class="edit_headline">
                                             <img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
-                                            Edit</span>
+                                            {{ $headline != '' ? 'Edit' : 'Add' }}</span>
                                     </div>
-                                    @php
-                                        $headline = count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_resume_headline : '';
-                                    @endphp
+
                                     <form action="#" id="update_resume_headline">
                                         <div class="text-left inline_text">{{ $headline }} </div>
                                         <textarea required class="inputinfo hide" name="user_resume_headline" rows="3" cols="30" minlength="10"
@@ -312,7 +312,7 @@
                                         </ul>
                                     @endif
                                     <form action="#" id="create_keyskils">
-                                        <input required type="text" minlength="4" maxlength="300"
+                                        <input required minlength="3" type="text" minlength="4" maxlength="300"
                                             class="form-control inputinfo hide" name="key_skils"
                                             placeholder="Add Technical Skill ( maximum 10 or 300 charactors)" />
                                         <div class="key_hint">Note: Can add multiple skills with comma(,) separator</div>
@@ -321,6 +321,32 @@
                                             <button type="submit" class="btn btn-save">Save</button>
                                         </div>
                                     </form>
+                                </div>
+
+                                @php
+                                    $summary = count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_profile_summary : '';
+                                @endphp
+                                <div class="resume-upload resume-headline">
+                                    <div class="d-flex">
+                                        <h4>Profile Summary </h4>
+                                        <span class="edit_summary" style="cursor: pointer">
+                                            <img
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
+                                            {{ $summary != '' ? 'Edit' : 'Add' }}</span>
+                                    </div>
+
+                                    <form action="#" id="update_profile_summary">
+                                        <div class="text-left inline_text">{{ $summary }} </div>
+                                        <textarea required class="inputinfo hide" name="user_profile_summary" rows="3" cols="30" minlength="100"
+                                            maxlength="1000"
+                                            placeholder="Add Profile Summary e.g : Design Engineer with 5.6 year experience in Automotive Plastic Product Design with 1 year BIW design.">{{ $summary }}</textarea>
+                                        <span class="text_limit"> 0/1000 </span>
+                                        <div class="form-buttons">
+                                            <button type="button" class="btn btn-cancel cancelaction">Cancel</button>
+                                            <button type="submit" class="btn btn-save">Save</button>
+                                        </div>
+                                    </form>
+
                                 </div>
 
                                 <div class="resume-upload resume-headline employement">
@@ -336,11 +362,18 @@
                                         @foreach ($userInfo['userEmployments'] as $employment)
                                             @php
                                                 $fromMonth = date('M', strtotime(date('Y') . '-' . Months()[$employment->user_employment_joining_month - 1] . '-01'));
-                                                $fromYear = Year()[$employment->user_employment_joining_year - 1];
+                                                $years = Year();
+                                                usort($years, function ($a, $b) {
+                                                    if ($a == $b) {
+                                                        return 0;
+                                                    }
+                                                    return $a > $b ? -1 : 1;
+                                                });
+                                                $fromYear = $years[$employment->user_employment_joining_year - 1];
 
                                                 $toMonth = date('M', strtotime(date('Y') . '-' . Months()[$employment->user_employment_working_month - 1] . '-01'));
 
-                                                $toYear = Year()[$employment->user_employment_working_year - 1];
+                                                $toYear = $years[$employment->user_employment_working_year - 1];
 
                                                 $datetime1 = new DateTime('1 ' . $fromMonth . ' ' . $fromYear);
                                                 $datetime2 = new DateTime('1 ' . $toMonth . ' ' . $toYear);
@@ -352,6 +385,8 @@
                                                 $getCompany = \App\Http\Controllers\Frontend\Helper\HelperController::getCompanyById($employment->user_employment_current_companyname);
                                                 if (count($getCompany)) {
                                                     $companyName = $getCompany[0]->company_detail_name;
+                                                } else {
+                                                    $companyName = $employment->user_employment_current_companyname;
                                                 }
                                             @endphp
                                             <div>
@@ -392,10 +427,37 @@
                                     <div class="education-list">
                                         @if (count($userInfo['userEmployments']))
                                             @foreach ($userInfo['userEducations'] as $education)
-                                                <h5> {{ education()[$education->user_education_primary_id - 1] }} :
-                                                    {{ courses()[$education->user_education_course_id - 1] }} -
-                                                    {{ specialization()[$education->user_education_specialization - 1] }} -
-                                                    {{ Year()[$education->user_education_passed_year - 1] }}
+                                                <h5>
+                                                    @php
+                                                        $educationName = $courseName = $specilization = '';
+                                                        $educationData = \App\Http\Controllers\Frontend\Helper\HelperController::getEducationInfo($education->user_education_primary_id);
+                                                        if (count($educationData)) {
+                                                            $educationName = $educationData[0]->education_name;
+                                                        }
+                                                        if ($education->user_education_course_id != '') {
+                                                            $courseData = \App\Http\Controllers\Frontend\Helper\HelperController::getCourseInfo($education->user_education_course_id);
+                                                            if (count($courseData)) {
+                                                                $courseName = $courseData[0]->course_board_name . ' -';
+                                                            }
+                                                        }
+                                                        if ($education->user_education_specialization != '') {
+                                                            $specializationData = \App\Http\Controllers\Frontend\Helper\HelperController::getSpecializationInfo($education->user_education_specialization);
+                                                            if (count($specializationData)) {
+                                                                $specilization = $specializationData[0]->education_specialization_name;
+                                                            }
+                                                        }
+                                                        $years = Year();
+                                                        usort($years, function ($a, $b) {
+                                                            if ($a == $b) {
+                                                                return 0;
+                                                            }
+                                                            return $a > $b ? -1 : 1;
+                                                        });
+                                                    @endphp
+                                                    {{ $educationName }} :
+                                                    {{ $courseName }}
+                                                    {{ $specilization != '' ? $specilization . ' -' : '' }}
+                                                    {{ $years[$education->user_education_passed_year - 1] }}
                                                     <span class="edit_education pointer"
                                                         data-id="{{ encryption($education->user_education_id) }}"
                                                         data-education="{{ $education->user_education_id }}">
@@ -420,10 +482,10 @@
                                                 <select class="form-control custom_change" name="user_city" required
                                                     aria-label="Default select example">
                                                     <option selected value="">Select city</option>
-                                                    @foreach (city() as $k => $city)
-                                                        <option value="{{ $k + 1 }}"
-                                                            {{ count($userInfo['userDetails']) && $userInfo['userDetails'][0]->user_city == $k + 1 ? 'selected' : '' }}>
-                                                            {{ $city }}</option>
+                                                    @foreach (getActiveRecord('city') as $city)
+                                                        <option value="{{ $city->city_id }}"
+                                                            {{ count($userInfo['userDetails']) && $userInfo['userDetails'][0]->user_city == $city->city_id ? 'selected' : '' }}>
+                                                            {{ $city->city_name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -436,10 +498,10 @@
                                                         name="user_preferred_location" required
                                                         aria-label="Default select example">
                                                         <option selected value="">Select city</option>
-                                                        @foreach (city() as $k => $city)
-                                                            <option value="{{ $k + 1 }}"
-                                                                {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_location == $k + 1 ? 'selected' : '' }}>
-                                                                {{ $city }}</option>
+                                                        @foreach (getActiveRecord('city') as $city)
+                                                            <option value="{{ $city->city_id }}"
+                                                                {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_location == $city->city_id ? 'selected' : '' }}>
+                                                                {{ $city->city_name }}</option>
                                                         @endforeach
                                                     </select>
                                                     {{-- <select class="form-control custom_change"

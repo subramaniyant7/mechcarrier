@@ -153,6 +153,8 @@
                     $getCompany = \App\Http\Controllers\Frontend\Helper\HelperController::getCompanyById($data[0]->user_employment_current_companyname);
                     if (count($getCompany)) {
                         $companyName = $getCompany[0]->company_detail_name;
+                    } else {
+                        $companyName = $data[0]->user_employment_current_companyname;
                     }
                 }
             @endphp
@@ -176,8 +178,29 @@
             <label
                 class="company_designation">{{ count($data) && $data[0]->user_employment_current_company == 1 ? 'Current' : '' }}
                 Designation *</label>
-            <select class="form-control" name="user_employment_current_designation" aria-label="Default select example"
-                required onchange="showOther(this.value,'user_employment_current_designation')">
+            @php
+                $designation = '';
+                if (count($data)) {
+                    $getDesignation = \App\Http\Controllers\Frontend\Helper\HelperController::getDesignationById($data[0]->user_employment_current_designation);
+                    if (count($getDesignation)) {
+                        $designation = $getDesignation[0]->designation_name;
+                    } else {
+                        $designation = $data[0]->user_employment_current_designation;
+                    }
+                }
+            @endphp
+            <div style="position:relative" class="autocomplete_ui_parent">
+                <input type="text" placeholder="Add Designation" name="user_employment_current_designation"
+                    class="form-control autocomplete_actual_id user_employment_current_designation" required
+                    value="{{ $designation }}" />
+                <input type="hidden" name="current_designation_id" class="autocomplete_id"
+                    value="{{ count($data) ? $data[0]->user_employment_current_designation : '' }}">
+                <div class="autocomplete-items" style="display:none">
+                </div>
+            </div>
+            {{-- <select class="form-control" name="user_employment_current_designation"
+                aria-label="Default select example" required
+                onchange="showOther(this.value,'user_employment_current_designation')">
                 <option selected value="">Add designation</option>
                 @foreach (getActiveRecord('designation') as $designation)
                     <option value="{{ $designation->designation_id }}"
@@ -187,7 +210,7 @@
                 <option value="0"
                     {{ count($data) && $data[0]->user_employment_current_designation == 0 ? 'selected' : '' }}>Other
                 </option>
-            </select>
+            </select> --}}
         </div>
     </div>
 
@@ -201,7 +224,15 @@
                 value="{{ count($data) ? $data[0]->user_employment_current_designation_other : '' }}" />
         </div>
     </div>
-
+    @php
+        $years = Year();
+        usort($years, function ($a, $b) {
+            if ($a == $b) {
+                return 0;
+            }
+            return $a > $b ? -1 : 1;
+        });
+    @endphp
     <div class="row form-selectbox">
         <div class="col-md-6">
             <label>Joining Date *</label>
@@ -209,7 +240,7 @@
                 <select class="form-control" name="user_employment_joining_year" aria-label="Default select example"
                     required>
                     <option selected value="">Year</option>
-                    @foreach (Year() as $k => $year)
+                    @foreach ($years as $k => $year)
                         <option value="{{ $k + 1 }}"
                             {{ count($data) && $data[0]->user_employment_joining_year == $k + 1 ? 'selected' : '' }}>
                             {{ $year }}</option>
@@ -230,10 +261,11 @@
             style="display : {{ count($data) && $data[0]->user_employment_current_company == 1 ? 'none' : 'block' }}">
             <label>Working till *</label>
             <div class="d-flex">
+
                 <select class="form-control" name="user_employment_working_year" aria-label="Default select example"
                     required>
                     <option selected value="">Year</option>
-                    @foreach (Year() as $k => $year)
+                    @foreach ($years as $k => $year)
                         <option value="{{ $k + 1 }}"
                             {{ count($data) && $data[0]->user_employment_working_year == $k + 1 ? 'selected' : '' }}>
                             {{ $year }}</option>
@@ -254,40 +286,29 @@
 
     <div class="row form-selectbox one-select">
         <div class="col-md-6">
-            <label>Current Annual Salary *</label>
+            <label>Annual Salary *</label>
             <div class="d-flex">
                 <select class="form-control" name="user_employment_current_salary_lakh"
                     aria-label="Default select example" required>
                     <option selected value="">0 Lakh</option>
-                    <option value="1"
-                        {{ count($data) && $data[0]->user_employment_current_salary_lakh == 1 ? 'selected' : '' }}>
-                        1
-                        Lakh</option>
-                    <option value="2"
-                        {{ count($data) && $data[0]->user_employment_current_salary_lakh == 2 ? 'selected' : '' }}>
-                        2
-                        Lakh</option>
-                    <option value="3"
-                        {{ count($data) && $data[0]->user_employment_current_salary_lakh == 3 ? 'selected' : '' }}>
-                        3
-                        Lakh</option>
+                    @foreach (SalaryLakhs() as $l => $lakh)
+                        <option value="{{ $l + 1 }}"
+                            {{ count($data) && $data[0]->user_employment_current_salary_lakh == $l + 1 ? 'selected' : '' }}>
+                            {{ $lakh }} Lakh{{ $l > 0 ? 's' : '' }}</option>
+                    @endforeach
                 </select>
                 <select class="form-control" name="user_employment_current_salary_thousand"
                     aria-label="Default select example" required>
                     <option selected value="">0 Thousand </option>
-                    <option value="1"
-                        {{ count($data) && $data[0]->user_employment_current_salary_thousand == 1 ? 'selected' : '' }}>
-                        1 Thousand</option>
-                    <option value="2"
-                        {{ count($data) && $data[0]->user_employment_current_salary_thousand == 2 ? 'selected' : '' }}>
-                        2 Thousand</option>
-                    <option value="3"
-                        {{ count($data) && $data[0]->user_employment_current_salary_thousand == 3 ? 'selected' : '' }}>
-                        3 Thousand</option>
+                    @foreach (SalaryThousands() as $k => $thousand)
+                        <option value="{{ $k + 1 }}"
+                            {{ count($data) && $data[0]->user_employment_current_salary_thousand == $k + 1 ? 'selected' : '' }}>
+                            {{ $thousand }} Thousand</option>
+                    @endforeach
                 </select>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 notice_period">
             <label>Notice Period *</label>
             <div class="d-flex">
                 <select class="form-control" name="user_employment_notice_period" aria-label="Default select example"
@@ -329,14 +350,18 @@
         if (this.value == 1) {
             $("select[name=user_employment_working_year]").removeAttr('required');
             $("select[name=user_employment_working_month]").removeAttr('required');
+            $("select[name=user_employment_notice_period]").attr('required');
             $('.worktill').hide();
+            $('.notice_period').show();
             $('.company_name').html('Current Company Name');
             $('.company_designation').html('Current Designation');
         }
         if (this.value == 2) {
             $("select[name=user_employment_working_year]").attr('required', 'required');
             $("select[name=user_employment_working_month]").attr('required', 'required');
+            $("select[name=user_employment_notice_period]").removeAttr('required', 'required');
             $('.worktill').show();
+            $('.notice_period').hide();
             $('.company_name').html('Company Name');
             $('.company_designation').html('Company Designation');
         }

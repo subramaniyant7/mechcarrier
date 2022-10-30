@@ -119,11 +119,15 @@ Route::middleware(['globalvalidate'])->group(function () {
 
 
         Route::post('/getcompany', [FAjaxController::class, 'GetCompany'])->name('getcompany');
+        Route::post('/getdesignation', [FAjaxController::class, 'GetDesignation'])->name('getdesignation');
+        Route::post('/getspecialization', [FAjaxController::class, 'GetSpecialization'])->name('getspecialization');
+        Route::post('/getuniversity', [FAjaxController::class, 'GetUniversity'])->name('getuniversity');
         Route::post('/action_employment', [FAjaxController::class, 'ActionEmployment'])->name('actionemployment');
         Route::get('/delete_employment/{id}', [FrontendController::class, 'DeleteEmployment'])->name('deleteemployment');
 
 
         Route::post('/update_resume_headline', [FAjaxController::class, 'UpdateResumeHeadline'])->name('updateresumeheadline');
+        Route::post('/update_profile_summary', [FAjaxController::class, 'UpdateProfileSummary'])->name('updateprofilesummary');
         Route::post('/create_keyskils', [FAjaxController::class, 'CreateKeySkils'])->name('createkeyskils');
         Route::post('/delete_keyskils', [FAjaxController::class, 'DeleteKeySkils'])->name('deletekeyskils');
 

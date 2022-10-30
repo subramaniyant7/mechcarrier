@@ -266,6 +266,7 @@ $('.delete_resume').click(function () {
     }
 });
 
+// Profile Headline
 $('.edit_headline').click(function () {
     let parent = $(this).closest('.resume-headline');
     let headline = parent.find('.inputinfo').val();
@@ -273,7 +274,7 @@ $('.edit_headline').click(function () {
     parent.find('.text_limit').html(headline.length + '/250').show();
     parent.find('.inline_text').addClass('hide');
     parent.find('.inputinfo').removeClass('hide');
-    parent.find('.key_hint').css('display','block');
+    parent.find('.key_hint').css('display', 'block');
 })
 
 $("textarea[name=user_resume_headline]").keyup(function () {
@@ -287,7 +288,7 @@ $('.cancelaction').click(function () {
     parent.find('.text_limit').hide();
     parent.find('.inline_text').removeClass('hide');
     parent.find('.inputinfo').addClass('hide');
-    parent.find('.key_hint').css('display','none');
+    parent.find('.key_hint').css('display', 'none');
 })
 
 $('#update_resume_headline').submit(function (e) {
@@ -320,6 +321,7 @@ $('#update_resume_headline').submit(function (e) {
     }
 });
 
+// Key Skills
 $('#create_keyskils').submit(function (e) {
     e.preventDefault();
     let keyskils = $("input[name=key_skils]").val();
@@ -372,6 +374,53 @@ const removeKeySkil = (skilid) => {
     }
 }
 
+// Profile Summary
+$('.edit_summary').click(function () {
+    let parent = $(this).closest('.resume-headline');
+    let headline = parent.find('.inputinfo').val();
+    parent.find('.form-buttons').show();
+    parent.find('.text_limit').html(headline.length + '/1000').show();
+    parent.find('.inline_text').addClass('hide');
+    parent.find('.inputinfo').removeClass('hide');
+    parent.find('.key_hint').css('display', 'block');
+})
+
+$("textarea[name=user_profile_summary]").keyup(function () {
+    let inputVal = $(this).val();
+    $(this).parent().find('.text_limit').html(inputVal.length + '/1000');
+});
+
+$('#update_profile_summary').submit(function (e) {
+    e.preventDefault();
+    let summary = $("textarea[name=user_profile_summary]").val();
+    if (summary != '') {
+        $('.loader').show();
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}update_profile_summary`,
+            data: { summary: summary },
+            dataType: 'json',
+            success: function (data) {
+                if (data.status) {
+                    toastr.success(data.message)
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000)
+
+                }
+                else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    }
+});
+
+// Employment
 $('.create_employment').click(function () {
     $.ajax({
         type: 'get',
@@ -461,7 +510,7 @@ $(document).on('keyup', '.user_employment_current_companyname', function (e) {
     let val = $(this).val();
     let current = this;
     const currentParent = $(this).parents('.autocomplete_ui_parent');
-    $(this).attr('required','required');
+    $(this).attr('required', 'required');
     if (val != '') {
         $.ajax({
             type: 'post',
@@ -474,14 +523,14 @@ $(document).on('keyup', '.user_employment_current_companyname', function (e) {
                     let response = JSON.parse(data.data);
                     if (response.length) {
                         response.forEach(res => {
-                            html += "<div class='option_click' data-id='"+ res.company_detail_name +"'>" + res.company_detail_name + '<input type="hidden" value="' + res.company_detail_id + '"></div>'
+                            html += "<div class='option_click' data-id='" + res.company_detail_name + "'>" + res.company_detail_name + '<input type="hidden" value="' + res.company_detail_id + '"></div>'
                         })
-                        currentParent.find('.autocomplete-items').css('height','100px');
-                    }else{
+                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                    } else {
                         html += "<div>No options found</div>";
-                        currentParent.find('.autocomplete-items').css('height','42px');
+                        currentParent.find('.autocomplete-items').css('height', '42px').html('').hide();
                     }
-                    currentParent.find('.autocomplete-items').html(html).show();
+                    currentParent.find('.autocomplete_id').val('');
                 }
                 else toastr.error(data.message);
             },
@@ -492,28 +541,182 @@ $(document).on('keyup', '.user_employment_current_companyname', function (e) {
                 $('.loader').hide();
             }
         });
-    }else{
+    } else {
         currentParent.find('.autocomplete-items').html('').hide();
         currentParent.find('.autocomplete_id').val('')
     }
 });
 
-$(document).on('click','.option_click',function(){
+$(document).on('blur', '.user_employment_current_companyname', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    setTimeout(() => {
+        const idVal = currentParent.find('.autocomplete_id').val();
+        // if(idVal == '') { currentParent.find('.autocomplete_actual_id').val('').attr('required','required'); }
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+
+});
+
+
+$(document).on('keyup', '.user_employment_current_designation', function (e) {
+    let val = $(this).val();
+    let current = this;
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $(this).attr('required', 'required');
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getdesignation`,
+            data: { designaionname: val },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='option_click' data-id='" + res.designation_name + "'>" + res.designation_name + '<input type="hidden" value="' + res.designation_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html('').hide();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+                }
+                else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('blur', '.user_employment_current_designation', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    setTimeout(() => {
+        const idVal = currentParent.find('.autocomplete_id').val();
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+
+});
+
+
+// Education
+$(document).on('keyup', '.user_education_specialization', function (e) {
+    let educationId = $("select[name='user_education_primary_id']").val();
+    let val = $(this).val();
+    let current = this;
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $(this).attr('required', 'required');
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getspecialization`,
+            data: { name: val, id: educationId },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='option_click' data-id='" + res.education_specialization_name + "'>" + res.education_specialization_name + '<input type="hidden" value="' + res.education_specialization_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html('').hide();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+                }
+                else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('blur', '.user_education_specialization', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    setTimeout(() => {
+        const idVal = currentParent.find('.autocomplete_id').val();
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+
+});
+
+$(document).on('keyup', '.user_education_university', function (e) {
+    let educationId = $("select[name='user_education_primary_id']").val();
+    let val = $(this).val();
+    let current = this;
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $(this).attr('required', 'required');
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getuniversity`,
+            data: { name: val, id: educationId },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='option_click' data-id='" + res.education_university_name + "'>" + res.education_university_name + '<input type="hidden" value="' + res.education_university_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html('').hide();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+                }
+                else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('blur', '.user_education_university', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    setTimeout(() => {
+        const idVal = currentParent.find('.autocomplete_id').val();
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+});
+
+$(document).on('click', '.option_click', function () {
     const inputVal = $(this).find('input').val();
     const currentParent = $(this).parents('.autocomplete_ui_parent');
     currentParent.find('.autocomplete_id').val(inputVal);
     currentParent.find('.autocomplete_actual_id').val($(this).attr('data-id')).removeAttr('required');
     currentParent.find('.autocomplete-items').hide().html('');
-});
-
-$(document).on('blur','.user_employment_current_companyname',function(){
-    const currentParent = $(this).parents('.autocomplete_ui_parent');
-    setTimeout(() => {
-        const idVal = currentParent.find('.autocomplete_id').val();
-        if(idVal == '') { currentParent.find('.autocomplete_actual_id').val('').attr('required','required'); }
-        currentParent.find('.autocomplete-items').hide().html('');
-    },500);
-
 });
 
 $('.create_education').click(function () {
@@ -537,6 +740,39 @@ $('.create_education').click(function () {
             $('.loader').hide();
         }
     });
+});
+
+$(document).on('change', '.user_education_primary_id', function (e) {
+    let educationId = $("input[name='user_education_id']").val();
+    let type = educationId == '' ? 'add' : 'edit';
+    let payload = { type: type, educationId: $(this).val() };
+    let contentClass = 'action_education';
+    let emptyClass = 'edit_education_content';
+    if (educationId != '') {
+        payload.dataid = educationId;
+        contentClass = 'edit_education_content';
+        emptyClass = 'action_education';
+    }
+    $.ajax({
+        type: 'get',
+        url: `${siteurl}geteducationhtml`,
+        data: payload,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                $(`.${contentClass}`).html(data.data);
+                $(`.${emptyClass}`).html('');
+            }
+            else toastr.error(data.message);
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+    console.log('value:', $(this).val());
 });
 
 $('.edit_education').click(function () {
@@ -603,6 +839,7 @@ $('.custom_change').change(function (e) {
     $(this).parents('.current-location').find('.form-buttons').show();
 });
 
+// Location
 $(document).on('submit', '#current-location', function (e) {
     e.preventDefault();
     let formValue = $(this).serialize();
@@ -628,6 +865,7 @@ $(document).on('submit', '#current-location', function (e) {
     });
 });
 
+// IT Skill
 $('.create_itskill').click(function () {
     $.ajax({
         type: 'get',
@@ -711,6 +949,7 @@ $(document).on('click', '.cancel_itskill', function (e) {
     }
 });
 
+// Personal Details
 $('.action_personaldetails').click(function () {
     $('.loader').show();
     $.ajax({
@@ -760,6 +999,7 @@ $(document).on('click', '.cancel_personaldetails', function (e) {
     $('.action_personaldetailsdata').html('');
 });
 
+// Language
 $(document).on('click', '.new_language', function (e) {
     $.ajax({
         type: 'get',
@@ -778,3 +1018,5 @@ $(document).on('click', '.new_language', function (e) {
         }
     });
 });
+
+
