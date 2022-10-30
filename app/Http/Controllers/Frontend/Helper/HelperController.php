@@ -131,9 +131,9 @@ class HelperController extends Controller
         return DB::table('user_education')->where('user_education_id', $id)->get();
     }
 
-    static function getEducationByEducation($id)
+    static function getEducationByEducation($id, $userId)
     {
-        return DB::table('user_education')->where('user_education_primary_id', $id)->get();
+        return DB::table('user_education')->where([['user_education_primary_id', $id], ['user_id', $userId]])->get();
     }
 
     static function getCompanyById($id)

@@ -457,7 +457,7 @@ class AjaxController extends Controller
                 $formData['user_education_university'] = $request->input('current_university');
             }
 
-            $educationExist = HelperController::getEducationByEducation($formData['user_education_primary_id']);
+            $educationExist = HelperController::getEducationByEducation($formData['user_education_primary_id'],$formData['user_id']);
             if ($request->input('user_education_id') == '' && count($educationExist)) {
                 $response = ['status' => false, 'message' => 'Education Already exist'];
                 return $response;
