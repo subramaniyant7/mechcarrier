@@ -58,7 +58,11 @@
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Profile
                                                 <span class="caret"></span></button>
                                             <ul class="dropdown-menu">
-                                                <li><a href="#">Pro1</a></li>
+                                                <li><a href="{{ route('userdashboard') }}">My Dashboard</a></li>
+                                                <li><a href="#">Personal Details</a></li>
+                                                <li><a href="#">My Courses</a></li>
+                                                <li><a href="#">My Mail Box</a></li>
+                                                <li><a href="#">Account Settings</a></li>
                                             </ul>
                                         </div>
                                     </div>
