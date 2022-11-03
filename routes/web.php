@@ -101,10 +101,12 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::get('/getemploymenthtml', [FAjaxController::class, 'GetEmploymentHtml'])->name('getemploymenthtml');
         Route::get('/geteducationhtml', [FAjaxController::class, 'GetEducationHtml'])->name('geteducationhtml');
         Route::get('/getitskillhtml', [FAjaxController::class, 'GetItSkillHtml'])->name('getitskillhtml');
+        Route::get('/getcertificationhtml', [FAjaxController::class, 'GetCertificationHtml'])->name('getcertificationhtml');
         Route::get('/getpersonaldetailhtml', [FAjaxController::class, 'GetPersonalDetailHtml'])->name('getpersonaldetailhtml');
         Route::post('/action_personaldetails_data', [FAjaxController::class, 'ActionPersonalData'])->name('actionpersonaldetailsdata');
 
         Route::get('/newlanguagehtml', [FAjaxController::class, 'GetNewLanguage'])->name('newlanguagehtml');
+
 
 
         Route::post('/action_education', [FAjaxController::class, 'ActionEducation'])->name('actioneducation');
@@ -112,6 +114,12 @@ Route::middleware(['globalvalidate'])->group(function () {
 
         Route::post('/action_itskill', [FAjaxController::class, 'ActionItSkill'])->name('actionitskill');
         Route::get('/delete_itskill/{id}', [FrontendController::class, 'DeleteITSkill'])->name('deleteitskill');
+
+
+        Route::post('/action_certification', [FAjaxController::class, 'ActionCertification'])->name('actioncertification');
+        Route::get('/delete_certification/{id}', [FrontendController::class, 'DeleteCertification'])->name('deletecertification');
+
+
 
 
         Route::post('/actioncurrentlocation', [FAjaxController::class, 'ActionCurrentLocation'])->name('actioncurrentlocation');

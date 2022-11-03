@@ -161,6 +161,15 @@
                     </div>
                 </div>
             </div>
+            @php
+                $years = Year();
+                usort($years, function ($a, $b) {
+                    if ($a == $b) {
+                        return 0;
+                    }
+                    return $a > $b ? -1 : 1;
+                });
+            @endphp
             <div class="profile-dashboard">
                 <div class="container">
                     <div class="row">
@@ -212,6 +221,11 @@
                                                     if ($sidebar['key'] == 'userITSkils' && count($userInfo['userITSkils'])) {
                                                         $verify = 'check';
                                                     }
+
+                                                    if ($sidebar['key'] == 'userCertifications' && count($userInfo['userCertification'])) {
+                                                        $verify = 'check';
+                                                    }
+
 
                                                     if ($sidebar['key'] == 'personadetail' && (count($userInfo['userLanguages']) && $userInfo['userDetails'][0]->user_gender != '' && $userInfo['userDetails'][0]->user_marital_status != '' && $userInfo['userDetails'][0]->user_dob != '' && $userInfo['userDetails'][0]->user_permanent_address != '' && $userInfo['userDetails'][0]->user_permanent_address_pin != '')) {
                                                         $verify = 'check';
@@ -362,13 +376,7 @@
                                         @foreach ($userInfo['userEmployments'] as $employment)
                                             @php
                                                 $fromMonth = date('M', strtotime(date('Y') . '-' . Months()[$employment->user_employment_joining_month - 1] . '-01'));
-                                                $years = Year();
-                                                usort($years, function ($a, $b) {
-                                                    if ($a == $b) {
-                                                        return 0;
-                                                    }
-                                                    return $a > $b ? -1 : 1;
-                                                });
+
                                                 $fromYear = $years[$employment->user_employment_joining_year - 1];
 
                                                 $toMonth = date('M', strtotime(date('Y') . '-' . Months()[$employment->user_employment_working_month - 1] . '-01'));
@@ -425,7 +433,7 @@
                                             Add</span>
                                     </div>
                                     <div class="education-list">
-                                        @if (count($userInfo['userEmployments']))
+                                        @if (count($userInfo['userEducations']))
                                             @foreach ($userInfo['userEducations'] as $education)
                                                 <h5>
                                                     @php
@@ -569,6 +577,38 @@
                                         @endif
                                     </div>
                                     <div class="action_itskill"></div>
+                                </div>
+
+                                <div class="resume-upload resume-headline employement">
+                                    <div class="d-flex">
+                                        <h4>Certifications </h4>
+                                        <span class="create_certification pointer"><img
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
+                                            Add</span>
+                                    </div>
+                                    <div class="education-list">
+                                        @if (count($userInfo['userCertification']))
+                                            @foreach ($userInfo['userCertification'] as $certification)
+                                                <div>
+                                                    <h5>{{ $certification->user_certification_name }}
+                                                        - {{ $certification->user_certification_completion_id }} -
+                                                        Duration-
+                                                        {{ $years[$certification->user_certification_validity_year_from - 1] }} -
+                                                        {{ $years[$certification->user_certification_validity_year_to - 1]}}
+                                                        <span class="edit_certification pointer"
+                                                            data-id="{{ encryption($certification->user_certification_id) }}"
+                                                            data-certification="{{ $certification->user_certification_id }}">
+                                                            <img
+                                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
+                                                            Edit</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="edit_certification_content"
+                                                    id="certification_{{ $certification->user_certification_id }}"></div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="action_certification"></div>
                                 </div>
 
                                 <div class="resume-upload resume-headline employement personal-details">

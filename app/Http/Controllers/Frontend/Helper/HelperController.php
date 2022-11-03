@@ -51,6 +51,7 @@ class HelperController extends Controller
         $user['userKeySkils'] = DB::table('user_key_skils')->where('user_id', $id)->get();
         $user['userLanguages'] = DB::table('user_languages')->where('user_id', $id)->get();
         $user['userProfile'] = DB::table('user_profile')->where('user_id', $id)->get();
+        $user['userCertification'] = DB::table('user_certification')->where('user_id', $id)->get();
         return $user;
     }
 
@@ -144,6 +145,11 @@ class HelperController extends Controller
     static function getITSkill($id)
     {
         return DB::table('user_itskils')->where('user_itskil_id', $id)->get();
+    }
+
+    static function getCertification($id)
+    {
+        return DB::table('user_certification')->where('user_certification_id', $id)->get();
     }
 
     static function getUserLanguages($id)

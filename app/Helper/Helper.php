@@ -162,6 +162,7 @@ function getUserSidebar()
         ['name' => 'Current Location', 'key' => 'currentlocation'],
         // ['name' => 'Total Experience', 'key' => 'totalexperience'],
         ['name' => 'IT Skill', 'key' => 'userITSkils'],
+        ['name' => 'Certifications', 'key' => 'userCertifications'],
         ['name' => 'Personal Details', 'key' => 'personadetail']
     ];
 }

@@ -949,6 +949,92 @@ $(document).on('click', '.cancel_itskill', function (e) {
     }
 });
 
+// Certifications
+$('.create_certification').click(function () {
+    $.ajax({
+        type: 'get',
+        url: `${siteurl}getcertificationhtml`,
+        data: { type: 'add' },
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                $('.action_certification').html(data.data);
+                $('.edit_certification_content').html('');
+
+            }
+            else toastr.error(data.message);
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+});
+
+$('.edit_certification').click(function () {
+    let certification = $(this).attr('data-certification');
+    let dataId = $(this).attr('data-id');
+    $('.loader').show();
+    $.ajax({
+        type: 'get',
+        url: `${siteurl}getcertificationhtml`,
+        data: { type: 'edit', dataid: dataId },
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                $('.action_certification').html('');
+                $('.edit_certification_content').html('');
+                $('#certification_' + certification).html(data.data);
+            }
+            else toastr.error(data.message);
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+});
+
+
+$(document).on('submit', '#action_certification', function (e) {
+    e.preventDefault();
+    let formValue = $(this).serialize();
+    $('.loader').show();
+    $.ajax({
+        type: 'post',
+        url: `${siteurl}action_certification`,
+        data: formValue,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                toastr.success(data.message)
+                location.reload();
+            }
+            else toastr.error(data.message);
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+});
+
+
+$(document).on('click', '.cancel_certification', function (e) {
+    let id = $("input[name=user_certification_id]").val();
+    if (id == '') {
+        $('.action_certification').html('');
+    } else {
+        $(this).parents('.edit_certification_content').html('');
+    }
+});
+
 // Personal Details
 $('.action_personaldetails').click(function () {
     $('.loader').show();

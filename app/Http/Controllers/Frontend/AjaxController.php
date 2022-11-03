@@ -301,6 +301,29 @@ class AjaxController extends Controller
         return $response;
     }
 
+    public function GetCertificationHtml(Request $request)
+    {
+        $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
+        try {
+            if ($request->session()->get('frontend_userid') != '' && $request->input('type') != '') {
+                $type = $request->input('type');
+                $data = [];
+                if ($request->input('dataid') != '') {
+                    $certificationInfo = HelperController::getCertification(decryption($request->input('dataid')));
+                    if (count($certificationInfo)) $data = $certificationInfo;
+                }
+                $html = view('frontend.users.actioncertification', compact('type', 'data'))->render();
+                $response = ['status' => true, 'message' => '', 'data' => $html];
+            }
+        } catch (\Exception $e) {
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+
+
     public function GetNewLanguage(Request $request)
     {
         $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
@@ -543,9 +566,6 @@ class AjaxController extends Controller
         return $response;
     }
 
-
-
-
     public function ActionItSkill(Request $request)
     {
         $response = ['status' => false, 'message' => ''];
@@ -558,6 +578,35 @@ class AjaxController extends Controller
                 insertQuery('user_itskils', $formData);
             }
             $response = ['status' => true, 'message' => 'IT Skills Successfully saved'];
+        } catch (\Exception $e) {
+            $response = ['status' => false, 'message' => $e->getMessage()];
+        }
+        return $response;
+    }
+
+    public function ActionCertification(Request $request)
+    {
+        $response = ['status' => false, 'message' => ''];
+        try {
+            $formData = $request->except('user_certification_id');
+            $formData['user_id'] = $request->session()->get('frontend_userid');
+
+            if ($formData['user_certification_validity_year_from'] <  $formData['user_certification_validity_year_to']) {
+                $response['message'] = 'To date should be greater than From Date';
+                return $response;
+            }
+
+            if (($formData['user_certification_validity_year_from'] ==  $formData['user_certification_validity_year_to']) && ($formData['user_certification_validity_month_from'] > $formData['user_certification_validity_month_to'])) {
+                $response['message'] = 'To date should be greater than From Date';
+                return $response;
+            }
+
+            if ($request->input('user_certification_id') != '') {
+                updateQuery('user_certification', 'user_certification_id', decryption($request->input('user_certification_id')), $formData);
+            } else {
+                insertQuery('user_certification', $formData);
+            }
+            $response = ['status' => true, 'message' => 'Certifications Successfully saved'];
         } catch (\Exception $e) {
             $response = ['status' => false, 'message' => $e->getMessage()];
         }

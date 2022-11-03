@@ -109,6 +109,22 @@ class FrontendController extends Controller
         }
     }
 
+    public function DeleteCertification($id)
+    {
+        try {
+            $certificationId = decryption($id);
+            $data = HelperController::getCertification($certificationId);
+            if (count($data)) {
+                deleteQuery($certificationId, 'user_certification', 'user_certification_id');
+                return back()->with('success', 'Certification Deleted Successfully');
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong. Please try again');
+        }
+    }
+
+
+
 
 
 
