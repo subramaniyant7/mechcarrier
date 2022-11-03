@@ -17,7 +17,7 @@
     @endif
     <div class="row">
         <div class="col-md-12">
-            <label>Ceritification Name *</label>
+            <label>Certification Name *</label>
             <input type="text" placeholder="Add certification name" class="form-control"
                 name="user_certification_name" required
                 value="{{ count($data) ? $data[0]->user_certification_name : '' }}">
@@ -26,7 +26,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <label>Ceritification Completion ID *</label>
+            <label>Certification Completion ID *</label>
             <input type="text" placeholder="Add certification completion ID" class="form-control"
                 name="user_certification_completion_id" required
                 value="{{ count($data) ? $data[0]->user_certification_completion_id : '' }}">
@@ -43,7 +43,7 @@
     @endphp
     <div class="row form-selectbox">
         <div class="col-md-6">
-            <label>Certfication Validity *</label>
+            <label>Certification Validity *</label>
             <div class="d-flex">
                 <select class="form-control" name="user_certification_validity_month_from" required
                     aria-label="Default select example">
@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <label style="visibility: hidden">Certfication Validity *</label>
+            <label style="visibility: hidden">Certification Validity *</label>
             <div class="d-flex">
                 <select class="form-control" name="user_certification_validity_month_to" required
                     aria-label="Default select example">
