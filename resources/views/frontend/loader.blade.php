@@ -1,11 +1,11 @@
 <style>
     /*utils*/
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Inter', sans-serif !important;
     }
 
     /*use flexbox to centered element*/
