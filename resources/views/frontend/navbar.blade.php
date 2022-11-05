@@ -43,15 +43,6 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">Resume Building </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Free Job Post</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Free Resume Datebase</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Ready Screening Candidate </a>
-                                    </li>
                                 </ul>
                             </div>
                         </nav>
