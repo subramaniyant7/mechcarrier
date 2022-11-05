@@ -24,6 +24,7 @@ use App\Http\Controllers\Frontend\AjaxController as FAjaxController;
 use App\Http\Controllers\Frontend\JobseekerController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\Frontend\EmployerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,8 +108,6 @@ Route::middleware(['globalvalidate'])->group(function () {
 
         Route::get('/newlanguagehtml', [FAjaxController::class, 'GetNewLanguage'])->name('newlanguagehtml');
 
-
-
         Route::post('/action_education', [FAjaxController::class, 'ActionEducation'])->name('actioneducation');
         Route::get('/delete_education/{id}', [FrontendController::class, 'DeleteEducation'])->name('deleteeducation');
 
@@ -119,29 +118,29 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::post('/action_certification', [FAjaxController::class, 'ActionCertification'])->name('actioncertification');
         Route::get('/delete_certification/{id}', [FrontendController::class, 'DeleteCertification'])->name('deletecertification');
 
-
-
-
         Route::post('/actioncurrentlocation', [FAjaxController::class, 'ActionCurrentLocation'])->name('actioncurrentlocation');
-
-
-
         Route::post('/getcompany', [FAjaxController::class, 'GetCompany'])->name('getcompany');
         Route::post('/getdesignation', [FAjaxController::class, 'GetDesignation'])->name('getdesignation');
         Route::post('/getspecialization', [FAjaxController::class, 'GetSpecialization'])->name('getspecialization');
+        Route::post('/getcity', [FAjaxController::class, 'GetCity'])->name('getcity');
+
         Route::post('/getuniversity', [FAjaxController::class, 'GetUniversity'])->name('getuniversity');
+
         Route::post('/action_employment', [FAjaxController::class, 'ActionEmployment'])->name('actionemployment');
         Route::get('/delete_employment/{id}', [FrontendController::class, 'DeleteEmployment'])->name('deleteemployment');
 
-
         Route::post('/update_resume_headline', [FAjaxController::class, 'UpdateResumeHeadline'])->name('updateresumeheadline');
         Route::post('/update_profile_summary', [FAjaxController::class, 'UpdateProfileSummary'])->name('updateprofilesummary');
+
         Route::post('/create_keyskils', [FAjaxController::class, 'CreateKeySkils'])->name('createkeyskils');
         Route::post('/delete_keyskils', [FAjaxController::class, 'DeleteKeySkils'])->name('deletekeyskils');
 
-
         Route::get('/user_logout', [FrontendController::class, 'UserLogout'])->name('userlogout');
     });
+
+    Route::get('/employer_login', [EmployerController::class, 'EmployerLogin'])->name('employerlogin');
+    Route::get('/employer_register', [EmployerController::class, 'EmployerRegister'])->name('employerregister');
+    Route::get('/employer_company', [EmployerController::class, 'CompanyAction'])->name('employercompany');
 
     Route::get('/login/{social}', [SocialMediaController::class, 'SocialMedia'])->where('social', 'google|linkedin');
     Route::get('/login/{social}/callback', [SocialMediaController::class, 'handleProviderCallback'])->where('social', 'google|linkedin');

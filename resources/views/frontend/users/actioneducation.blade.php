@@ -59,28 +59,31 @@
             </select>
         </div>
     </div>
-    @if (($educationId != '' && $educationId <= 2) || (count($data) && $education->education_id <= 2) )
-    <div class="row">
-        <div class="col-md-12">
-            <label>Course / board *</label>
-            <select class="form-control" name="user_education_course_id" aria-label="Default select example" required>
-                <option selected value="">Select Course</option>
-                @if ($educationId != '' || count($data))
-                    @php
-                        $id = $educationId != '' ? $educationId : (count($data) && $data[0]->user_education_primary_id ? $data[0]->user_education_primary_id : '');
-                        $getCourses = \App\Http\Controllers\Frontend\Helper\HelperController::getCourseByEducationId($id);
-                    @endphp
-                    @foreach ($getCourses as $course)
-                        <option value="{{ $course->course_board_id }}"
-                            {{ count($data) && $data[0]->user_education_course_id == $course->course_board_id ? 'selected' : '' }}>
-                            {{ $course->course_board_name }}</option>
-                    @endforeach
-                @endif
-            </select>
+    @if (($educationId != '' && $educationId <= 2) ||
+        ($educationId == '' && count($data) && $data[0]->user_education_primary_id <= 2))
+        <div class="row">
+            <div class="col-md-12">
+                <label>Course / board *</label>
+                <select class="form-control" name="user_education_course_id" aria-label="Default select example"
+                    required>
+                    <option selected value="">Select Course</option>
+                    @if ($educationId != '' || count($data))
+                        @php
+                            $id = $educationId != '' ? $educationId : (count($data) && $data[0]->user_education_primary_id ? $data[0]->user_education_primary_id : '');
+                            $getCourses = \App\Http\Controllers\Frontend\Helper\HelperController::getCourseByEducationId($id);
+                        @endphp
+                        @foreach ($getCourses as $course)
+                            <option value="{{ $course->course_board_id }}"
+                                {{ count($data) && $data[0]->user_education_course_id == $course->course_board_id ? 'selected' : '' }}>
+                                {{ $course->course_board_name }}</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
         </div>
-    </div>
     @endif
-    @if (($educationId != '' && $educationId > 2) || (count($data) && $education->education_id > 2))
+    @if (($educationId != '' && $educationId > 2) ||
+        ($educationId == '' && count($data) && $data[0]->user_education_primary_id > 2))
         <div class="row">
             <div class="col-md-12">
                 <label>Specialization *</label>
@@ -122,7 +125,8 @@
             </div>
         </div>
     @endif
-    @if (($educationId != '' && $educationId > 2) || (count($data) && $education->education_id > 2))
+    @if (($educationId != '' && $educationId > 2) ||
+        ($educationId == '' && count($data) && $data[0]->user_education_primary_id > 2))
         <div class="row">
             <div class="col-md-12">
                 <label>University/Institute *</label>
@@ -221,9 +225,13 @@
     <div class="row">
         <div class="col-md-6">
             <label>Marks / Grade</label>
-            <select class="form-control" name="user_education_grade" aria-label="Default select example" required>
+            <select class="form-control user_education_grade" name="user_education_grade"
+                aria-label="Default select example" required>
                 <option selected value="">Add marks / grade</option>
-                @if ($educationId != '' || count($data))
+                @foreach (educationGrades() as $k => $grades)
+                    <option value="{{ $k + 1 }}" {{ count($data) && $data[0]->user_education_grade == $k + 1 ? 'selected' : '' }}>{{ $grades }}</option>
+                @endforeach
+                {{-- @if ($educationId != '' || count($data))
                     @php
                         $id = $educationId != '' ? $educationId : (count($data) && $data[0]->user_education_primary_id ? $data[0]->user_education_primary_id : '');
                         $getgrades = \App\Http\Controllers\Frontend\Helper\HelperController::getGradesByEducationId($id);
@@ -233,8 +241,17 @@
                             {{ count($data) && $data[0]->user_education_grade == $grade->education_grade_id ? 'selected' : '' }}>
                             {{ $grade->education_grade_name }}</option>
                     @endforeach
-                @endif
+                @endif --}}
             </select>
+        </div>
+    </div>
+
+    <div class="row showmarks"
+        style="display: {{ count($data) && $data[0]->user_education_grade < 4 ? 'block' : 'none' }}">
+        <div class="col-md-12">
+            <label>Marks *</label>
+            <input type="number" step="0.1" placeholder="Enter Marks" class="form-control" name="user_education_mark" required
+                value="{{ count($data) ? $data[0]->user_education_mark : '' }}">
         </div>
     </div>
 

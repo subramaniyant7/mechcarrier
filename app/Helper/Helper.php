@@ -156,9 +156,9 @@ function getUserSidebar()
         ['name' => 'Attach Resume', 'key' => 'resume'],
         ['name' => 'Resume Headline', 'key' => 'headline'],
         ['name' => 'Key Skill', 'key' => 'userKeySkils'],
+        ['name' => 'Profile Summary', 'key' => 'profilesummary'],
         ['name' => 'Employment', 'key' => 'userEmployments'],
         ['name' => 'Education', 'key' => 'userEducations'],
-        ['name' => 'Profile Summary', 'key' => 'profilesummary'],
         ['name' => 'Current Location', 'key' => 'currentlocation'],
         // ['name' => 'Total Experience', 'key' => 'totalexperience'],
         ['name' => 'IT Skill', 'key' => 'userITSkils'],
@@ -289,6 +289,11 @@ function SalaryThousands(){
         else array_push($data,$data[$t-1]+5);
     }
     return $data;
+}
+
+function educationGrades()
+{
+    return ['Scale 10 Grading System', 'Scale 4 Grading System', '% Marks of 100 Maximum', 'Course Requires a Pass'];
 }
 
 

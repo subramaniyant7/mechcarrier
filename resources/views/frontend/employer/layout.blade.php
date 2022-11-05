@@ -4,7 +4,7 @@
 
 <body>
     @include('frontend.loader')
-    @include('frontend.navbar')
+    @include('frontend.employer.navbar')
     @yield('content')
     @include('frontend.footer')
 </body>

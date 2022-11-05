@@ -1,19 +1,4 @@
 <header>
-    <div class="top-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <ul>
-                        <li><a href="" target="_blank" class="active">Job Seekers</a></li>
-                        <li><a href="" target="_blank">For Colleges TPO</a></li>
-                        <li><a href="" target="_blank">For training institutes</a></li>
-                        <li><a href="{{ route('employerlogin') }}">For employers</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="header">
         <div class="container">
             <div class="row">
@@ -32,18 +17,6 @@
                             <div class="collapse navbar-collapse" id="navbarNav">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('jobsearch') }}">Job Search</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Free Course</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Career Consuling </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Resume Building </a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a class="nav-link" href="#">Free Job Post</a>
                                     </li>
                                     <li class="nav-item">
@@ -60,7 +33,7 @@
                 <div class="col-md-4 desktop-login-flex">
                     <div class="desktop-login">
                         <div class="notification-button">
-                            @if (session('frontend_useremail'))
+                            @if (session('frontend_employeremail'))
                                 <img src="{{ URL::asset(FRONTEND . '/assets/images/home/notification.svg') }}" />
                                 <div class="user-login">
                                     <a href="{{ route('userlogout') }}" style="padding-top:0.4em;"
@@ -80,8 +53,8 @@
                                 </div>
                             @else
                                 <div class="user-login">
-                                    <a href="{{ route('jobseekerregister') }}" class="register-button">Register</a>
-                                    <a href="{{ route('jobseekerlogin') }}" class="login-button">Login</a>
+                                    <a href="{{ route('employerregister') }}" class="register-button">Register</a>
+                                    <a href="{{ route('employerlogin') }}" class="login-button">Login</a>
                                 </div>
                             @endif
                         </div>

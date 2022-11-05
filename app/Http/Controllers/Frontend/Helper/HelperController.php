@@ -127,6 +127,11 @@ class HelperController extends Controller
         return DB::table('education_university')->where([['education_university_name', 'like', '%' . $value . '%'], ['education_id', $id]])->get();
     }
 
+    static function getCity($value)
+    {
+        return DB::table('city')->where([['city_name', 'like', '%' . $value . '%']])->get();
+    }
+
     static function getEducation($id)
     {
         return DB::table('user_education')->where('user_education_id', $id)->get();
@@ -217,6 +222,13 @@ class HelperController extends Controller
     {
         $data = DB::table('education_university');
         if ($id != '')  $data->where('education_university_id', $id);
+        return $data->get();
+    }
+
+    static function getCityInfo($id = '')
+    {
+        $data = DB::table('city');
+        if ($id != '')  $data->where('city_id', $id);
         return $data->get();
     }
 

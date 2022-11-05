@@ -26,6 +26,34 @@
         font-size: 12px;
         display: none;
     }
+
+    /*the container must be positioned relative:*/
+    .autocomplete {
+        position: relative;
+        display: inline-block;
+    }
+
+    /*when hovering an item:*/
+    .autocomplete-items div:hover {
+        background-color: #e9e9e9;
+    }
+
+    .autocomplete-items {
+        border: 1px solid #d4d4d4;
+        border-top: none;
+        height: 100px;
+        overflow: auto;
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+    }
+
+    .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff;
+        text-align: left;
+    }
 </style>
 @section('content')
 
@@ -85,10 +113,17 @@
                                         </span>
                                     @endif
                                 </li>
-                                @if ($userInfo['userDetails'][0]->user_state != '')
+                                @if ($userInfo['userDetails'][0]->user_city != '')
+                                @php
+                                    $cityName = '';
+                                    $getCity = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userDetails'][0]->user_city);
+                                    if(count($getCity)){
+                                        $cityName = $getCity[0]->city_name;
+                                    }
+                                @endphp
                                     <li class="location"><img
                                             src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/location.svg') }}" />
-                                        {{ $userInfo[0]->user_state }}
+                                        {{ $cityName }}
                                     </li>
                                 @endif
                                 @if (count($userInfo['userProfile']))
@@ -100,6 +135,8 @@
                                         </li>
                                     @endif
                                 @endif
+                                {{-- <li class="workexp"><img src="{{  URL::asset(FRONTEND .'/assets/images/profilecreation/workexp.svg') }}" /> 2.5 Years
+                                </li> --}}
                                 @if (count($currentEmployment))
                                     @if ($currentEmployment[0]->user_employment_current_salary_lakh != '')
                                         <li class="deposit"><img
@@ -180,6 +217,7 @@
                                 <ul>
                                     @foreach (getUserSidebar() as $k => $sidebar)
                                         <li>
+                                            <a href="#{{$sidebar['key']}}">
                                             <img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/sidebar' . ($k + 1) . '.svg') }}" />
                                             {{ $sidebar['name'] }}
@@ -226,7 +264,6 @@
                                                         $verify = 'check';
                                                     }
 
-
                                                     if ($sidebar['key'] == 'personadetail' && (count($userInfo['userLanguages']) && $userInfo['userDetails'][0]->user_gender != '' && $userInfo['userDetails'][0]->user_marital_status != '' && $userInfo['userDetails'][0]->user_dob != '' && $userInfo['userDetails'][0]->user_permanent_address != '' && $userInfo['userDetails'][0]->user_permanent_address_pin != '')) {
                                                         $verify = 'check';
                                                     }
@@ -235,20 +272,18 @@
                                                 <img
                                                     src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/' . $verify . '.svg') }}" />
                                             </span>
+                                            </a>
                                         </li>
                                     @endforeach
-
                                 </ul>
-
                             </div>
-
                         </div>
                         <div class="col-md-9">
                             @php
                                 $resumeAvailable = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_resume != '';
                             @endphp
                             <div class="profile-dashboard-content">
-                                <div class="resume-upload">
+                                <div class="resume-upload" id="resume">
                                     <div class="d-flex">
                                         <h4>Resume</h4>
                                         @if ($resumeAvailable)
@@ -283,7 +318,7 @@
                                 @php
                                     $headline = count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_resume_headline : '';
                                 @endphp
-                                <div class="resume-upload resume-headline">
+                                <div class="resume-upload resume-headline" id="headline">
                                     <div class="d-flex">
                                         <h4>Profile Headline </h4>
                                         <span class="edit_headline">
@@ -306,7 +341,7 @@
 
                                 </div>
 
-                                <div class="resume-upload resume-headline keyskills">
+                                <div class="resume-upload resume-headline keyskills" id="userKeySkils">
                                     <div class="d-flex">
                                         <h4>Key Skills </h4>
                                         <span class="edit_headline"><img
@@ -340,7 +375,7 @@
                                 @php
                                     $summary = count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_profile_summary : '';
                                 @endphp
-                                <div class="resume-upload resume-headline">
+                                <div class="resume-upload resume-headline" id="profilesummary">
                                     <div class="d-flex">
                                         <h4>Profile Summary </h4>
                                         <span class="edit_summary" style="cursor: pointer">
@@ -363,7 +398,7 @@
 
                                 </div>
 
-                                <div class="resume-upload resume-headline employement">
+                                <div class="resume-upload resume-headline employement" id="userEmployments">
                                     <div class="d-flex">
                                         <h4>Employment </h4>
                                         <span class="create_employment pointer">
@@ -425,7 +460,7 @@
                                     <div class="action_employment"></div>
                                 </div>
 
-                                <div class="resume-upload resume-headline employement">
+                                <div class="resume-upload resume-headline employement" id="userEducations">
                                     <div class="d-flex">
                                         <h4>Education </h4>
                                         <span class="create_education pointer"><img
@@ -482,60 +517,57 @@
                                     <div class="action_education"></div>
                                 </div>
 
-                                <div class="resume-upload resume-headline current-location">
+                                <div class="resume-upload resume-headline current-location" id="currentlocation">
                                     <form class="current-location" action="#" id="current-location">
                                         <div class="row">
                                             <div class="col-md-6">
+                                                @php
+                                                    $currentLocation = '';
+                                                    if (count($userInfo['userDetails']) && $userInfo['userDetails'][0]->user_city != '') {
+                                                        $getCityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userDetails'][0]->user_city);
+                                                        if (count($getCityInfo)) {
+                                                            $currentLocation = $getCityInfo[0]->city_name;
+                                                        } else {
+                                                            $currentLocation = $userInfo['userDetails'][0]->user_city;
+                                                        }
+                                                    }
+
+                                                    $preferredLocation = '';
+                                                    if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_location != '') {
+                                                        $getPreferredInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userProfile'][0]->user_preferred_location);
+                                                        if (count($getPreferredInfo)) {
+                                                            $preferredLocation = $getPreferredInfo[0]->city_name;
+                                                        } else {
+                                                            $preferredLocation = $userInfo['userProfile'][0]->user_preferred_location;
+                                                        }
+                                                    }
+                                                @endphp
                                                 <h4>Current Location </h4>
-                                                <select class="form-control custom_change" name="user_city" required
-                                                    aria-label="Default select example">
-                                                    <option selected value="">Select city</option>
-                                                    @foreach (getActiveRecord('city') as $city)
-                                                        <option value="{{ $city->city_id }}"
-                                                            {{ count($userInfo['userDetails']) && $userInfo['userDetails'][0]->user_city == $city->city_id ? 'selected' : '' }}>
-                                                            {{ $city->city_name }}</option>
-                                                    @endforeach
-                                                </select>
+                                                <div style="position:relative" class="autocomplete_ui_parent">
+                                                    <input type="text" placeholder="Select Current Location"
+                                                        name="user_city"
+                                                        class="form-control autocomplete_actual_id user_city" required
+                                                        value="{{ $currentLocation }}" />
+                                                    <input type="hidden" name="current_city" class="autocomplete_id"
+                                                        value="{{ count($userInfo['userDetails']) ? $userInfo['userDetails'][0]->user_city : '' }}">
+                                                    <div class="autocomplete-items" style="display:none">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <h4>Preferred Job Location </h4>
-                                                <div class="d-flex">
-                                                    <select class="form-control custom_change"
-                                                        name="user_preferred_location" required
-                                                        aria-label="Default select example">
-                                                        <option selected value="">Select city</option>
-                                                        @foreach (getActiveRecord('city') as $city)
-                                                            <option value="{{ $city->city_id }}"
-                                                                {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_location == $city->city_id ? 'selected' : '' }}>
-                                                                {{ $city->city_name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    {{-- <select class="form-control custom_change"
-                                                        name="user_total_experience_year" required
-                                                        aria-label="Default select example">
-                                                        <option selected value="">Year</option>
-                                                        @foreach (experience() as $k => $experience)
-                                                            <option value="{{ $k + 1 }}"
-                                                                {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_total_experience_year == $k + 1 ? 'selected' : '' }}>
-                                                                {{ $experience }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-control custom_change"
-                                                        name="user_total_experience_month" required
-                                                        aria-label="Default select example">
-                                                        <option selected value="">Month</option>
-                                                        @foreach (Months() as $k => $month)
-                                                            <option value="{{ $k + 1 }}"
-                                                                {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_total_experience_month == $k + 1 ? 'selected' : '' }}>
-                                                                {{ $month }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select> --}}
+                                                <div style="position:relative" class="autocomplete_ui_parent">
+                                                    <input type="text" placeholder="Select Preferred Location"
+                                                        name="user_preferred_location"
+                                                        class="form-control autocomplete_actual_id user_preferred_location"
+                                                        required value="{{ $preferredLocation }}" />
+                                                    <input type="hidden" name="preferred_city" class="autocomplete_id"
+                                                        value="{{ count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_preferred_location : '' }}">
+                                                    <div class="autocomplete-items" style="display:none">
+                                                    </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="row">
@@ -549,7 +581,7 @@
                                     </form>
                                 </div>
 
-                                <div class="resume-upload resume-headline employement">
+                                <div class="resume-upload resume-headline employement" id="userITSkils">
                                     <div class="d-flex">
                                         <h4>IT skill </h4>
                                         <span class="create_itskill pointer"><img
@@ -579,7 +611,7 @@
                                     <div class="action_itskill"></div>
                                 </div>
 
-                                <div class="resume-upload resume-headline employement">
+                                <div class="resume-upload resume-headline employement" id="userCertifications">
                                     <div class="d-flex">
                                         <h4>Certifications </h4>
                                         <span class="create_certification pointer"><img
@@ -593,8 +625,9 @@
                                                     <h5>{{ $certification->user_certification_name }}
                                                         - {{ $certification->user_certification_completion_id }} -
                                                         Duration-
-                                                        {{ $years[$certification->user_certification_validity_year_from - 1] }} -
-                                                        {{ $years[$certification->user_certification_validity_year_to - 1]}}
+                                                        {{ $years[$certification->user_certification_validity_year_from - 1] }}
+                                                        -
+                                                        {{ $years[$certification->user_certification_validity_year_to - 1] }}
                                                         <span class="edit_certification pointer"
                                                             data-id="{{ encryption($certification->user_certification_id) }}"
                                                             data-certification="{{ $certification->user_certification_id }}">
@@ -611,7 +644,7 @@
                                     <div class="action_certification"></div>
                                 </div>
 
-                                <div class="resume-upload resume-headline employement personal-details">
+                                <div class="resume-upload resume-headline employement personal-details" id="personadetail">
                                     <div class="d-flex">
                                         <h4>Personal Details </h4>
                                         <span class="action_personaldetails pointer">

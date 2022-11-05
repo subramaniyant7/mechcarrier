@@ -835,11 +835,126 @@ $(document).on('click', '.cancel_education', function (e) {
     }
 });
 
+$(document).on("change", ".user_education_grade", function(){
+    let inputVal = $(this).val();
+    $('.showmarks').hide();
+    if(inputVal != '' && inputVal < 4){
+        $('.showmarks').show();
+    }
+    console.log('thi', $(this).val());
+});
+
 $('.custom_change').change(function (e) {
     $(this).parents('.current-location').find('.form-buttons').show();
 });
 
 // Location
+
+$(document).on('keyup', '.user_city', function (e) {
+    let val = $(this).val();
+    let current = this;
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $(this).attr('required', 'required');
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getcity`,
+            data: { name: val },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='option_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+                }
+                else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('blur', '.user_city', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    const rootParent = $(this).parents('.current-location');
+    setTimeout(() => {
+        const idVal = currentParent.find('.autocomplete_id').val();
+        currentParent.find('.autocomplete-items').hide().html('');
+        if(idVal != '') rootParent.find('.form-buttons').show()
+        console.log('id', idVal)
+    }, 500);
+});
+
+
+$(document).on('keyup', '.user_preferred_location', function (e) {
+    let val = $(this).val();
+    let current = this;
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $(this).attr('required', 'required');
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getcity`,
+            data: { name: val },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='option_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+                }
+                else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('blur', '.user_preferred_location', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    const rootParent = $(this).parents('.current-location');
+    setTimeout(() => {
+        const idVal = currentParent.find('.autocomplete_id').val();
+        currentParent.find('.autocomplete-items').hide().html('');
+        if(idVal != '') rootParent.find('.form-buttons').show()
+        console.log('id', idVal)
+    }, 500);
+});
+
 $(document).on('submit', '#current-location', function (e) {
     e.preventDefault();
     let formValue = $(this).serialize();

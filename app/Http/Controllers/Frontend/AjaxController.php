@@ -139,7 +139,6 @@ class AjaxController extends Controller
         return response()->json($response);
     }
 
-
     public function UpdateProfilePicture(Request $request)
     {
         $response = ['status' => false, 'message' => ''];
@@ -264,7 +263,9 @@ class AjaxController extends Controller
                     $educationInfo = HelperController::getEducation(decryption($request->input('dataid')));
                     if (count($educationInfo)) $data = $educationInfo;
                 }
+                // echo '<pre>';
                 // echo $educationId;
+                // print_r($data);
                 // exit;
                 $html = view('frontend.users.actioneducation', ['type' => $type, 'data' => $data, 'educationId' => $educationId])->render();
                 $response = ['status' => true, 'message' => '', 'data' => $html];
@@ -322,8 +323,6 @@ class AjaxController extends Controller
         return $response;
     }
 
-
-
     public function GetNewLanguage(Request $request)
     {
         $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
@@ -338,9 +337,6 @@ class AjaxController extends Controller
 
         return $response;
     }
-
-
-
 
     public function GetPersonalDetailHtml(Request $request)
     {
@@ -360,8 +356,6 @@ class AjaxController extends Controller
         return $response;
     }
 
-
-
     public function GetDesignation(Request $request)
     {
         $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
@@ -376,7 +370,17 @@ class AjaxController extends Controller
     {
         $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
         if ($request->input('name') != '') {
-            $data = HelperController::getSpecialization($request->input('name'),$request->input('id'));
+            $data = HelperController::getSpecialization($request->input('name'), $request->input('id'));
+            $response = ['status' => true, 'message' => '', 'data' => json_encode($data)];
+        }
+        return $response;
+    }
+
+    public function GetCity(Request $request)
+    {
+        $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
+        if ($request->input('name') != '') {
+            $data = HelperController::getCity($request->input('name'));
             $response = ['status' => true, 'message' => '', 'data' => json_encode($data)];
         }
         return $response;
@@ -386,7 +390,7 @@ class AjaxController extends Controller
     {
         $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
         if ($request->input('name') != '') {
-            $data = HelperController::getUniversity($request->input('name'),$request->input('id'));
+            $data = HelperController::getUniversity($request->input('name'), $request->input('id'));
             $response = ['status' => true, 'message' => '', 'data' => json_encode($data)];
         }
         return $response;
@@ -480,9 +484,36 @@ class AjaxController extends Controller
                 $formData['user_education_university'] = $request->input('current_university');
             }
 
-            $educationExist = HelperController::getEducationByEducation($formData['user_education_primary_id'],$formData['user_id']);
+            $educationExist = HelperController::getEducationByEducation($formData['user_education_primary_id'], $formData['user_id']);
             if ($request->input('user_education_id') == '' && count($educationExist)) {
                 $response = ['status' => false, 'message' => 'Education Already exist'];
+                return $response;
+            }
+
+            $grade = $request->input('user_education_grade');
+            $marks = $request->input('user_education_mark');
+
+            if ($grade > 4 && $marks == '') {
+                $response = ['status' => false, 'message' => 'Please Enter Marks'];
+                return $response;
+            }
+
+            if ($grade == 4) {
+                $formData['user_education_mark'] = '';
+            }
+
+            if ($grade == 1 && $marks > 10) {
+                $response = ['status' => false, 'message' => 'Marks value should not exceed 10'];
+                return $response;
+            }
+
+            if ($grade == 2 && $marks > 4) {
+                $response = ['status' => false, 'message' => 'Marks value should not exceed 4'];
+                return $response;
+            }
+
+            if ($grade == 3 && $marks > 100) {
+                $response = ['status' => false, 'message' => 'Marks value should not exceed 100'];
                 return $response;
             }
 
@@ -613,17 +644,31 @@ class AjaxController extends Controller
         return $response;
     }
 
-
-
     public function ActionCurrentLocation(Request $request)
     {
         $response = ['status' => false, 'message' => ''];
         try {
-            $formData = $request->except('user_city');
+            $formData = $request->except('user_city', 'current_city', 'preferred_city');
+            $invalidLocation = false;
+            if ($request->input('current_city') == '') $invalidLocation = true;
+            if ($request->input('current_city') != '') {
+                $locationAvailable = HelperController::getCityInfo($request->input('current_city'));
+                if (!count($locationAvailable)) $invalidLocation = true;
+            }
+
+            if ($request->input('preferred_city') == '') $invalidLocation = true;
+            if ($request->input('preferred_city') != '') {
+                $locationAvailable = HelperController::getCityInfo($request->input('preferred_city'));
+                if (!count($locationAvailable)) $invalidLocation = true;
+            }
+
+            if ($invalidLocation) return response()->json(['status' => false, 'message' => 'Invalid Location Entered']);
+
             $userid = $request->session()->get('frontend_userid');
             $formData['user_id'] = $userid;
+            $formData['user_preferred_location'] = $request->input('preferred_city');
             $profileInfo = HelperController::getUserProfile($userid);
-            updateQuery('user_details', 'user_id', $userid, ['user_city' => $request->input('user_city')]);
+            updateQuery('user_details', 'user_id', $userid, ['user_city' => $request->input('current_city')]);
             if (count($profileInfo)) {
                 updateQuery('user_profile', 'user_id', $userid, $formData);
             } else {
@@ -635,12 +680,6 @@ class AjaxController extends Controller
         }
         return $response;
     }
-
-
-
-
-
-
 
     public function UpdateResumeHeadline(Request $request)
     {
@@ -684,7 +723,6 @@ class AjaxController extends Controller
         return $response;
     }
 
-
     public function CreateKeySkils(Request $request)
     {
         $response = ['status' => false, 'message' => ''];
@@ -693,7 +731,7 @@ class AjaxController extends Controller
                 $splitKeys = explode(',', $request->input('keyskils'));
                 $userId = $request->session()->get('frontend_userid');
                 foreach ($splitKeys as $keys) {
-                    $keyExist = HelperController::getUserSkilsByText($keys,$userId);
+                    $keyExist = HelperController::getUserSkilsByText($keys, $userId);
                     if (!count($keyExist)) {
                         $data = ['user_id' => $userId, 'user_key_skil_text' => $keys];
                         insertQuery('user_key_skils', $data);
