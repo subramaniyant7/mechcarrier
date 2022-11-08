@@ -1,4 +1,4 @@
-@extends('frontend.layout')
+@extends('frontend.employer.layout')
 @section('title', 'Recruiter Verification')
 @section('content')
 
