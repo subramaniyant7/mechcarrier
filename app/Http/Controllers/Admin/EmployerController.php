@@ -52,6 +52,7 @@ class EmployerController extends Controller
             $password = HelperController::randomPassword();
             $formData['employer_password'] = md5($password);
             $formData['employer_verified'] = 1;
+            $formData['employer_profile_completed'] = 2;
 
             try {
                 $emailContent = ['user_email' => $formData['employer_email'], 'user_password' => $password];
