@@ -1221,3 +1221,71 @@ $(document).on('click', '.new_language', function (e) {
 });
 
 
+
+
+// Employer
+
+
+$("textarea[name=employer_address]").keyup(function () {
+
+    let inputVal = $(this).val();
+    console.log('ppp', inputVal)
+    $(this).parent().find('#current').html(inputVal.length);
+});
+
+$("textarea[name=employer_about_company]").keyup(function () {
+    let inputVal = $(this).val();
+    console.log('ppp', inputVal)
+    $(this).parent().find('#current1').html(inputVal.length);
+});
+
+
+
+
+$(document).on('keyup', '.employer_location', function (e) {
+    let val = $(this).val();
+    let current = this;
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $(this).attr('required', 'required');
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getcity`,
+            data: { name: val },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='option_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+                }
+                else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('blur', '.employer_location', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    setTimeout(() => {
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+});

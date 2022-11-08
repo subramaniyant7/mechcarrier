@@ -1,18 +1,20 @@
 <header>
+    @if (!session('frontend_useremail'))
     <div class="top-header">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <ul>
-                        <li><a href="" target="_blank" class="active">Job Seekers</a></li>
+                        <li><a href="{{ route('jobseekerlogin') }}" class="active">Job Seekers</a></li>
                         <li><a href="" target="_blank">For Colleges TPO</a></li>
                         <li><a href="" target="_blank">For training institutes</a></li>
-                        <li><a href="{{ route('employerlogin') }}">For employers</a></li>
+                        <li><a href="{{ route('employerhome') }}" >For Employers</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+    @endif
 
     <div class="header">
         <div class="container">
@@ -54,18 +56,19 @@
                             @if (session('frontend_useremail'))
                                 <img src="{{ URL::asset(FRONTEND . '/assets/images/home/notification.svg') }}" />
                                 <div class="user-login">
-                                    <a href="{{ route('userlogout') }}" style="padding-top:0.4em;"
-                                        class="register-button">Logout</a>
+                                    <a href="{{ route('userdashboard') }}" style="padding-top:0.4em;"
+                                        class="register-button">Dashboard</a>
                                     <div class="dropdown">
                                         <button class="btn btn-primary dropdown-toggle" type="button"
                                             data-toggle="dropdown">Profile
                                             <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="{{ route('userdashboard') }}">My Dashboard</a></li>
+
                                             <li><a href="#">Personal Details</a></li>
                                             <li><a href="#">My Courses</a></li>
                                             <li><a href="#">My Mail Box</a></li>
                                             <li><a href="#">Account Settings</a></li>
+                                            <li><a href="{{ route('userlogout') }}">Logout</a></li>
                                         </ul>
                                     </div>
                                 </div>

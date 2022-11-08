@@ -1,4 +1,20 @@
 <header>
+    @if (!session('employer_id'))
+        <div class="top-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li><a href="{{ route('jobseekerlogin') }}">Job Seekers</a></li>
+                            <li><a href="" target="_blank">For Colleges TPO</a></li>
+                            <li><a href="" target="_blank">For training institutes</a></li>
+                            <li><a href="{{ route('employerhome') }}" class="active">For Employers</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="header">
         <div class="container">
             <div class="row">
@@ -17,7 +33,7 @@
                             <div class="collapse navbar-collapse" id="navbarNav">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Free Job Post</a>
+                                        <a class="nav-link" href="{{ route('employerjobpost') }}">Free Job Post</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">Free Resume Datebase</a>
@@ -33,21 +49,17 @@
                 <div class="col-md-4 desktop-login-flex">
                     <div class="desktop-login">
                         <div class="notification-button">
-                            @if (session('frontend_employeremail'))
-                                <img src="{{ URL::asset(FRONTEND . '/assets/images/home/notification.svg') }}" />
+                            @if (session('employer_id'))
                                 <div class="user-login">
-                                    <a href="{{ route('userlogout') }}" style="padding-top:0.4em;"
-                                        class="register-button">Logout</a>
+                                    <a href="{{ route('employerdashboard') }}" style="padding-top:0.4em;"
+                                        class="register-button">Dashboard</a>
                                     <div class="dropdown">
                                         <button class="btn btn-primary dropdown-toggle" type="button"
                                             data-toggle="dropdown">Profile
                                             <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="{{ route('userdashboard') }}">My Dashboard</a></li>
-                                            <li><a href="#">Personal Details</a></li>
-                                            <li><a href="#">My Courses</a></li>
-                                            <li><a href="#">My Mail Box</a></li>
-                                            <li><a href="#">Account Settings</a></li>
+                                            <li><a href="{{ route('employercompany') }}">Personal Details</a></li>
+                                            <li><a href="{{ route('employerlogout') }}">Logout</a></li>
                                         </ul>
                                     </div>
                                 </div>

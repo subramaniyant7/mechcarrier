@@ -20,21 +20,23 @@
                             <div class="title desktop">
                                 <h1>Login</h1>
                                 <p>If you don’t have an account register</p>
-                                <p>You can <a href="{{ route('employerregister') }}" >Register here !</a></p>
+                                <p>You can <a href="{{ route('employerregister') }}">Register here !</a></p>
                             </div>
-                            <form autocomplete="off">
+                            <form autocomplete="off" action="{{ route('employerloginvalidate') }}" method="POST">
+                                @csrf
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="form1Example1">Email <span>*</span></label>
-                                    <input type="email" id="form1Example1" placeholder="Enter your email address"
-                                        class="form-control" required/>
+                                    <label class="form-label">Email <span>*</span></label>
+                                    <input type="email" name="employer_email" placeholder="Enter your email address"
+                                        class="form-control" required />
                                 </div>
 
                                 <div class="form-outline password mb-4">
-                                    <label class="form-label" for="form1Example2">Password <span>*</span>
+                                    <label class="form-label">Password <span>*</span>
                                     </label>
-                                    <input type="password"  autocomplete="new-password" id="form1Example2" placeholder="Enter your password"
-                                        class="form-control" required/>
-                                    <span> <img src="{{ URL::asset(FRONTEND.'/assets/images/passwordshowicon.svg') }}" /> </span>
+                                    <input type="password" autocomplete="new-password" name="employer_password"
+                                        placeholder="Enter your password" class="form-control view" required />
+                                    <span> <img onclick="viewText(this)" src="{{ URL::asset(FRONTEND . '/assets/images/passwordshowicon.svg') }}" style="cursor:pointer" />
+                                    </span>
                                 </div>
 
                                 <div class="form-outline">
@@ -42,7 +44,7 @@
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value=""
                                                 id="form1Example3" checked />
-                                            <label class="form-check-label" for="form1Example3"> Remember me </label>
+                                            <label class="form-check-label"> Remember me </label>
                                         </div>
                                     </div>
 
@@ -51,13 +53,15 @@
                                     </div>
                                 </div>
 
-                                <div class="form-outline mb-3">
-                                    <div class="col">
-                                        <div class="error-msg">
-                                            <span> Password or email not matched</span>
+                                @if (session('error'))
+                                    <div class="form-outline mb-3">
+                                        <div class="col">
+                                            <div class="error-msg">
+                                                <span> {{ session('error') }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
 
                                 <button type="submit" class="btn btn-primary btn-block">Login</button>
                             </form>
@@ -74,3 +78,14 @@
 
 
 @stop
+
+<script>
+    function viewText(val) {
+        let element = $(val).parent().parent().find(".view");
+        if (element.attr('type') === "password") {
+            element.attr('type', "text");
+        } else {
+            element.attr('type', "password");
+        }
+    }
+</script>

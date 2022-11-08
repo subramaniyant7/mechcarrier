@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\IndustryController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\DesignationController;
+use App\Http\Controllers\Admin\EmployerController as AdminEmployerController;
 use App\Http\Controllers\Admin\WebpageContent\BannerContentController;
 use App\Http\Controllers\Admin\WebpageContent\CompanyManagementController;
 use App\Http\Controllers\Admin\WebpageContent\HomePageTrainingCenterController;
@@ -59,7 +60,9 @@ Route::middleware(['globalvalidate'])->group(function () {
             return view('frontend.jobseeker.login');
         })->name('jobseekerlogin');
         Route::post('/jobseeker_loginvalidate', [JobseekerController::class, 'JobseekerValidate'])->name('jobseekervalidate');
-        Route::get('/jobseeker_register', function () { return view('frontend.jobseeker.register'); })->name('jobseekerregister');
+        Route::get('/jobseeker_register', function () {
+            return view('frontend.jobseeker.register');
+        })->name('jobseekerregister');
         Route::post('/jobseeker_registration', [JobseekerController::class, 'JobseekerRegister'])->name('jobseekerregistration');
 
         Route::get('/email_verification/{id}', [JobseekerController::class, 'EmailVerification'])->name('emailverification');
@@ -90,6 +93,7 @@ Route::middleware(['globalvalidate'])->group(function () {
         })->name('register');
     });
 
+    Route::post('/getcity', [FAjaxController::class, 'GetCity'])->name('getcity');
 
     Route::middleware(['userloginvalidate'])->group(function () {
         Route::get('/user_dashboard', [FrontendController::class, 'UserDashboard'])->name('userdashboard');
@@ -122,7 +126,7 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::post('/getcompany', [FAjaxController::class, 'GetCompany'])->name('getcompany');
         Route::post('/getdesignation', [FAjaxController::class, 'GetDesignation'])->name('getdesignation');
         Route::post('/getspecialization', [FAjaxController::class, 'GetSpecialization'])->name('getspecialization');
-        Route::post('/getcity', [FAjaxController::class, 'GetCity'])->name('getcity');
+
 
         Route::post('/getuniversity', [FAjaxController::class, 'GetUniversity'])->name('getuniversity');
 
@@ -138,13 +142,30 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::get('/user_logout', [FrontendController::class, 'UserLogout'])->name('userlogout');
     });
 
-    Route::get('/employer_login', [EmployerController::class, 'EmployerLogin'])->name('employerlogin');
-    Route::get('/employer_register', [EmployerController::class, 'EmployerRegister'])->name('employerregister');
-    Route::get('/employer_company', [EmployerController::class, 'CompanyAction'])->name('employercompany');
+    // Employer
+    Route::middleware(['employerNologgedIn'])->group(function () {
+        Route::get('/employer_home', [EmployerController::class, 'EmployerHome'])->name('employerhome');
+        Route::get('/employer_login', [EmployerController::class, 'EmployerLogin'])->name('employerlogin');
+        Route::post('/employer_login_validate', [EmployerController::class, 'EmployerLoginValidate'])->name('employerloginvalidate');
+        Route::get('/employer_register', [EmployerController::class, 'EmployerRegister'])->name('employerregister');
+        Route::post('/employer_register', [EmployerController::class, 'EmployerRegisterProcess'])->name('employerregistersubmit');
+        Route::get('/employer_verification', [EmployerController::class, 'EmployerVerification'])->name('employerverification');
+    });
 
+    Route::middleware(['employerloggedIn'])->group(function () {
+        Route::get('/employer_dashboard', [EmployerController::class, 'EmployerDashboard'])->name('employerdashboard');
+        Route::get('/employer_company', [EmployerController::class, 'EmployerCompanyAction'])->name('employercompany');
+        Route::post('/save_employer_company', [EmployerController::class, 'SaveEmployerCompany'])->name('saveemployercompany');
+        Route::get('/employer_jobpost', [EmployerController::class, 'EmployerJobPost'])->name('employerjobpost');
+        Route::get('/employer_logout', [EmployerController::class, 'EmployerLogout'])->name('employerlogout');
+    });
+
+    // Social Media
     Route::get('/login/{social}', [SocialMediaController::class, 'SocialMedia'])->where('social', 'google|linkedin');
     Route::get('/login/{social}/callback', [SocialMediaController::class, 'handleProviderCallback'])->where('social', 'google|linkedin');
 
+
+    // Admin
     Route::prefix(ADMINURL)->group(function () {
         Route::middleware(['adminlogin'])->group(function () {
             Route::get('/', function () {
@@ -207,6 +228,13 @@ Route::middleware(['globalvalidate'])->group(function () {
             Route::get('/create_city', [CityController::class, 'ManageCity'])->name('managecity');
             Route::get('/action_city/{option}/{id}', [CityController::class, 'ActionCity'])->name('actioncity');
             Route::post('/save_city', [CityController::class, 'SaveCityDetails'])->name('savecity');
+
+            // Employers
+            Route::get('/view_employers', [AdminEmployerController::class, 'ViewEmployers'])->name('viewemployers');
+            Route::get('/create_employer', [AdminEmployerController::class, 'ManageEmployer'])->name('manageemployer');
+            Route::get('/action_employer/{option}/{id}', [AdminEmployerController::class, 'ActionEmployer'])->name('actionemployer');
+            Route::post('/save_employer', [AdminEmployerController::class, 'SaveEmployerDetails'])->name('saveemployer');
+
 
             // Users
             Route::get('/download_sample_file', [UserController::class, 'DownloadSampleFile'])->name('downloadsamplefile');

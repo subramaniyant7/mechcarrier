@@ -30,41 +30,43 @@
                                 <h1>Register for Recruiter</h1>
                                 <p>If you already have an account register
                                 </p>
-                                <p>You can <a href="{{ route('employerlogin') }}" >Login here !</a></p>
+                                <p>You can <a href="{{ route('employerlogin') }}">Login here !</a></p>
                             </div>
-                            <form autocomplete="off">
+                            <form autocomplete="off" action="{{ route('employerregistersubmit') }}" method="POST">
+                                @csrf
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Company Name <span>*</span></label>
-                                    <input type="text" id="form1Example1" placeholder="Add Company Name"
-                                        class="form-control" required/>
+                                    <input type="text" placeholder="Add Company Name" name="employer_company_name" class="form-control" required />
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Official Email <span>*</span></label>
-                                    <input type="email" id="form1Example1" placeholder="add Official Email"
-                                        class="form-control" required />
+                                    <input type="email" placeholder="Add Official Email" name="employer_email" class="form-control" required />
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Mobile Number <span>*</span></label>
-                                    <input type="number" id="form1Example1" placeholder="+91| Mobile Number"
-                                        class="form-control" required/>
+                                    <input type="number" placeholder="+91| Mobile Number" name="employer_mobile" class="form-control" required />
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Contact Person Name <span>*</span></label>
-                                    <input type="text" id="form1Example1" placeholder="Contact Person Name"
-                                        class="form-control" required/>
+                                    <input type="text" placeholder="Contact Person Name" name="employer_contact_person" class="form-control" required />
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form1Example1">CIN or GST Number(optional) </label>
+                                    <input type="text" placeholder="Add CIN or GST Number" name="employer_gst" class="form-control" />
                                 </div>
 
                                 <div class="form-outline mb-4 d-flex company-type">
                                     <div class="col">
                                         <label class="form-label" for="form1Example1">Company Type <span>*</span></label>
                                         <div class="form-button">
-                                            <button type="button"><span>
+                                            <button type="button" onclick="companyType(1)"><span>
                                                     <embed
                                                         src="{{ URL::asset(FRONTEND . '/assets/images/companytypeicon.svg') }}"
                                                         type="image/svg+xml" />
                                                 </span> Company</button>
 
-                                            <button type="button"><span>
+                                            <button type="button" onclick="companyType(2)"><span>
                                                     <embed
                                                         src="{{ URL::asset(FRONTEND . '/assets/images/consultancytypeicon.svg') }}"
                                                         type="image/svg+xml" />
@@ -73,21 +75,23 @@
 
                                     </div>
                                 </div>
-
-                                <div class="form-outline mb-4">
-                                    <div class="col">
-                                        <div class="error-msg">
-                                            <span> Error : Fill all fileds</span>
+                                <input type="hidden"  name="employer_company_type" id="employer_company_type" class="form-control" />
+                                @if (session('error'))
+                                    <div class="form-outline mb-4">
+                                        <div class="col">
+                                            <div class="error-msg">
+                                                <span> Error : {{ session('error') }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
 
                                 <div class="form-outline mb-4">
                                     <div class="col text-left">
                                         <div class="form-check register-privacy">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="form1Example3" checked />
-                                            <label class="form-check-label" for="form1Example3"> By registering, you agree
+                                            <input class="form-check-input" type="checkbox"
+                                                checked name="employer_agree" />
+                                            <label class="form-check-label"> By registering, you agree
                                                 to our terms & condition & privacy policy </label>
                                         </div>
                                     </div>
@@ -108,3 +112,11 @@
     </main>
 
 @stop
+
+
+<script>
+    const companyType = (value) => {
+        var s = document.getElementById('employer_company_type');
+        s.value = value;
+    }
+</script>

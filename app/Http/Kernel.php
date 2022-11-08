@@ -68,5 +68,7 @@ class Kernel extends HttpKernel
         'adminlogin' => \App\Http\Middleware\AdminLogin::class,
         'userloginvalidate' => \App\Http\Middleware\FrontendLoggedIn::class,
         'userlogin' => \App\Http\Middleware\FrontendLogin::class,
+        'employerloggedIn' => \App\Http\Middleware\EmployerValidate::class,
+        'employerNologgedIn' => \App\Http\Middleware\EmployerNoLogin::class,
     ];
 }

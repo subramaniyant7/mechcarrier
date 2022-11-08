@@ -55,9 +55,9 @@
 
                                 <div class="form-outline password mb-4">
                                     <label class="form-label">Password <span>*</span></label>
-                                    <input type="password" name="user_password" placeholder="Enter your password" class="form-control"
+                                    <input type="password" name="user_password" placeholder="Enter your password" class="form-control view"
                                         autocomplete="new-password" required />
-                                    <span><img onclick="viewText(this)" src="{{ URL::asset(FRONTEND . '/assets/images/passwordshowicon.svg') }}" /></span>
+                                    <span><img onclick="viewText(this)" src="{{ URL::asset(FRONTEND . '/assets/images/passwordshowicon.svg') }}" style="cursor:pointer" /></span>
                                 </div>
 
                                 <div class="form-outline mb-4" style="display: flex">

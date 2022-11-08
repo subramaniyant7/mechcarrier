@@ -29,6 +29,7 @@ function statustype()
     return array('Active', 'De-Active');
 }
 
+
 function verifiedStatus()
 {
     return array('Verified', 'Not Verified');
@@ -47,6 +48,11 @@ function loginStatusClass()
 function loginStatus()
 {
     return array('Online', 'Offline');
+}
+
+function typeOfCompany()
+{
+    return array('Company', 'Consultancy');
 }
 
 
