@@ -19,6 +19,6 @@ class EmployerProfileValidate
         if (strval($request->session()->get('employer_profile')) === '1') {
             return $next($request);
         }
-        return redirect()->route('employercompany')->with('error','Please complete the company details');
+        return redirect()->route('employercompany')->with('error', 'Please complete the company details');
     }
 }
