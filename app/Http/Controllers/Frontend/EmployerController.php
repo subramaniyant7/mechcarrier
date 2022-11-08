@@ -40,6 +40,8 @@ class EmployerController extends Controller
             if ($employerExist[0]->employer_verified == 1 && $employerExist[0]->status) {
                 $request->session()->put('employer_email', $employerExist[0]->employer_email);
                 $request->session()->put('employer_id', $employerExist[0]->employer_detail_id);
+                $request->session()->put('employer_profile', $employerExist[0]->employer_profile_completed);
+                updateQuery('employer_details', 'employer_detail_id', $employerExist[0]->employer_detail_id, ['employer_login_status' => 1]);
                 if($employerExist[0]->employer_profile_completed == 1) return redirect()->route('employerdashboard');
                 return redirect()->route('employercompany');
             }
@@ -83,6 +85,7 @@ class EmployerController extends Controller
         $formData['employer_verified'] = 2;
         $formData['employer_login_status'] = 2;
         $formData['employer_profile_completed'] = 2;
+        $formData['employer_ipaddress'] = request()->ip();
         try {
             $emailContent = ['user_email' => $formData['employer_email'], 'user_password' => $password];
             Mail::send('frontend.employer.email.employer_password', $emailContent, function ($message) use ($emailContent) {

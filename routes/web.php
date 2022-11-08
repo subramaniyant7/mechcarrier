@@ -156,7 +156,9 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::get('/employer_dashboard', [EmployerController::class, 'EmployerDashboard'])->name('employerdashboard');
         Route::get('/employer_company', [EmployerController::class, 'EmployerCompanyAction'])->name('employercompany');
         Route::post('/save_employer_company', [EmployerController::class, 'SaveEmployerCompany'])->name('saveemployercompany');
-        Route::get('/employer_jobpost', [EmployerController::class, 'EmployerJobPost'])->name('employerjobpost');
+        Route::middleware(['employerProfileValidate'])->group(function () {
+            Route::get('/employer_jobpost', [EmployerController::class, 'EmployerJobPost'])->name('employerjobpost');
+        });
         Route::get('/employer_logout', [EmployerController::class, 'EmployerLogout'])->name('employerlogout');
     });
 

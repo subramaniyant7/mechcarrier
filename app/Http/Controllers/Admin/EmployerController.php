@@ -53,7 +53,7 @@ class EmployerController extends Controller
             $formData['employer_password'] = md5($password);
             $formData['employer_verified'] = 1;
             $formData['employer_profile_completed'] = 2;
-
+            $formData['employer_ipaddress'] = request()->ip();
             try {
                 $emailContent = ['user_email' => $formData['employer_email'], 'user_password' => $password];
                 Mail::send('frontend.employer.email.employer_password', $emailContent, function ($message) use ($emailContent) {
