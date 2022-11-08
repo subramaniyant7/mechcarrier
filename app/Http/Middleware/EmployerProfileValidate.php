@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use DB;
 
 class EmployerProfileValidate
 {
@@ -16,7 +17,8 @@ class EmployerProfileValidate
      */
     public function handle(Request $request, Closure $next)
     {
-        if (strval($request->session()->get('employer_profile')) === '1') {
+        $employer = DB::table('employer_details')->where('employer_detail_id', $request->session()->get('employer_id'))->get();
+        if (count($employer) && $employer[0]->employer_profile_completed == 1) {
             return $next($request);
         }
         return redirect()->route('employercompany')->with('error', 'Please complete the company details');
