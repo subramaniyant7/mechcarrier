@@ -3321,6 +3321,7 @@ span.switch-handle {
 .desktop-menu .menu-btn:checked~.menu-icon:not(.steps) .navicon:after {
     top: 0;
 }
+
 .email-registration.number-verification.tell-us-aboutyours {
     padding: 60px 0px 60px;
 }
@@ -3329,22 +3330,28 @@ span.switch-handle {
 .job-post {
     padding: 40px 0px;
 }
+
 .job-post img {
     width: 100%;
 }
+
 .job-post .user-progress-bar {
     justify-content: end;
 }
+
 .job-post .job-post-title h1 {
     position: relative;
     top: 37px;
 }
+
 .job-post .job-post-title .user-progress-bar .user-progress p span {
     color: #1D56BB;
 }
-.job-post  form .form-group.relative {
+
+.job-post form .form-group.relative {
     position: relative;
 }
+
 .job-post form .form-group.relative .counter {
     position: absolute;
     bottom: 2px;
@@ -3352,20 +3359,25 @@ span.switch-handle {
     color: #707070;
     font-size: 11px;
 }
+
 .job-post .job-post-main {
     padding: 50px 10px;
 }
+
 .job-post .job-post-main form label,
-.job-post .job-post-main form p{
+.job-post .job-post-main form p {
     font-size: 14px;
 }
+
 .job-post .job-post-main form ::placeholder {
     font-size: 14px;
 }
+
 .job-post .job-post-main form .form-group,
 .job-post .job-post-main form .form-outline {
     margin-bottom: 30px;
 }
+
 .job-post .job-post-main form button.btn-primary {
     background: #1D56BB;
     border-radius: 4px;
@@ -3374,32 +3386,40 @@ span.switch-handle {
     font-size: 14px;
     margin-right: 40px;
 }
+
 .job-post .job-post-main form .form-group label.form-check-label {
     color: #8F8E8E;
     font-size: 13px;
 }
+
 .job-post .similar-jobs .similar-jobs-card .similar-job-card-info img {
     width: auto;
 }
+
 .job-post .job-card-apply {
     align-items: center;
     padding-bottom: 10px;
 }
+
 .job-post .similar-jobs .similar-jobs-card .similar-job-card-title h4 {
     padding-bottom: 7px;
 }
+
 .job-post .similar-jobs .similar-jobs-card .similar-job-card-info p {
     color: #555555;
     font-size: 13px;
 }
+
 .job-post .job-card-apply h4 {
     position: relative;
     top: 5px;
 }
+
 .job-post .similar-jobs .similar-jobs-card {
     margin-bottom: 0px;
     margin-top: 25px;
 }
+
 .job-post .similar-jobs span.job-post-mail {
     color: #000000;
     font-size: 11px;
@@ -3408,36 +3428,113 @@ span.switch-handle {
     display: block;
     margin-top: 7px;
 }
+
 .job-post .similar-jobs .form-control::placeholder {
     text-align: center;
     font-size: 13px;
 }
+
 .job-post .job-post-main .col-md-5 h3 {
     text-align: center;
     font-size: 20px;
     color: #000;
     margin-bottom: 15px;
 }
+
 .job-post .similar-jobs .pagination img {
     width: auto;
 }
+
 .job-post .similar-jobs .pagination .page-link {
     background-color: transparent;
     border: 0px;
 }
+
 .job-post .similar-jobs .page-item.disabled .page-link {
-    color:#000;
+    color: #000;
 }
+
 .job-post .similar-jobs .page-item.active .page-link {
     background-color: #1D56BB;
     color: #fff;
     border-color: #1D56BB;
 }
+
 .job-post .similar-jobs .pagination {
     margin-top: 12px;
 }
-.job-post .similar-jobs .pagination ul li.page-item:last-child span img{
+
+.job-post .similar-jobs .pagination ul li.page-item:last-child span img {
     transform: rotate(174deg);
+}
+
+
+
+/*EmployeeDashboard*/
+.profile-creation-top.employee-dashboard .profile-contact h1 {
+    font-weight: 500;
+    font-size: 28px;
+    color: #fff;
+}
+
+.profile-creation-top.employee-dashboard .profile-contact ul {
+    padding-inline-start: 30px;
+}
+
+.profile-creation-top.employee-dashboard .user-progress-bar .circle-wrap {
+    width: 110px;
+    height: 110px;
+}
+
+.profile-creation-top.employee-dashboard .user-progress-bar .circle-wrap .circle .mask,
+.profile-creation-top.employee-dashboard .user-progress-bar .circle-wrap .circle .fill {
+    width: 110px;
+    height: 110px;
+}
+
+.profile-creation-top.employee-dashboard .user-progress-bar .circle-wrap .inside-circle {
+    width: 95px;
+    height: 95px;
+    font-size: 18px;
+    line-height: 94px;
+    margin-left: 7px;
+    top: 27px;
+}
+
+.employee-dashboard-main {
+    padding: 60px 0px;
+}
+
+.employee-dashboard-main .emp-dash-card {
+    background: #EDF9FC;
+    border: 1px solid #707070;
+    border-radius: 5px;
+}
+
+.employee-dashboard-main .emp-dash-card .card-image {
+    padding: 30px 20px;
+    height: 162px;
+    text-align: center;
+    display: block;
+}
+
+.employee-dashboard-main .emp-dash-card .card-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.employee-dashboard-main .emp-dash-card .card-title {
+    background: #1D56BB;
+    border: 1px solid #1D56BB;
+    border-radius: 0px 0px 5px 5px;
+    margin: 0;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+.employee-dashboard-main .emp-dash-card .card-title p {
+    margin-bottom: 0px;
 }
 
 

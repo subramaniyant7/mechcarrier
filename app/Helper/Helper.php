@@ -302,4 +302,9 @@ function educationGrades()
     return ['Scale 10 Grading System', 'Scale 4 Grading System', '% Marks of 100 Maximum', 'Course Requires a Pass'];
 }
 
+function employmentType()
+{
+    return array('Permanent', 'Temporary');
+}
+
 

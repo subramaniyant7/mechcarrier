@@ -259,6 +259,12 @@ class HelperController extends Controller
         return DB::table('employer_details')->where([['employer_email', $email], ['employer_password', md5($password)]])->get();
     }
 
+    static function getEmployerPost($employerId)
+    {
+        return DB::table('employer_post')->where([['employer_post_employee_id', $employerId], ['status', 1]])->get();
+    }
+
+
     static function randomPassword()
     {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';

@@ -10,9 +10,10 @@ use Mail;
 class EmployerController extends Controller
 {
 
-    public function EmployerDashboard()
+    public function EmployerDashboard(Request $request)
     {
-        return view('frontend.employer.employer_dashboard');
+        $employerInfo = HelperController::getEmployerInfoById($request->session()->get('employer_id'));
+        return view('frontend.employer.employer_dashboard', compact('employerInfo'));
     }
 
     public function EmployerHome()
@@ -153,7 +154,35 @@ class EmployerController extends Controller
 
     public function EmployerJobPost()
     {
-        return view('frontend.employer.employer_jobpost');
+        $employerPost = HelperController::getEmployerPost($request->session()->get('employer_id'));
+        return view('frontend.employer.employer_jobpost', compact('employerPost'));
+    }
+
+    public function SaveEmployerJobPost(Request $request){
+        $formData = $request->except('_token');
+
+        $keySkil = explode(',',$formData['employer_post_key_skils']);
+        if(count($keySkil) <=4){
+            return back()->withInput()->with('error', "Please add minimum 5 skils to create a job post");
+        }
+
+        if ($formData['employer_post_salary_range_from_lakhs'] >  $formData['employer_post_salary_range_to_lakhs']) {
+            return back()->withInput()->with('error', "Invalid Salary Range");
+        }
+
+        if ($formData['employer_post_salary_range_from_lakhs'] ==  $formData['employer_post_salary_range_to_lakhs'] &&
+        ($formData['employer_post_salary_range_from_thousands'] >  $formData['employer_post_salary_range_to_thousands'])) {
+            return back()->withInput()->with('error', "Invalid Salary Range");
+        }
+
+        if(!array_key_exists('employer_post_hidesalary', $formData)){
+            $formData['employer_post_hidesalary'] = 2;
+        }
+
+        $formData['employer_post_employee_id'] = $request->session()->get('employer_id');
+        $saveData = insertQuery('employer_post',$formData);
+        $notify = notification($saveData);
+        return redirect()->route('employerjobpost')->with($notify['type'], $notify['msg']);
     }
 
     public function EmployerLogout(Request $request)

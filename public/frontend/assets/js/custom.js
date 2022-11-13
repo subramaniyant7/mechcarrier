@@ -1227,15 +1227,12 @@ $(document).on('click', '.new_language', function (e) {
 
 
 $("textarea[name=employer_address]").keyup(function () {
-
     let inputVal = $(this).val();
-    console.log('ppp', inputVal)
     $(this).parent().find('#current').html(inputVal.length);
 });
 
 $("textarea[name=employer_about_company]").keyup(function () {
     let inputVal = $(this).val();
-    console.log('ppp', inputVal)
     $(this).parent().find('#current1').html(inputVal.length);
 });
 
@@ -1288,4 +1285,28 @@ $(document).on('blur', '.employer_location', function () {
     setTimeout(() => {
         currentParent.find('.autocomplete-items').hide().html('');
     }, 500);
+});
+
+// Employer Post
+
+$("textarea[name=employer_post_description]").keyup(function () {
+    let inputVal = $(this).val();
+    $(this).parent().find('#current').html(inputVal.length);
+});
+
+
+
+$('#employer_post_save').click(function(e){
+    // e.preventDefault();
+    $("input[name=employer_post_saved]").val(1);
+    $("input[name=employer_post_save_publish]").val(2);
+    $('#employer_post_submit').click();
+});
+
+
+$('#employer_post_save_publish').click(function(e){
+    // e.preventDefault();
+    $("input[name=employer_post_saved]").val(2);
+    $("input[name=employer_post_save_publish]").val(1);
+    $('#employer_post_submit').click();
 });
