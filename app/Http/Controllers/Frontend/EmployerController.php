@@ -152,7 +152,7 @@ class EmployerController extends Controller
     }
 
 
-    public function EmployerJobPost()
+    public function EmployerJobPost(Request $request)
     {
         $employerPost = HelperController::getEmployerPost($request->session()->get('employer_id'));
         return view('frontend.employer.employer_jobpost', compact('employerPost'));
