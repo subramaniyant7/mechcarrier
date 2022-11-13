@@ -1297,16 +1297,12 @@ $("textarea[name=employer_post_description]").keyup(function () {
 
 
 $('#employer_post_save').click(function(e){
-    // e.preventDefault();
-    $("input[name=employer_post_saved]").val(1);
-    $("input[name=employer_post_save_publish]").val(2);
+    $("input[name=employer_post_save_status]").val(1);
     $('#employer_post_submit').click();
 });
 
 
 $('#employer_post_save_publish').click(function(e){
-    // e.preventDefault();
-    $("input[name=employer_post_saved]").val(2);
-    $("input[name=employer_post_save_publish]").val(1);
+    $("input[name=employer_post_save_status]").val(2);
     $('#employer_post_submit').click();
 });

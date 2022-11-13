@@ -122,6 +122,13 @@ class CommonHelperController extends Controller
         return $data->get();
     }
 
+    static function getEmployersPost($id = '')
+    {
+        $data = DB::table('employer_post');
+        if ($id != '')  $data->where('employer_post_id', $id);
+        return $data->get();
+    }
+
     static function getEmployerInfoByEmail($email)
     {
         return DB::table('employer_details')->where('employer_email', $email)->get();

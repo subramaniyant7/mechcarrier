@@ -307,4 +307,14 @@ function employmentType()
     return array('Permanent', 'Temporary');
 }
 
+function YesNo()
+{
+    return array('Yes', 'No');
+}
+
+function SaveStatus()
+{
+    return array('Save', 'Save & Publish');
+}
+
 

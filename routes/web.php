@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\IndustryController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\DesignationController;
 use App\Http\Controllers\Admin\EmployerController as AdminEmployerController;
+use App\Http\Controllers\Admin\EmployerPost;
 use App\Http\Controllers\Admin\WebpageContent\BannerContentController;
 use App\Http\Controllers\Admin\WebpageContent\CompanyManagementController;
 use App\Http\Controllers\Admin\WebpageContent\HomePageTrainingCenterController;
@@ -238,6 +239,11 @@ Route::middleware(['globalvalidate'])->group(function () {
             Route::get('/action_employer/{option}/{id}', [AdminEmployerController::class, 'ActionEmployer'])->name('actionemployer');
             Route::post('/save_employer', [AdminEmployerController::class, 'SaveEmployerDetails'])->name('saveemployer');
 
+            // Employers Post
+            Route::get('/view_employers_post', [EmployerPost::class, 'ViewEmployersPost'])->name('viewemployerspost');
+            Route::get('/create_employer_post', [EmployerPost::class, 'ManageEmployerPost'])->name('manageemployerpost');
+            Route::get('/action_employer_post/{option}/{id}', [EmployerPost::class, 'ActionEmployerPost'])->name('actionemployerpost');
+            Route::post('/save_employer_post', [EmployerPost::class, 'SaveEmployerPostDetails'])->name('saveemployerpost');
 
             // Users
             Route::get('/download_sample_file', [UserController::class, 'DownloadSampleFile'])->name('downloadsamplefile');

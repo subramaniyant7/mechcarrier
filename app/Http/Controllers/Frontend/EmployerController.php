@@ -180,6 +180,7 @@ class EmployerController extends Controller
         }
 
         $formData['employer_post_employee_id'] = $request->session()->get('employer_id');
+        $formData['employer_post_createdby'] = 0;
         $saveData = insertQuery('employer_post',$formData);
         $notify = notification($saveData);
         return redirect()->route('employerjobpost')->with($notify['type'], $notify['msg']);

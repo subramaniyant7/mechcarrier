@@ -198,8 +198,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input type="hidden" name="employer_post_saved" value="1">
-                                <input type="hidden" name="employer_post_save_publish" value="2">
+                                <input type="hidden" name="employer_post_save_status" value="1">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
