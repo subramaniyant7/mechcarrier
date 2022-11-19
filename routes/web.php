@@ -57,14 +57,14 @@ Route::middleware(['globalvalidate'])->group(function () {
     Route::get('/sendsms', [JobseekerController::class, 'SendSMS'])->name('sendsms');
 
     Route::middleware(['userlogin'])->group(function () {
-        Route::get('/jobseeker_login', function () {
-            return view('frontend.jobseeker.login');
-        })->name('jobseekerlogin');
+        Route::get('/jobseeker_login', function () { return view('frontend.jobseeker.login'); })->name('jobseekerlogin');
         Route::post('/jobseeker_loginvalidate', [JobseekerController::class, 'JobseekerValidate'])->name('jobseekervalidate');
-        Route::get('/jobseeker_register', function () {
-            return view('frontend.jobseeker.register');
-        })->name('jobseekerregister');
+        Route::get('/jobseeker_register', function () { return view('frontend.jobseeker.register');})->name('jobseekerregister');
         Route::post('/jobseeker_registration', [JobseekerController::class, 'JobseekerRegister'])->name('jobseekerregistration');
+
+        Route::get('/jobseeker_forgotpassword', [JobseekerController::class, 'JobseekerForgotPassword'])->name('jobseekerforgotpassword');
+        Route::post('/handlejobseeker_forgotpassword', [JobseekerController::class, 'HandleJobseekerForgotPassword'])->name('handlejobseekerforgotpassword');
+        Route::get('/jobseeker_passwordsuccess', [JobseekerController::class, 'JobseekerForgotPasswordSuccess'])->name('jobseekerpasswordsuccess');
 
         Route::get('/email_verification/{id}', [JobseekerController::class, 'EmailVerification'])->name('emailverification');
         Route::post('/email_verification_success', [JobseekerController::class, 'EmailVerificationSuccess'])->name('emailverificationsuccess');
@@ -151,6 +151,12 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::get('/employer_register', [EmployerController::class, 'EmployerRegister'])->name('employerregister');
         Route::post('/employer_register', [EmployerController::class, 'EmployerRegisterProcess'])->name('employerregistersubmit');
         Route::get('/employer_verification', [EmployerController::class, 'EmployerVerification'])->name('employerverification');
+
+        Route::get('/employer_forgotpassword', [EmployerController::class, 'EmployerForgotPassword'])->name('employerforgotpassword');
+        Route::post('/handleemployer_forgotpassword', [EmployerController::class, 'HandleEmployerForgotPassword'])->name('handleemployerforgotpassword');
+        Route::get('/employer_passwordsuccess', [EmployerController::class, 'EmployerForgotPasswordSuccess'])->name('employerpasswordsuccess');
+
+
     });
 
     Route::middleware(['employerloggedIn'])->group(function () {

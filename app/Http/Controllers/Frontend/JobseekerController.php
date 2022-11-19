@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\Helper\HelperController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Mail;
+use PhpParser\Node\Expr\Print_;
 
 class JobseekerController extends Controller
 {
@@ -82,6 +83,45 @@ class JobseekerController extends Controller
 
         $otpInsert = insertQuery('user_email_otp', $userEmail);
         return redirect()->route('emailverification', ['id' => encryption($createUser)])->with('success', 'We have sent OTP to registered email. Please check you email');
+    }
+
+    // Forgot Password
+    public function JobseekerForgotPassword(){
+        return view('frontend.jobseeker.forgotpassword');
+    }
+
+    public function HandleJobseekerForgotPassword(Request $request){
+        $email = $request->input('user_email');
+        if($email != ''){
+            $userExist = HelperController::isUserExistByEmail($email);
+            if(count($userExist)){
+                $password = HelperController::randomPassword();
+                $userInfo = json_decode(json_encode($userExist[0]), true);
+                $userInfo['user_password'] = md5($password);
+                // Stop($userInfo);
+
+                try {
+                    $emailContent = ['user_email' => $email, 'user_password' => $password];
+                    Mail::send('frontend.jobseeker.email.jobseeker_forgotpassword', $emailContent, function ($message) use ($emailContent) {
+                        $message->to($emailContent['user_email'], 'Admin')->subject('Jobseeker Forgot Password - MechCareer');
+                        $message->from(getenv('MAIL_USERNAME'), 'Admin');
+                    });
+                } catch (\Exception $e) {
+                    return back()->with('error', $e->getMessage());
+                }
+                $saveData = updateQuery('user_details','user_id',$userInfo['user_id'], $userInfo);
+                $notify = notification($saveData);
+                return redirect()->route('jobseekerpasswordsuccess')->with($notify['type'], $notify['msg']);
+            }
+            return back()->with('error','Email address not found');
+        }
+    }
+
+    public function JobseekerForgotPasswordSuccess(Request $request){
+        if($request->session()->get('success')){
+            return view('frontend.jobseeker.forgotpasswordsuccess');
+        }
+        return redirect()->route('jobseekerlogin')->with('error','Please Login');
     }
 
     // Verify Email OTP
@@ -162,8 +202,6 @@ class JobseekerController extends Controller
     public function MobileVerification(Request $request)
     {
         $formData = $request->except('_token');
-        // print_r($formData);
-        // exit;
         try {
             $userId = decryption($formData['user_identity']);
             $userInfo = HelperController::getUserInfo($userId);

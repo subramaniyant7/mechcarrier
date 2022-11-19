@@ -112,6 +112,8 @@ function updateQuery($table, $match, $id, $data)
         $update = DB::table($table)->where($match, $id)->update($data);
         return true;
     } catch (Exception $e) {
+        print_r($e->getMessage());
+        exit;
         return false;
     }
 }
@@ -316,5 +318,12 @@ function SaveStatus()
 {
     return array('Save', 'Save & Publish');
 }
+
+function Stop($value){
+    echo '<pre>';
+    print_r($value);
+    exit;
+}
+
 
 

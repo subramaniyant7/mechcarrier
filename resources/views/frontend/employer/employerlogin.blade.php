@@ -35,11 +35,13 @@
                                     </label>
                                     <input type="password" autocomplete="new-password" name="employer_password"
                                         placeholder="Enter your password" class="form-control view" required />
-                                    <span> <img onclick="viewText(this)" src="{{ URL::asset(FRONTEND . '/assets/images/passwordshowicon.svg') }}" style="cursor:pointer" />
+                                    <span> <img onclick="viewText(this)"
+                                            src="{{ URL::asset(FRONTEND . '/assets/images/passwordshowicon.svg') }}"
+                                            style="cursor:pointer" />
                                     </span>
                                 </div>
 
-                                <div class="form-outline">
+                                <div class="form-outline mb-4" style="display: flex">
                                     <div class="col d-flex">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value=""
@@ -49,7 +51,7 @@
                                     </div>
 
                                     <div class="col">
-                                        <a href="#!">Forgot password?</a>
+                                        <a href="{{ route('employerforgotpassword') }}">Forgot password?</a>
                                     </div>
                                 </div>
 

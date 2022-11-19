@@ -186,6 +186,46 @@ class EmployerController extends Controller
         return redirect()->route('employerjobpost')->with($notify['type'], $notify['msg']);
     }
 
+
+    // Forgot Password
+    public function EmployerForgotPassword(){
+        return view('frontend.employer.forgotpassword');
+    }
+
+    public function HandleEmployerForgotPassword(Request $request){
+        $email = $request->input('user_email');
+        if($email != ''){
+            $employerExist = HelperController::getEmployerInfoByEmail($email);
+            if(count($employerExist)){
+                $password = HelperController::randomPassword();
+                $employerInfo = json_decode(json_encode($employerExist[0]), true);
+                $employerInfo['employer_password'] = md5($password);
+                // Stop($employerInfo);
+
+                try {
+                    $emailContent = ['user_email' => $email, 'user_password' => $password];
+                    Mail::send('frontend.employer.email.employer_forgotpassword', $emailContent, function ($message) use ($emailContent) {
+                        $message->to($emailContent['user_email'], 'Admin')->subject('Employer Forgot Password - MechCareer');
+                        $message->from(getenv('MAIL_USERNAME'), 'Admin');
+                    });
+                } catch (\Exception $e) {
+                    return back()->with('error', $e->getMessage());
+                }
+                $saveData = updateQuery('employer_details','employer_detail_id',$employerInfo['employer_detail_id'], $employerInfo);
+                $notify = notification($saveData);
+                return redirect()->route('employerpasswordsuccess')->with($notify['type'], $notify['msg']);
+            }
+            return back()->with('error','Email address not found');
+        }
+    }
+
+    public function EmployerForgotPasswordSuccess(Request $request){
+        if($request->session()->get('success')){
+            return view('frontend.employer.forgotpasswordsuccess');
+        }
+        return redirect()->route('employerlogin')->with('error','Please Login');
+    }
+
     public function EmployerLogout(Request $request)
     {
         $request->session()->forget('employer_email');

@@ -69,7 +69,7 @@
                                     </div>
 
                                     <div class="col forgot">
-                                        <a href="#!">Forgot password?</a>
+                                        <a href="{{ route('jobseekerforgotpassword') }}">Forgot password?</a>
                                     </div>
                                 </div>
 
