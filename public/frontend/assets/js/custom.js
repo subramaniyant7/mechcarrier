@@ -11,7 +11,9 @@ $('.email-registration-form a').click(function () {
         $.ajax({
             type: 'post',
             url: `${siteurl}resendemailotp`,
-            data: { userIdentity: userIdentity },
+            data: {
+                userIdentity: userIdentity
+            },
             dataType: 'json',
             success: function (data) {
                 if (data.status) toastr.success(data.message);
@@ -36,7 +38,10 @@ $('.change_email').submit(function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}updateemail`,
-            data: { userIdentity: userIdentity, userEmail: userEmail },
+            data: {
+                userIdentity: userIdentity,
+                userEmail: userEmail
+            },
             dataType: 'json',
             success: function (data) {
                 if (data.status) {
@@ -45,8 +50,7 @@ $('.change_email').submit(function (e) {
                     setTimeout(() => {
                         location.reload();
                     }, 700);
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -66,7 +70,9 @@ $('.mobile-registration-form a').click(function () {
         $.ajax({
             type: 'post',
             url: `${siteurl}resendmobileotp`,
-            data: { userIdentity: userIdentity },
+            data: {
+                userIdentity: userIdentity
+            },
             dataType: 'json',
             success: function (data) {
                 if (data.status) toastr.success(data.message);
@@ -91,7 +97,10 @@ $('.change_mobile').submit(function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}updatemobile`,
-            data: { userIdentity: userIdentity, userPhone: userPhone },
+            data: {
+                userIdentity: userIdentity,
+                userPhone: userPhone
+            },
             dataType: 'json',
             success: function (data) {
                 if (data.status) {
@@ -100,8 +109,7 @@ $('.change_mobile').submit(function (e) {
                     setTimeout(() => {
                         location.reload();
                     }, 700);
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -119,7 +127,9 @@ const redirectToDashboard = (userIdentity) => {
         $.ajax({
             type: 'post',
             url: `${siteurl}redirecttodashboard`,
-            data: { userIdentity: userIdentity },
+            data: {
+                userIdentity: userIdentity
+            },
             dataType: 'json',
             success: function (data) {
                 if (data.status) window.location.href = data.redirect;
@@ -180,8 +190,7 @@ $('.user_img').on('change', function (e) {
                 if (data.status) {
                     toastr.success(data.message)
                     location.reload();
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -225,8 +234,7 @@ $('.resume_upload').on('change', function (e) {
                     setTimeout(() => {
                         location.reload();
                     }, 1000)
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -245,7 +253,9 @@ $('.delete_resume').click(function () {
         $.ajax({
             type: 'post',
             url: `${siteurl}delete_resume`,
-            data: { dataid: dataId },
+            data: {
+                dataid: dataId
+            },
             dataType: 'json',
             success: function (data) {
                 if (data.status) {
@@ -253,8 +263,7 @@ $('.delete_resume').click(function () {
                     setTimeout(() => {
                         location.reload();
                     }, 1000)
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -299,7 +308,9 @@ $('#update_resume_headline').submit(function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}update_resume_headline`,
-            data: { headline: headline },
+            data: {
+                headline: headline
+            },
             dataType: 'json',
             success: function (data) {
                 if (data.status) {
@@ -308,8 +319,7 @@ $('#update_resume_headline').submit(function (e) {
                         location.reload();
                     }, 1000)
 
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -330,14 +340,15 @@ $('#create_keyskils').submit(function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}create_keyskils`,
-            data: { keyskils: keyskils },
+            data: {
+                keyskils: keyskils
+            },
             dataType: 'json',
             success: function (data) {
                 if (data.status) {
                     toastr.success(data.message)
                     location.reload();
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -355,14 +366,15 @@ const removeKeySkil = (skilid) => {
         $.ajax({
             type: 'post',
             url: `${siteurl}delete_keyskils`,
-            data: { skilid: skilid },
+            data: {
+                skilid: skilid
+            },
             dataType: 'json',
             success: function (data) {
                 if (data.status) {
                     toastr.success(data.message)
                     location.reload();
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -398,7 +410,9 @@ $('#update_profile_summary').submit(function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}update_profile_summary`,
-            data: { summary: summary },
+            data: {
+                summary: summary
+            },
             dataType: 'json',
             success: function (data) {
                 if (data.status) {
@@ -407,8 +421,7 @@ $('#update_profile_summary').submit(function (e) {
                         location.reload();
                     }, 1000)
 
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -425,15 +438,16 @@ $('.create_employment').click(function () {
     $.ajax({
         type: 'get',
         url: `${siteurl}getemploymenthtml`,
-        data: { type: 'add' },
+        data: {
+            type: 'add'
+        },
         dataType: 'json',
         success: function (data) {
             if (data.status) {
                 $('.action_employment').html(data.data);
                 $('.edit_employment_content').html('');
 
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -451,15 +465,17 @@ $('.edit_employment').click(function () {
     $.ajax({
         type: 'get',
         url: `${siteurl}getemploymenthtml`,
-        data: { type: 'edit', dataid: dataId },
+        data: {
+            type: 'edit',
+            dataid: dataId
+        },
         dataType: 'json',
         success: function (data) {
             if (data.status) {
                 $('.action_employment').html('');
                 $('.edit_employment_content').html('');
                 $('#employment_' + employment).html(data.data);
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -494,8 +510,7 @@ $(document).on('submit', '#action_employment', function (e) {
                 setTimeout(() => {
                     location.reload();
                 }, 1000)
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -515,7 +530,9 @@ $(document).on('keyup', '.user_employment_current_companyname', function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}getcompany`,
-            data: { companyname: val },
+            data: {
+                companyname: val
+            },
             dataType: 'json',
             success: function (data) {
                 let html = '';
@@ -525,14 +542,16 @@ $(document).on('keyup', '.user_employment_current_companyname', function (e) {
                         response.forEach(res => {
                             html += "<div class='option_click' data-id='" + res.company_detail_name + "'>" + res.company_detail_name + '<input type="hidden" value="' + res.company_detail_id + '"></div>'
                         })
-                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
                     } else {
                         html += "<div>No options found</div>";
                         currentParent.find('.autocomplete-items').css('height', '42px').html('').hide();
                     }
                     currentParent.find('.autocomplete_id').val('');
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -567,7 +586,9 @@ $(document).on('keyup', '.user_employment_current_designation', function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}getdesignation`,
-            data: { designaionname: val },
+            data: {
+                designaionname: val
+            },
             dataType: 'json',
             success: function (data) {
                 let html = '';
@@ -577,14 +598,16 @@ $(document).on('keyup', '.user_employment_current_designation', function (e) {
                         response.forEach(res => {
                             html += "<div class='option_click' data-id='" + res.designation_name + "'>" + res.designation_name + '<input type="hidden" value="' + res.designation_id + '"></div>'
                         })
-                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
                     } else {
                         html += "<div>No options found</div>";
                         currentParent.find('.autocomplete-items').css('height', '42px').html('').hide();
                     }
                     currentParent.find('.autocomplete_id').val('');
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -620,7 +643,10 @@ $(document).on('keyup', '.user_education_specialization', function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}getspecialization`,
-            data: { name: val, id: educationId },
+            data: {
+                name: val,
+                id: educationId
+            },
             dataType: 'json',
             success: function (data) {
                 let html = '';
@@ -630,14 +656,16 @@ $(document).on('keyup', '.user_education_specialization', function (e) {
                         response.forEach(res => {
                             html += "<div class='option_click' data-id='" + res.education_specialization_name + "'>" + res.education_specialization_name + '<input type="hidden" value="' + res.education_specialization_id + '"></div>'
                         })
-                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
                     } else {
                         html += "<div>No options found</div>";
                         currentParent.find('.autocomplete-items').css('height', '42px').html('').hide();
                     }
                     currentParent.find('.autocomplete_id').val('');
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -671,7 +699,10 @@ $(document).on('keyup', '.user_education_university', function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}getuniversity`,
-            data: { name: val, id: educationId },
+            data: {
+                name: val,
+                id: educationId
+            },
             dataType: 'json',
             success: function (data) {
                 let html = '';
@@ -681,14 +712,16 @@ $(document).on('keyup', '.user_education_university', function (e) {
                         response.forEach(res => {
                             html += "<div class='option_click' data-id='" + res.education_university_name + "'>" + res.education_university_name + '<input type="hidden" value="' + res.education_university_id + '"></div>'
                         })
-                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
                     } else {
                         html += "<div>No options found</div>";
                         currentParent.find('.autocomplete-items').css('height', '42px').html('').hide();
                     }
                     currentParent.find('.autocomplete_id').val('');
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -711,27 +744,22 @@ $(document).on('blur', '.user_education_university', function () {
     }, 500);
 });
 
-$(document).on('click', '.option_click', function () {
-    const inputVal = $(this).find('input').val();
-    const currentParent = $(this).parents('.autocomplete_ui_parent');
-    currentParent.find('.autocomplete_id').val(inputVal);
-    currentParent.find('.autocomplete_actual_id').val($(this).attr('data-id')).removeAttr('required');
-    currentParent.find('.autocomplete-items').hide().html('');
-});
+
 
 $('.create_education').click(function () {
     $.ajax({
         type: 'get',
         url: `${siteurl}geteducationhtml`,
-        data: { type: 'add' },
+        data: {
+            type: 'add'
+        },
         dataType: 'json',
         success: function (data) {
             if (data.status) {
                 $('.action_education').html(data.data);
                 $('.edit_education_content').html('');
 
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -745,7 +773,10 @@ $('.create_education').click(function () {
 $(document).on('change', '.user_education_primary_id', function (e) {
     let educationId = $("input[name='user_education_id']").val();
     let type = educationId == '' ? 'add' : 'edit';
-    let payload = { type: type, educationId: $(this).val() };
+    let payload = {
+        type: type,
+        educationId: $(this).val()
+    };
     let contentClass = 'action_education';
     let emptyClass = 'edit_education_content';
     if (educationId != '') {
@@ -762,8 +793,7 @@ $(document).on('change', '.user_education_primary_id', function (e) {
             if (data.status) {
                 $(`.${contentClass}`).html(data.data);
                 $(`.${emptyClass}`).html('');
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -782,15 +812,17 @@ $('.edit_education').click(function () {
     $.ajax({
         type: 'get',
         url: `${siteurl}geteducationhtml`,
-        data: { type: 'edit', dataid: dataId },
+        data: {
+            type: 'edit',
+            dataid: dataId
+        },
         dataType: 'json',
         success: function (data) {
             if (data.status) {
                 $('.action_education').html('');
                 $('.edit_education_content').html('');
                 $('#education_' + education).html(data.data);
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -814,8 +846,7 @@ $(document).on('submit', '#action_education', function (e) {
             if (data.status) {
                 toastr.success(data.message)
                 location.reload();
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -835,10 +866,10 @@ $(document).on('click', '.cancel_education', function (e) {
     }
 });
 
-$(document).on("change", ".user_education_grade", function(){
+$(document).on("change", ".user_education_grade", function () {
     let inputVal = $(this).val();
     $('.showmarks').hide();
-    if(inputVal != '' && inputVal < 4){
+    if (inputVal != '' && inputVal < 4) {
         $('.showmarks').show();
     }
     console.log('thi', $(this).val());
@@ -859,7 +890,9 @@ $(document).on('keyup', '.user_city', function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}getcity`,
-            data: { name: val },
+            data: {
+                name: val
+            },
             dataType: 'json',
             success: function (data) {
                 let html = '';
@@ -869,14 +902,16 @@ $(document).on('keyup', '.user_city', function (e) {
                         response.forEach(res => {
                             html += "<div class='option_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
                         })
-                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
                     } else {
                         html += "<div>No options found</div>";
                         currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
                     }
                     currentParent.find('.autocomplete_id').val('');
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -897,7 +932,7 @@ $(document).on('blur', '.user_city', function () {
     setTimeout(() => {
         const idVal = currentParent.find('.autocomplete_id').val();
         currentParent.find('.autocomplete-items').hide().html('');
-        if(idVal != '') rootParent.find('.form-buttons').show()
+        if (idVal != '') rootParent.find('.form-buttons').show()
         console.log('id', idVal)
     }, 500);
 });
@@ -912,7 +947,9 @@ $(document).on('keyup', '.user_preferred_location', function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}getcity`,
-            data: { name: val },
+            data: {
+                name: val
+            },
             dataType: 'json',
             success: function (data) {
                 let html = '';
@@ -922,14 +959,16 @@ $(document).on('keyup', '.user_preferred_location', function (e) {
                         response.forEach(res => {
                             html += "<div class='option_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
                         })
-                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
                     } else {
                         html += "<div>No options found</div>";
                         currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
                     }
                     currentParent.find('.autocomplete_id').val('');
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -950,7 +989,7 @@ $(document).on('blur', '.user_preferred_location', function () {
     setTimeout(() => {
         const idVal = currentParent.find('.autocomplete_id').val();
         currentParent.find('.autocomplete-items').hide().html('');
-        if(idVal != '') rootParent.find('.form-buttons').show()
+        if (idVal != '') rootParent.find('.form-buttons').show()
         console.log('id', idVal)
     }, 500);
 });
@@ -968,8 +1007,7 @@ $(document).on('submit', '#current-location', function (e) {
             if (data.status) {
                 toastr.success(data.message)
                 location.reload();
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -985,15 +1023,16 @@ $('.create_itskill').click(function () {
     $.ajax({
         type: 'get',
         url: `${siteurl}getitskillhtml`,
-        data: { type: 'add' },
+        data: {
+            type: 'add'
+        },
         dataType: 'json',
         success: function (data) {
             if (data.status) {
                 $('.action_itskill').html(data.data);
                 $('.edit_itskill_content').html('');
 
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -1011,15 +1050,17 @@ $('.edit_itskill').click(function () {
     $.ajax({
         type: 'get',
         url: `${siteurl}getitskillhtml`,
-        data: { type: 'edit', dataid: dataId },
+        data: {
+            type: 'edit',
+            dataid: dataId
+        },
         dataType: 'json',
         success: function (data) {
             if (data.status) {
                 $('.action_itskill').html('');
                 $('.edit_itskill_content').html('');
                 $('#itskill_' + itskill).html(data.data);
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -1043,8 +1084,7 @@ $(document).on('submit', '#action_itskill', function (e) {
             if (data.status) {
                 toastr.success(data.message)
                 location.reload();
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -1069,15 +1109,16 @@ $('.create_certification').click(function () {
     $.ajax({
         type: 'get',
         url: `${siteurl}getcertificationhtml`,
-        data: { type: 'add' },
+        data: {
+            type: 'add'
+        },
         dataType: 'json',
         success: function (data) {
             if (data.status) {
                 $('.action_certification').html(data.data);
                 $('.edit_certification_content').html('');
 
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -1095,15 +1136,17 @@ $('.edit_certification').click(function () {
     $.ajax({
         type: 'get',
         url: `${siteurl}getcertificationhtml`,
-        data: { type: 'edit', dataid: dataId },
+        data: {
+            type: 'edit',
+            dataid: dataId
+        },
         dataType: 'json',
         success: function (data) {
             if (data.status) {
                 $('.action_certification').html('');
                 $('.edit_certification_content').html('');
                 $('#certification_' + certification).html(data.data);
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -1128,8 +1171,7 @@ $(document).on('submit', '#action_certification', function (e) {
             if (data.status) {
                 toastr.success(data.message)
                 location.reload();
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -1159,8 +1201,7 @@ $('.action_personaldetails').click(function () {
         success: function (data) {
             if (data.status) {
                 $('.action_personaldetailsdata').html(data.data);
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -1184,8 +1225,7 @@ $(document).on('submit', '#action_personaldetails_data', function (e) {
             if (data.status) {
                 toastr.success(data.message)
                 location.reload();
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -1208,8 +1248,7 @@ $(document).on('click', '.new_language', function (e) {
         success: function (data) {
             if (data.status) {
                 $('.new_lan_html').html(data.data);
-            }
-            else toastr.error(data.message);
+            } else toastr.error(data.message);
         },
         error: function (data) {
             toastr.error('Something went wrong. Please try again');
@@ -1248,7 +1287,9 @@ $(document).on('keyup', '.employer_location', function (e) {
         $.ajax({
             type: 'post',
             url: `${siteurl}getcity`,
-            data: { name: val },
+            data: {
+                name: val
+            },
             dataType: 'json',
             success: function (data) {
                 let html = '';
@@ -1258,14 +1299,16 @@ $(document).on('keyup', '.employer_location', function (e) {
                         response.forEach(res => {
                             html += "<div class='option_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
                         })
-                        currentParent.find('.autocomplete-items').css({ 'height': '100px', 'background': '#fff' }).html(html).show();
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
                     } else {
                         html += "<div>No options found</div>";
                         currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
                     }
                     currentParent.find('.autocomplete_id').val('');
-                }
-                else toastr.error(data.message);
+                } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -1294,15 +1337,299 @@ $("textarea[name=employer_post_description]").keyup(function () {
     $(this).parent().find('#current').html(inputVal.length);
 });
 
-
-
-$('#employer_post_save').click(function(e){
+$(document).on('click' , '#employer_post_save', function(){
     $("input[name=employer_post_save_status]").val(1);
     $('#employer_post_submit').click();
 });
 
 
-$('#employer_post_save_publish').click(function(e){
+$(document).on('click' , '#employer_post_save_publish', function(){
     $("input[name=employer_post_save_status]").val(2);
     $('#employer_post_submit').click();
+});
+
+$(document).on('keyup', '.employer_post_location_state', function (e) {
+    let val = $(this).val();
+    let current = this;
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $(this).attr('required', 'required');
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getstate`,
+            data: {
+                name: val
+            },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='option_click custom_click' data-id='" + res.state_name + "'>" + res.state_name + '<input type="hidden" value="' + res.state_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html('').hide();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+                } else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('blur', '.employer_post_location_state', function () {
+    console.log('blur')
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $('.employer_post_location_city').attr('readonly', true);
+    $('.selected_cities').html('');
+    $("input[name=employer_post_location_city_id]").val('');
+    $(".city_text").val('');
+    setTimeout(() => {
+        const idVal = currentParent.find('.autocomplete_id').val();
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+
+});
+
+
+$(document).on('click', '.custom_click', function () {
+    console.log('Option')
+    $('.employer_post_location_city').attr({
+        'readonly': false,
+        required: true
+    });
+});
+
+
+$(document).on('keyup', '.employer_post_location_city', function (e) {
+    const stateId = $("input[name=employer_post_location_state_id]").val();
+    if (stateId == '') {
+        toastr.error('Please Enter Valid State');
+        return false;
+    }
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+
+    let cityId = currentParent.find('.autocomplete_id').val();
+    if (cityId != '') {
+        let splitCityId = cityId.split(',');
+        if (splitCityId.length == 3) {
+            $(this).attr('readonly', true).val('');
+            return false;
+        }
+    }
+
+    $(this).attr('required', 'required');
+    let val = $(this).val();
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getstatecity`,
+            data: {
+                state: stateId,
+                city: val
+            },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='citycustom_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
+                    }
+                    // currentParent.find('.autocomplete_id').val('');
+                } else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('click', '.clear_city', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    const cityIdRemove = $(this).attr('data-id');
+    const cityIdRemoveIndex = $(this).attr('data-index');
+    const getCityText = $('.city_text').val();
+
+    const selectedCityId = currentParent.find('.autocomplete_id').val();
+    if (selectedCityId != '') {
+        let splitSelectedCityId = selectedCityId.split(',');
+        if (splitSelectedCityId.length == 1) {
+            toastr.error('Minimum One City Required');
+            return false;
+        }
+
+        const index = splitSelectedCityId.indexOf(cityIdRemove);
+        if (index > -1) {
+            splitSelectedCityId.splice(index, 1);
+        }
+
+        let selectedCityText = getCityText.split(',');
+        const textIndex = selectedCityText.indexOf(selectedCityText[cityIdRemoveIndex]);
+        if (textIndex > -1) {
+            selectedCityText.splice(index, 1);
+        }
+        let selectedItems = '<ul class="selected_items">';
+        let imagePath = `${siteurl}frontend/assets/images/profilecreation/cancel.svg`
+        selectedCityText.forEach((element, index) => {
+            selectedItems += '<li>';
+            selectedItems += `${element}`;
+            selectedItems += '<img class="pointer clear_city" style="cursor:pointer" data-index="' + index + '" data-id="' + splitSelectedCityId[index] + '" src="' + imagePath + '" >';
+            selectedItems += '</li>'
+        });
+        selectedItems += '</ul>';
+        if (splitSelectedCityId.length < 3) {
+            currentParent.find('.autocomplete_actual_id').attr('disabled', false);
+        }
+        $('.selected_cities').html(selectedItems);
+        currentParent.find('.autocomplete_id').val(splitSelectedCityId.toString())
+        $('.city_text').val(selectedCityText.toString());
+
+        console.log('splitSelectedCityId', splitSelectedCityId)
+        console.log('selectedCityText', selectedCityText)
+    } else {
+        toastr.error('Something went wrong. Please try again');
+    }
+
+    console.log($(this).attr('data-id'));
+});
+
+
+$(document).on('click', '.citycustom_click', function () {
+    const inputVal = $(this).find('input').val();
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    currentParent.find('.autocomplete_actual_id').removeAttr('required');
+    currentParent.find('.autocomplete-items').hide().html('');
+
+    let cityText = $('.city_text').val();
+    let newText = $(this).attr('data-id');
+    let cityId = currentParent.find('.autocomplete_id').val();
+    let newId = inputVal;
+    if (cityText != '') {
+        cityText = `${cityText},${newText}`;
+    } else {
+        cityText = newText;
+    }
+
+    if (cityId != '') {
+        let validateCity = cityId.split(',');
+        if(validateCity.length == 3){
+            toastr.error('Reached maximum city limit');
+            return false;
+        }
+        if (validateCity.includes(newId)) {
+            $('.employer_post_location_city').val('')
+            toastr.error('City Already added')
+            return false
+        }
+        cityId = `${cityId},${newId}`;
+    } else {
+        cityId = newId;
+    }
+
+    let imagePath = `${siteurl}frontend/assets/images/profilecreation/cancel.svg`
+    let newTextSplit = cityText.split(',');
+    let newCityIdSplit = cityId.split(',');
+    let selectedItems = '<ul class="selected_items">';
+    newTextSplit.forEach((element, index) => {
+        selectedItems += '<li>';
+        selectedItems += `${element}`;
+        selectedItems += '<img class="pointer clear_city" style="cursor:pointer" data-index="' + index + '" data-id="' + newCityIdSplit[index] + '" src="' + imagePath + '" >';
+        selectedItems += '</li>'
+    });
+
+    currentParent.find('.autocomplete_id').val(cityId);
+    if (newCityIdSplit.length == 3) $('.employer_post_location_city').attr({
+        readonly: true,
+        required: false
+    });
+    selectedItems += '</ul>';
+    $('.selected_cities').html(selectedItems);
+    $('.city_text').val(cityText);
+
+    $('.employer_post_location_city').val('')
+});
+
+$(document).on('click', '.employer_post_external', function () {
+    let display = 'none';
+    let required = false;
+    if ($(this).prop("checked")) {
+        display = 'block'
+        required = true
+    }
+    $(".apply_link").css('display', display);
+    $(".apply_link").find('input').attr('required', required)
+});
+
+$('.form_prefil').click(function (e) {
+    const postid = $(this).attr('data-post');
+    if (postid != '') {
+        let current = $(this);
+        current.html('Loading...')
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}employer_jobpost_prefil`,
+            data: {
+                post_id: postid,
+            },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    $('#rendered_form').html(data.html);
+                    console.log(data.html)
+                } else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+                current.html('Prefil')
+            }
+        });
+    }
+});
+
+
+
+$(document).on('click', '.option_click', function () {
+    console.log('Option')
+    const inputVal = $(this).find('input').val();
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    currentParent.find('.autocomplete_id').val(inputVal);
+    currentParent.find('.autocomplete_actual_id').val($(this).attr('data-id')).removeAttr('required');
+    currentParent.find('.autocomplete-items').hide().html('');
 });

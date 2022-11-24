@@ -46,8 +46,8 @@ Route::middleware(['globalvalidate'])->group(function () {
     });
 
     Route::get('/jobsdetails', [FrontendController::class, 'JobsDetails'])->name('jobsdetails');
-    Route::get('/job_search', [FrontendController::class, 'JobSearch'])->name('jobsearch');
-    Route::get('/job_search1', [FrontendController::class, 'JobSearch1'])->name('jobsearch1');
+    //Route::get('/job_search', [FrontendController::class, 'JobSearch'])->name('jobsearch');
+    Route::get('/job_search', [FrontendController::class, 'JobseekerJobSearch'])->name('jobsearch');
     Route::get('/job_search2', [FrontendController::class, 'JobSearch2'])->name('jobsearch2');
 
     Route::get('/mycourse_services', [FrontendController::class, 'MyCourseandService'])->name('mycourseservice');
@@ -94,6 +94,8 @@ Route::middleware(['globalvalidate'])->group(function () {
         })->name('register');
     });
 
+    Route::post('/getstate', [FAjaxController::class, 'GetState'])->name('getstate');
+    Route::post('/getstatecity', [FAjaxController::class, 'GetStateCity'])->name('getstatecity');
     Route::post('/getcity', [FAjaxController::class, 'GetCity'])->name('getcity');
 
     Route::middleware(['userloginvalidate'])->group(function () {
@@ -159,6 +161,9 @@ Route::middleware(['globalvalidate'])->group(function () {
 
     });
 
+
+
+
     Route::middleware(['employerloggedIn'])->group(function () {
         Route::get('/employer_dashboard', [EmployerController::class, 'EmployerDashboard'])->name('employerdashboard');
         Route::get('/employer_company', [EmployerController::class, 'EmployerCompanyAction'])->name('employercompany');
@@ -166,6 +171,9 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::middleware(['employerProfileValidate'])->group(function () {
             Route::get('/employer_jobpost', [EmployerController::class, 'EmployerJobPost'])->name('employerjobpost');
             Route::get('/save_employer_jobpost', [EmployerController::class, 'SaveEmployerJobPost'])->name('saveemployerjobpost');
+
+            Route::post('/employer_jobpost_prefil', [FAjaxController::class, 'EmployerJobPostPrefil'])->name('employerjobpostprefil');
+
         });
         Route::get('/employer_logout', [EmployerController::class, 'EmployerLogout'])->name('employerlogout');
     });

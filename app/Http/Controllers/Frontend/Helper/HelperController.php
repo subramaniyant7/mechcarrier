@@ -127,9 +127,29 @@ class HelperController extends Controller
         return DB::table('education_university')->where([['education_university_name', 'like', '%' . $value . '%'], ['education_id', $id]])->get();
     }
 
+    static function getState($value)
+    {
+        return DB::table('state')->where([['state_name', 'like', '%' . $value . '%'],['status' ,1]])->get();
+    }
+
+    static function getStateById($stateId)
+    {
+        return DB::table('state')->where([['state_id', $stateId],['status' ,1]])->get();
+    }
+
+    static function getStateCity($state,$value)
+    {
+        return DB::table('city')->where([['state_id', $state],['city_name', 'like', '%' . $value . '%'],['status' ,1]])->get();
+    }
+
+    static function getCityById($stateId)
+    {
+        return DB::table('city')->where([['city_id', $stateId],['status' ,1]])->get();
+    }
+
     static function getCity($value)
     {
-        return DB::table('city')->where([['city_name', 'like', '%' . $value . '%']])->get();
+        return DB::table('city')->where([['city_name', 'like', '%' . $value . '%'],['status' ,1]])->get();
     }
 
     static function getEducation($id)
@@ -232,6 +252,11 @@ class HelperController extends Controller
         return $data->get();
     }
 
+    static function getActiveCityInfo($id)
+    {
+        return DB::table('city')->where([['city_id', $id],['status', 1]])->get();
+    }
+
     static function getGradeInfo($id = '')
     {
         $data = DB::table('education_grade');
@@ -262,6 +287,11 @@ class HelperController extends Controller
     static function getEmployerPost($employerId)
     {
         return DB::table('employer_post')->where([['employer_post_employee_id', $employerId], ['status', 1]])->get();
+    }
+
+    static function getJobPostById($postId)
+    {
+        return DB::table('employer_post')->where('employer_post_id', $postId)->get();
     }
 
 

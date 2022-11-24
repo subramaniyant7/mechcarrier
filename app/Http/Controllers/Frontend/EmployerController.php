@@ -155,13 +155,15 @@ class EmployerController extends Controller
     public function EmployerJobPost(Request $request)
     {
         $employerPost = HelperController::getEmployerPost($request->session()->get('employer_id'));
+        // Stop($employerPost);
         return view('frontend.employer.employer_jobpost', compact('employerPost'));
     }
 
     public function SaveEmployerJobPost(Request $request){
-        $formData = $request->except('_token');
+        $formData = $request->except('_token','employer_post_location_state_id','employer_post_location_city_id');
 
         $keySkil = explode(',',$formData['employer_post_key_skils']);
+
         if(count($keySkil) <=4){
             return back()->withInput()->with('error', "Please add minimum 5 skils to create a job post");
         }
@@ -179,10 +181,46 @@ class EmployerController extends Controller
             $formData['employer_post_hidesalary'] = 2;
         }
 
+        if($request->input('employer_post_location_state_id') == ''){
+            return back()->withInput()->with('error', 'Please Enter State');
+        }
+
+
+
+        if(!array_key_exists('employer_post_location_city', $formData) ||
+            (array_key_exists('employer_post_location_city', $formData) && $request->input('employer_post_location_city_id') == '') ){
+            return back()->withInput()->with('error', 'Please Enter City');
+        }
+
+
+
+        if(array_key_exists('employer_post_external', $formData) && $formData['employer_post_apply_link'] == ''){
+            return back()->withInput()->with('error','Please Enter Apply Link');
+        }
+
+        if(!array_key_exists('employer_post_external', $formData)){
+            $formData['employer_post_external'] = 2;
+            $formData['employer_post_apply_link'] = '';
+        }
+
+        $formData['employer_post_location_state'] = $request->input('employer_post_location_state_id');
+        $formData['employer_post_location_city'] = $request->input('employer_post_location_city_id');
+
         $formData['employer_post_employee_id'] = $request->session()->get('employer_id');
         $formData['employer_post_createdby'] = 0;
+
+        // Stop($formData);
         $saveData = insertQuery('employer_post',$formData);
         $notify = notification($saveData);
+        if($notify['type']){
+            if($formData['employer_post_save_status'] == 1){
+                $notify['msg'] = 'Your job saved successfully';
+            }
+
+            if($formData['employer_post_save_status'] == 2){
+                $notify['msg'] = 'Your job saved successfully. It will publish once admin reviewed/approved';
+            }
+        }
         return redirect()->route('employerjobpost')->with($notify['type'], $notify['msg']);
     }
 

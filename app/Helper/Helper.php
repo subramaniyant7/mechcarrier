@@ -293,7 +293,7 @@ function SalaryLakhs(){
 function SalaryThousands(){
     $data = [];
     for ($t = 0; $t <= 18; $t++) {
-        if($t ==0) array_push($data, $t+5);
+        if($t ==0) array_push($data, 0);
         else array_push($data,$data[$t-1]+5);
     }
     return $data;
@@ -323,6 +323,11 @@ function Stop($value){
     echo '<pre>';
     print_r($value);
     exit;
+}
+
+function experienceGap()
+{
+    return array('0 -1', '1 - 3','3 - 5','5 - 10','10 - 15','15 +');
 }
 
 

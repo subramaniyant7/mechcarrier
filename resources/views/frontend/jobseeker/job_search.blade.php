@@ -8,15 +8,15 @@
                     <div class="col-md-7">
                         <div class="user-dasboard-form">
                             <div class="form-dflex">
-                                <form>
+                                <form method="GET">
                                     <div class="d-flex">
-                                        <input type="text" class="form-control"
+                                        <input type="text" name="skil" class="form-control"
                                             placeholder="Search job by skill, destination or companies">
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </div>
                                     <div class="d-flex">
-                                        <input type="text" placeholder="Location" class="form-control">
-                                        <input type="text" placeholder="Experience" class="form-control">
+                                        <input type="text" name="location" placeholder="Location" class="form-control">
+                                        <input type="text" name="experience" placeholder="Experience" class="form-control">
                                     </div>
                                 </form>
                             </div>
@@ -36,153 +36,74 @@
                                 <h4>Clear all</h4>
                             </div>
                             <div class="searchfilters-list">
-                                <h4>job type </h4>
+                                <h4>Job type </h4>
                                 <ul>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                Part Time
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                Full Time
-                                            </label>
-                                        </div>
-                                    </li>
+                                    @foreach(employmentType() as $k => $employment)
+                                        <li>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="{{$k+1}}"
+                                                       id="defaultCheck1">
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    {{ $employment }}
+                                                </label>
+                                            </div>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div class="searchfilters-list">
                                 <h4>Posted by</h4>
                                 <ul>
+                                    @foreach(typeOfCompany() as $p => $type)
                                     <li>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
+                                            <input class="form-check-input" type="checkbox" value="{{$p}}"
                                                 id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
-                                                Company
+                                                {{$type}}
                                             </label>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                Consultacy
-                                            </label>
-                                        </div>
-                                    </li>
+                                    @endforeach
+
                                 </ul>
                             </div>
                             <div class="searchfilters-list">
                                 <h4>Experience</h4>
                                 <ul>
+                                    @foreach(experienceGap() as $l => $experiencegap)
                                     <li>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
+                                            <input class="form-check-input" type="checkbox" value="{{$l}}"
                                                 id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
-                                                0 -1 years
+                                                {{$experiencegap}} Years
                                             </label>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                1 - 3 Years
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                3 - 5 Years
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                5 - 10 Years
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                10 - 15 Years
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                15 + Years
-                                            </label>
-                                        </div>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div class="searchfilters-list">
+
+
                                 <h4>Education</h4>
                                 <ul>
+                                    @foreach(getActiveRecord('education_info') as $education_info)
                                     <li>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
+                                            <input class="form-check-input" type="checkbox" value="{{ $education_info->education_id }}"
                                                 id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
-                                                Diploma
+                                                {{ $education_info->education_name }}
                                             </label>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                B.E / B.Tech
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                M.E / M.Tech
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                Other
-                                            </label>
-                                        </div>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div class="searchfilters-list">
-                                <h4>Comapany Type</h4>
+                                <h4>Company Type</h4>
                                 <ul>
                                     <li>
                                         <div class="form-check">

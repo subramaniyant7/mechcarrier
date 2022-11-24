@@ -376,6 +376,27 @@ class AjaxController extends Controller
         return $response;
     }
 
+    public function GetState(Request $request)
+    {
+        $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
+        if ($request->input('name') != '') {
+            $data = HelperController::getState($request->input('name'));
+            $response = ['status' => true, 'message' => '', 'data' => json_encode($data)];
+        }
+        return $response;
+    }
+
+    public function GetStateCity(Request $request)
+    {
+        $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
+        if ($request->input('state') != '' && $request->input('city') != '') {
+            $data = HelperController::getStateCity($request->input('state'),$request->input('city'));
+            $response = ['status' => true, 'message' => '', 'data' => json_encode($data)];
+        }
+        return $response;
+    }
+
+
     public function GetCity(Request $request)
     {
         $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
@@ -776,5 +797,25 @@ class AjaxController extends Controller
         } catch (\Exception $e) {
         }
         return response()->json($response);
+    }
+
+    public function EmployerJobPostPrefil(Request $request){
+        $response = ['status' => false, 'message' => ''];
+        $postId = $request->input('post_id');
+        if($postId != ''){
+            try {
+                $jobPost = HelperController::getJobPostById(decryption($postId));
+
+               // Stop($jobPost);
+                if (count($jobPost)) {
+                    $renderPostForm = view('frontend.employer.employerpost_form',compact('jobPost'))->render();
+                    return ['status' => true, 'html' => $renderPostForm];
+                }
+                $response = ['status' => false, 'message' => 'Job Post Not available'];
+            } catch (\Exception $e) {
+                $response = ['status' => false, 'message' => $e->getMessage()];
+            }
+        }
+        return $response;
     }
 }

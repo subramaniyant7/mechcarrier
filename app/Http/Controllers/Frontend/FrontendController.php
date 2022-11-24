@@ -157,9 +157,9 @@ class FrontendController extends Controller
         return view('frontend.jobseeker_job_search');
     }
 
-    public function JobSearch1(Request $request)
+    public function JobseekerJobSearch(Request $request)
     {
-        return view('frontend.jobseeker_job_search1');
+        return view('frontend.jobseeker.job_search');
     }
 
     public function JobSearch2(Request $request)
