@@ -227,6 +227,85 @@ class AjaxController extends Controller
         return $response;
     }
 
+    public function GetBasicDetailsHtml(Request $request){
+        $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
+        try {
+            if ($request->session()->get('frontend_userid') != '' && $request->input('type') != '') {
+                $type = $request->input('type');
+                $data = [];
+                if ($request->input('dataid') != '') {
+                    $profileInfo = HelperController::getUserProfileById(decryption($request->input('dataid')));
+                    if (count($profileInfo)) $data = $profileInfo;
+                }
+                $html = view('frontend.users.actionbasicetails', compact('type', 'data'))->render();
+                $response = ['status' => true, 'message' => '', 'data' => $html];
+            }
+        } catch (\Exception $e) {
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+    public function GetCurrentLocationHtml(Request $request){
+        $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
+        try {
+            if ($request->session()->get('frontend_userid') != '' && $request->input('type') != '') {
+                $type = $request->input('type');
+                $data = [];
+                if ($request->input('dataid') != '') {
+                    $profileInfo = HelperController::getUserProfileById(decryption($request->input('dataid')));
+                    if (count($profileInfo)) $data = $profileInfo;
+                }
+                $html = view('frontend.users.actioncurrentlocation', compact('type', 'data'))->render();
+                $response = ['status' => true, 'message' => '', 'data' => $html];
+            }
+        } catch (\Exception $e) {
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+    public function GetPreferredLocationHtml(Request $request){
+        $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
+        try {
+            if ($request->session()->get('frontend_userid') != '' && $request->input('type') != '') {
+                $type = $request->input('type');
+                $data = [];
+                if ($request->input('dataid') != '') {
+                    $profileInfo = HelperController::getUserProfileById(decryption($request->input('dataid')));
+                    if (count($profileInfo)) $data = $profileInfo;
+                }
+                $html = view('frontend.users.actionpreferredlocation', compact('type', 'data'))->render();
+                $response = ['status' => true, 'message' => '', 'data' => $html];
+            }
+        } catch (\Exception $e) {
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+    public function GetAddMoreLocationHtml(Request $request){
+        $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
+        try {
+            if ($request->session()->get('frontend_userid') != '') {
+                $html = view('frontend.users.addmorepreferredlocation',)->render();
+                $response = ['status' => true, 'message' => '', 'data' => $html];
+            }else{
+                $response['message'] = 'Something went wrong. Invalid access';
+            }
+        } catch (\Exception $e) {
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+
+
+
     public function GetEmploymentHtml(Request $request)
     {
         $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
@@ -489,6 +568,130 @@ class AjaxController extends Controller
         }
         return $response;
     }
+
+
+    public function ActionBasicDetails(Request $request)
+    {
+        $response = ['status' => false, 'message' => ''];
+        try {
+            $formData = $request->except('user_profile_id');
+
+            if($formData['user_current_salary_month'] == '' || $formData['user_current_salary_year'] == ''
+                || $formData['user_total_experience_year'] == '' || $formData['user_total_experience_month'] == ''){
+                    $response = ['status' => false, 'message' => 'Please enter all mandatory fields'];
+                }
+            $formData['user_id'] = $request->session()->get('frontend_userid');
+            $userid = $request->session()->get('frontend_userid');
+            $profileInfo = HelperController::getUserProfile($userid);
+            if(count($profileInfo)){
+                updateQuery('user_profile', 'user_id', $userid, $formData);
+            } else {
+                insertQuery('user_profile', $formData);
+            }
+            $response = ['status' => true, 'message' => 'Basic Details saved'];
+        } catch (\Exception $e) {
+            $response = ['status' => false, 'message' => $e->getMessage()];
+        }
+        return $response;
+    }
+
+    public function ActionCurrentLocationOnly(Request $request)
+    {
+        $response = ['status' => false, 'message' => ''];
+        try {
+            $formData = $request->except('user_profile_id','current_state_id','current_city_id');
+
+            if($formData['user_current_state'] == '' || $formData['user_current_city'] == ''){
+                return ['status' => false, 'message' => 'Please enter all mandatory fields'];
+            }
+
+            if($request->input('current_state_id') == ''){ $response['message'] = 'Please Enter valid State'; return $response; }
+            if($request->input('current_city_id') == ''){ $response['message'] = 'Please Enter valid City'; return $response; }
+
+            $formData['user_current_state'] = $request->input('current_state_id');
+            $formData['user_current_city'] = $request->input('current_city_id');
+            $formData['user_id'] = $request->session()->get('frontend_userid');
+            $userid = $request->session()->get('frontend_userid');
+            $profileInfo = HelperController::getUserProfile($userid);
+            if(count($profileInfo)){
+                updateQuery('user_profile', 'user_id', $userid, $formData);
+            } else {
+                insertQuery('user_profile', $formData);
+            }
+            $response = ['status' => true, 'message' => 'Current Location Details saved'];
+        } catch (\Exception $e) {
+            $response = ['status' => false, 'message' => $e->getMessage()];
+        }
+        return $response;
+    }
+
+
+    public function ActionPreferredLocationOnly(Request $request)
+    {
+        $response = ['status' => false, 'message' => ''];
+        try {
+            $formData = $request->only('preferred_state_id','preferred_city_id');
+
+            if(!count($formData['preferred_state_id']) || !count($formData['preferred_city_id'])){
+                return ['status' => false,'message' => 'Please enter valid State/City'];
+            }
+
+            if(count($formData['preferred_state_id']) == count($formData['preferred_city_id'])){
+                $userData = ['user_preferred_state' => implode(',',$formData['preferred_state_id']), 'user_preferred_city' => implode(',',$formData['preferred_city_id'])];
+                $stateSplit = explode(',',$userData['user_preferred_state']);
+                foreach($stateSplit as $stateInfo){
+                    $stateData = HelperController::getStateById($stateInfo);
+                    if(!count($stateData)) return ['status' => false,'message' => 'Please Enter Valid State'];
+                }
+
+                foreach(explode(',',$userData['user_preferred_city']) as $k => $cityInfo){
+                    $cityData = HelperController::getStateCityById($stateSplit[$k], $cityInfo);
+                    if(!count($cityData)){
+                        return ['status' => false,'message' => 'Please Enter Valid City'];
+                    }
+                }
+
+                $userid = $request->session()->get('frontend_userid');
+                $profileInfo = HelperController::getUserProfile($userid);
+                if(count($profileInfo)){
+                    updateQuery('user_profile', 'user_id', $userid, $userData);
+                } else {
+                    insertQuery('user_profile', $userData);
+                }
+                $response = ['status' => true, 'message' => 'Preferred Location Details saved'];
+            }else{
+                return $response['message'] = 'Invalid action';
+            }
+
+            // Stop($formData);
+            // exit;
+            // if($formData['user_current_state'] == '' || $formData['user_current_city'] == ''){
+            //     return ['status' => false, 'message' => 'Please enter all mandatory fields'];
+            // }
+
+            // if($request->input('current_state_id') == ''){ $response['message'] = 'Please Enter valid State'; return $response; }
+            // if($request->input('current_city_id') == ''){ $response['message'] = 'Please Enter valid City'; return $response; }
+
+            // $formData['user_current_state'] = $request->input('current_state_id');
+            // $formData['user_current_city'] = $request->input('current_city_id');
+            // $formData['user_id'] = $request->session()->get('frontend_userid');
+            // $userid = $request->session()->get('frontend_userid');
+            // $profileInfo = HelperController::getUserProfile($userid);
+            // if(count($profileInfo)){
+            //     updateQuery('user_profile', 'user_id', $userid, $formData);
+            // } else {
+            //     insertQuery('user_profile', $formData);
+            // }
+            // $response = ['status' => true, 'message' => 'Current Location Details saved'];
+        } catch (\Exception $e) {
+            $response = ['status' => false, 'message' => $e->getMessage()];
+        }
+        return $response;
+    }
+
+
+
+
 
     public function ActionEducation(Request $request)
     {

@@ -85,6 +85,11 @@ class HelperController extends Controller
         return DB::table('user_profile')->where('user_id', $id)->get();
     }
 
+    static function getUserProfileById($id)
+    {
+        return DB::table('user_profile')->where('user_profile_id', $id)->get();
+    }
+
     static function getUserSkilsById($id)
     {
         return DB::table('user_key_skils')->where('user_key_skil_id', $id)->get();
@@ -142,9 +147,14 @@ class HelperController extends Controller
         return DB::table('city')->where([['state_id', $state],['city_name', 'like', '%' . $value . '%'],['status' ,1]])->get();
     }
 
-    static function getCityById($stateId)
+    static function getStateCityById($state,$city)
     {
-        return DB::table('city')->where([['city_id', $stateId],['status' ,1]])->get();
+        return DB::table('city')->where([['state_id', $state],['city_id', $city],['status' ,1]])->get();
+    }
+
+    static function getCityById($cityId)
+    {
+        return DB::table('city')->where([['city_id', $cityId],['status' ,1]])->get();
     }
 
     static function getCity($value)
@@ -242,6 +252,13 @@ class HelperController extends Controller
     {
         $data = DB::table('education_university');
         if ($id != '')  $data->where('education_university_id', $id);
+        return $data->get();
+    }
+
+    static function getCountryInfo($id = '')
+    {
+        $data = DB::table('country');
+        if ($id != '')  $data->where('country_id', $id);
         return $data->get();
     }
 

@@ -10,13 +10,14 @@
                             <div class="form-dflex">
                                 <form method="GET">
                                     <div class="d-flex">
-                                        <input type="text" name="skil" class="form-control"
+                                        <input type="text" name="skil" class="form-control" required
                                             placeholder="Search job by skill, destination or companies">
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </div>
                                     <div class="d-flex">
                                         <input type="text" name="location" placeholder="Location" class="form-control">
-                                        <input type="text" name="experience" placeholder="Experience" class="form-control">
+                                        <input type="text" name="experience" placeholder="Experience"
+                                            class="form-control">
                                     </div>
                                 </form>
                             </div>
@@ -32,17 +33,18 @@
                     <div class="col-md-4">
                         <div class="searchfilter-sidebar">
                             <div class="searchfilter-dflex">
-                                <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/filtericon.svg')}}" /></span> Filters</p>
+                                <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/filtericon.svg') }}" /></span>
+                                    Filters</p>
                                 <h4>Clear all</h4>
                             </div>
                             <div class="searchfilters-list">
                                 <h4>Job type </h4>
                                 <ul>
-                                    @foreach(employmentType() as $k => $employment)
+                                    @foreach (employmentType() as $k => $employment)
                                         <li>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="{{$k+1}}"
-                                                       id="defaultCheck1">
+                                                <input class="form-check-input" type="checkbox" value="{{ $k + 1 }}"
+                                                    id="defaultCheck1">
                                                 <label class="form-check-label" for="defaultCheck1">
                                                     {{ $employment }}
                                                 </label>
@@ -54,16 +56,16 @@
                             <div class="searchfilters-list">
                                 <h4>Posted by</h4>
                                 <ul>
-                                    @foreach(typeOfCompany() as $p => $type)
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="{{$p}}"
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                {{$type}}
-                                            </label>
-                                        </div>
-                                    </li>
+                                    @foreach (typeOfCompany() as $p => $type)
+                                        <li>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="{{ $p }}"
+                                                    id="defaultCheck1">
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    {{ $type }}
+                                                </label>
+                                            </div>
+                                        </li>
                                     @endforeach
 
                                 </ul>
@@ -71,16 +73,16 @@
                             <div class="searchfilters-list">
                                 <h4>Experience</h4>
                                 <ul>
-                                    @foreach(experienceGap() as $l => $experiencegap)
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="{{$l}}"
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                {{$experiencegap}} Years
-                                            </label>
-                                        </div>
-                                    </li>
+                                    @foreach (experienceGap() as $l => $experiencegap)
+                                        <li>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="{{ $l }}"
+                                                    id="defaultCheck1">
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    {{ $experiencegap }} Years
+                                                </label>
+                                            </div>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -89,16 +91,16 @@
 
                                 <h4>Education</h4>
                                 <ul>
-                                    @foreach(getActiveRecord('education_info') as $education_info)
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="{{ $education_info->education_id }}"
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                {{ $education_info->education_name }}
-                                            </label>
-                                        </div>
-                                    </li>
+                                    @foreach (getActiveRecord('education_info') as $education_info)
+                                        <li>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    value="{{ $education_info->education_id }}" id="defaultCheck1">
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    {{ $education_info->education_name }}
+                                                </label>
+                                            </div>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -162,18 +164,23 @@
                                         <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                         <p> Collins Aerospace technology</p>
                                     </div>
-                                    <img src="{{URL::asset(FRONTEND.'/assets/images/jobicon.svg')}}">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
                                 </div>
                                 <div class="job-card-details">
                                     <div class="job-card-info">
                                         <div class="years">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}"> </span>5-10 Years</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                                                </span>5-10 Years</p>
                                         </div>
                                         <div class="location">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}"> </span>Banglore</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                                                </span>Banglore</p>
                                         </div>
                                         <div class="salary">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}"> </span>5-6 Lakhs</p>
+                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                                                </span>5-6 Lakhs</p>
                                         </div>
                                     </div>
                                     <div class="job-posted-date">
@@ -187,7 +194,8 @@
                                         participat... <span>more</span></p>
                                 </div>
                                 <div class="job-card-apply">
-                                    <h4><img src="{{URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}"> Key skill : <span>SAP, PLM, CATIA</span>
+                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
+                                        : <span>SAP, PLM, CATIA</span>
                                     </h4>
                                     <div class="job-card-button">
                                         <button type="button" class="btn btn-primary  bg-white">Saved</button>
@@ -201,18 +209,23 @@
                                         <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                         <p> Collins Aerospace technology</p>
                                     </div>
-                                    <img src="{{URL::asset(FRONTEND.'/ssets/images/jobicon.svg')}}">
+                                    <img src="{{ URL::asset(FRONTEND . '/ssets/images/jobicon.svg') }}">
                                 </div>
                                 <div class="job-card-details">
                                     <div class="job-card-info">
                                         <div class="years">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}"> </span>5-10 Years</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                                                </span>5-10 Years</p>
                                         </div>
                                         <div class="location">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}"> </span>Banglore</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                                                </span>Banglore</p>
                                         </div>
                                         <div class="salary">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}"> </span>5-6 Lakhs</p>
+                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                                                </span>5-6 Lakhs</p>
                                         </div>
                                     </div>
                                     <div class="job-posted-date">
@@ -226,7 +239,8 @@
                                         participat... <span>more</span></p>
                                 </div>
                                 <div class="job-card-apply">
-                                    <h4><img src="{{URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}"> Key skill : <span>SAP, PLM, CATIA</span>
+                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
+                                        : <span>SAP, PLM, CATIA</span>
                                     </h4>
                                     <div class="job-card-button">
                                         <button type="button" class="btn btn-primary  bg-white">Saved</button>
@@ -240,18 +254,23 @@
                                         <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                         <p> Collins Aerospace technology</p>
                                     </div>
-                                    <img src="{{URL::asset(FRONTEND.'/assets/images/jobicon.svg')}}">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
                                 </div>
                                 <div class="job-card-details">
                                     <div class="job-card-info">
                                         <div class="years">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}"> </span>5-10 Years</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                                                </span>5-10 Years</p>
                                         </div>
                                         <div class="location">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}"> </span>Banglore</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                                                </span>Banglore</p>
                                         </div>
                                         <div class="salary">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}"> </span>5-6 Lakhs</p>
+                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                                                </span>5-6 Lakhs</p>
                                         </div>
                                     </div>
                                     <div class="job-posted-date">
@@ -265,7 +284,8 @@
                                         participat... <span>more</span></p>
                                 </div>
                                 <div class="job-card-apply">
-                                    <h4><img src="{{URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}"> Key skill : <span>SAP, PLM, CATIA</span>
+                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
+                                        : <span>SAP, PLM, CATIA</span>
                                     </h4>
                                     <div class="job-card-button">
                                         <button type="button" class="btn btn-primary  bg-white">Saved</button>
@@ -279,18 +299,23 @@
                                         <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                         <p> Collins Aerospace technology</p>
                                     </div>
-                                    <img src="{{URL::asset(FRONTEND.'/assets/images/jobicon.svg')}}">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
                                 </div>
                                 <div class="job-card-details">
                                     <div class="job-card-info">
                                         <div class="years">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}"> </span>5-10 Years</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                                                </span>5-10 Years</p>
                                         </div>
                                         <div class="location">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}"> </span>Banglore</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                                                </span>Banglore</p>
                                         </div>
                                         <div class="salary">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}"> </span>5-6 Lakhs</p>
+                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                                                </span>5-6 Lakhs</p>
                                         </div>
                                     </div>
                                     <div class="job-posted-date">
@@ -304,7 +329,8 @@
                                         participat... <span>more</span></p>
                                 </div>
                                 <div class="job-card-apply">
-                                    <h4><img src="{{URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}"> Key skill : <span>SAP, PLM, CATIA</span>
+                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
+                                        : <span>SAP, PLM, CATIA</span>
                                     </h4>
                                     <div class="job-card-button">
                                         <button type="button" class="btn btn-primary  bg-white">Saved</button>
@@ -318,18 +344,23 @@
                                         <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                         <p> Collins Aerospace technology</p>
                                     </div>
-                                    <img src="{{URL::asset(FRONTEND.'/assets/images/jobicon.svg')}}">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
                                 </div>
                                 <div class="job-card-details">
                                     <div class="job-card-info">
                                         <div class="years">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}"> </span>5-10 Years</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                                                </span>5-10 Years</p>
                                         </div>
                                         <div class="location">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}"> </span>Banglore</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                                                </span>Banglore</p>
                                         </div>
                                         <div class="salary">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}"> </span>5-6 Lakhs</p>
+                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                                                </span>5-6 Lakhs</p>
                                         </div>
                                     </div>
                                     <div class="job-posted-date">
@@ -343,7 +374,8 @@
                                         participat... <span>more</span></p>
                                 </div>
                                 <div class="job-card-apply">
-                                    <h4><img src="{{URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}"> Key skill : <span>SAP, PLM, CATIA</span>
+                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
+                                        : <span>SAP, PLM, CATIA</span>
                                     </h4>
                                     <div class="job-card-button">
                                         <button type="button" class="btn btn-primary  bg-white">Saved</button>
@@ -357,18 +389,23 @@
                                         <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                         <p> Collins Aerospace technology</p>
                                     </div>
-                                    <img src="{{URL::asset(FRONTEND.'/assets/images/jobicon.svg')}}">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
                                 </div>
                                 <div class="job-card-details">
                                     <div class="job-card-info">
                                         <div class="years">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}"> </span>5-10 Years</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                                                </span>5-10 Years</p>
                                         </div>
                                         <div class="location">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}"> </span>Banglore</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                                                </span>Banglore</p>
                                         </div>
                                         <div class="salary">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}"> </span>5-6 Lakhs</p>
+                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                                                </span>5-6 Lakhs</p>
                                         </div>
                                     </div>
                                     <div class="job-posted-date">
@@ -382,7 +419,8 @@
                                         participat... <span>more</span></p>
                                 </div>
                                 <div class="job-card-apply">
-                                    <h4><img src="{{URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}"> Key skill : <span>SAP, PLM, CATIA</span>
+                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
+                                        : <span>SAP, PLM, CATIA</span>
                                     </h4>
                                     <div class="job-card-button">
                                         <button type="button" class="btn btn-primary  bg-white">Saved</button>
@@ -396,18 +434,23 @@
                                         <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                         <p> Collins Aerospace technology</p>
                                     </div>
-                                    <img src="{{URL::asset(FRONTEND.'/assets/images/jobicon.svg')}}">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
                                 </div>
                                 <div class="job-card-details">
                                     <div class="job-card-info">
                                         <div class="years">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}"> </span>5-10 Years</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                                                </span>5-10 Years</p>
                                         </div>
                                         <div class="location">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}"> </span>Banglore</p>
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                                                </span>Banglore</p>
                                         </div>
                                         <div class="salary">
-                                            <p><span><img src="{{URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}"> </span>5-6 Lakhs</p>
+                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                                                </span>5-6 Lakhs</p>
                                         </div>
                                     </div>
                                     <div class="job-posted-date">
@@ -421,7 +464,8 @@
                                         participat... <span>more</span></p>
                                 </div>
                                 <div class="job-card-apply">
-                                    <h4><img src="{{URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}"> Key skill : <span>SAP, PLM, CATIA</span>
+                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
+                                        : <span>SAP, PLM, CATIA</span>
                                     </h4>
                                     <div class="job-card-button">
                                         <button type="button" class="btn btn-primary  bg-white">Saved</button>

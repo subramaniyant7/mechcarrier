@@ -25,10 +25,10 @@
                 <li class="breadcrumb-item"><a href="{{ route('analysisdashboard') }}">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Employer Post</li>
             </ol>
-            <div>
+            {{-- <div>
                 <a href="{{ route('manageemployerpost') }}" class="btn btn-primary btn-rounded mb-2 me-4"><i
                         class="fa-solid fa-plus"></i> Employer Post</a>
-            </div>
+            </div> --}}
         </nav>
     </div>
     <!-- /BREADCRUMB -->
@@ -45,6 +45,7 @@
                             <th>Employment Type</th>
                             <th>Key Skils</th>
                             <th>Qualification</th>
+                            <th>Experience</th>
                             <th>Salary</th>
                             <th>Location</th>
                             <th>Saved / Publish</th>
@@ -56,21 +57,36 @@
                         @forelse($employerspost as $k => $employerspost)
                             @php
                                 $class = $employerspost->status == 1 ? 'badge-light-success' : '';
-                                $employerName = '';
+                                $employerName = $stateName = $cityName = '';
                                 $employerInfo = App\Http\Controllers\Admin\Helper\CommonHelperController::getEmployers($employerspost->employer_post_employee_id);
-                                if(count($employerInfo)){
+                                if (count($employerInfo)) {
                                     $employerName = $employerInfo[0]->employer_company_name;
+                                }
+                                $stateInfo = App\Http\Controllers\Admin\Helper\CommonHelperController::getState($employerspost->employer_post_location_state);
+                                if (count($stateInfo)) {
+                                    $stateName = $stateInfo[0]->state_name;
+                                }
+                                $citySplit = explode(',', $employerspost->employer_post_location_city);
+                                if (count($citySplit)) {
+                                    foreach ($citySplit as $k => $cities) {
+                                        $cityInfo = App\Http\Controllers\Admin\Helper\CommonHelperController::getCity($cities);
+                                        if (count($cityInfo)) {
+                                            $cityName .= $cityInfo[0]->city_name . (count($citySplit) != ($k + 1) ? ',' : '');
+                                        }
+                                    }
                                 }
                             @endphp
                             <tr>
                                 <td> {{ $k + 1 }} </td>
                                 <td> {{ $employerName }} </td>
                                 <td> {{ $employerspost->employer_post_headline }} </td>
-                                <td> {{ employmentType()[$employerspost->employer_post_employement_type-1] }} </td>
+                                <td> {{ employmentType()[$employerspost->employer_post_employement_type - 1] }} </td>
                                 <td> {{ $employerspost->employer_post_key_skils }} </td>
-                                <td> {{ education()[$employerspost->employer_post_qualification-1] }} </td>
-                                <td> {{ SalaryLakhs()[$employerspost->employer_post_salary_range_from_lakhs-1] }}L - {{ SalaryLakhs()[$employerspost->employer_post_salary_range_to_lakhs-1] }}L </td>
-                                <td> {{ $employerspost->employer_post_locations }} </td>
+                                <td> {{ education()[$employerspost->employer_post_qualification - 1] }} </td>
+                                <td> {{ experienceGap()[$employerspost->employer_post_experience - 1] . ' Years' }} </td>
+                                <td> {{ SalaryLakhs()[$employerspost->employer_post_salary_range_from_lakhs - 1] }}L -
+                                    {{ SalaryLakhs()[$employerspost->employer_post_salary_range_to_lakhs - 1] }}L </td>
+                                <td> {{ $stateName . '/' . $cityName }} </td>
                                 <td> {{ $employerspost->employer_post_save_status == 1 ? 'Saved' : 'Published' }} </td>
 
                                 <td> <span

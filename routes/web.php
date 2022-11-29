@@ -106,6 +106,11 @@ Route::middleware(['globalvalidate'])->group(function () {
 
         Route::get('/download_resume', [FrontendController::class, 'DownloadResume'])->name('downloadresume');
         Route::post('/delete_resume', [FAjaxController::class, 'DeleteResume'])->name('deleteresume');
+        Route::get('/getbasicdetailshtml', [FAjaxController::class, 'GetBasicDetailsHtml'])->name('getbasicdetailshtml');
+        Route::get('/getcurrentlocationhtml', [FAjaxController::class, 'GetCurrentLocationHtml'])->name('getcurrentlocationhtml');
+        Route::get('/getpreferredlocationhtml', [FAjaxController::class, 'GetPreferredLocationHtml'])->name('getpreferredlocationhtml');
+        Route::get('/getaddmorepreferredlocationhtml', [FAjaxController::class, 'GetAddMoreLocationHtml'])->name('getaddmorepreferredlocationhtml');
+
         Route::get('/getemploymenthtml', [FAjaxController::class, 'GetEmploymentHtml'])->name('getemploymenthtml');
         Route::get('/geteducationhtml', [FAjaxController::class, 'GetEducationHtml'])->name('geteducationhtml');
         Route::get('/getitskillhtml', [FAjaxController::class, 'GetItSkillHtml'])->name('getitskillhtml');
@@ -114,6 +119,14 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::post('/action_personaldetails_data', [FAjaxController::class, 'ActionPersonalData'])->name('actionpersonaldetailsdata');
 
         Route::get('/newlanguagehtml', [FAjaxController::class, 'GetNewLanguage'])->name('newlanguagehtml');
+
+
+
+        Route::post('/action_basicdetails', [FAjaxController::class, 'ActionBasicDetails'])->name('actionbasicdetails');
+        Route::post('/action_currentlocation', [FAjaxController::class, 'ActionCurrentLocationOnly'])->name('actioncurrentlocation');
+        Route::post('/action_preferred_location', [FAjaxController::class, 'ActionPreferredLocationOnly'])->name('actionpreferredlocation');
+
+        // Route::post('/action_preferredlocation', [FAjaxController::class, 'ActionPreferredLocationOnly'])->name('actionpreferredlocation');
 
         Route::post('/action_education', [FAjaxController::class, 'ActionEducation'])->name('actioneducation');
         Route::get('/delete_education/{id}', [FrontendController::class, 'DeleteEducation'])->name('deleteeducation');

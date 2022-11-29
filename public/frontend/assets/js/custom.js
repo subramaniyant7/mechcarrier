@@ -331,6 +331,75 @@ $('#update_resume_headline').submit(function (e) {
     }
 });
 
+// Basic Details
+$('.edit_basic_details').click(function () {
+    let Id = $(this).attr('data-id');
+    let type = $(this).attr('data-id') != '' ? 'edit' : 'add';
+    let payload = {
+        type: type
+    }
+    if (Id != '') {
+        payload = {
+            ...payload,
+            dataid: Id
+        }
+    }
+
+    $.ajax({
+        type: 'get',
+        url: `${siteurl}getbasicdetailshtml`,
+        data: payload,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                $('.basic-details-action').html(data.data);
+                $('.basic-details-content').hide();
+            } else {
+                toastr.error(data.message);
+                $('.basic-details-action').html('');
+                $('.basic-details-content').show();
+            }
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+            $('.basic-details-action').html('');
+            $('.basic-details-content').show();
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+})
+
+$(document).on('submit', '#basic-details-form', function (e) {
+    e.preventDefault();
+    let formValue = $(this).serialize();
+    $('.loader').show();
+    $.ajax({
+        type: 'post',
+        url: `${siteurl}action_basicdetails`,
+        data: formValue,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                toastr.success(data.message)
+                location.reload();
+            } else toastr.error(data.message);
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+});
+
+$(document).on('click', '.cancel_basic_details', function (e) {
+    $('.basic-details-action').html('');
+    $('.basic-details-content').show();
+});
+
 // Key Skills
 $('#create_keyskils').submit(function (e) {
     e.preventDefault();
@@ -744,8 +813,6 @@ $(document).on('blur', '.user_education_university', function () {
     }, 500);
 });
 
-
-
 $('.create_education').click(function () {
     $.ajax({
         type: 'get',
@@ -879,8 +946,420 @@ $('.custom_change').change(function (e) {
     $(this).parents('.current-location').find('.form-buttons').show();
 });
 
-// Location
+// Current Location
+$(document).on('click', '.action_location', function (e) {
+    let Id = $(this).attr('data-id');
+    let type = $(this).attr('data-id') != '' ? 'edit' : 'add';
+    let payload = {
+        type: type
+    }
+    if (Id != '') {
+        payload = {
+            ...payload,
+            dataid: Id
+        }
+    }
+    $.ajax({
+        type: 'get',
+        url: `${siteurl}getcurrentlocationhtml`,
+        data: payload,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                $(".action_currentlocation").html(data.data);
+                $(".current-location").hide();
+            } else {
+                $(".action_currentlocation").html('');
+                $(".current-location").show();
+                toastr.error(data.message);
+            }
+        },
+        error: function (data) {
+            $(".action_currentlocation").html('');
+            $(".current-location").show();
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+});
 
+$(document).on('keyup', '.user_current_state', function (e) {
+    let val = $(this).val();
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $(this).attr('required', 'required');
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getstate`,
+            data: {
+                name: val
+            },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='option_click' data-id='" + res.state_name + "'>" + res.state_name + '<input type="hidden" value="' + res.state_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+                } else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('blur', '.user_current_state', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    setTimeout(() => {
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+});
+
+$(document).on('keyup', '.user_current_city', function (e) {
+    const stateId = $("input[name=current_state_id]").val();
+    if (stateId == '') {
+        toastr.error('Please Enter Valid State');
+        return false;
+    }
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+
+    $(this).attr('required', 'required');
+    let val = $(this).val();
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getstatecity`,
+            data: {
+                state: stateId,
+                city: val
+            },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='option_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+                } else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('blur', '.user_current_city', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    setTimeout(() => {
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+});
+
+$(document).on('submit', '#current-location-form', function (e) {
+    e.preventDefault();
+    let formValue = $(this).serialize();
+    $('.loader').show();
+    $.ajax({
+        type: 'post',
+        url: `${siteurl}action_currentlocation`,
+        data: formValue,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                toastr.success(data.message)
+                location.reload();
+            } else toastr.error(data.message);
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+});
+
+$(document).on('click', '.cancel_current_location', function (e) {
+    $(".action_currentlocation").html('');
+    $(".current-location").show();
+})
+
+
+// Preferred Location
+$(document).on('click', '.action_preferred_location', function (e) {
+    let Id = $(this).attr('data-id');
+    let type = $(this).attr('data-id') != '' ? 'edit' : 'add';
+    let payload = {
+        type: type
+    }
+    if (Id != '') {
+        payload = {
+            ...payload,
+            dataid: Id
+        }
+    }
+    $.ajax({
+        type: 'get',
+        url: `${siteurl}getpreferredlocationhtml`,
+        data: payload,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                $(".preferred-current-location").html(data.data);
+                $(".displaypreferred-current-location").hide();
+            } else {
+                $(".preferred-current-location").html('');
+                $(".displaypreferred-current-location").show();
+                toastr.error(data.message);
+            }
+        },
+        error: function (data) {
+            $(".preferred-current-location").html('');
+            $(".displaypreferred-current-location").show();
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+});
+
+$(document).on('keyup', '.user_preferred_state', function (e) {
+    let val = $(this).val();
+    const preferredMain = $(this).parents('.preferred_main');
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $(this).attr('required', 'required');
+    if (val != '') {
+        preferredMain.find('.user_preferred_city').val('');
+        preferredMain.find('.preferred_city_id').val('');
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getstate`,
+            data: {
+                name: val
+            },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='custom_state_click' data-id='" + res.state_name + "'>" + res.state_name + '<input type="hidden" value="' + res.state_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+                } else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('blur', '.user_preferred_state', function () {
+    const preferredMain = $(this).parents('.preferred_main');
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    preferredMain.find('.preferred_state_id').val('');
+    setTimeout(() => {
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+});
+
+$(document).on('click', '.custom_state_click', function () {
+    const inputVal = $(this).find('input').val();
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    currentParent.find('.autocomplete_id').val(inputVal);
+    currentParent.find('.autocomplete_actual_id').val($(this).attr('data-id')).removeAttr('required');
+    currentParent.find('.autocomplete-items').hide().html('');
+});
+
+$(document).on('keyup', '.user_preferred_city', function (e) {
+    const currentMain = $(this).parents('.preferred_main');
+    const stateId = currentMain.find(".preferred_state_id").val();
+    if (stateId == '') {
+        toastr.error('Please Enter Valid State');
+        return false;
+    }
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+
+    $(this).attr('required', 'required');
+    let val = $(this).val();
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getstatecity`,
+            data: {
+                state: stateId,
+                city: val
+            },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='option_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+                } else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('blur', '.user_preferred_city', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    setTimeout(() => {
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+});
+
+$(document).on('click', '.add_more span', function (e) {
+    let totalElement = $('.user_preferred_state').length;
+    let current = $(this);
+    if (totalElement == 3) {
+        current.hide();
+        toastr.error('You cannot add more than 3');
+        return false;
+    }
+    $.ajax({
+        type: 'get',
+        url: `${siteurl}getaddmorepreferredlocationhtml`,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                $(".addnewelement").append(data.data);
+            } else {
+                $(".addnewelement").html('');
+                toastr.error(data.message);
+            }
+        },
+        error: function (data) {
+            $(".addnewelement").html('');
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            if (totalElement == 2) {
+                current.hide();
+            }
+            $('.loader').hide();
+        }
+    });
+
+    console.log(totalElement)
+});
+
+$(document).on('click', '.removeelement', function (e) {
+    $(this).parents('.preferred_main').remove();
+    let totalElement = $('.user_preferred_state').length;
+    if (totalElement <= 2) {
+        $('.add_more span').show();
+    }
+});
+
+$(document).on('submit', '#preferred-location-form', function (e) {
+    e.preventDefault();
+    let formValue = $(this).serialize();
+    $('.loader').show();
+    $.ajax({
+        type: 'post',
+        url: `${siteurl}action_preferred_location`,
+        data: formValue,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                toastr.success(data.message)
+                location.reload();
+            } else toastr.error(data.message);
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+});
+
+$(document).on('click', '.cancel_preferred_location', function (e) {
+    $(".preferred-current-location").html('');
+    $(".displaypreferred-current-location").show();
+})
+
+
+// Location
 $(document).on('keyup', '.user_city', function (e) {
     let val = $(this).val();
     let current = this;
@@ -936,6 +1415,7 @@ $(document).on('blur', '.user_city', function () {
         console.log('id', idVal)
     }, 500);
 });
+
 
 
 $(document).on('keyup', '.user_preferred_location', function (e) {
@@ -1275,9 +1755,6 @@ $("textarea[name=employer_about_company]").keyup(function () {
     $(this).parent().find('#current1').html(inputVal.length);
 });
 
-
-
-
 $(document).on('keyup', '.employer_location', function (e) {
     let val = $(this).val();
     let current = this;
@@ -1331,19 +1808,17 @@ $(document).on('blur', '.employer_location', function () {
 });
 
 // Employer Post
-
 $("textarea[name=employer_post_description]").keyup(function () {
     let inputVal = $(this).val();
     $(this).parent().find('#current').html(inputVal.length);
 });
 
-$(document).on('click' , '#employer_post_save', function(){
+$(document).on('click', '#employer_post_save', function () {
     $("input[name=employer_post_save_status]").val(1);
     $('#employer_post_submit').click();
 });
 
-
-$(document).on('click' , '#employer_post_save_publish', function(){
+$(document).on('click', '#employer_post_save_publish', function () {
     $("input[name=employer_post_save_status]").val(2);
     $('#employer_post_submit').click();
 });
@@ -1407,7 +1882,6 @@ $(document).on('blur', '.employer_post_location_state', function () {
 
 });
 
-
 $(document).on('click', '.custom_click', function () {
     console.log('Option')
     $('.employer_post_location_city').attr({
@@ -1415,7 +1889,6 @@ $(document).on('click', '.custom_click', function () {
         required: true
     });
 });
-
 
 $(document).on('keyup', '.employer_post_location_city', function (e) {
     const stateId = $("input[name=employer_post_location_state_id]").val();
@@ -1526,7 +1999,6 @@ $(document).on('click', '.clear_city', function () {
     console.log($(this).attr('data-id'));
 });
 
-
 $(document).on('click', '.citycustom_click', function () {
     const inputVal = $(this).find('input').val();
     const currentParent = $(this).parents('.autocomplete_ui_parent');
@@ -1545,7 +2017,7 @@ $(document).on('click', '.citycustom_click', function () {
 
     if (cityId != '') {
         let validateCity = cityId.split(',');
-        if(validateCity.length == 3){
+        if (validateCity.length == 3) {
             toastr.error('Reached maximum city limit');
             return false;
         }
@@ -1622,8 +2094,6 @@ $('.form_prefil').click(function (e) {
         });
     }
 });
-
-
 
 $(document).on('click', '.option_click', function () {
     console.log('Option')

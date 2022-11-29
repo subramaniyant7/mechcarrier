@@ -26,7 +26,8 @@
                             <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Employer<span
                                     class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <select class="form-select" name="employer_post_employee_id" required>
+                                <select class="form-select" name="employer_post_employee_id" required
+                                    {{ isset($data) ? 'disabled' : '' }}>
                                     <option value="">Select Employer</option>
                                     @foreach (getActiveRecord('employer_details') as $k => $employer_details)
                                         <option value="{{ $employer_details->employer_detail_id }}"
@@ -42,16 +43,17 @@
                                     class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control form-control" name="employer_post_headline"
-                                    placeholder="Headline" required
+                                    placeholder="Headline" required {{ isset($data) ? 'disabled' : '' }}
                                     value="{{ isset($data) ? $data[0]->employer_post_headline : old('employer_post_headline') }}">
                             </div>
                         </div>
 
                         <div class="form-group row mb-4">
-                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Employment Type<span
-                                    class="text-danger">*</span></label>
+                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Employment
+                                Type<span class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <select class="form-select" name="employer_post_employement_type" required>
+                                <select class="form-select" name="employer_post_employement_type" required
+                                    {{ isset($data) ? 'disabled' : '' }}>
                                     <option value="">Select Employment Type</option>
                                     @foreach (employmentType() as $k => $employmentType)
                                         <option value="{{ $k + 1 }}"
@@ -66,8 +68,8 @@
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Description
                                 <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <textarea name="employer_post_description" required rows="5" minlength="10" maxlength="1000"
-                                                placeholder="Describe activities in this job role " class="form-control">{{ isset($data) ? $data[0]->employer_post_description :'' }}</textarea>
+                                <textarea {{ isset($data) ? 'disabled' : '' }} name="employer_post_description" required rows="5" minlength="10"
+                                    maxlength="1000" placeholder="Describe activities in this job role " class="form-control">{{ isset($data) ? $data[0]->employer_post_description : '' }}</textarea>
 
                             </div>
                         </div>
@@ -76,18 +78,20 @@
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Key Skils<span
                                     class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control form-control" name="employer_post_key_skils"
-                                    placeholder="Key Skils" required
+                                <input {{ isset($data) ? 'disabled' : '' }} type="text"
+                                    class="form-control form-control" name="employer_post_key_skils" placeholder="Key Skils"
+                                    required
                                     value="{{ isset($data) ? $data[0]->employer_post_key_skils : old('employer_post_key_skils') }}">
                             </div>
                         </div>
 
 
                         <div class="form-group row mb-4">
-                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Employment Qualification<span
-                                    class="text-danger">*</span></label>
+                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Employment
+                                Qualification<span class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <select class="form-select" name="employer_post_qualification" required>
+                                <select {{ isset($data) ? 'disabled' : '' }} class="form-select"
+                                    name="employer_post_qualification" required>
                                     <option value="">Select Employment Type</option>
                                     @foreach (education() as $k => $education)
                                         <option value="{{ $k + 1 }}"
@@ -99,10 +103,27 @@
                         </div>
 
                         <div class="form-group row mb-4">
-                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Hide Salary from Candidates<span
-                                    class="text-danger">*</span></label>
+                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Employment
+                                Experience<span class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <select class="form-select" name="employer_post_hidesalary" required>
+                                <select {{ isset($data) ? 'disabled' : '' }} class="form-select"
+                                    name="employer_post_experience" required>
+                                    <option value="">Select Employment Type</option>
+                                    @foreach (experienceGap() as $k => $experienc)
+                                        <option value="{{ $k + 1 }}"
+                                            {{ isset($data) && $data[0]->employer_post_experience == $k + 1 ? 'selected' : '' }}>
+                                            {{ $experienc }} Years</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Hide Salary from
+                                Candidates<span class="text-danger">*</span></label>
+                            <div class="col-sm-10">
+                                <select {{ isset($data) ? 'disabled' : '' }} class="form-select"
+                                    name="employer_post_hidesalary" required>
                                     <option value="">Select</option>
                                     @foreach (YesNo() as $k => $yesno)
                                         <option value="{{ $k + 1 }}"
@@ -117,7 +138,8 @@
                             <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Salary Range<span
                                     class="text-danger">*</span></label>
                             <div class="col-sm-2">
-                                <select class="form-select" name="employer_post_salary_range_from_lakhs" required>
+                                <select {{ isset($data) ? 'disabled' : '' }} class="form-select"
+                                    name="employer_post_salary_range_from_lakhs" required>
                                     <option value="">Select</option>
                                     @foreach (SalaryLakhs() as $k => $lakh)
                                         <option value="{{ $k + 1 }}"
@@ -127,7 +149,8 @@
                                 </select>
                             </div>
                             <div class="col-sm-3">
-                                <select class="form-select" name="employer_post_salary_range_from_thousands" required>
+                                <select {{ isset($data) ? 'disabled' : '' }} class="form-select"
+                                    name="employer_post_salary_range_from_thousands" required>
                                     <option value="">Select</option>
                                     @foreach (SalaryThousands() as $k => $thousand)
                                         <option value="{{ $k + 1 }}"
@@ -137,7 +160,8 @@
                                 </select>
                             </div>
                             <div class="col-sm-2">
-                                <select class="form-select" name="employer_post_salary_range_to_lakhs" required>
+                                <select {{ isset($data) ? 'disabled' : '' }} class="form-select"
+                                    name="employer_post_salary_range_to_lakhs" required>
                                     <option value="">Select</option>
                                     @foreach (SalaryLakhs() as $k => $lakh)
                                         <option value="{{ $k + 1 }}"
@@ -147,7 +171,8 @@
                                 </select>
                             </div>
                             <div class="col-sm-3">
-                                <select class="form-select" name="employer_post_salary_range_to_thousands" required>
+                                <select class="form-select" name="employer_post_salary_range_to_thousands" required
+                                    {{ isset($data) ? 'disabled' : '' }}>
                                     <option value="">Select</option>
                                     @foreach (SalaryThousands() as $k => $thousand)
                                         <option value="{{ $k + 1 }}"
@@ -158,21 +183,43 @@
                             </div>
                         </div>
 
-
+                        @php
+                            $stateName = $cityName = '';
+                            if (isset($data)) {
+                                $stateInfo = App\Http\Controllers\Admin\Helper\CommonHelperController::getState($data[0]->employer_post_location_state);
+                                if (count($stateInfo)) {
+                                    $stateName = $stateInfo[0]->state_name;
+                                }
+                                $cityIdSplit = explode(',', $data[0]->employer_post_location_city);
+                                foreach ($cityIdSplit as $k => $cities) {
+                                    $cityInfo = App\Http\Controllers\Admin\Helper\CommonHelperController::getCity($cities);
+                                    if (count($cityInfo)) {
+                                        $cityName .= $cityInfo[0]->city_name.(count($cityIdSplit) != ($k+1) ? ',' : '');
+                                    }
+                                }
+                            }
+                        @endphp
                         <div class="form-group row  mb-4">
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Employment
-                                Locations<span class="text-danger">*</span></label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control form-control" name="employer_post_locations"
-                                    placeholder="Employment Location" required
-                                    value="{{ isset($data) ? $data[0]->employer_post_locations : old('employer_post_locations') }}">
+                                Location<span class="text-danger">*</span></label>
+                            <div class="col-sm-5">
+                                <input {{ isset($data) ? 'disabled' : '' }} type="text"
+                                    class="form-control form-control" name="employer_post_location_state"
+                                    placeholder="Employment State" required value="{{ $stateName }}">
+                            </div>
+                            <div class="col-sm-5">
+                                <input {{ isset($data) ? 'disabled' : '' }} type="text"
+                                    class="form-control form-control" name="employer_post_location_city"
+                                    placeholder="Employment City" required value="{{ $cityName }}">
                             </div>
                         </div>
 
                         <div class="form-group row  mb-4">
-                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Employment Walk-in Details</label>
+                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Employment
+                                Walk-in Details</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control form-control" name="employer_post_walkin_details"
+                                <input {{ isset($data) ? 'disabled' : '' }} type="text"
+                                    class="form-control form-control" name="employer_post_walkin_details"
                                     placeholder="Walk-in Details"
                                     value="{{ isset($data) ? $data[0]->employer_post_walkin_details : old('employer_post_walkin_details') }}">
                             </div>
@@ -182,11 +229,28 @@
                             <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Save Status<span
                                     class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <select class="form-select" name="employer_post_save_status" required>
+                                <select {{ isset($data) ? 'disabled' : '' }} class="form-select" name="employer_post_save_status" required>
                                     <option value="">Select Status</option>
                                     @foreach (SaveStatus() as $k => $saveStatus)
                                         <option value="{{ $k + 1 }}"
                                             {{ isset($data) && $data[0]->employer_post_save_status == $k + 1 ? 'selected' : '' }}>
+                                            {{ $saveStatus }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Approval
+                                Status<span class="text-danger">*</span></label>
+                            <div class="col-sm-10">
+                                <select
+                                    {{ isset($data) && $data[0]->employer_post_approval_status != '' ? 'disabled' : '' }}
+                                    class="form-select" name="employer_post_approval_status" required>
+                                    <option value="">Select Status</option>
+                                    @foreach (approvaltype() as $k => $saveStatus)
+                                        <option value="{{ $k + 1 }}"
+                                            {{ isset($data) && $data[0]->employer_post_approval_status == $k + 1 ? 'selected' : '' }}>
                                             {{ $saveStatus }}</option>
                                     @endforeach
                                 </select>

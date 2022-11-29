@@ -36,27 +36,35 @@ class EmployerPost extends Controller
     public function SaveEmployerPostDetails(Request $request)
     {
         $formData =  $request->except(['_token', 'employer_post_id','save_status']);
-        $keySkil = explode(',',$formData['employer_post_key_skils']);
-        if(count($keySkil) <=4){
-            return back()->withInput()->with('error', "Please add minimum 5 skils to create a job post");
-        }
+        // $keySkil = explode(',',$formData['employer_post_key_skils']);
+        // if(count($keySkil) <=4){
+        //     return back()->withInput()->with('error', "Please add minimum 5 skils to create a job post");
+        // }
 
-        if ($formData['employer_post_salary_range_from_lakhs'] >  $formData['employer_post_salary_range_to_lakhs']) {
-            return back()->withInput()->with('error', "Invalid Salary Range");
-        }
+        // if ($formData['employer_post_salary_range_from_lakhs'] >  $formData['employer_post_salary_range_to_lakhs']) {
+        //     return back()->withInput()->with('error', "Invalid Salary Range");
+        // }
 
-        if ($formData['employer_post_salary_range_from_lakhs'] ==  $formData['employer_post_salary_range_to_lakhs'] &&
-        ($formData['employer_post_salary_range_from_thousands'] >  $formData['employer_post_salary_range_to_thousands'])) {
-            return back()->withInput()->with('error', "Invalid Salary Range");
-        }
+        // if ($formData['employer_post_salary_range_from_lakhs'] ==  $formData['employer_post_salary_range_to_lakhs'] &&
+        // ($formData['employer_post_salary_range_from_thousands'] >  $formData['employer_post_salary_range_to_thousands'])) {
+        //     return back()->withInput()->with('error', "Invalid Salary Range");
+        // }
 
         if ($request->input('employer_post_id') == '') {
             $formData['employer_post_createdby'] = $request->session()->get('admin_id');
             $saveData = insertQuery('employer_post', $formData);
         } else {
-            $formData['employer_post_updatedby'] = $request->session()->get('admin_id');
             $actionId = decryption($request->input('employer_post_id'));
-            $saveData = updateQuery('employer_post', 'employer_post_id', $actionId, $formData);
+            $data = CommonHelperController::getEmployersPost($actionId);
+            $updateData = json_decode(json_encode($data),true);
+
+
+            $updateData[0]['employer_post_approval_status'] = $request->input('employer_post_approval_status');
+            $updateData[0]['status'] = $request->input('status');
+            $updateData[0]['employer_post_approvedby'] = $request->session()->get('admin_id');
+            $updateData[0]['employer_post_updatedby'] = $request->session()->get('admin_id');
+            // Stop($updateData[0]);
+            $saveData = updateQuery('employer_post', 'employer_post_id', $actionId, $updateData[0]);
         }
         $notify = notification($saveData);
         return redirect()->route('viewemployerspost')->with($notify['type'], $notify['msg']);

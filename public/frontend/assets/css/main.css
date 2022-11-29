@@ -2618,7 +2618,7 @@ span.switch-handle {
 .resume-upload p {
     color: #676767;
     font-size: 13px;
-    padding-left: 20px;
+    padding-left: 0px;
     margin-bottom: 20px;
 }
 
@@ -2673,6 +2673,11 @@ span.switch-handle {
     border-radius: 4px;
 }
 
+.resume-upload.resume-headline form .inline_text {
+    font-size: 13px;
+    color: #676767;
+}
+
 .resume-upload.resume-headline form textarea::placeholder,
 .resume-upload.resume-headline form input::placeholder {
     font-size: 13px;
@@ -2721,10 +2726,22 @@ span.switch-handle {
     margin-top: 10px;
 }
 
+.resume-upload.resume-headline.basic-details form h4{
+    color: #000;
+    font-size: 16px;
+    text-align: left;
+    margin-top: 15px;
+}
+
+.resume-upload.resume-headline.basic-details .basic-details-content{
+    margin-top: 6px;
+}
+
 .resume-upload.resume-headline.keyskills ul {
-    display: flex;
+    display: inline-flex;
     padding-inline-start: 0px;
     margin-top: 10px;
+    flex-wrap: wrap;
 }
 
 .resume-upload.resume-headline.keyskills ul li {
@@ -2734,13 +2751,15 @@ span.switch-handle {
     border-radius: 4px;
     margin-right: 10px;
     padding: 6px 10px;
-    font-size: 14px;
+    font-size: 13px;
+    margin-bottom: 10px;
 }
 
 .resume-upload.resume-headline.employement h5 {
     margin-top: 20px;
-    font-size: 18px;
-    margin-left: 20px;
+    font-size: 14px;
+    margin-left: 0px;
+    color: #676767;
 }
 
 .resume-upload.resume-headline.employement h5 span {
@@ -2749,11 +2768,11 @@ span.switch-handle {
 }
 
 .resume-upload.resume-headline.employement p {
-    color: #000;
+    color: #676767;
 }
 
 .resume-upload.resume-headline.employement p span {
-    color: #000;
+    color: #676767;
     font-size: 15px;
 }
 
@@ -2854,18 +2873,18 @@ span.switch-handle {
 }
 
 .resume-upload.resume-headline.employement .education-list h5 {
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 0px;
     margin-top: 10px;
 }
 
 .resume-upload.resume-headline.employement.personal-details ul {
     display: flex;
-    padding-inline-start: 21px;
+    padding-inline-start: 0px;
 }
 
 .resume-upload.resume-headline.employement.personal-details .education-list {
-    padding-top: 30px;
+    padding-top: 16px;
 }
 
 .resume-upload.resume-headline.employement.personal-details ul li {
@@ -2890,7 +2909,7 @@ span.switch-handle {
 }
 
 .resume-upload.resume-headline.employement.personal-details .education-list table {
-    margin-left: 20px;
+    margin-left: 0px;
     width: 70%;
 }
 

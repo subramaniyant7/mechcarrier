@@ -29,6 +29,11 @@ function statustype()
     return array('Active', 'De-Active');
 }
 
+function approvaltype()
+{
+    return array('Approved', 'Not Approved');
+}
+
 
 function verifiedStatus()
 {
@@ -163,6 +168,7 @@ function getUserSidebar()
     return [
         ['name' => 'Attach Resume', 'key' => 'resume'],
         ['name' => 'Resume Headline', 'key' => 'headline'],
+        ['name' => 'Basic Details', 'key' => 'basic_details'],
         ['name' => 'Key Skill', 'key' => 'userKeySkils'],
         ['name' => 'Profile Summary', 'key' => 'profilesummary'],
         ['name' => 'Employment', 'key' => 'userEmployments'],
@@ -192,7 +198,7 @@ function Year()
 function restrictedMonths()
 {
     $month = [];
-    for ($t = 1; $t <= date('m'); $t++) {
+    for ($t = 0; $t <= date('m'); $t++) {
         array_push($month, $t);
     }
     return $month;
@@ -202,7 +208,16 @@ function restrictedMonths()
 function Months()
 {
     $month = [];
-    for ($t = 1; $t <= 12; $t++) {
+    for ($t = 0; $t <= 12; $t++) {
+        array_push($month, $t);
+    }
+    return $month;
+}
+
+function ExperienceMonths()
+{
+    $month = [];
+    for ($t = 0; $t <= 12; $t++) {
         array_push($month, $t);
     }
     return $month;
@@ -210,7 +225,7 @@ function Months()
 
 function noticePeriod()
 {
-    return ['Immediate', '15 Days', '1 Month', '2 Months', '3 Months', 'More than 3 Months'];
+    return ['Serving Notice Period','Immediate', '15 Days', '1 Month', '2 Months', '3 Months', 'More than 3 Months'];
 }
 
 function MonthName()
@@ -284,7 +299,7 @@ function languageStrength()
 
 function SalaryLakhs(){
     $data = [];
-    for ($t = 1; $t <= 20; $t++) {
+    for ($t = 0; $t <= 20; $t++) {
         array_push($data, $t);
     }
     return $data;

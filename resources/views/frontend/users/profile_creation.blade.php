@@ -114,13 +114,13 @@
                                     @endif
                                 </li>
                                 @if ($userInfo['userDetails'][0]->user_city != '')
-                                @php
-                                    $cityName = '';
-                                    $getCity = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userDetails'][0]->user_city);
-                                    if(count($getCity)){
-                                        $cityName = $getCity[0]->city_name;
-                                    }
-                                @endphp
+                                    @php
+                                        $cityName = '';
+                                        $getCity = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userDetails'][0]->user_city);
+                                        if (count($getCity)) {
+                                            $cityName = $getCity[0]->city_name;
+                                        }
+                                    @endphp
                                     <li class="location"><img
                                             src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/location.svg') }}" />
                                         {{ $cityName }}
@@ -150,6 +150,59 @@
                             </ul>
                         </div>
                     </div>
+                    @php
+                        $percentage = 0;
+                        $verifiedPercentange = [];
+                        if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_resume != '') {
+                            $percentage += 20;
+                            array_push($verifiedPercentange, 'resume');
+                        }
+                        if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_resume_headline != '') {
+                            $percentage += 10;
+                            array_push($verifiedPercentange, 'resume_headline');
+                        }
+                        if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_salary_month != '' && $userInfo['userProfile'][0]->user_current_salary_year != '' && $userInfo['userProfile'][0]->user_total_experience_year != '' && $userInfo['userProfile'][0]->user_total_experience_month != '') {
+                            $percentage += 10;
+                            array_push($verifiedPercentange, 'basic_profile');
+                        }
+                        if (count($userInfo['userKeySkils'])) {
+                            $percentage += 15;
+                        }
+                        if ($userInfo['userDetails'][0]->user_phonenumber_verified == 1) {
+                            $percentage += 15;
+                            array_push($verifiedPercentange, 'phonenumber');
+                        }
+                        if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_profile_summary != '') {
+                            $percentage += 5;
+                            array_push($verifiedPercentange, 'profile_summary');
+                        }
+                        if (count($userInfo['userEmployments'])) {
+                            $percentage += 5;
+                            array_push($verifiedPercentange, 'employments');
+                        }
+                        if (count($userInfo['userEducations'])) {
+                            $percentage += 5;
+                            array_push($verifiedPercentange, 'educations');
+                        }
+                        // if (count($userInfo['userDetails']) && $userInfo['userDetails'][0]->user_city != '') {
+                        if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_city != '' && $userInfo['userProfile'][0]->user_current_state != '' && $userInfo['userProfile'][0]->user_preferred_city != '' && $userInfo['userProfile'][0]->user_preferred_state != '') {
+                            $percentage += 5;
+                            array_push($verifiedPercentange, 'location');
+                        }
+                        if (count($userInfo['userITSkils'])) {
+                            $percentage += 2;
+                            array_push($verifiedPercentange, 'itskil');
+                        }
+                        if (count($userInfo['userCertification'])) {
+                            $percentage += 2;
+                            array_push($verifiedPercentange, 'cerification');
+                        }
+                        if (count($userInfo['userLanguages']) && $userInfo['userDetails'][0]->user_gender != '' && $userInfo['userDetails'][0]->user_marital_status != '' && $userInfo['userDetails'][0]->user_dob != '' && $userInfo['userDetails'][0]->user_permanent_address != '' && $userInfo['userDetails'][0]->user_permanent_address_pin != '') {
+                            $percentage += 6;
+                            array_push($verifiedPercentange, 'personal_details');
+                        }
+                        //  Stop($verifiedPercentange);
+                    @endphp
                     <div class="col-md-6">
                         <div class="user-progress-bar">
                             <div class="user-progress">
@@ -161,7 +214,8 @@
                                         <div class="mask half">
                                             <div class="fill"></div>
                                         </div>
-                                        <div class="inside-circle"> 30% </div>
+
+                                        <div class="inside-circle"> {{ $percentage }}% </div>
                                     </div>
                                 </div>
                                 <p>Profile Completed</p>
@@ -217,61 +271,65 @@
                                 <ul>
                                     @foreach (getUserSidebar() as $k => $sidebar)
                                         <li>
-                                            <a href="#{{$sidebar['key']}}">
-                                            <img
-                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/sidebar' . ($k + 1) . '.svg') }}" />
-                                            {{ $sidebar['name'] }}
-                                            <span>
-                                                @php
-                                                    $verify = 'close';
-                                                    if ($sidebar['key'] == 'resume' && count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_resume != '') {
-                                                        $verify = 'check';
-                                                    }
-
-                                                    if ($sidebar['key'] == 'headline' && count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_resume_headline != '') {
-                                                        $verify = 'check';
-                                                    }
-
-                                                    if ($sidebar['key'] == 'userKeySkils' && count($userInfo['userKeySkils'])) {
-                                                        $verify = 'check';
-                                                    }
-
-                                                    if ($sidebar['key'] == 'userEmployments' && count($userInfo['userEmployments'])) {
-                                                        $verify = 'check';
-                                                    }
-
-                                                    if ($sidebar['key'] == 'userEducations' && count($userInfo['userEducations'])) {
-                                                        $verify = 'check';
-                                                    }
-
-                                                    if ($sidebar['key'] == 'profilesummary' && count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_profile_summary != '') {
-                                                        $verify = 'check';
-                                                    }
-
-                                                    if ($sidebar['key'] == 'currentlocation' && count($userInfo['userDetails']) && $userInfo['userDetails'][0]->user_city != '') {
-                                                        $verify = 'check';
-                                                    }
-
-                                                    if ($sidebar['key'] == 'totalexperience' && count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_total_experience_year != '') {
-                                                        $verify = 'check';
-                                                    }
-
-                                                    if ($sidebar['key'] == 'userITSkils' && count($userInfo['userITSkils'])) {
-                                                        $verify = 'check';
-                                                    }
-
-                                                    if ($sidebar['key'] == 'userCertifications' && count($userInfo['userCertification'])) {
-                                                        $verify = 'check';
-                                                    }
-
-                                                    if ($sidebar['key'] == 'personadetail' && (count($userInfo['userLanguages']) && $userInfo['userDetails'][0]->user_gender != '' && $userInfo['userDetails'][0]->user_marital_status != '' && $userInfo['userDetails'][0]->user_dob != '' && $userInfo['userDetails'][0]->user_permanent_address != '' && $userInfo['userDetails'][0]->user_permanent_address_pin != '')) {
-                                                        $verify = 'check';
-                                                    }
-
-                                                @endphp
+                                            <a href="#{{ $sidebar['key'] }}">
                                                 <img
-                                                    src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/' . $verify . '.svg') }}" />
-                                            </span>
+                                                    src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/sidebar' . ($k + 1) . '.svg') }}" />
+                                                {{ $sidebar['name'] }}
+                                                <span>
+                                                    @php
+                                                        $verify = 'close';
+                                                        if ($sidebar['key'] == 'resume' && in_array('resume', $verifiedPercentange)) {
+                                                            $verify = 'check';
+                                                        }
+
+                                                        if ($sidebar['key'] == 'headline' && in_array('resume', $verifiedPercentange)) {
+                                                            $verify = 'check';
+                                                        }
+
+                                                        if ($sidebar['key'] == 'basic_details' && in_array('basic_profile', $verifiedPercentange)) {
+                                                            $verify = 'check';
+                                                        }
+
+                                                        if ($sidebar['key'] == 'userKeySkils' && count($userInfo['userKeySkils'])) {
+                                                            $verify = 'check';
+                                                        }
+
+                                                        if ($sidebar['key'] == 'userEmployments' && count($userInfo['userEmployments'])) {
+                                                            $verify = 'check';
+                                                        }
+
+                                                        if ($sidebar['key'] == 'userEducations' && count($userInfo['userEducations'])) {
+                                                            $verify = 'check';
+                                                        }
+
+                                                        if ($sidebar['key'] == 'profilesummary' && in_array('profile_summary', $verifiedPercentange)) {
+                                                            $verify = 'check';
+                                                        }
+
+                                                        if ($sidebar['key'] == 'currentlocation' && count($userInfo['userDetails']) && $userInfo['userDetails'][0]->user_city != '') {
+                                                            $verify = 'check';
+                                                        }
+
+                                                        // if ($sidebar['key'] == 'totalexperience' && count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_total_experience_year != '') {
+                                                        //     $verify = 'check';
+                                                        // }
+
+                                                        if ($sidebar['key'] == 'userITSkils' && count($userInfo['userITSkils'])) {
+                                                            $verify = 'check';
+                                                        }
+
+                                                        if ($sidebar['key'] == 'userCertifications' && count($userInfo['userCertification'])) {
+                                                            $verify = 'check';
+                                                        }
+
+                                                        if ($sidebar['key'] == 'personadetail' && in_array('personal_details', $verifiedPercentange)) {
+                                                            $verify = 'check';
+                                                        }
+
+                                                    @endphp
+                                                    <img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/' . $verify . '.svg') }}" />
+                                                </span>
                                             </a>
                                         </li>
                                     @endforeach
@@ -320,7 +378,7 @@
                                 @endphp
                                 <div class="resume-upload resume-headline" id="headline">
                                     <div class="d-flex">
-                                        <h4>Profile Headline </h4>
+                                        <h4>Resume Headline </h4>
                                         <span class="edit_headline">
                                             <img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
@@ -338,6 +396,28 @@
                                             <button type="submit" class="btn btn-save">Save</button>
                                         </div>
                                     </form>
+
+                                </div>
+
+                                <div class="resume-upload resume-headline basic-details" id="basic_details">
+                                    <div class="d-flex">
+                                        <h4>Basic Details </h4>
+                                        <span class="edit_basic_details" style="cursor: pointer"
+                                            data-id={{ in_array('basic_profile', $verifiedPercentange) ? encryption($userInfo['userProfile'][0]->user_profile_id) : '' }}>
+                                            <img
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
+                                            {{ in_array('basic_profile', $verifiedPercentange) ? 'Edit' : 'Add' }}</span>
+                                    </div>
+                                    <div class="basic-details-content">
+                                        <h5>
+                                            <p><span>Total Experience :
+                                                    {{ count($userInfo['userProfile']) ? SalaryLakhs()[$userInfo['userProfile'][0]->user_total_experience_year - 1] . ($userInfo['userProfile'][0]->user_total_experience_year - 1 > 1 ? ' Years ' : ' Year ') . ExperienceMonths()[$userInfo['userProfile'][0]->user_total_experience_month - 1] . ($userInfo['userProfile'][0]->user_total_experience_month - 1 > 1 ? ' Months' : ' Month') : '-' }}</span>
+                                            <p><span>Current Annual Salary :
+                                                    {{ count($userInfo['userProfile']) ? SalaryLakhs()[$userInfo['userProfile'][0]->user_current_salary_year - 1] . ' Lakh ' . ($userInfo['userProfile'][0]->user_current_salary_year - 1 > 1 ? 's ' : '') . SalaryThousands()[$userInfo['userProfile'][0]->user_current_salary_month - 1] . ($userInfo['userProfile'][0]->user_current_salary_month - 1 > 1 ? ' Thousands ' : ' Thousand ') : '-' }}</span>
+                                        </h5>
+                                    </div>
+
+                                    <div class="basic-details-action"></div>
 
                                 </div>
 
@@ -517,10 +597,49 @@
                                     <div class="action_education"></div>
                                 </div>
 
-                                <div class="resume-upload resume-headline current-location" id="currentlocation">
+                                {{-- <div class="resume-upload resume-headline current-location" id="currentlocation">
                                     <form class="current-location" action="#" id="current-location">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
+                                                @php
+                                                    $currentCountry = $currentCity = $preferredCountry = $preferredCity = '';
+                                                    if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_city != '') {
+                                                        $countryInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCountryInfo($userInfo['userProfile'][0]->user_current_city);
+                                                        if (count($countryInfo)) {
+                                                            $currentCountry = $countryInfo[0]->country_name;
+                                                        }
+                                                    }
+
+                                                    if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_state != '') {
+                                                        $cityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userProfile'][0]->user_current_state);
+                                                        if (count($cityInfo)) {
+                                                            $currentCity = $cityInfo[0]->city_name;
+                                                        }
+                                                    }
+
+                                                    if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_city != '') {
+                                                        $preferredCountryInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCountryInfo($userInfo['userProfile'][0]->user_preferred_city);
+                                                        if (count($preferredCountryInfo)) {
+                                                            $preferredCountry = $preferredCountryInfo[0]->country_name;
+                                                        }
+                                                    }
+                                                @endphp
+                                                <h4>Current Location </h4>
+                                                <span class="create_itskill pointer"><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
+                                                    Add</span>
+                                                <div style="position:relative" class="autocomplete_ui_parent">
+                                                    <input type="text" placeholder="Select Current Country"
+                                                        name="user_current_city"
+                                                        class="form-control autocomplete_actual_id user_city" required
+                                                        value="{{ $currentCountry }}" />
+                                                    <input type="hidden" name="current_city" class="autocomplete_id"
+                                                        value="{{ count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_current_city : '' }}">
+                                                    <div class="autocomplete-items" style="display:none">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
                                                 @php
                                                     $currentLocation = '';
                                                     if (count($userInfo['userDetails']) && $userInfo['userDetails'][0]->user_city != '') {
@@ -542,34 +661,52 @@
                                                         }
                                                     }
                                                 @endphp
-                                                <h4>Current Location </h4>
-                                                <div style="position:relative" class="autocomplete_ui_parent">
-                                                    <input type="text" placeholder="Select Current Location"
-                                                        name="user_city"
-                                                        class="form-control autocomplete_actual_id user_city" required
-                                                        value="{{ $currentLocation }}" />
+
+                                                <div style="position:relative;margin-top:46px"
+                                                    class="autocomplete_ui_parent">
+                                                    <input type="text" placeholder="Select Current City"
+                                                        name="user_current_state"
+                                                        class="form-control autocomplete_actual_id user_current_state"
+                                                        required value="{{ $currentLocation }}" />
                                                     <input type="hidden" name="current_city" class="autocomplete_id"
-                                                        value="{{ count($userInfo['userDetails']) ? $userInfo['userDetails'][0]->user_city : '' }}">
+                                                        value="{{ count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_current_state : '' }}">
                                                     <div class="autocomplete-items" style="display:none">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <h4>Preferred Job Location </h4>
+                                            <div class="col-md-5">
+                                                <h4>Preferred Job Location (Max 3) </h4>
                                                 <div style="position:relative" class="autocomplete_ui_parent">
                                                     <input type="text" placeholder="Select Preferred Location"
                                                         name="user_preferred_location"
                                                         class="form-control autocomplete_actual_id user_preferred_location"
                                                         required value="{{ $preferredLocation }}" />
-                                                    <input type="hidden" name="preferred_city" class="autocomplete_id"
-                                                        value="{{ count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_preferred_location : '' }}">
+                                                    <input type="hidden" name="user_preferred_city"
+                                                        class="autocomplete_id"
+                                                        value="{{ count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_preferred_city : '' }}">
                                                     <div class="autocomplete-items" style="display:none">
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="col-md-5">
+                                                <div style="position:relative;margin-top:46px"
+                                                    class="autocomplete_ui_parent">
+                                                    <input type="text" placeholder="Select Current City"
+                                                        name="user_preferred_state"
+                                                        class="form-control autocomplete_actual_id user_preferred_state"
+                                                        required value="{{ $currentLocation }}" />
+                                                    <input type="hidden" name="current_city" class="autocomplete_id"
+                                                        value="{{ count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_preferred_state : '' }}">
+                                                    <div class="autocomplete-items" style="display:none">
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
+                                        <div>Add more</div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-buttons">
@@ -579,6 +716,84 @@
                                             </div>
                                         </div>
                                     </form>
+                                </div> --}}
+
+                                @php
+                                    $cLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_city != '' && $userInfo['userProfile'][0]->user_current_state != '';
+                                    $pLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_city != '' && $userInfo['userProfile'][0]->user_preferred_state != '';
+                                @endphp
+                                <div class="resume-upload resume-headline employement" id="location">
+                                    <div class="d-flex">
+                                        <h4>Current Location </h4>
+                                        <span class="action_location pointer"
+                                            data-id={{ $cLocationValid ? encryption($userInfo['userProfile'][0]->user_profile_id) : '' }}><img
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
+                                            {{ $cLocationValid ? 'Edit' : 'Add' }}</span>
+                                    </div>
+                                    @if ($cLocationValid)
+                                        @php
+                                            $currentCountry = $currentCity = '';
+                                            $stateInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getStateById($userInfo['userProfile'][0]->user_current_state);
+                                            if (count($stateInfo)) {
+                                                $currentCountry = $stateInfo[0]->state_name;
+                                            }
+
+                                            $cityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userProfile'][0]->user_current_city);
+                                            if (count($cityInfo)) {
+                                                $currentCity = $cityInfo[0]->city_name;
+                                            }
+                                        @endphp
+                                        <div class="current-location">
+                                            <div>
+                                                <h5>{{ $currentCountry }} - {{ $currentCity }} </h5>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    <div class="action_currentlocation"></div>
+
+
+
+                                    <div style="margin-top:30px;">
+                                        <div class="d-flex">
+                                            <h4>Preferred Location </h4>
+                                            <span class="action_preferred_location pointer"
+                                                data-id={{ $pLocationValid ? encryption($userInfo['userProfile'][0]->user_profile_id) : '' }}><img
+                                                    src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
+                                                {{ $pLocationValid ? 'Edit' : 'Add' }}</span>
+                                        </div>
+                                        <div class="displaypreferred-current-location">
+                                            <div style="display: flex;">
+                                                @if ($pLocationValid)
+                                                    @php
+                                                        $preferredStateSplit = explode(',', $userInfo['userProfile'][0]->user_preferred_state);
+                                                        $preferredCitySplit = explode(',', $userInfo['userProfile'][0]->user_preferred_city);
+                                                        // Stop($userInfo['userProfile'][0]->user_preferred_state);
+                                                    @endphp
+                                                    @foreach ($preferredStateSplit as $k => $preferredState)
+                                                        @php
+                                                            $preferredStateName = $preferredCityName = '';
+                                                            $stateInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getStateById($preferredState);
+                                                            if (count($stateInfo)) {
+                                                                $preferredStateName = $stateInfo[0]->state_name;
+                                                            }
+                                                            $cityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($preferredCitySplit[$k]);
+                                                            if (count($cityInfo)) {
+                                                                $preferredCityName = $cityInfo[0]->city_name;
+                                                            }
+                                                        @endphp
+                                                        <h5 style="padding-right: 1em;">{{ $preferredStateName }} -
+                                                            {{ $preferredCityName }}
+                                                        </h5>
+                                                    @endforeach
+
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="preferred-current-location"></div>
+
+                                    </div>
                                 </div>
 
                                 <div class="resume-upload resume-headline employement" id="userITSkils">
@@ -604,7 +819,8 @@
                                                     </h5>
                                                 </div>
                                                 <div class="edit_itskill_content"
-                                                    id="itskill_{{ $itskil->user_itskil_id }}"></div>
+                                                    id="itskill_{{ $itskil->user_itskil_id }}">
+                                                </div>
                                             @endforeach
                                         @endif
                                     </div>
@@ -644,7 +860,8 @@
                                     <div class="action_certification"></div>
                                 </div>
 
-                                <div class="resume-upload resume-headline employement personal-details" id="personadetail">
+                                <div class="resume-upload resume-headline employement personal-details"
+                                    id="personadetail">
                                     <div class="d-flex">
                                         <h4>Personal Details </h4>
                                         <span class="action_personaldetails pointer">
