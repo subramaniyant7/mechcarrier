@@ -61,7 +61,7 @@
                 </div>
             </div>
         @endif
-        @if ($l == 1)<div class="addnewelement"> @endif
+        @if ($l == 1 || $total == 1)<div class="addnewelement"> @endif
             @if ($l > 0)
                 <div class="preferred_main">
                     <div class="row">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
             @endif
-        @if ($l+1 == $total)  </div> @endif
+        @if ($l+1 == $total || $total == 1)  </div> @endif
     @endfor
 
     <div class="add_more"
