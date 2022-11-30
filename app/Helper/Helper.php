@@ -173,7 +173,7 @@ function getUserSidebar()
         ['name' => 'Profile Summary', 'key' => 'profilesummary'],
         ['name' => 'Employment', 'key' => 'userEmployments'],
         ['name' => 'Education', 'key' => 'userEducations'],
-        ['name' => 'Current Location', 'key' => 'currentlocation'],
+        ['name' => 'Location', 'key' => 'currentlocation'],
         // ['name' => 'Total Experience', 'key' => 'totalexperience'],
         ['name' => 'IT Skill', 'key' => 'userITSkils'],
         ['name' => 'Certifications', 'key' => 'userCertifications'],

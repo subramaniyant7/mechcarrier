@@ -306,7 +306,7 @@
                                                             $verify = 'check';
                                                         }
 
-                                                        if ($sidebar['key'] == 'currentlocation' && count($userInfo['userDetails']) && $userInfo['userDetails'][0]->user_city != '') {
+                                                        if ($sidebar['key'] == 'currentlocation' && in_array('location', $verifiedPercentange)) {
                                                             $verify = 'check';
                                                         }
 
