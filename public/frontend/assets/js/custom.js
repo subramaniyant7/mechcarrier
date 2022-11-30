@@ -1183,6 +1183,9 @@ $(document).on('keyup', '.user_preferred_state', function (e) {
                 if (data.status) {
                     let response = JSON.parse(data.data);
                     if (response.length) {
+                        if (preferredMain.attr('data-id') == 1) {
+                            html += "<div class='custom_state_click' data-id='All India'>All India<input type='hidden' value='0'></div>"
+                        }
                         response.forEach(res => {
                             html += "<div class='custom_state_click' data-id='" + res.state_name + "'>" + res.state_name + '<input type="hidden" value="' + res.state_id + '"></div>'
                         })
@@ -1220,7 +1223,16 @@ $(document).on('blur', '.user_preferred_state', function () {
 });
 
 $(document).on('click', '.custom_state_click', function () {
+    const preferredMain = $(this).parents('.preferred_main');
     const inputVal = $(this).find('input').val();
+    if (inputVal == 0) {
+        preferredMain.find('.user_preferred_city').hide().removeAttr('required');
+        $('.add_more').hide();
+        $('.addnewelement').html('');
+    } else {
+        preferredMain.find('.user_preferred_city').show().attr('required', true);
+        $('.add_more').show();
+    }
     const currentParent = $(this).parents('.autocomplete_ui_parent');
     currentParent.find('.autocomplete_id').val(inputVal);
     currentParent.find('.autocomplete_actual_id').val($(this).attr('data-id')).removeAttr('required');

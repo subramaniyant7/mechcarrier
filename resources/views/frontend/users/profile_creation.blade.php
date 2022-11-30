@@ -597,130 +597,9 @@
                                     <div class="action_education"></div>
                                 </div>
 
-                                {{-- <div class="resume-upload resume-headline current-location" id="currentlocation">
-                                    <form class="current-location" action="#" id="current-location">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                @php
-                                                    $currentCountry = $currentCity = $preferredCountry = $preferredCity = '';
-                                                    if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_city != '') {
-                                                        $countryInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCountryInfo($userInfo['userProfile'][0]->user_current_city);
-                                                        if (count($countryInfo)) {
-                                                            $currentCountry = $countryInfo[0]->country_name;
-                                                        }
-                                                    }
-
-                                                    if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_state != '') {
-                                                        $cityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userProfile'][0]->user_current_state);
-                                                        if (count($cityInfo)) {
-                                                            $currentCity = $cityInfo[0]->city_name;
-                                                        }
-                                                    }
-
-                                                    if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_city != '') {
-                                                        $preferredCountryInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCountryInfo($userInfo['userProfile'][0]->user_preferred_city);
-                                                        if (count($preferredCountryInfo)) {
-                                                            $preferredCountry = $preferredCountryInfo[0]->country_name;
-                                                        }
-                                                    }
-                                                @endphp
-                                                <h4>Current Location </h4>
-                                                <span class="create_itskill pointer"><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
-                                                    Add</span>
-                                                <div style="position:relative" class="autocomplete_ui_parent">
-                                                    <input type="text" placeholder="Select Current Country"
-                                                        name="user_current_city"
-                                                        class="form-control autocomplete_actual_id user_city" required
-                                                        value="{{ $currentCountry }}" />
-                                                    <input type="hidden" name="current_city" class="autocomplete_id"
-                                                        value="{{ count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_current_city : '' }}">
-                                                    <div class="autocomplete-items" style="display:none">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5">
-                                                @php
-                                                    $currentLocation = '';
-                                                    if (count($userInfo['userDetails']) && $userInfo['userDetails'][0]->user_city != '') {
-                                                        $getCityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userDetails'][0]->user_city);
-                                                        if (count($getCityInfo)) {
-                                                            $currentLocation = $getCityInfo[0]->city_name;
-                                                        } else {
-                                                            $currentLocation = $userInfo['userDetails'][0]->user_city;
-                                                        }
-                                                    }
-
-                                                    $preferredLocation = '';
-                                                    if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_location != '') {
-                                                        $getPreferredInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userProfile'][0]->user_preferred_location);
-                                                        if (count($getPreferredInfo)) {
-                                                            $preferredLocation = $getPreferredInfo[0]->city_name;
-                                                        } else {
-                                                            $preferredLocation = $userInfo['userProfile'][0]->user_preferred_location;
-                                                        }
-                                                    }
-                                                @endphp
-
-                                                <div style="position:relative;margin-top:46px"
-                                                    class="autocomplete_ui_parent">
-                                                    <input type="text" placeholder="Select Current City"
-                                                        name="user_current_state"
-                                                        class="form-control autocomplete_actual_id user_current_state"
-                                                        required value="{{ $currentLocation }}" />
-                                                    <input type="hidden" name="current_city" class="autocomplete_id"
-                                                        value="{{ count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_current_state : '' }}">
-                                                    <div class="autocomplete-items" style="display:none">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <h4>Preferred Job Location (Max 3) </h4>
-                                                <div style="position:relative" class="autocomplete_ui_parent">
-                                                    <input type="text" placeholder="Select Preferred Location"
-                                                        name="user_preferred_location"
-                                                        class="form-control autocomplete_actual_id user_preferred_location"
-                                                        required value="{{ $preferredLocation }}" />
-                                                    <input type="hidden" name="user_preferred_city"
-                                                        class="autocomplete_id"
-                                                        value="{{ count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_preferred_city : '' }}">
-                                                    <div class="autocomplete-items" style="display:none">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-5">
-                                                <div style="position:relative;margin-top:46px"
-                                                    class="autocomplete_ui_parent">
-                                                    <input type="text" placeholder="Select Current City"
-                                                        name="user_preferred_state"
-                                                        class="form-control autocomplete_actual_id user_preferred_state"
-                                                        required value="{{ $currentLocation }}" />
-                                                    <input type="hidden" name="current_city" class="autocomplete_id"
-                                                        value="{{ count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_preferred_state : '' }}">
-                                                    <div class="autocomplete-items" style="display:none">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div>Add more</div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-buttons">
-                                                    <button type="button" class="btn btn-cancel">Cancel</button>
-                                                    <button type="submit" class="btn btn-save">Save</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> --}}
-
                                 @php
                                     $cLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_city != '' && $userInfo['userProfile'][0]->user_current_state != '';
-                                    $pLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_city != '' && $userInfo['userProfile'][0]->user_preferred_state != '';
+                                    $pLocationValid = (count($userInfo['userProfile']) && ($userInfo['userProfile'][0]->user_preferred_city != '' && $userInfo['userProfile'][0]->user_preferred_state != '')) || $userInfo['userProfile'][0]->user_preferred_state == 0;
                                 @endphp
                                 <div class="resume-upload resume-headline employement" id="location">
                                     <div class="d-flex">
@@ -768,22 +647,28 @@
                                                     @php
                                                         $preferredStateSplit = explode(',', $userInfo['userProfile'][0]->user_preferred_state);
                                                         $preferredCitySplit = explode(',', $userInfo['userProfile'][0]->user_preferred_city);
-                                                        // Stop($userInfo['userProfile'][0]->user_preferred_state);
                                                     @endphp
                                                     @foreach ($preferredStateSplit as $k => $preferredState)
                                                         @php
                                                             $preferredStateName = $preferredCityName = '';
-                                                            $stateInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getStateById($preferredState);
-                                                            if (count($stateInfo)) {
-                                                                $preferredStateName = $stateInfo[0]->state_name;
-                                                            }
-                                                            $cityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($preferredCitySplit[$k]);
-                                                            if (count($cityInfo)) {
-                                                                $preferredCityName = $cityInfo[0]->city_name;
+                                                            if ($userInfo['userProfile'][0]->user_preferred_state != 0) {
+                                                                $stateInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getStateById($preferredState);
+                                                                if (count($stateInfo)) {
+                                                                    $preferredStateName = $stateInfo[0]->state_name;
+                                                                }
+                                                                $cityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($preferredCitySplit[$k]);
+                                                                if (count($cityInfo)) {
+                                                                    $preferredCityName = $cityInfo[0]->city_name;
+                                                                }
+                                                            }else{
+                                                                $preferredStateName = 'All India';
                                                             }
                                                         @endphp
-                                                        <h5 style="padding-right: 1em;">{{ $preferredStateName }} -
-                                                            {{ $preferredCityName }}
+                                                        <h5 style="padding-right: 1em;">{{ $preferredStateName }}
+                                                            @if($preferredCityName != '')
+                                                                -
+                                                                {{ $preferredCityName }}
+                                                            @endif
                                                         </h5>
                                                     @endforeach
 

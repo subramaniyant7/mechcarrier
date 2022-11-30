@@ -639,15 +639,25 @@ class AjaxController extends Controller
             if(count($formData['preferred_state_id']) == count($formData['preferred_city_id'])){
                 $userData = ['user_preferred_state' => implode(',',$formData['preferred_state_id']), 'user_preferred_city' => implode(',',$formData['preferred_city_id'])];
                 $stateSplit = explode(',',$userData['user_preferred_state']);
-                foreach($stateSplit as $stateInfo){
-                    $stateData = HelperController::getStateById($stateInfo);
-                    if(!count($stateData)) return ['status' => false,'message' => 'Please Enter Valid State'];
+
+                if(count($formData['preferred_state_id']) !== count(array_unique($formData['preferred_state_id']))
+                 && count($formData['preferred_city_id']) !== count(array_unique($formData['preferred_city_id']))) {
+                    return ['status' => false,'message' => 'Please Enter Valid State/City'];
                 }
 
-                foreach(explode(',',$userData['user_preferred_city']) as $k => $cityInfo){
-                    $cityData = HelperController::getStateCityById($stateSplit[$k], $cityInfo);
-                    if(!count($cityData)){
-                        return ['status' => false,'message' => 'Please Enter Valid City'];
+                if(count($formData['preferred_state_id']) == 1 && $formData['preferred_state_id'][0] == 0){
+                    $userData = ['user_preferred_state' => 0];
+                }else{
+                    foreach($stateSplit as $stateInfo){
+                        $stateData = HelperController::getStateById($stateInfo);
+                        if(!count($stateData)) return ['status' => false,'message' => 'Please Enter Valid State'];
+                    }
+
+                    foreach(explode(',',$userData['user_preferred_city']) as $k => $cityInfo){
+                        $cityData = HelperController::getStateCityById($stateSplit[$k], $cityInfo);
+                        if(!count($cityData)){
+                            return ['status' => false,'message' => 'Please Enter Valid City'];
+                        }
                     }
                 }
 
