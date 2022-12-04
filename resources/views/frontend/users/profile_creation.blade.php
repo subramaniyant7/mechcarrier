@@ -356,7 +356,7 @@
                                     <div class="d-flex">
                                         <h4>Resume</h4>
                                         @if ($resumeAvailable)
-                                            <a href="javascript:void(0)"
+                                            <a href="javascript:void(0)" style="color:#676767;text-decoration:none !important;"
                                                 data-id="{{ encryption(session('frontend_userid')) }}"
                                                 class="delete_resume">Delete Resume </a>
                                         @endif
