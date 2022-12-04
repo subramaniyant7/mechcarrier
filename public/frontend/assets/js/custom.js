@@ -231,9 +231,7 @@ $('.resume_upload').on('change', function (e) {
             success: function (data) {
                 if (data.status) {
                     toastr.success(data.message)
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000)
+                    location.reload();
                 } else toastr.error(data.message);
             },
             error: function (data) {
@@ -260,9 +258,7 @@ $('.delete_resume').click(function () {
             success: function (data) {
                 if (data.status) {
                     toastr.success(data.message)
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000)
+                    location.reload();
                 } else toastr.error(data.message);
             },
             error: function (data) {
@@ -315,9 +311,7 @@ $('#update_resume_headline').submit(function (e) {
             success: function (data) {
                 if (data.status) {
                     toastr.success(data.message)
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000)
+                    location.reload();
 
                 } else toastr.error(data.message);
             },
@@ -486,9 +480,7 @@ $('#update_profile_summary').submit(function (e) {
             success: function (data) {
                 if (data.status) {
                     toastr.success(data.message)
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000)
+                    location.reload();
 
                 } else toastr.error(data.message);
             },
@@ -528,8 +520,8 @@ $('.create_employment').click(function () {
 });
 
 $('.edit_employment').click(function () {
-    let employment = $(this).children('img').attr('data-employment');
-    let dataId = $(this).children('img').attr('data-id');
+    let employment = $(this).attr('data-employment');
+    let dataId = $(this).attr('data-id');
     $('.loader').show();
     $.ajax({
         type: 'get',
@@ -576,9 +568,7 @@ $(document).on('submit', '#action_employment', function (e) {
         success: function (data) {
             if (data.status) {
                 toastr.success(data.message)
-                setTimeout(() => {
-                    location.reload();
-                }, 1000)
+                location.reload();
             } else toastr.error(data.message);
         },
         error: function (data) {
@@ -639,7 +629,6 @@ $(document).on('blur', '.user_employment_current_companyname', function () {
     const currentParent = $(this).parents('.autocomplete_ui_parent');
     setTimeout(() => {
         const idVal = currentParent.find('.autocomplete_id').val();
-        // if(idVal == '') { currentParent.find('.autocomplete_actual_id').val('').attr('required','required'); }
         currentParent.find('.autocomplete-items').hide().html('');
     }, 500);
 
@@ -1597,6 +1586,17 @@ $(document).on('click', '.cancel_itskill', function (e) {
 });
 
 // Certifications
+$(document).on('keyup', "input[name='user_certification_name']", function (e) {
+    let string = $(this).val();
+    if (string.length > 50) {
+        toastr.error('You cannot enter more than 50 characters');
+        return false;
+    } else {
+        let parentElement = $(this).parents('.parent');
+        parentElement.find('.text_limit').html(string.length + '/50')
+    }
+})
+
 $('.create_certification').click(function () {
     $.ajax({
         type: 'get',
@@ -1685,6 +1685,172 @@ $(document).on('click', '.cancel_certification', function (e) {
 });
 
 // Personal Details
+$(document).on('keyup', "textarea[name='user_permanent_address']", function (e) {
+    let string = $(this).val();
+    console.log('ppppp')
+    if (string.length > 100) {
+        toastr.error('You cannot enter more than 100 characters');
+        return false;
+    } else {
+        let parentElement = $(this).parents('.parent');
+        parentElement.find('.text_limit').html(string.length + '/100')
+    }
+})
+
+$(document).on('keyup', '.user_work_permit', function (e) {
+    let val = $(this).val();
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    $(this).attr('required', 'required');
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getcountry`,
+            data: {
+                name: val
+            },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='custom_country_click' data-id='" + res.country_name + "'>" + res.country_name + '<input type="hidden" value="' + res.country_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff'
+                        }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
+                    }
+                    // currentParent.find('.autocomplete_id').val('');
+                } else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+    }
+});
+
+$(document).on('click', '.custom_country_click', function (e) {
+    const inputVal = $(this).find('input').val();
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    currentParent.find('.autocomplete_actual_id').removeAttr('required').val('');
+    currentParent.find('.autocomplete-items').hide().html('');
+
+    let countryText = $('.country_text').val();
+    let newCountryText = $(this).attr('data-id');
+
+    let countryId = currentParent.find('.autocomplete_id').val();
+    let newCountryId = inputVal;
+
+    if (countryText != '') {
+        countryText = `${countryText},${newCountryText}`;
+    } else {
+        countryText = newCountryText;
+    }
+
+    if (countryId != '') {
+        let validateCountry = countryId.split(',');
+        if (validateCountry.length == 5) {
+            toastr.error('Reached maximum country limit');
+            return false;
+        }
+        if (validateCountry.includes(newCountryId)) {
+            toastr.error('Country Already added')
+            return false
+        }
+        countryId = `${countryId},${newCountryId}`;
+    } else {
+        countryId = newCountryId;
+    }
+
+    let imagePath = `${siteurl}frontend/assets/images/profilecreation/cancel.svg`
+    let newTextSplit = countryText.split(',');
+    let newCityIdSplit = countryId.split(',');
+    let selectedItems = '<ul class="selected_items">';
+    newTextSplit.forEach((element, index) => {
+        selectedItems += '<li>';
+        selectedItems += `${element}`;
+        selectedItems += '<img class="pointer clear_country" style="cursor:pointer" data-index="' + index + '" data-id="' + newCityIdSplit[index] + '" src="' + imagePath + '" >';
+        selectedItems += '</li>'
+    });
+
+    currentParent.find('.autocomplete_id').val(countryId);
+    if (newCityIdSplit.length == 5) $('.user_work_permit').attr({
+        readonly: true,
+        required: false
+    });
+    selectedItems += '</ul>';
+    $('.selected_country').html(selectedItems);
+    $('.country_text').val(countryText);
+
+    $('.user_work_permit').val('')
+});
+
+$(document).on('click', '.clear_country', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    const countryIdRemove = $(this).attr('data-id');
+    const countryIdRemoveIndex = $(this).attr('data-index');
+    const getCountryText = $('.country_text').val();
+    currentParent.find('.autocomplete_actual_id').attr({
+        readonly: false,
+        required: false
+    })
+    const selectedCountryId = currentParent.find('.autocomplete_id').val();
+    if (selectedCountryId != '') {
+        let splitSelectedCountryId = selectedCountryId.split(',');
+
+        const index = splitSelectedCountryId.indexOf(countryIdRemove);
+        if (index > -1) {
+            splitSelectedCountryId.splice(index, 1);
+        }
+
+        let selectedCityText = getCountryText.split(',');
+        const textIndex = selectedCityText.indexOf(selectedCityText[countryIdRemoveIndex]);
+        if (textIndex > -1) {
+            selectedCityText.splice(index, 1);
+        }
+        let selectedItems = '<ul class="selected_items">';
+        let imagePath = `${siteurl}frontend/assets/images/profilecreation/cancel.svg`
+        selectedCityText.forEach((element, index) => {
+            selectedItems += '<li>';
+            selectedItems += `${element}`;
+            selectedItems += '<img class="pointer clear_country" style="cursor:pointer" data-index="' + index + '" data-id="' + splitSelectedCountryId[index] + '" src="' + imagePath + '" >';
+            selectedItems += '</li>'
+        });
+        selectedItems += '</ul>';
+        if (splitSelectedCountryId.length < 3) {
+            currentParent.find('.autocomplete_actual_id').attr('disabled', false);
+        }
+        $('.selected_country').html(selectedItems);
+        currentParent.find('.autocomplete_id').val(splitSelectedCountryId.toString())
+        $('.country_text').val(selectedCityText.toString());
+    } else {
+        toastr.error('Something went wrong. Please try again');
+    }
+
+    console.log($(this).attr('data-id'));
+});
+
+$(document).on('blur', '.user_work_permit', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    setTimeout(() => {
+        currentParent.find('.autocomplete_actual_id').val('');
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+});
+
+
 $('.action_personaldetails').click(function () {
     $('.loader').show();
     $.ajax({
@@ -1895,7 +2061,6 @@ $(document).on('blur', '.employer_post_location_state', function () {
 });
 
 $(document).on('click', '.custom_click', function () {
-    console.log('Option')
     $('.employer_post_location_city').attr({
         'readonly': false,
         required: true
@@ -1961,6 +2126,20 @@ $(document).on('keyup', '.employer_post_location_city', function (e) {
         currentParent.find('.autocomplete_id').val('')
     }
 });
+
+
+$(document).on('blur', '.employer_post_location_city', function () {
+    const currentParent = $(this).parents('.autocomplete_ui_parent');
+    setTimeout(() => {
+        const idVal = currentParent.find('.autocomplete_id').val();
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+});
+
+
+
+
+
 
 $(document).on('click', '.clear_city', function () {
     const currentParent = $(this).parents('.autocomplete_ui_parent');

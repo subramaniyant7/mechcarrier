@@ -132,6 +132,21 @@ class HelperController extends Controller
         return DB::table('education_university')->where([['education_university_name', 'like', '%' . $value . '%'], ['education_id', $id]])->get();
     }
 
+    static function getLanguageById($languageId)
+    {
+        return DB::table('languages')->where([['language_id', $languageId],['status' ,1]])->get();
+    }
+
+    static function getCountry($value)
+    {
+        return DB::table('country')->where([['country_name', 'like', '%' . $value . '%'],['status' ,1]])->get();
+    }
+
+    static function getCountryById($stateId)
+    {
+        return DB::table('country')->where([['country_id', $stateId],['status' ,1]])->get();
+    }
+
     static function getState($value)
     {
         return DB::table('state')->where([['state_name', 'like', '%' . $value . '%'],['status' ,1]])->get();
@@ -192,9 +207,9 @@ class HelperController extends Controller
         return DB::table('user_languages')->where('user_id', $id)->get();
     }
 
-    static function getLanguagesById($id)
+    static function getUserLanguagesById($id, $userId)
     {
-        return DB::table('user_languages')->where('user_language_id', $id)->get();
+        return DB::table('user_languages')->where([['user_language_id', $id],['user_id', $userId]])->get();
     }
 
     static function getUserCurrentEmployment($id)
@@ -310,6 +325,8 @@ class HelperController extends Controller
     {
         return DB::table('employer_post')->where('employer_post_id', $postId)->get();
     }
+
+
 
 
     static function randomPassword()

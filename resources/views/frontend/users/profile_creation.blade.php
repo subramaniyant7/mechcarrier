@@ -77,8 +77,8 @@
                     <div class="col-md-4">
                         <div class="profile-contact">
                             <ul>
-                                <li class="phone"> <img
-                                        src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/phone.svg') }}" />
+                                <li class="phone">
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/phone.svg') }}">
 
                                     @php
                                         $mobileimg = $emailimg = 'alerticon';
@@ -87,7 +87,6 @@
                                             $emailimg = 'verifiedicon';
                                             $emailverifiedText = 'verified';
                                         }
-
                                         if ($userInfo['userDetails'][0]->user_phonenumber_verified == 1) {
                                             $mobileimg = 'verifiedicon';
                                             $mobileverifiedText = 'verified';
@@ -113,44 +112,54 @@
                                         </span>
                                     @endif
                                 </li>
-                                @if ($userInfo['userDetails'][0]->user_city != '')
-                                    @php
-                                        $cityName = '';
-                                        $getCity = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userDetails'][0]->user_city);
-                                        if (count($getCity)) {
-                                            $cityName = $getCity[0]->city_name;
-                                        }
-                                    @endphp
-                                    <li class="location"><img
-                                            src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/location.svg') }}" />
-                                        {{ $cityName }}
-                                    </li>
-                                @endif
                                 @if (count($userInfo['userProfile']))
+                                    @if ($userInfo['userProfile'][0]->user_current_city != '')
+                                        @php
+                                            $cityName = '';
+                                            $getCity = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($userInfo['userProfile'][0]->user_current_city);
+                                            if (count($getCity)) {
+                                                $cityName = $getCity[0]->city_name;
+                                            }
+                                        @endphp
+                                        <li class="location"><img
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/location.svg') }}" />
+                                            {{ $cityName }}
+                                        </li>
+                                    @endif
+
                                     @if ($userInfo['userProfile'][0]->user_total_experience_year != '')
-                                        <li class="workexp"><img
-                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/workexp.svg') }}" />{{ $userInfo['userProfile'][0]->user_total_experience_year }}
-                                            Years
-                                            {{ $userInfo['userProfile'][0]->user_total_experience_month != 0 ? $userInfo['userProfile'][0]->user_total_experience_month . ' Months' : '' }}
+                                        <li class="workexp">
+                                            <img
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/workexp.svg') }}" />
+                                            {{ SalaryLakhs()[$userInfo['userProfile'][0]->user_total_experience_year - 1] .
+                                                ($userInfo['userProfile'][0]->user_total_experience_year - 1 > 1 ? ' Years ' : ' Year ') .
+                                                ExperienceMonths()[$userInfo['userProfile'][0]->user_total_experience_month - 1] .
+                                                ($userInfo['userProfile'][0]->user_total_experience_month - 1 > 1 ? ' Months' : ' Month') }}
+
+                                        </li>
+                                    @endif
+
+                                    @if ($userInfo['userProfile'][0]->user_current_salary_year != '' &&
+                                        $userInfo['userProfile'][0]->user_current_salary_month != '')
+                                        <li class="deposit">
+                                            <img
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/deposit.svg') }}" />
+                                            {{ SalaryLakhs()[$userInfo['userProfile'][0]->user_current_salary_year - 1] .
+                                                ' Lakh' .
+                                                ($userInfo['userProfile'][0]->user_current_salary_year - 1 > 1 ? 's ' : ' ') .
+                                                SalaryThousands()[$userInfo['userProfile'][0]->user_current_salary_month - 1] .
+                                                ($userInfo['userProfile'][0]->user_current_salary_month - 1 > 1 ? ' Thousands ' : ' Thousand ') }}/
+                                            Annum
                                         </li>
                                     @endif
                                 @endif
-                                {{-- <li class="workexp"><img src="{{  URL::asset(FRONTEND .'/assets/images/profilecreation/workexp.svg') }}" /> 2.5 Years
-                                </li> --}}
-                                @if (count($currentEmployment))
-                                    @if ($currentEmployment[0]->user_employment_current_salary_lakh != '')
-                                        <li class="deposit"><img
-                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/deposit.svg') }}" />
-                                            {{ $currentEmployment[0]->user_employment_current_salary_lakh }} Lakhs
-                                            {{ $currentEmployment[0]->user_employment_current_salary_thousand . ' Thousand' }}
-                                            /
-                                            Annum </li>
-                                    @endif
-                                @endif
+
+
                             </ul>
                         </div>
                     </div>
                     @php
+
                         $percentage = 0;
                         $verifiedPercentange = [];
                         if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_resume != '') {
@@ -161,7 +170,7 @@
                             $percentage += 10;
                             array_push($verifiedPercentange, 'resume_headline');
                         }
-                        if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_salary_month != '' && $userInfo['userProfile'][0]->user_current_salary_year != '' && $userInfo['userProfile'][0]->user_total_experience_year != '' && $userInfo['userProfile'][0]->user_total_experience_month != '') {
+                        if (count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_salary_month != '' && $userInfo['userProfile'][0]->user_current_salary_year != '' && $userInfo['userProfile'][0]->user_total_experience_year != '' && $userInfo['userProfile'][0]->user_total_experience_month != '' && $userInfo['userProfile'][0]->user_notice_period != '') {
                             $percentage += 10;
                             array_push($verifiedPercentange, 'basic_profile');
                         }
@@ -201,7 +210,7 @@
                             $percentage += 6;
                             array_push($verifiedPercentange, 'personal_details');
                         }
-                        //  Stop($verifiedPercentange);
+
                     @endphp
                     <div class="col-md-6">
                         <div class="user-progress-bar">
@@ -218,7 +227,7 @@
                                         <div class="inside-circle"> {{ $percentage }}% </div>
                                     </div>
                                 </div>
-                                <p>Profile Completed</p>
+                                <p>Profile {{ $percentage == 100 ? 'Completed' : 'Pending' }}</p>
                                 <h6> How to improve</h6>
                             </div>
                             <div class="user-progress">
@@ -253,6 +262,7 @@
                 </div>
             </div>
             @php
+
                 $years = Year();
                 usort($years, function ($a, $b) {
                     if ($a == $b) {
@@ -266,7 +276,10 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="profile-sidebar">
-                                <h6>Profile Last Updated : 01 March, 2022</h6>
+                                @php
+                                    $date = count($userInfo['userProfile']) ? date('d M, Y', strtotime($userInfo['userProfile'][0]->updated_at)) : '-';
+                                @endphp
+                                <h6>Profile Last Updated : {{ $date }}</h6>
                                 <h4>Quick Links</h4>
                                 <ul>
                                     @foreach (getUserSidebar() as $k => $sidebar)
@@ -282,7 +295,7 @@
                                                             $verify = 'check';
                                                         }
 
-                                                        if ($sidebar['key'] == 'headline' && in_array('resume', $verifiedPercentange)) {
+                                                        if ($sidebar['key'] == 'headline' && in_array('resume_headline', $verifiedPercentange)) {
                                                             $verify = 'check';
                                                         }
 
@@ -310,10 +323,6 @@
                                                             $verify = 'check';
                                                         }
 
-                                                        // if ($sidebar['key'] == 'totalexperience' && count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_total_experience_year != '') {
-                                                        //     $verify = 'check';
-                                                        // }
-
                                                         if ($sidebar['key'] == 'userITSkils' && count($userInfo['userITSkils'])) {
                                                             $verify = 'check';
                                                         }
@@ -337,10 +346,12 @@
                             </div>
                         </div>
                         <div class="col-md-9">
-                            @php
-                                $resumeAvailable = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_resume != '';
-                            @endphp
+
                             <div class="profile-dashboard-content">
+                                @php
+
+                                    $resumeAvailable = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_resume != '';
+                                @endphp
                                 <div class="resume-upload" id="resume">
                                     <div class="d-flex">
                                         <h4>Resume</h4>
@@ -356,11 +367,7 @@
                                         <input type="file" class="resume_upload" name="uploadfile" id="Resume"
                                             style="display:none;">
                                         <label for="Resume">
-                                            @if ($resumeAvailable)
-                                                Update
-                                            @else
-                                                Upload
-                                            @endif New Resume
+                                            {{ $resumeAvailable ? 'Update' : 'Upload' }} New Resume
                                         </label>
                                     </form>
                                     <div class="form-dflex">
@@ -373,16 +380,18 @@
                                         @endif
                                     </div>
                                 </div>
-                                @php
-                                    $headline = count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_resume_headline : '';
-                                @endphp
+
                                 <div class="resume-upload resume-headline" id="headline">
+                                    @php
+                                        $headline = count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_resume_headline : '';
+                                    @endphp
                                     <div class="d-flex">
                                         <h4>Resume Headline </h4>
                                         <span class="edit_headline">
                                             <img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
-                                            {{ $headline != '' ? 'Edit' : 'Add' }}</span>
+                                            {{ $headline == '' ? 'Add' : 'Edit' }}
+                                        </span>
                                     </div>
 
                                     <form action="#" id="update_resume_headline">
@@ -406,20 +415,25 @@
                                             data-id={{ in_array('basic_profile', $verifiedPercentange) ? encryption($userInfo['userProfile'][0]->user_profile_id) : '' }}>
                                             <img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
-                                            {{ in_array('basic_profile', $verifiedPercentange) ? 'Edit' : 'Add' }}</span>
+                                            {{ in_array('basic_profile', $verifiedPercentange) ? 'Edit' : 'Add' }}
+                                        </span>
                                     </div>
                                     <div class="basic-details-content">
                                         <h5>
                                             <p><span>Total Experience :
                                                     {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_total_experience_year != '' && $userInfo['userProfile'][0]->user_total_experience_year != '' ? SalaryLakhs()[$userInfo['userProfile'][0]->user_total_experience_year - 1] . ($userInfo['userProfile'][0]->user_total_experience_year - 1 > 1 ? ' Years ' : ' Year ') . ExperienceMonths()[$userInfo['userProfile'][0]->user_total_experience_month - 1] . ($userInfo['userProfile'][0]->user_total_experience_month - 1 > 1 ? ' Months' : ' Month') : '-' }}</span>
                                             <p><span>Current Annual Salary :
-                                                    {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_salary_year != '' && $userInfo['userProfile'][0]->user_current_salary_month != '' ? SalaryLakhs()[$userInfo['userProfile'][0]->user_current_salary_year - 1] . ' Lakh ' . ($userInfo['userProfile'][0]->user_current_salary_year - 1 > 1 ? 's ' : '') . SalaryThousands()[$userInfo['userProfile'][0]->user_current_salary_month - 1] . ($userInfo['userProfile'][0]->user_current_salary_month - 1 > 1 ? ' Thousands ' : ' Thousand ') : '-' }}</span>
+                                                    {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_salary_year != '' && $userInfo['userProfile'][0]->user_current_salary_month != '' ? SalaryLakhs()[$userInfo['userProfile'][0]->user_current_salary_year - 1] . ' Lakh' . ($userInfo['userProfile'][0]->user_current_salary_year - 1 > 1 ? 's ' : ' ') . SalaryThousands()[$userInfo['userProfile'][0]->user_current_salary_month - 1] . ($userInfo['userProfile'][0]->user_current_salary_month - 1 > 1 ? ' Thousands ' : ' Thousand ') : '-' }}</span>
+                                            <p><span>Notice Period :
+                                                    {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_notice_period != '' ? noticePeriod()[$userInfo['userProfile'][0]->user_notice_period - 1] : '-' }}</span>
+                                            </p>
                                         </h5>
                                     </div>
 
                                     <div class="basic-details-action"></div>
-
                                 </div>
+
+
 
                                 <div class="resume-upload resume-headline keyskills" id="userKeySkils">
                                     <div class="d-flex">
@@ -452,16 +466,19 @@
                                     </form>
                                 </div>
 
-                                @php
-                                    $summary = count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_profile_summary : '';
-                                @endphp
+
+
                                 <div class="resume-upload resume-headline" id="profilesummary">
+                                    @php
+                                        $summary = count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_profile_summary : '';
+                                    @endphp
                                     <div class="d-flex">
                                         <h4>Profile Summary </h4>
                                         <span class="edit_summary" style="cursor: pointer">
                                             <img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
-                                            {{ $summary != '' ? 'Edit' : 'Add' }}</span>
+                                            {{ $summary != '' ? 'Edit' : 'Add' }}
+                                        </span>
                                     </div>
 
                                     <form action="#" id="update_profile_summary">
@@ -477,6 +494,7 @@
                                     </form>
 
                                 </div>
+
 
                                 <div class="resume-upload resume-headline employement" id="userEmployments">
                                     <div class="d-flex">
@@ -520,10 +538,9 @@
                                                     {{ $fromMonth }} {{ $fromYear }} to {{ $toMonth }}
                                                     {{ $toYear }} ({{ $interval->format('%y years') }}
                                                     {{ $months }})
-                                                    <span class="edit_employment pointer">
-                                                        <img data-id="{{ encryption($employment->user_employment_id) }}"
-                                                            data-employment="{{ $employment->user_employment_id }}"
-                                                            src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
+                                                    <span class="edit_employment pointer"
+                                                        data-id="{{ encryption($employment->user_employment_id) }}"
+                                                        data-employment="{{ $employment->user_employment_id }}">
                                                         Edit
                                                     </span>
                                                 </h5>
@@ -535,10 +552,11 @@
                                             <div class="edit_employment_content"
                                                 id="employment_{{ $employment->user_employment_id }}"></div>
                                         @endforeach
-
                                     @endif
                                     <div class="action_employment"></div>
                                 </div>
+
+
 
                                 <div class="resume-upload resume-headline employement" id="userEducations">
                                     <div class="d-flex">
@@ -584,8 +602,7 @@
                                                     <span class="edit_education pointer"
                                                         data-id="{{ encryption($education->user_education_id) }}"
                                                         data-education="{{ $education->user_education_id }}">
-                                                        <img
-                                                            src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
+
                                                         Edit</span>
                                                 </h5>
                                                 <div class="edit_education_content"
@@ -597,11 +614,12 @@
                                     <div class="action_education"></div>
                                 </div>
 
-                                @php
-                                    $cLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_city != '' && $userInfo['userProfile'][0]->user_current_state != '';
-                                    $pLocationValid = (count($userInfo['userProfile']) && ($userInfo['userProfile'][0]->user_preferred_city != '' && $userInfo['userProfile'][0]->user_preferred_state != '')) || $userInfo['userProfile'][0]->user_preferred_state == 0;
-                                @endphp
+
                                 <div class="resume-upload resume-headline employement" id="location">
+                                    @php
+                                        $cLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_city != '' && $userInfo['userProfile'][0]->user_current_state != '';
+                                        $pLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_city != '' && $userInfo['userProfile'][0]->user_preferred_state != '';
+                                    @endphp
                                     <div class="d-flex">
                                         <h4>Current Location </h4>
                                         <span class="action_location pointer"
@@ -629,9 +647,8 @@
                                         </div>
                                     @endif
 
+
                                     <div class="action_currentlocation"></div>
-
-
 
                                     <div style="margin-top:30px;">
                                         <div class="d-flex">
@@ -660,12 +677,12 @@
                                                                 if (count($cityInfo)) {
                                                                     $preferredCityName = $cityInfo[0]->city_name;
                                                                 }
-                                                            }else{
-                                                                $preferredStateName = 'All India';
+                                                            } else {
+                                                                $preferredStateName = $preferredState != '' ? 'All India' : '-';
                                                             }
                                                         @endphp
                                                         <h5 style="padding-right: 1em;">{{ $preferredStateName }}
-                                                            @if($preferredCityName != '')
+                                                            @if ($preferredCityName != '')
                                                                 -
                                                                 {{ $preferredCityName }}
                                                             @endif
@@ -680,6 +697,10 @@
 
                                     </div>
                                 </div>
+
+
+
+
 
                                 <div class="resume-upload resume-headline employement" id="userITSkils">
                                     <div class="d-flex">
@@ -698,8 +719,7 @@
                                                         <span class="edit_itskill pointer"
                                                             data-id="{{ encryption($itskil->user_itskil_id) }}"
                                                             data-itskill="{{ $itskil->user_itskil_id }}">
-                                                            <img
-                                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
+
                                                             Edit</span>
                                                     </h5>
                                                 </div>
@@ -724,16 +744,20 @@
                                             @foreach ($userInfo['userCertification'] as $certification)
                                                 <div>
                                                     <h5>{{ $certification->user_certification_name }}
-                                                        - {{ $certification->user_certification_completion_id }} -
-                                                        Duration-
-                                                        {{ $years[$certification->user_certification_validity_year_from - 1] }}
                                                         -
+                                                        Duration :
+                                                        {{ Months()[$certification->user_certification_duration_year - 1] }}
+                                                        Year
+
+                                                        {{ Months()[$certification->user_certification_duration_month - 1] }}
+                                                        Month
+                                                        -
+
+                                                        {{ MonthName()[$certification->user_certification_validity_month_to - 1] }}
                                                         {{ $years[$certification->user_certification_validity_year_to - 1] }}
                                                         <span class="edit_certification pointer"
                                                             data-id="{{ encryption($certification->user_certification_id) }}"
                                                             data-certification="{{ $certification->user_certification_id }}">
-                                                            <img
-                                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
                                                             Edit</span>
                                                     </h5>
                                                 </div>
@@ -745,6 +769,7 @@
                                     <div class="action_certification"></div>
                                 </div>
 
+
                                 <div class="resume-upload resume-headline employement personal-details"
                                     id="personadetail">
                                     <div class="d-flex">
@@ -752,7 +777,12 @@
                                         <span class="action_personaldetails pointer">
                                             <img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
-                                            Add/edit</span>
+                                            @if (in_array('personal_details', $verifiedPercentange))
+                                                Edit
+                                            @else
+                                                Add
+                                            @endif
+                                        </span>
                                     </div>
                                     <div class="education-list">
                                         <ul>
@@ -762,12 +792,30 @@
                                                     : '-' }}
                                                     {{ $userInfo['userDetails'][0]->user_marital_status != '' ? Maritual()[$userInfo['userDetails'][0]->user_marital_status - 1] : '' }}</span>
                                             </li>
+
                                             <li>Date of Birth : <span>
                                                     {{ $userInfo['userDetails'][0]->user_dob != '' ? date('d F Y', strtotime($userInfo['userDetails'][0]->user_dob)) : '-' }}
                                                 </span> </li>
-                                            <li>Work Permit : <span> Germeny</span> </li>
+
+                                            <li>Work Permit : <span>
+                                                    @php
+                                                        $countryName = '';
+                                                        if ($userInfo['userDetails'][0]->user_work_permit != '') {
+                                                            $splitCountryId = explode(',', $userInfo['userDetails'][0]->user_work_permit);
+                                                            if (count($splitCountryId) == 1) {
+                                                                $countryInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCountryById($splitCountryId[0]);
+                                                                if (count($countryInfo)) {
+                                                                    $countryName = $countryInfo[0]->country_name;
+                                                                }
+                                                            } else {
+                                                                $countryName = count($splitCountryId) . ' Countries';
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    {{ $countryName }}
+                                                </span> </li>
                                         </ul>
-                                        <p>Address : <span>
+                                        <p>Address : <span class="permanent_address">
                                                 {{ $userInfo['userDetails'][0]->user_permanent_address != ''
                                                     ? $userInfo['userDetails'][0]->user_permanent_address . ','
                                                     : '-' }}
@@ -787,12 +835,17 @@
                                                 <tbody>
                                                     @foreach ($userInfo['userLanguages'] as $language)
                                                         @php
+                                                            $languageName = '';
+                                                            $languageInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getLanguageById($language->user_language_primary_id);
+                                                            if (count($languageInfo)) {
+                                                                $languageName = $languageInfo[0]->language_name;
+                                                            }
                                                             $read = $language->user_language_read == 1 ? 'tablecheck.svg' : 'cancel.svg';
                                                             $write = $language->user_language_write == 1 ? 'tablecheck.svg' : 'cancel.svg';
                                                             $speak = $language->user_language_speak == 1 ? 'tablecheck.svg' : 'cancel.svg';
                                                         @endphp
                                                         <tr>
-                                                            <td>{{ language()[$language->user_language_primary_id - 1] }}
+                                                            <td>{{ $languageName }}
                                                             </td>
                                                             <td>{{ languageStrength()[$language->user_language_proficiency - 1] }}
                                                             </td>

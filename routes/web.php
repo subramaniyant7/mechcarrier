@@ -94,6 +94,7 @@ Route::middleware(['globalvalidate'])->group(function () {
         })->name('register');
     });
 
+    Route::post('/getcountry', [FAjaxController::class, 'GetCountry'])->name('getcountry');
     Route::post('/getstate', [FAjaxController::class, 'GetState'])->name('getstate');
     Route::post('/getstatecity', [FAjaxController::class, 'GetStateCity'])->name('getstatecity');
     Route::post('/getcity', [FAjaxController::class, 'GetCity'])->name('getcity');

@@ -44,6 +44,7 @@ class FrontendController extends Controller
     {
         $userInfo = HelperController::getUserCompleteProfileInfo($request->session()->get('frontend_userid'));
         $currentEmployment = HelperController::getUserCurrentEmployment($request->session()->get('frontend_userid'));
+        // Stop($userInfo);
         return view('frontend.users.profile_creation', compact('userInfo','currentEmployment'));
     }
 

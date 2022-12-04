@@ -29,6 +29,15 @@ body {
 
 /* Custom Start */
 
+#personadetail .permanent_address {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 88%;
+    height: 1.2em;
+    white-space: nowrap;
+    display: inline-block;
+}
+
 .similar-job-card-info .cityname {
     width: 35%;
     text-overflow: ellipsis;
@@ -79,6 +88,18 @@ body {
     padding-inline-start: 0px;
     margin-top: 10px;
 }
+.selected_country{
+    width: 500px;
+}
+
+.selected_country .selected_items{
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+.selected_country .selected_items li {
+    margin-top: 5px;
+}
 
 .selected_items li {
     list-style: none;
@@ -86,8 +107,8 @@ body {
     border: 0.8px solid #005CFF;
     border-radius: 4px;
     margin-right: 10px;
-    padding: 2px 5px;
-    font-size: 11px;
+    padding: 2px 5px !important;
+    font-size: 11px !important;
 }
 
 .selected_items li img {
@@ -2486,7 +2507,8 @@ span.switch-handle {
 
 .profile-creation-top .profile-contact ul li.workexp img {
     position: relative;
-    left: -6px;
+    left: -4px;
+    padding-right: 1px;
 }
 
 .profile-creation-top .user-progress-bar {
@@ -2659,7 +2681,7 @@ span.switch-handle {
 }
 
 .resume-upload.resume-headline .d-flex span {
-    padding-left: 20px;
+    padding-left: 8px;
     color: #005CFF;
     font-size: 15px;
 }
@@ -2726,14 +2748,14 @@ span.switch-handle {
     margin-top: 10px;
 }
 
-.resume-upload.resume-headline.basic-details form h4{
+.resume-upload.resume-headline.basic-details form h4 {
     color: #000;
     font-size: 16px;
     text-align: left;
     margin-top: 15px;
 }
 
-.resume-upload.resume-headline.basic-details .basic-details-content{
+.resume-upload.resume-headline.basic-details .basic-details-content {
     margin-top: 6px;
 }
 
@@ -2773,7 +2795,7 @@ span.switch-handle {
 
 .resume-upload.resume-headline.employement p span {
     color: #676767;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .resume-upload.resume-headline.employement .chevron-up {
@@ -2793,7 +2815,7 @@ span.switch-handle {
 }
 
 .resume-upload.resume-headline.employement form .col-md-12.delete a {
-    color: #005CFF;
+    color: #676767;
     font-size: 14px;
 }
 

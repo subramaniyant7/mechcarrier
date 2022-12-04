@@ -1,4 +1,4 @@
-<div class="row languages">
+<div class="row languages parentlanguage">
     <div class="col-md-3">
         <label>Languages </label>
         <br />
@@ -6,9 +6,9 @@
         <select class="form-control" name="user_language_primary_id[]" required
             aria-label="Default select example">
             <option selected="" value="">Add</option>
-            @foreach (language() as $k => $language)
-                <option value="{{ $k + 1 }}">
-                    {{ $language }}
+            @foreach (getActiveRecord('languages') as $language)
+                <option value="{{ $language->language_id }}">
+                    {{ $language->language_name }}
                 </option>
             @endforeach
         </select>

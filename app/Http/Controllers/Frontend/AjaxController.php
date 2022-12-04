@@ -455,6 +455,18 @@ class AjaxController extends Controller
         return $response;
     }
 
+
+
+    public function GetCountry(Request $request)
+    {
+        $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
+        if ($request->input('name') != '') {
+            $data = HelperController::getCountry($request->input('name'));
+            $response = ['status' => true, 'message' => '', 'data' => json_encode($data)];
+        }
+        return $response;
+    }
+
     public function GetState(Request $request)
     {
         $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
@@ -768,6 +780,16 @@ class AjaxController extends Controller
         $response = ['status' => false, 'message' => ''];
         try {
             $userId = $request->session()->get('frontend_userid');
+            $userPermit = $request->input('user_work_permit_id');
+            if($userPermit != ''){
+                $countryId = explode(',', $userPermit);
+                foreach($countryId as $country){
+                    $countryExist = HelperController::getCountryById($country);
+                    if(!count($countryExist)){
+                        return ['status' => false, 'message' => 'Invalid Country Provided'];
+                    }
+                }
+            }
             $userData = $request->only(
                 'user_gender',
                 'user_marital_status',
@@ -776,6 +798,7 @@ class AjaxController extends Controller
                 'user_permanent_address_pin',
                 'user_work_permit'
             );
+            $userData['user_work_permit'] = $userPermit;
             $languageData = $request->only(
                 'user_language_primary_id',
                 'user_language_proficiency',
@@ -803,8 +826,8 @@ class AjaxController extends Controller
                     'user_language_write' => isset($languageData['user_language_write_value'][$k]) ? $languageData['user_language_write_value'][$k] : 2,
                     'user_language_speak' => isset($languageData['user_language_speak_value'][$k]) ? $languageData['user_language_speak_value'][$k] : 2,
                 ];
-                if (isset($languageData['user_language_id'][$k])) {
-                    $langExist = HelperController::getLanguagesById($languageData['user_language_id'][$k]);
+                if (isset($languageData['user_language_id'][$k]) && $languageData['user_language_id'][$k] != '') {
+                    $langExist = HelperController::getUserLanguagesById($languageData['user_language_id'][$k], $userId);
                     if (count($langExist)) {
                         $update = true;
                     }
@@ -856,12 +879,12 @@ class AjaxController extends Controller
             $formData = $request->except('user_certification_id');
             $formData['user_id'] = $request->session()->get('frontend_userid');
 
-            if ($formData['user_certification_validity_year_from'] <  $formData['user_certification_validity_year_to']) {
+            if ($formData['user_certification_duration_month'] <  $formData['user_certification_validity_year_to']) {
                 $response['message'] = 'To date should be greater than From Date';
                 return $response;
             }
 
-            if (($formData['user_certification_validity_year_from'] ==  $formData['user_certification_validity_year_to']) && ($formData['user_certification_validity_month_from'] > $formData['user_certification_validity_month_to'])) {
+            if (($formData['user_certification_duration_month'] ==  $formData['user_certification_validity_year_to']) && ($formData['user_certification_duration_year'] > $formData['user_certification_validity_month_to'])) {
                 $response['message'] = 'To date should be greater than From Date';
                 return $response;
             }
