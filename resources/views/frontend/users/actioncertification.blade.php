@@ -75,7 +75,7 @@
                 <select class="form-control" name="user_certification_validity_month_to" required
                     aria-label="Default select example">
                     <option selected="" value="">Month</option>
-                    @foreach (Months() as $k => $month)
+                    @foreach (Months1() as $k => $month)
                         <option value="{{ $k + 1 }}"
                             {{ count($data) && $data[0]->user_certification_validity_month_to == $k + 1 ? 'selected' : '' }}>
                             {{ $month }}
