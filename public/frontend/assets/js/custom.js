@@ -1902,12 +1902,20 @@ $(document).on('click', '.cancel_personaldetails', function (e) {
 
 // Language
 $(document).on('click', '.new_language', function (e) {
+
+
+    let currentthis = this;
     $.ajax({
         type: 'get',
         url: `${siteurl}newlanguagehtml`,
         success: function (data) {
             if (data.status) {
                 $('.new_lan_html').append(data.data);
+                console.log('pppp', $('.parentlanguage').length)
+                if($('.parentlanguage').length == 10){
+                    console.log('hide');
+                    $(currentthis).parents('.row.add-another').hide();
+                }
             } else toastr.error(data.message);
         },
         error: function (data) {
@@ -1917,15 +1925,14 @@ $(document).on('click', '.new_language', function (e) {
             $('.loader').hide();
         }
     });
+
 });
 
 $(document).on('click', '.delete_language', function (e) {
-    console.log('current', $(this).parents('.parentlanguage').index());
-    console.log($('.parentlanguage').length);
-    $(this).parents('.parentlanguage').remove()
-    $(".parentlanguage").each(function (index) {
-        console.log($(this).index());
-    });
+    $(this).parents('.parentlanguage').remove();
+    if($(this).parents('.parentlanguage').length <10){
+        $('.row.add-another').show();
+    }
 })
 
 

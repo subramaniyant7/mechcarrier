@@ -239,7 +239,7 @@
         </div>
     @endif
     <div class="new_lan_html"></div>
-    <div class="row add-another">
+    <div class="row add-another" style="display : {{ count($data) == 10 ? 'none' : 'block' }}">
         <div class="col-md-12">
             <a href="javascript:void(0)" class="new_language">Add Another Language</a>
         </div>

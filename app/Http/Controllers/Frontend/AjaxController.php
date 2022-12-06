@@ -555,7 +555,7 @@ class AjaxController extends Controller
             // print_r($formData);
             // exit;
 
-            if ($formData['user_employment_joining_year'] <  $formData['user_employment_working_year']) {
+            if ($formData['user_employment_joining_year'] !=  $formData['user_employment_working_year'] && $formData['user_employment_joining_year'] <  $formData['user_employment_working_year']) {
                 $response['message'] = 'Working date should be greater than Joining Date';
                 return $response;
             }
@@ -818,6 +818,10 @@ class AjaxController extends Controller
             $userLanguages = HelperController::getUserLanguages($userId);
             $totalRecord = count($languageData['user_language_id']);
 
+            if(count($languageData['user_language_primary_id']) > 10){
+                return ['status' => false,'message' => 'You cannot add more than 10 Languages'];
+            }
+
             if(count($userLanguages) != $totalRecord){
                 $deletedLanguageId = [];
                 foreach($userLanguages as $uLanguage){
@@ -894,15 +898,15 @@ class AjaxController extends Controller
             $formData = $request->except('user_certification_id');
             $formData['user_id'] = $request->session()->get('frontend_userid');
 
-            if ($formData['user_certification_duration_month'] <  $formData['user_certification_validity_year_to']) {
-                $response['message'] = 'To date should be greater than From Date';
-                return $response;
-            }
+            // if ($formData['user_certification_duration_month'] <  $formData['user_certification_validity_year_to']) {
+            //     $response['message'] = 'To date should be greater than From Date';
+            //     return $response;
+            // }
 
-            if (($formData['user_certification_duration_month'] ==  $formData['user_certification_validity_year_to']) && ($formData['user_certification_duration_year'] > $formData['user_certification_validity_month_to'])) {
-                $response['message'] = 'To date should be greater than From Date';
-                return $response;
-            }
+            // if (($formData['user_certification_duration_month'] ==  $formData['user_certification_validity_year_to']) && ($formData['user_certification_duration_year'] > $formData['user_certification_validity_month_to'])) {
+            //     $response['message'] = 'To date should be greater than From Date';
+            //     return $response;
+            // }
 
             if ($request->input('user_certification_id') != '') {
                 updateQuery('user_certification', 'user_certification_id', decryption($request->input('user_certification_id')), $formData);

@@ -206,7 +206,7 @@
                             $percentage += 2;
                             array_push($verifiedPercentange, 'cerification');
                         }
-                        if (count($userInfo['userLanguages']) && $userInfo['userDetails'][0]->user_gender != '' && $userInfo['userDetails'][0]->user_marital_status != '' && $userInfo['userDetails'][0]->user_dob != '' && $userInfo['userDetails'][0]->user_permanent_address != '' && $userInfo['userDetails'][0]->user_permanent_address_pin != '') {
+                        if (count($userInfo['userLanguages']) && $userInfo['userDetails'][0]->user_gender != '' && $userInfo['userDetails'][0]->user_marital_status != '' && $userInfo['userDetails'][0]->user_dob != '' ) {
                             $percentage += 6;
                             array_push($verifiedPercentange, 'personal_details');
                         }
@@ -541,7 +541,7 @@
                                                     </span>
                                                 </h5>
 
-                                                <p><span>Job Profile :</span>
+                                                <p class="job-profile"><span>Job Profile :</span>
                                                     {{ $employment->user_employment_description != '' ? $employment->user_employment_description : '-' }}
                                                 </p>
 

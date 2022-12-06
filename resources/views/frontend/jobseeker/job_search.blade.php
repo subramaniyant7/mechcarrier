@@ -110,9 +110,12 @@
                                 <div class="job-card">
                                     @php
                                         $employerName = $stateName = $cityName = '';
+                                        $companyLogo = FRONTEND.'/assets/images/company_logo.svg';
                                         $employerInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getEmployerInfoById($skilMatchJob['employer_post_employee_id']);
                                         if (count($employerInfo)) {
                                             $employerName = $employerInfo[0]->employer_company_name;
+                                            $companyLogo = $employerInfo[0]->employer_company_logo != '' ?
+                                                '/uploads/employer/company/'.$employerInfo[0]->employer_company_logo : $companyLogo;
                                         }
 
                                         $stateInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getStateById($skilMatchJob['employer_post_location_state']);
@@ -129,7 +132,7 @@
                                             <h3>{{ $skilMatchJob['employer_post_headline'] }}</h3>
                                             <p> {{ $employerName }}</p>
                                         </div>
-                                        <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
+                                        <img style="width:10%;height:50px;" src="{{ URL::asset($companyLogo) }}">
                                     </div>
                                     <div class="job-card-details">
                                         <div class="job-card-info">

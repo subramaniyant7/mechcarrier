@@ -2640,8 +2640,8 @@ span.switch-handle {
     padding: 20px 30px 22px;
 }
 
-.resume-upload.education .education-list .education-info{
-    padding-bottom : 10px;
+.resume-upload.education .education-list .education-info {
+    padding-bottom: 10px;
 }
 
 .resume-upload.location {
@@ -2836,6 +2836,15 @@ span.switch-handle {
     color: #676767;
 }
 
+.resume-upload.resume-headline.employement .job-profile {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
 .resume-upload.resume-headline.employement p span {
     color: #676767;
     font-size: 14px;
@@ -2957,17 +2966,17 @@ span.switch-handle {
     padding-top: 2px
 }
 
-.resume-upload.resume-headline.employement.personal-details .personal-data ul{
+.resume-upload.resume-headline.employement.personal-details .personal-data ul {
     margin-bottom: 10px;
 }
 
-#action_personaldetails_data .parentlanguage .form-check{
+#action_personaldetails_data .parentlanguage .form-check {
     padding-top: 0.7em;
 }
 
 
 
-#action_personaldetails_data .parentlanguage .delete_language span{
+#action_personaldetails_data .parentlanguage .delete_language span {
     bottom: 1.1em;
     right: 4em;
 }
