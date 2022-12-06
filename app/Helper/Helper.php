@@ -214,6 +214,15 @@ function Months()
     return $month;
 }
 
+function Months1()
+{
+    $month = [];
+    for ($t = 1; $t <= 12; $t++) {
+        array_push($month, $t);
+    }
+    return $month;
+}
+
 function ExperienceMonths()
 {
     $month = [];
