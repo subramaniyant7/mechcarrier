@@ -44,7 +44,6 @@ class FrontendController extends Controller
     {
         $userInfo = HelperController::getUserCompleteProfileInfo($request->session()->get('frontend_userid'));
         $currentEmployment = HelperController::getUserCurrentEmployment($request->session()->get('frontend_userid'));
-        // Stop($userInfo);
         return view('frontend.users.profile_creation', compact('userInfo','currentEmployment'));
     }
 
@@ -160,7 +159,25 @@ class FrontendController extends Controller
 
     public function JobseekerJobSearch(Request $request)
     {
-        return view('frontend.jobseeker.job_search');
+        $skilMatchJobs = [];
+        $userKeySkilInfo = HelperController::getUserKeySkilByUserId($request->session()->get('frontend_userid'));
+        // echo '<pre>';
+        // print_r($userKeySkilInfo);
+
+        if(count($userKeySkilInfo)){
+            foreach($userKeySkilInfo as $skil){
+                $skilJob = HelperController::GetUserSkilBasedJobs($skil->user_key_skil_text);
+                if(count($skilJob)){
+                    $jobData = json_decode(json_encode($skilJob),true);
+
+                    array_push($skilMatchJobs,$jobData);
+                }
+            }
+            if(count($skilMatchJobs)) $skilMatchJobs = $skilMatchJobs[0];
+        }
+
+        // Stop($skilMatchJobs);
+        return view('frontend.jobseeker.job_search', compact('skilMatchJobs'));
     }
 
     public function JobSearch2(Request $request)

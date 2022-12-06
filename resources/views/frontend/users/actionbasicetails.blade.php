@@ -32,7 +32,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h4>Current Annual Salary </h4>
+            <h4>Current Annual Salary *</h4>
             <div class="d-flex">
                 <select class="form-control" name="user_current_salary_year" aria-label="Default select example"
                     required>
@@ -57,7 +57,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h4>Notice Period </h4>
+            <h4>Notice Period *</h4>
             <div class="d-flex">
                 <select class="form-control" name="user_notice_period" aria-label="Default select example"
                     required>

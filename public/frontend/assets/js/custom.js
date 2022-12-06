@@ -925,8 +925,10 @@ $(document).on('click', '.cancel_education', function (e) {
 $(document).on("change", ".user_education_grade", function () {
     let inputVal = $(this).val();
     $('.showmarks').hide();
+    $('.showmarks').find("input").removeAttr('required');
     if (inputVal != '' && inputVal < 4) {
         $('.showmarks').show();
+        $('.showmarks').find("input").attr('required', true);
     }
     console.log('thi', $(this).val());
 });
@@ -1905,7 +1907,7 @@ $(document).on('click', '.new_language', function (e) {
         url: `${siteurl}newlanguagehtml`,
         success: function (data) {
             if (data.status) {
-                $('.new_lan_html').html(data.data);
+                $('.new_lan_html').append(data.data);
             } else toastr.error(data.message);
         },
         error: function (data) {
@@ -1917,12 +1919,17 @@ $(document).on('click', '.new_language', function (e) {
     });
 });
 
-
+$(document).on('click', '.delete_language', function (e) {
+    console.log('current', $(this).parents('.parentlanguage').index());
+    console.log($('.parentlanguage').length);
+    $(this).parents('.parentlanguage').remove()
+    $(".parentlanguage").each(function (index) {
+        console.log($(this).index());
+    });
+})
 
 
 // Employer
-
-
 $("textarea[name=employer_address]").keyup(function () {
     let inputVal = $(this).val();
     $(this).parent().find('#current').html(inputVal.length);

@@ -43,9 +43,8 @@
                                     @foreach (employmentType() as $k => $employment)
                                         <li>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="{{ $k + 1 }}"
-                                                    id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
+                                                <input class="form-check-input employment_type" name="employment_type" type="checkbox" value="{{ $k + 1 }}">
+                                                <label class="form-check-label">
                                                     {{ $employment }}
                                                 </label>
                                             </div>
@@ -87,8 +86,6 @@
                                 </ul>
                             </div>
                             <div class="searchfilters-list">
-
-
                                 <h4>Education</h4>
                                 <ul>
                                     @foreach (getActiveRecord('education_info') as $education_info)
@@ -104,375 +101,86 @@
                                     @endforeach
                                 </ul>
                             </div>
-                            <div class="searchfilters-list">
-                                <h4>Company Type</h4>
-                                <ul>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                Foreign MNC
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                Indian MNC
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                Corporate
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                Start Up
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                Contract base
-                                            </label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="recomended-jobs">
-                            <div class="job-card">
-                                <div class="job-card-title">
-                                    <div class="d-flex">
-                                        <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
-                                        <p> Collins Aerospace technology</p>
-                                    </div>
-                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
-                                </div>
-                                <div class="job-card-details">
-                                    <div class="job-card-info">
-                                        <div class="years">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
-                                                </span>5-10 Years</p>
+                            @forelse ($skilMatchJobs as $skilMatchJob)
+                                <div class="job-card">
+                                    @php
+                                        $employerName = $stateName = $cityName = '';
+                                        $employerInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getEmployerInfoById($skilMatchJob['employer_post_employee_id']);
+                                        if (count($employerInfo)) {
+                                            $employerName = $employerInfo[0]->employer_company_name;
+                                        }
+
+                                        $stateInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getStateById($skilMatchJob['employer_post_location_state']);
+                                        if (count($stateInfo)) {
+                                            $stateName = $stateInfo[0]->state_name;
+                                        }
+                                        $cityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo($skilMatchJob['employer_post_location_city']);
+                                        if (count($cityInfo)) {
+                                            $cityName = $cityInfo[0]->city_name;
+                                        }
+                                    @endphp
+                                    <div class="job-card-title">
+                                        <div class="d-flex">
+                                            <h3>{{ $skilMatchJob['employer_post_headline'] }}</h3>
+                                            <p> {{ $employerName }}</p>
                                         </div>
-                                        <div class="location">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
-                                                </span>Banglore</p>
-                                        </div>
-                                        <div class="salary">
-                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                                </span>5-6 Lakhs</p>
-                                        </div>
+                                        <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
                                     </div>
-                                    <div class="job-posted-date">
-                                        <h4>Posted : <span>Just now</span></h4>
-                                    </div>
-                                </div>
-                                <div class="job-card-description">
-                                    <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
-                                        Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
-                                        participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
-                                        participat... <span>more</span></p>
-                                </div>
-                                <div class="job-card-apply">
-                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
-                                        : <span>SAP, PLM, CATIA</span>
-                                    </h4>
-                                    <div class="job-card-button">
-                                        <button type="button" class="btn btn-primary  bg-white">Saved</button>
-                                        <button type="button" class="btn btn-primary">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="job-card">
-                                <div class="job-card-title">
-                                    <div class="d-flex">
-                                        <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
-                                        <p> Collins Aerospace technology</p>
-                                    </div>
-                                    <img src="{{ URL::asset(FRONTEND . '/ssets/images/jobicon.svg') }}">
-                                </div>
-                                <div class="job-card-details">
-                                    <div class="job-card-info">
-                                        <div class="years">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
-                                                </span>5-10 Years</p>
+                                    <div class="job-card-details">
+                                        <div class="job-card-info">
+                                            <div class="years">
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                                                    </span>{{ experienceGap()[$skilMatchJob['employer_post_experience'] - 1] }}
+                                                </p>
+                                            </div>
+
+                                            <div class="location">
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                                                    </span>{{ $stateName }}</p>
+                                            </div>
+                                            @if ($skilMatchJob['employer_post_hidesalary'] == 2)
+                                                <div class="salary">
+                                                    <p><span>
+                                                            <img
+                                                                src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                                                        </span>{{ SalaryLakhs()[$skilMatchJob['employer_post_salary_range_from_lakhs'] - 1] }}
+                                                        -{{ SalaryLakhs()[$skilMatchJob['employer_post_salary_range_to_lakhs'] - 1] }}
+                                                        Lakhs
+                                                    </p>
+                                                </div>
+                                            @endif
                                         </div>
-                                        <div class="location">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
-                                                </span>Banglore</p>
-                                        </div>
-                                        <div class="salary">
-                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                                </span>5-6 Lakhs</p>
+                                        <div class="job-posted-date">
+                                            <h4>Posted :
+                                                <span>{{ date('d M Y', strtotime($skilMatchJob['created_at'])) }}</span>
+                                            </h4>
                                         </div>
                                     </div>
-                                    <div class="job-posted-date">
-                                        <h4>Posted : <span>Just now</span></h4>
+                                    <div class="job-card-description">
+                                        <p>{{ $skilMatchJob['employer_post_description'] }} <span>more</span></p>
                                     </div>
-                                </div>
-                                <div class="job-card-description">
-                                    <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
-                                        Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
-                                        participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
-                                        participat... <span>more</span></p>
-                                </div>
-                                <div class="job-card-apply">
-                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
-                                        : <span>SAP, PLM, CATIA</span>
-                                    </h4>
-                                    <div class="job-card-button">
-                                        <button type="button" class="btn btn-primary  bg-white">Saved</button>
-                                        <button type="button" class="btn btn-primary">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="job-card">
-                                <div class="job-card-title">
-                                    <div class="d-flex">
-                                        <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
-                                        <p> Collins Aerospace technology</p>
-                                    </div>
-                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
-                                </div>
-                                <div class="job-card-details">
-                                    <div class="job-card-info">
-                                        <div class="years">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
-                                                </span>5-10 Years</p>
-                                        </div>
-                                        <div class="location">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
-                                                </span>Banglore</p>
-                                        </div>
-                                        <div class="salary">
-                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                                </span>5-6 Lakhs</p>
+                                    <div class="job-card-apply">
+                                        <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key
+                                            skill
+                                            : <span>{{ $skilMatchJob['employer_post_key_skils'] }}</span>
+                                        </h4>
+                                        <div class="job-card-button">
+                                            <button type="button" class="btn btn-primary  bg-white">Save</button>
+                                            <button type="button" class="btn btn-primary">Apply</button>
                                         </div>
                                     </div>
-                                    <div class="job-posted-date">
-                                        <h4>Posted : <span>Just now</span></h4>
-                                    </div>
                                 </div>
-                                <div class="job-card-description">
-                                    <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
-                                        Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
-                                        participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
-                                        participat... <span>more</span></p>
-                                </div>
-                                <div class="job-card-apply">
-                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
-                                        : <span>SAP, PLM, CATIA</span>
-                                    </h4>
-                                    <div class="job-card-button">
-                                        <button type="button" class="btn btn-primary  bg-white">Saved</button>
-                                        <button type="button" class="btn btn-primary">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="job-card">
-                                <div class="job-card-title">
-                                    <div class="d-flex">
-                                        <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
-                                        <p> Collins Aerospace technology</p>
-                                    </div>
-                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
-                                </div>
-                                <div class="job-card-details">
-                                    <div class="job-card-info">
-                                        <div class="years">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
-                                                </span>5-10 Years</p>
-                                        </div>
-                                        <div class="location">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
-                                                </span>Banglore</p>
-                                        </div>
-                                        <div class="salary">
-                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                                </span>5-6 Lakhs</p>
-                                        </div>
-                                    </div>
-                                    <div class="job-posted-date">
-                                        <h4>Posted : <span>Just now</span></h4>
-                                    </div>
-                                </div>
-                                <div class="job-card-description">
-                                    <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
-                                        Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
-                                        participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
-                                        participat... <span>more</span></p>
-                                </div>
-                                <div class="job-card-apply">
-                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
-                                        : <span>SAP, PLM, CATIA</span>
-                                    </h4>
-                                    <div class="job-card-button">
-                                        <button type="button" class="btn btn-primary  bg-white">Saved</button>
-                                        <button type="button" class="btn btn-primary">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="job-card">
-                                <div class="job-card-title">
-                                    <div class="d-flex">
-                                        <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
-                                        <p> Collins Aerospace technology</p>
-                                    </div>
-                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
-                                </div>
-                                <div class="job-card-details">
-                                    <div class="job-card-info">
-                                        <div class="years">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
-                                                </span>5-10 Years</p>
-                                        </div>
-                                        <div class="location">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
-                                                </span>Banglore</p>
-                                        </div>
-                                        <div class="salary">
-                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                                </span>5-6 Lakhs</p>
-                                        </div>
-                                    </div>
-                                    <div class="job-posted-date">
-                                        <h4>Posted : <span>Just now</span></h4>
-                                    </div>
-                                </div>
-                                <div class="job-card-description">
-                                    <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
-                                        Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
-                                        participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
-                                        participat... <span>more</span></p>
-                                </div>
-                                <div class="job-card-apply">
-                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
-                                        : <span>SAP, PLM, CATIA</span>
-                                    </h4>
-                                    <div class="job-card-button">
-                                        <button type="button" class="btn btn-primary  bg-white">Saved</button>
-                                        <button type="button" class="btn btn-primary">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="job-card">
-                                <div class="job-card-title">
-                                    <div class="d-flex">
-                                        <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
-                                        <p> Collins Aerospace technology</p>
-                                    </div>
-                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
-                                </div>
-                                <div class="job-card-details">
-                                    <div class="job-card-info">
-                                        <div class="years">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
-                                                </span>5-10 Years</p>
-                                        </div>
-                                        <div class="location">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
-                                                </span>Banglore</p>
-                                        </div>
-                                        <div class="salary">
-                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                                </span>5-6 Lakhs</p>
-                                        </div>
-                                    </div>
-                                    <div class="job-posted-date">
-                                        <h4>Posted : <span>Just now</span></h4>
-                                    </div>
-                                </div>
-                                <div class="job-card-description">
-                                    <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
-                                        Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
-                                        participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
-                                        participat... <span>more</span></p>
-                                </div>
-                                <div class="job-card-apply">
-                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
-                                        : <span>SAP, PLM, CATIA</span>
-                                    </h4>
-                                    <div class="job-card-button">
-                                        <button type="button" class="btn btn-primary  bg-white">Saved</button>
-                                        <button type="button" class="btn btn-primary">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="job-card">
-                                <div class="job-card-title">
-                                    <div class="d-flex">
-                                        <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
-                                        <p> Collins Aerospace technology</p>
-                                    </div>
-                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}">
-                                </div>
-                                <div class="job-card-details">
-                                    <div class="job-card-info">
-                                        <div class="years">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
-                                                </span>5-10 Years</p>
-                                        </div>
-                                        <div class="location">
-                                            <p><span><img
-                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
-                                                </span>Banglore</p>
-                                        </div>
-                                        <div class="salary">
-                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                                </span>5-6 Lakhs</p>
-                                        </div>
-                                    </div>
-                                    <div class="job-posted-date">
-                                        <h4>Posted : <span>Just now</span></h4>
-                                    </div>
-                                </div>
-                                <div class="job-card-description">
-                                    <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
-                                        Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
-                                        participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
-                                        participat... <span>more</span></p>
-                                </div>
-                                <div class="job-card-apply">
-                                    <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key skill
-                                        : <span>SAP, PLM, CATIA</span>
-                                    </h4>
-                                    <div class="job-card-button">
-                                        <button type="button" class="btn btn-primary  bg-white">Saved</button>
-                                        <button type="button" class="btn btn-primary">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
+                            @empty
+                                <div>No Job Found</div>
+                            @endforelse
+
                         </div>
                         <div class="pagination">
                             <nav aria-label="Page navigation example">

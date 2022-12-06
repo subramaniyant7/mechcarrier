@@ -7,7 +7,7 @@
 <form action="#" id="action_personaldetails_data">
     <div class="row">
         <div class="col-md-3">
-            <label>Gender </label>
+            <label>Gender * </label>
             <select class="form-control" aria-label="Default select example" name="user_gender" required>
                 <option selected="" value="">Select gender</option>
                 @foreach (Gender() as $k => $gender)
@@ -20,7 +20,7 @@
         </div>
 
         <div class="col-md-3">
-            <label>Marital Status </label>
+            <label>Marital Status * </label>
             <select class="form-control" name="user_marital_status" required aria-label="Default select example">
                 <option selected="" value="">Select status</option>
                 @foreach (Maritual() as $k => $maritual)
@@ -33,7 +33,7 @@
         </div>
 
         <div class="col-md-6">
-            <label>Date of Birth</label>
+            <label>Date of Birth *</label>
             <div class="d-flex">
                 <input type="date" name="user_dob" required placeholder="Date of Birth" class="form-control"
                     value="{{ count($userInfo) ? $userInfo[0]->user_dob : '' }}">
@@ -44,8 +44,8 @@
     <div class="row">
         <div class="col-md-12 parent">
             <label>Permanent Address</label>
-            <textarea required class="inputinfo" name="user_permanent_address" rows="3" cols="30" minlength="1"
-                maxlength="100" placeholder="Add permanent address">{{ count($userInfo) ? $userInfo[0]->user_permanent_address : '' }}</textarea>
+            <textarea style="margin-top :10px;" class="inputinfo" name="user_permanent_address" rows="3" cols="30"
+                minlength="1" maxlength="100" placeholder="Add permanent address">{{ count($userInfo) ? $userInfo[0]->user_permanent_address : '' }}</textarea>
             <span class="text_limit" style="display:block;bottom:0;right:22px;">
                 {{ count($userInfo) ? strlen($userInfo[0]->user_permanent_address) : 0 }}/100
             </span>
@@ -54,8 +54,8 @@
     <div class="row">
         <div class="col-md-3">
             <label>Pincode</label>
-            <input type="text" name="user_permanent_address_pin" required placeholder="Add PIN code"
-                class="form-control" value="{{ count($userInfo) ? $userInfo[0]->user_permanent_address_pin : '' }}">
+            <input type="text" name="user_permanent_address_pin" placeholder="Add PIN code" class="form-control"
+                value="{{ count($userInfo) ? $userInfo[0]->user_permanent_address_pin : '' }}">
         </div>
         @php
             $countryName = '';
@@ -104,7 +104,7 @@
     </div>
 
 
-    @foreach ($data as $language)
+    @foreach ($data as $k => $language)
         <div class="row languages parentlanguage">
             <div class="col-md-3">
                 <label>Languages </label>
@@ -135,40 +135,42 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-1 form-checkbox">
-                <p>Read</p>
-                <div class="d-flex">
-                    <div class="form-check">
-                        <input type="hidden" class="user_language_read_value" name="user_language_read_value[]"
-                            value="{{ $language->user_language_read }}">
-                        <input class="form-check-input enable user_language_read" data-id="user_language_read_value"
-                            name="user_language_read[]" type="checkbox" value="1"
-                            {{ $language->user_language_read == 1 ? 'checked' : '' }}>
-                    </div>
+            <div class="col-md-1">
+                <label>Read</label>
+
+                <div class="form-check">
+                    <input type="hidden" class="user_language_read_value" name="user_language_read_value[]"
+                        value="{{ $language->user_language_read }}">
+                    <input class="form-check-input enable user_language_read" data-id="user_language_read_value"
+                        name="user_language_read[]" type="checkbox" value="1"
+                        {{ $language->user_language_read == 1 ? 'checked' : '' }}>
+                </div>
+
+            </div>
+            <div class="col-md-1">
+                <label>Write</label>
+                <div class="form-check">
+                    <input type="hidden" class="user_language_write_value" name="user_language_write_value[]"
+                        value="{{ $language->user_language_write }}">
+                    <input class="form-check-input enable user_language_write" data-id="user_language_write_value"
+                        name="user_language_write[]" type="checkbox" value="1"
+                        {{ $language->user_language_write == 1 ? 'checked' : '' }}>
+                </div>
+
+            </div>
+            <div class="col-md-1">
+                <label>Speak</label>
+                <div class="form-check">
+                    <input type="hidden" class="user_language_speak_value" name="user_language_speak_value[]"
+                        value="{{ $language->user_language_speak }}">
+                    <input class="form-check-input enable user_language_speak" data-id="user_language_speak_value"
+                        name="user_language_speak[]" type="checkbox" value="1"
+                        {{ $language->user_language_speak == 1 ? 'checked' : '' }}>
                 </div>
             </div>
-            <div class="col-md-1 form-checkbox">
-                <p>Write</p>
-                <div class="d-flex">
-                    <div class="form-check">
-                        <input type="hidden" class="user_language_write_value" name="user_language_write_value[]"
-                            value="{{ $language->user_language_write }}">
-                        <input class="form-check-input enable user_language_write" data-id="user_language_write_value"
-                            name="user_language_write[]" type="checkbox" value="1"
-                            {{ $language->user_language_write == 1 ? 'checked' : '' }}>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-1 form-checkbox">
-                <p>Speak</p>
-                <div class="d-flex">
-                    <div class="form-check">
-                        <input type="hidden" class="user_language_speak_value" name="user_language_speak_value[]"
-                            value="{{ $language->user_language_speak }}">
-                        <input class="form-check-input enable user_language_speak" data-id="user_language_speak_value"
-                            name="user_language_speak[]" type="checkbox" value="1"
-                            {{ $language->user_language_speak == 1 ? 'checked' : '' }}>
-                    </div>
+            <div class="col-md-2">
+                <div class="delete_language" style="cursor:pointer">
+                    <span> Remove</span>
                 </div>
             </div>
         </div>
@@ -202,37 +204,36 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-2 form-checkbox">
-                <p>Read</p>
-                <div class="d-flex">
-                    <div class="form-check">
-                        <input type="hidden" class="user_language_read_value" name="user_language_read_value[]"
-                            value="2">
-                        <input class="form-check-input enable user_language_read" data-id="user_language_read_value"
-                            name="user_language_read[]" type="checkbox" value="1">
-                    </div>
+            <div class="col-md-1">
+                <label>Read</label>
+                <div class="form-check">
+                    <input type="hidden" class="user_language_read_value" name="user_language_read_value[]"
+                        value="2">
+                    <input class="form-check-input enable user_language_read" data-id="user_language_read_value"
+                        name="user_language_read[]" type="checkbox" value="1">
                 </div>
             </div>
-            <div class="col-md-2 form-checkbox">
-                <p>Write</p>
-                <div class="d-flex">
-                    <div class="form-check">
-                        <input type="hidden" class="user_language_write_value" name="user_language_write_value[]"
-                            value="2">
-                        <input class="form-check-input enable user_language_write" data-id="user_language_write_value"
-                            name="user_language_write[]" type="checkbox" value="1">
-                    </div>
+            <div class="col-md-1 form-checkbox">
+                <label>Write</label>
+                <div class="form-check">
+                    <input type="hidden" class="user_language_write_value" name="user_language_write_value[]"
+                        value="2">
+                    <input class="form-check-input enable user_language_write" data-id="user_language_write_value"
+                        name="user_language_write[]" type="checkbox" value="1">
                 </div>
             </div>
-            <div class="col-md-2 form-checkbox">
-                <p>Speak</p>
-                <div class="d-flex">
-                    <div class="form-check">
-                        <input type="hidden" class="user_language_speak_value" name="user_language_speak_value[]"
-                            value="2">
-                        <input class="form-check-input enable user_language_speak" data-id="user_language_speak_value"
-                            name="user_language_speak[]" type="checkbox" value="1">
-                    </div>
+            <div class="col-md-1 form-checkbox">
+                <label>Speak</label>
+                <div class="form-check">
+                    <input type="hidden" class="user_language_speak_value" name="user_language_speak_value[]"
+                        value="2">
+                    <input class="form-check-input enable user_language_speak" data-id="user_language_speak_value"
+                        name="user_language_speak[]" type="checkbox" value="1">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="delete_language" style="cursor:pointer">
+                    <span> Remove</span>
                 </div>
             </div>
         </div>
@@ -257,7 +258,7 @@
 
 <script>
     let currentCompany = $(".enable");
-    $(document).on("click",'.enable', function() {
+    $(document).on("click", '.enable', function() {
         let dataId = $(this).attr('data-id');
         let parent = $(this).parents('.parentlanguage');
         if ($(this).prop('checked')) {

@@ -231,17 +231,6 @@
                 @foreach (educationGrades() as $k => $grades)
                     <option value="{{ $k + 1 }}" {{ count($data) && $data[0]->user_education_grade == $k + 1 ? 'selected' : '' }}>{{ $grades }}</option>
                 @endforeach
-                {{-- @if ($educationId != '' || count($data))
-                    @php
-                        $id = $educationId != '' ? $educationId : (count($data) && $data[0]->user_education_primary_id ? $data[0]->user_education_primary_id : '');
-                        $getgrades = \App\Http\Controllers\Frontend\Helper\HelperController::getGradesByEducationId($id);
-                    @endphp
-                    @foreach ($getgrades as $grade)
-                        <option value="{{ $grade->education_grade_id }}"
-                            {{ count($data) && $data[0]->user_education_grade == $grade->education_grade_id ? 'selected' : '' }}>
-                            {{ $grade->education_grade_name }}</option>
-                    @endforeach
-                @endif --}}
             </select>
         </div>
     </div>
@@ -250,7 +239,8 @@
         style="display: {{ count($data) && $data[0]->user_education_grade < 4 ? 'block' : 'none' }}">
         <div class="col-md-12">
             <label>Marks *</label>
-            <input type="number" step="0.1" placeholder="Enter Marks" class="form-control" name="user_education_mark" required
+            <input type="number" step="0.1" placeholder="Enter Marks" class="form-control" name="user_education_mark"
+                {{ count($data) && $data[0]->user_education_grade != 4 ? 'required' : '' }}
                 value="{{ count($data) ? $data[0]->user_education_mark : '' }}">
         </div>
     </div>

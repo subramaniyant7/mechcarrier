@@ -815,7 +815,18 @@ class AjaxController extends Controller
             // print_r($languageData);
             // exit;
 
-            $totalRecord = count($languageData['user_language_primary_id']);
+            $userLanguages = HelperController::getUserLanguages($userId);
+            $totalRecord = count($languageData['user_language_id']);
+
+            if(count($userLanguages) != $totalRecord){
+                $deletedLanguageId = [];
+                foreach($userLanguages as $uLanguage){
+                    if(!in_array($uLanguage->user_language_id, $languageData['user_language_id'])){
+                        array_push($deletedLanguageId,$uLanguage->user_language_id);
+                        deleteQuery($uLanguage->user_language_id,'user_languages','user_language_id');
+                    }
+                }
+            }
 
             foreach ($languageData['user_language_primary_id'] as $k => $langloop) {
                 $update = false;
@@ -836,6 +847,10 @@ class AjaxController extends Controller
                 if ($update) {
                     updateQuery('user_languages', 'user_language_id', $languageData['user_language_id'][$k], $prepareData);
                 } else {
+                    $languageExist = HelperController::getUserLanguageExistByLanguageId($langloop, $userId);
+                    if(count($languageExist)){
+                        return ['status' => false,'message' => 'Invalid Action. Language Already added'];
+                    }
                     insertQuery('user_languages', $prepareData);
                 }
             }

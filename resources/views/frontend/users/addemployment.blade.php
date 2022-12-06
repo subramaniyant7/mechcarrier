@@ -326,8 +326,8 @@
 
     <div class="row">
         <div class="col-md-12">
-            <label>Job Profile</label>
-            <textarea name="user_employment_description" rows="7" cols="30" placeholder="" required>{{ count($data) ? $data[0]->user_employment_description : '' }}</textarea>
+            <label>Job Profile (optional)</label>
+            <textarea style="margin-top:1px;" name="user_employment_description" rows="7" cols="30" placeholder="">{{ count($data) ? $data[0]->user_employment_description : '' }}</textarea>
         </div>
         <div class="col-md-12">
             <div class="form-buttons custombtn">

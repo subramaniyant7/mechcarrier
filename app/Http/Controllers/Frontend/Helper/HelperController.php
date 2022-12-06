@@ -40,6 +40,13 @@ class HelperController extends Controller
         return $user->get();
     }
 
+    // Search Page
+    static function GetUserSkilBasedJobs($skil)
+    {
+        return DB::table("employer_post")->where([['employer_post_key_skils', 'like', '%' . $skil . '%'],['status', 1]])->orderBy('employer_post_id', 'desc')->get();
+    }
+    // End
+
     static function getUserCompleteProfileInfo($id)
     {
         $user = [];
@@ -88,6 +95,11 @@ class HelperController extends Controller
     static function getUserProfileById($id)
     {
         return DB::table('user_profile')->where('user_profile_id', $id)->get();
+    }
+
+    static function getUserKeySkilByUserId($id)
+    {
+        return DB::table('user_key_skils')->where('user_id', $id)->get();
     }
 
     static function getUserSkilsById($id)
@@ -210,6 +222,11 @@ class HelperController extends Controller
     static function getUserLanguagesById($id, $userId)
     {
         return DB::table('user_languages')->where([['user_language_id', $id],['user_id', $userId]])->get();
+    }
+
+    static function getUserLanguageExistByLanguageId($id, $userId)
+    {
+        return DB::table('user_languages')->where([['user_language_primary_id', $id],['user_id', $userId]])->get();
     }
 
     static function getUserCurrentEmployment($id)

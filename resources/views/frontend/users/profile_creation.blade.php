@@ -227,7 +227,7 @@
                                         <div class="inside-circle"> {{ $percentage }}% </div>
                                     </div>
                                 </div>
-                                <p>Profile {{ $percentage == 100 ? 'Completed' : 'Pending' }}</p>
+                                <p>Profile Completed</p>
                                 <h6> How to improve</h6>
                             </div>
                             <div class="user-progress">
@@ -356,7 +356,8 @@
                                     <div class="d-flex">
                                         <h4>Resume</h4>
                                         @if ($resumeAvailable)
-                                            <a href="javascript:void(0)" style="color:#676767;text-decoration:none !important;"
+                                            <a href="javascript:void(0)"
+                                                style="color:#676767;text-decoration:none !important;"
                                                 data-id="{{ encryption(session('frontend_userid')) }}"
                                                 class="delete_resume">Delete Resume </a>
                                         @endif
@@ -433,8 +434,6 @@
                                     <div class="basic-details-action"></div>
                                 </div>
 
-
-
                                 <div class="resume-upload resume-headline keyskills" id="userKeySkils">
                                     <div class="d-flex">
                                         <h4>Key Skills </h4>
@@ -466,8 +465,6 @@
                                     </form>
                                 </div>
 
-
-
                                 <div class="resume-upload resume-headline" id="profilesummary">
                                     @php
                                         $summary = count($userInfo['userProfile']) ? $userInfo['userProfile'][0]->user_profile_summary : '';
@@ -494,7 +491,6 @@
                                     </form>
 
                                 </div>
-
 
                                 <div class="resume-upload resume-headline employement" id="userEmployments">
                                     <div class="d-flex">
@@ -535,8 +531,8 @@
                                                     {{ $companyName }} -
                                                     {{ $employment->user_employment_type == 1 ? 'Full Time' : 'Part Time' }}
                                                     -
-                                                    {{ $fromMonth }} {{ $fromYear }} to {{ $toMonth }}
-                                                    {{ $toYear }} ({{ $interval->format('%y years') }}
+                                                    {{ $fromMonth }} {{ $fromYear }} to {{ $employment->user_employment_current_company == 1 ? 'Till Date' : $toMonth .' '.$toYear }}
+                                                    ({{ $interval->format('%y years') }}
                                                     {{ $months }})
                                                     <span class="edit_employment pointer"
                                                         data-id="{{ encryption($employment->user_employment_id) }}"
@@ -544,10 +540,11 @@
                                                         Edit
                                                     </span>
                                                 </h5>
-                                                @if ($employment->user_employment_description != '')
-                                                    <p><span>Job Profile :</span>
-                                                        {{ $employment->user_employment_description }}</p>
-                                                @endif
+
+                                                <p><span>Job Profile :</span>
+                                                    {{ $employment->user_employment_description != '' ? $employment->user_employment_description : '-' }}
+                                                </p>
+
                                             </div>
                                             <div class="edit_employment_content"
                                                 id="employment_{{ $employment->user_employment_id }}"></div>
@@ -556,21 +553,19 @@
                                     <div class="action_employment"></div>
                                 </div>
 
-
-
-                                <div class="resume-upload resume-headline employement" id="userEducations">
+                                <div class="resume-upload resume-headline employement education" id="userEducations">
                                     <div class="d-flex">
                                         <h4>Education </h4>
                                         <span class="create_education pointer"><img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/edit.svg') }}" />
                                             Add</span>
                                     </div>
-                                    <div class="education-list">
+                                    <div class="education-list ">
                                         @if (count($userInfo['userEducations']))
                                             @foreach ($userInfo['userEducations'] as $education)
-                                                <h5>
+                                                <h5 class="education-info">
                                                     @php
-                                                        $educationName = $courseName = $specilization = '';
+                                                        $educationName = $courseName = $specilization = $university = '';
                                                         $educationData = \App\Http\Controllers\Frontend\Helper\HelperController::getEducationInfo($education->user_education_primary_id);
                                                         if (count($educationData)) {
                                                             $educationName = $educationData[0]->education_name;
@@ -585,6 +580,16 @@
                                                             $specializationData = \App\Http\Controllers\Frontend\Helper\HelperController::getSpecializationInfo($education->user_education_specialization);
                                                             if (count($specializationData)) {
                                                                 $specilization = $specializationData[0]->education_specialization_name;
+                                                            } else {
+                                                                $specilization = $education->user_education_specialization;
+                                                            }
+                                                        }
+                                                        if ($education->user_education_university != '') {
+                                                            $universityData = \App\Http\Controllers\Frontend\Helper\HelperController::getUniversityInfo($education->user_education_university);
+                                                            if (count($universityData)) {
+                                                                $university = $universityData[0]->education_university_name;
+                                                            } else {
+                                                                $university = $education->user_education_university;
                                                             }
                                                         }
                                                         $years = Year();
@@ -598,6 +603,7 @@
                                                     {{ $educationName }} :
                                                     {{ $courseName }}
                                                     {{ $specilization != '' ? $specilization . ' -' : '' }}
+                                                    {{ $university != '' ? $university . ' -' : '' }}
                                                     {{ $years[$education->user_education_passed_year - 1] }}
                                                     <span class="edit_education pointer"
                                                         data-id="{{ encryption($education->user_education_id) }}"
@@ -614,8 +620,7 @@
                                     <div class="action_education"></div>
                                 </div>
 
-
-                                <div class="resume-upload resume-headline employement" id="location">
+                                <div class="resume-upload resume-headline employement location" id="location">
                                     @php
                                         $cLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_city != '' && $userInfo['userProfile'][0]->user_current_state != '';
                                         $pLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_city != '' && $userInfo['userProfile'][0]->user_preferred_state != '';
@@ -650,7 +655,7 @@
 
                                     <div class="action_currentlocation"></div>
 
-                                    <div style="margin-top:30px;">
+                                    <div style="margin-top:15px;">
                                         <div class="d-flex">
                                             <h4>Preferred Location </h4>
                                             <span class="action_preferred_location pointer"
@@ -698,11 +703,7 @@
                                     </div>
                                 </div>
 
-
-
-
-
-                                <div class="resume-upload resume-headline employement" id="userITSkils">
+                                <div class="resume-upload resume-headline employement itskils" id="userITSkils">
                                     <div class="d-flex">
                                         <h4>IT skill </h4>
                                         <span class="create_itskill pointer"><img
@@ -732,7 +733,8 @@
                                     <div class="action_itskill"></div>
                                 </div>
 
-                                <div class="resume-upload resume-headline employement" id="userCertifications">
+                                <div class="resume-upload resume-headline employement certification"
+                                    id="userCertifications">
                                     <div class="d-flex">
                                         <h4>Certifications </h4>
                                         <span class="create_certification pointer"><img
@@ -742,7 +744,7 @@
                                     <div class="education-list">
                                         @if (count($userInfo['userCertification']))
                                             @foreach ($userInfo['userCertification'] as $certification)
-                                                <div>
+                                                <div class="certification-list">
                                                     <h5>{{ $certification->user_certification_name }}
                                                         -
                                                         Duration :
@@ -769,7 +771,6 @@
                                     <div class="action_certification"></div>
                                 </div>
 
-
                                 <div class="resume-upload resume-headline employement personal-details"
                                     id="personadetail">
                                     <div class="d-flex">
@@ -784,7 +785,7 @@
                                             @endif
                                         </span>
                                     </div>
-                                    <div class="education-list">
+                                    <div class="education-list personal-data">
                                         <ul>
                                             <li>Personal :
                                                 <span>{{ $userInfo['userDetails'][0]->user_gender != ''
