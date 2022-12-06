@@ -560,7 +560,7 @@ class AjaxController extends Controller
                 return $response;
             }
 
-            if (($formData['user_employment_joining_year'] ==  $formData['user_employment_working_year']) && ($formData['user_employment_joining_month'] < $formData['user_employment_working_month'])) {
+            if (($formData['user_employment_joining_year'] ==  $formData['user_employment_working_year']) && ($formData['user_employment_joining_month'] > $formData['user_employment_working_month'])) {
                 $response['message'] = 'Working date should be greater than Joining Date';
                 return $response;
             }
