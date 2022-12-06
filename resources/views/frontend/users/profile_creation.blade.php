@@ -482,7 +482,7 @@
                                         <div class="text-left inline_text">{{ $summary }} </div>
                                         <textarea required class="inputinfo hide" name="user_profile_summary" rows="3" cols="30" minlength="100"
                                             maxlength="1000"
-                                            placeholder="Add Profile Summary e.g : Design Engineer with 5.6 year experience in Automotive Plastic Product Design with 1 year BIW design.">{{ $summary }}</textarea>
+                                            placeholder="Add Profile Summary">{{ $summary }}</textarea>
                                         <span class="text_limit"> 0/1000 </span>
                                         <div class="form-buttons">
                                             <button type="button" class="btn btn-cancel cancelaction">Cancel</button>
