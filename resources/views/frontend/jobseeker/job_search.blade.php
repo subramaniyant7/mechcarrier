@@ -8,16 +8,40 @@
                     <div class="col-md-7">
                         <div class="user-dasboard-form">
                             <div class="form-dflex">
-                                <form method="GET">
+                                <form method="GET" action="">
                                     <div class="d-flex">
                                         <input type="text" name="skil" class="form-control" required
-                                            placeholder="Search job by skill, destination or companies">
+                                            placeholder="Search job by skill, description"
+                                            value="{{ request()->get('skil') }}">
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </div>
-                                    <div class="d-flex">
-                                        <input type="text" name="location" placeholder="Location" class="form-control">
-                                        <input type="text" name="experience" placeholder="Experience"
-                                            class="form-control">
+                                    <div style="display: flex">
+                                        @php
+                                            $cityName = '';
+                                            if (request()->get('location') != '') {
+                                                $cityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityInfo(request()->get('location'));
+                                                if (count($cityInfo)) {
+                                                    $cityName = $cityInfo[0]->city_name;
+                                                }
+                                            }
+                                        @endphp
+                                        <div style="position:relative;width:80%;margin-right:2em;"
+                                            class="autocomplete_ui_parent">
+                                            <input type="text" placeholder="Search Location"
+                                                class="form-control autocomplete_actual_id location"
+                                                value="{{ $cityName }}" />
+                                            <input type="hidden" class="autocomplete_id" name="location"
+                                                value="{{ request()->get('location') }}">
+                                            <div class="autocomplete-items" style="display:none"></div>
+                                        </div>
+                                        <select class="form-control" name="experience" style="width:50%;">
+                                            <option value="">Select</option>
+                                            @foreach (experienceGap() as $k => $experience)
+                                                <option value={{ $k + 1 }}
+                                                    {{ request()->get('experience') == $k + 1 ? 'selected' : '' }}>
+                                                    {{ $experience }} Years</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </form>
                             </div>
@@ -43,7 +67,8 @@
                                     @foreach (employmentType() as $k => $employment)
                                         <li>
                                             <div class="form-check">
-                                                <input class="form-check-input employment_type" name="employment_type" type="checkbox" value="{{ $k + 1 }}">
+                                                <input class="form-check-input employment_type" name="employment_type"
+                                                    type="checkbox" value="{{ $k + 1 }}">
                                                 <label class="form-check-label">
                                                     {{ $employment }}
                                                 </label>
@@ -110,12 +135,11 @@
                                 <div class="job-card">
                                     @php
                                         $employerName = $stateName = $cityName = '';
-                                        $companyLogo = FRONTEND.'/assets/images/company_logo.svg';
+                                        $companyLogo = FRONTEND . '/assets/images/company_logo.svg';
                                         $employerInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getEmployerInfoById($skilMatchJob['employer_post_employee_id']);
                                         if (count($employerInfo)) {
                                             $employerName = $employerInfo[0]->employer_company_name;
-                                            $companyLogo = $employerInfo[0]->employer_company_logo != '' ?
-                                                '/uploads/employer/company/'.$employerInfo[0]->employer_company_logo : $companyLogo;
+                                            $companyLogo = $employerInfo[0]->employer_company_logo != '' ? '/uploads/employer/company/' . $employerInfo[0]->employer_company_logo : $companyLogo;
                                         }
 
                                         $stateInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getStateById($skilMatchJob['employer_post_location_state']);
@@ -185,7 +209,7 @@
                             @endforelse
 
                         </div>
-                        <div class="pagination">
+                        <div class="pagination" style="display: none;">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination pg-blue justify-content-center">
                                     <li class="page-item disabled">

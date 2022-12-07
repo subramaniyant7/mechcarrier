@@ -43,7 +43,23 @@ class HelperController extends Controller
     // Search Page
     static function GetUserSkilBasedJobs($skil)
     {
-        return DB::table("employer_post")->where([['employer_post_key_skils', 'like', '%' . $skil . '%'],['status', 1]])->orderBy('employer_post_id', 'desc')->get();
+        return DB::table("employer_post")->where([['employer_post_key_skils', 'like', '%' . $skil . '%'],
+        ['employer_post_save_status',2],['employer_post_approval_status',1],['status', 1]])->orderBy('employer_post_id', 'desc')->get();
+    }
+
+    static function GetUserSearchJobs($skil,$location='',$experience='')
+    {
+        $requestData = ['employer_post_key_skils', 'employer_post_description'];
+
+        $response = DB::table("employer_post")->where(function($q) use($requestData, $skil) {
+                foreach ($requestData as $field)
+                   $q->orWhere($field, 'like', "%{$skil}%");
+        })->where([['employer_post_save_status',2],['employer_post_approval_status',1],['status', 1]]);
+
+        if($location != '') $response->where('employer_post_location_city', $location);
+        if($experience != '') $response->where('employer_post_experience', $experience);
+        return $response->where([['employer_post_save_status',2],['employer_post_approval_status',1],['status', 1]])
+            ->orderBy('employer_post_id', 'desc')->get();
     }
     // End
 

@@ -84,6 +84,14 @@
                         Part-time
                     </label>
                 </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="3" name="user_employment_type"
+                        {{ $type == 'add' ? 'required' : '' }}
+                        {{ count($data) && $data[0]->user_employment_type == 3 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Contract
+                    </label>
+                </div>
             </div>
 
         </div>

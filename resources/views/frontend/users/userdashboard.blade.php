@@ -1,5 +1,5 @@
 @extends('frontend.layout')
-@section('title','User Dashboard')
+@section('title', 'User Dashboard')
 @section('content')
     <main>
         <div class="user-dashboard">
@@ -9,14 +9,30 @@
                         <div class="col-md-7">
                             <div class="user-dasboard-form">
                                 <div class="form-dflex">
-                                    <form>
+                                    <form action="{{ route('jobsearch') }}" method="GET">
                                         <div class="d-flex">
-                                            <input type="text" class="form-control" placeholder="Search job by skill, destination or companies" />
+                                            <input type="text" required name="skil" class="form-control"
+                                                placeholder="Search job by skill, description" />
                                             <button type="submit" class="btn btn-primary">Search</button>
                                         </div>
-                                        <div class="d-flex">
-                                            <input type="text" placeholder="Location" class="form-control" />
-                                            <input type="text" placeholder="Experience" class="form-control" />
+                                        <div style="display: flex">
+                                            <div style="position:relative;width:80%;margin-right:2em;"
+                                                class="autocomplete_ui_parent">
+                                                <input type="text" placeholder="Search Location"
+                                                    class="form-control autocomplete_actual_id location"
+                                                    value="" />
+                                                <input type="hidden" class="autocomplete_id" name="location"
+                                                    value="">
+                                                <div class="autocomplete-items" style="display:none"></div>
+                                            </div>
+                                            <select class="form-control" name="experience" style="width:50%;">
+                                                <option value="">Select</option>
+                                                @foreach (experienceGap() as $k => $experience)
+                                                    <option value={{ $k + 1 }}
+                                                        >
+                                                        {{ $experience }} Years</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </form>
                                 </div>
@@ -31,11 +47,12 @@
                         <div class="col-md-7">
                             <div class="beware">
                                 <div class="icon">
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/attention.svg')}}" />
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/attention.svg') }}" />
                                 </div>
                                 <div class="beware-text">
                                     <h3>Beware of fake calls and emails or scammers</h3>
-                                    <p>Mechcareer.com not ask money for promising a jobs or interview. <br/>Dont share OTP, passward and more important details</p>
+                                    <p>Mechcareer.com not ask money for promising a jobs or interview. <br />Dont share OTP,
+                                        passward and more important details</p>
                                 </div>
                                 <div class="beware-button">
                                     <button type="button" class="btn btn-primary">Got it</button>
@@ -51,18 +68,24 @@
                                             <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                             <p> Collins Aerospace technology</p>
                                         </div>
-                                        <img src="{{ URL::asset(FRONTEND.'/assets/images/jobicon.svg')}}" />
+                                        <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}" />
                                     </div>
                                     <div class="job-card-details">
                                         <div class="job-card-info">
                                             <div class="years">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}" /> </span>5-10 Years</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}" />
+                                                    </span>5-10 Years</p>
                                             </div>
                                             <div class="location">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}" /> </span>Banglore</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}" />
+                                                    </span>Banglore</p>
                                             </div>
                                             <div class="salary">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}" /> </span>5-6 Lakhs</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}" />
+                                                    </span>5-6 Lakhs</p>
                                             </div>
                                         </div>
                                         <div class="job-posted-date">
@@ -70,10 +93,14 @@
                                         </div>
                                     </div>
                                     <div class="job-card-description">
-                                        <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,  Continue. In this role the Lead Engineer / Senior Lead Engineer will actively participate in reviewing the Lead Engineer,  Senior Lead Engineer will actively participat...</p>
+                                        <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
+                                            Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
+                                            participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
+                                            participat...</p>
                                     </div>
                                     <div class="job-card-apply">
-                                        <h4><img src="{{ URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}" /> Key skill : <span>SAP, PLM, CATIA</span></h4>
+                                        <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}" /> Key
+                                            skill : <span>SAP, PLM, CATIA</span></h4>
                                         <div class="job-card-button">
                                             <button type="button" class="btn btn-primary  bg-white">Save</button>
                                             <button type="button" class="btn btn-primary">Apply</button>
@@ -88,18 +115,24 @@
                                             <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                             <p> Collins Aerospace technology</p>
                                         </div>
-                                        <img src="{{ URL::asset(FRONTEND.'/assets/images/jobicon.svg')}}" />
+                                        <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}" />
                                     </div>
                                     <div class="job-card-details">
                                         <div class="job-card-info">
                                             <div class="years">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}" /> </span>5-10 Years</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}" />
+                                                    </span>5-10 Years</p>
                                             </div>
                                             <div class="location">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}" /> </span>Banglore</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}" />
+                                                    </span>Banglore</p>
                                             </div>
                                             <div class="salary">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}" /> </span>5-6 Lakhs</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}" />
+                                                    </span>5-6 Lakhs</p>
                                             </div>
                                         </div>
                                         <div class="job-posted-date">
@@ -107,10 +140,14 @@
                                         </div>
                                     </div>
                                     <div class="job-card-description">
-                                        <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,  Continue. In this role the Lead Engineer / Senior Lead Engineer will actively participate in reviewing the Lead Engineer,  Senior Lead Engineer will actively participat...</p>
+                                        <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
+                                            Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
+                                            participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
+                                            participat...</p>
                                     </div>
                                     <div class="job-card-apply">
-                                        <h4><img src="{{ URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}" /> Key skill : <span>SAP, PLM, CATIA</span></h4>
+                                        <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}" /> Key
+                                            skill : <span>SAP, PLM, CATIA</span></h4>
                                         <div class="job-card-button">
                                             <button type="button" class="btn btn-primary  bg-white">Save</button>
                                             <button type="button" class="btn btn-primary">Apply</button>
@@ -125,18 +162,24 @@
                                             <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                             <p> Collins Aerospace technology</p>
                                         </div>
-                                        <img src="{{ URL::asset(FRONTEND.'/assets/images/jobicon.svg')}}" />
+                                        <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}" />
                                     </div>
                                     <div class="job-card-details">
                                         <div class="job-card-info">
                                             <div class="years">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}" /> </span>5-10 Years</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}" />
+                                                    </span>5-10 Years</p>
                                             </div>
                                             <div class="location">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}" /> </span>Banglore</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}" />
+                                                    </span>Banglore</p>
                                             </div>
                                             <div class="salary">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}" /> </span>5-6 Lakhs</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}" />
+                                                    </span>5-6 Lakhs</p>
                                             </div>
                                         </div>
                                         <div class="job-posted-date">
@@ -144,10 +187,14 @@
                                         </div>
                                     </div>
                                     <div class="job-card-description">
-                                        <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,  Continue. In this role the Lead Engineer / Senior Lead Engineer will actively participate in reviewing the Lead Engineer,  Senior Lead Engineer will actively participat...</p>
+                                        <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
+                                            Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
+                                            participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
+                                            participat...</p>
                                     </div>
                                     <div class="job-card-apply">
-                                        <h4><img src="{{ URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}" /> Key skill : <span>SAP, PLM, CATIA</span></h4>
+                                        <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}" /> Key
+                                            skill : <span>SAP, PLM, CATIA</span></h4>
                                         <div class="job-card-button">
                                             <button type="button" class="btn btn-primary  bg-white">Save</button>
                                             <button type="button" class="btn btn-primary">Apply</button>
@@ -162,18 +209,24 @@
                                             <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                             <p> Collins Aerospace technology</p>
                                         </div>
-                                        <img src="{{ URL::asset(FRONTEND.'/assets/images/jobicon.svg')}}" />
+                                        <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}" />
                                     </div>
                                     <div class="job-card-details">
                                         <div class="job-card-info">
                                             <div class="years">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}" /> </span>5-10 Years</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}" />
+                                                    </span>5-10 Years</p>
                                             </div>
                                             <div class="location">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}" /> </span>Banglore</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}" />
+                                                    </span>Banglore</p>
                                             </div>
                                             <div class="salary">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}" /> </span>5-6 Lakhs</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}" />
+                                                    </span>5-6 Lakhs</p>
                                             </div>
                                         </div>
                                         <div class="job-posted-date">
@@ -181,10 +234,14 @@
                                         </div>
                                     </div>
                                     <div class="job-card-description">
-                                        <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,  Continue. In this role the Lead Engineer / Senior Lead Engineer will actively participate in reviewing the Lead Engineer,  Senior Lead Engineer will actively participat...</p>
+                                        <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
+                                            Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
+                                            participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
+                                            participat...</p>
                                     </div>
                                     <div class="job-card-apply">
-                                        <h4><img src="{{ URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}" /> Key skill : <span>SAP, PLM, CATIA</span></h4>
+                                        <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}" /> Key
+                                            skill : <span>SAP, PLM, CATIA</span></h4>
                                         <div class="job-card-button">
                                             <button type="button" class="btn btn-primary  bg-white">Save</button>
                                             <button type="button" class="btn btn-primary">Apply</button>
@@ -199,18 +256,24 @@
                                             <h3>Lead Engineer / Senior Lead Engineer (Product Design)</h3>
                                             <p> Collins Aerospace technology</p>
                                         </div>
-                                        <img src="{{ URL::asset(FRONTEND.'/assets/images/jobicon.svg')}}" />
+                                        <img src="{{ URL::asset(FRONTEND . '/assets/images/jobicon.svg') }}" />
                                     </div>
                                     <div class="job-card-details">
                                         <div class="job-card-info">
                                             <div class="years">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}" /> </span>5-10 Years</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}" />
+                                                    </span>5-10 Years</p>
                                             </div>
                                             <div class="location">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}" /> </span>Banglore</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}" />
+                                                    </span>Banglore</p>
                                             </div>
                                             <div class="salary">
-                                                <p><span><img src="{{ URL::asset(FRONTEND.'/assets/images/rupeeicon.svg')}}" /> </span>5-6 Lakhs</p>
+                                                <p><span><img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}" />
+                                                    </span>5-6 Lakhs</p>
                                             </div>
                                         </div>
                                         <div class="job-posted-date">
@@ -218,10 +281,14 @@
                                         </div>
                                     </div>
                                     <div class="job-card-description">
-                                        <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,  Continue. In this role the Lead Engineer / Senior Lead Engineer will actively participate in reviewing the Lead Engineer,  Senior Lead Engineer will actively participat...</p>
+                                        <p>CATIA, PLM , Change management, SAP , Avaition, Aerospace, CAD, Senior, Lead,
+                                            Continue. In this role the Lead Engineer / Senior Lead Engineer will actively
+                                            participate in reviewing the Lead Engineer, Senior Lead Engineer will actively
+                                            participat...</p>
                                     </div>
                                     <div class="job-card-apply">
-                                        <h4><img src="{{ URL::asset(FRONTEND.'/assets/images/filetexticon.svg')}}" /> Key skill : <span>SAP, PLM, CATIA</span></h4>
+                                        <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}" /> Key
+                                            skill : <span>SAP, PLM, CATIA</span></h4>
                                         <div class="job-card-button">
                                             <button type="button" class="btn btn-primary  bg-white">Save</button>
                                             <button type="button" class="btn btn-primary">Apply</button>
@@ -246,26 +313,28 @@
                                     <div class="col-md-6">
                                         <div class="enhance-your-resume-card">
                                             <div class="enhance-your-resume-image">
-                                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er1.svg')}}" />
+                                                <img src="{{ URL::asset(FRONTEND . '/assets/images/home/er1.svg') }}" />
                                             </div>
                                             <div class="enhance-your-resume-card-title">
                                                 <h4>Resume Building</h4>
-                                                <p>Grab the attention of employers by building best grab the attention ...</p>
+                                                <p>Grab the attention of employers by building best grab the attention ...
+                                                </p>
                                                 <a href="#" target="_blank">Read More<span><img
-                                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/home/arrowsvgicon.svg') }}" /></span></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="enhance-your-resume-card">
                                             <div class="enhance-your-resume-image">
-                                                <img src="{{ URL::asset(FRONTEND.'/assets/images/home/er2.svg')}}" />
+                                                <img src="{{ URL::asset(FRONTEND . '/assets/images/home/er2.svg') }}" />
                                             </div>
                                             <div class="enhance-your-resume-card-title">
                                                 <h4>Career Booster</h4>
-                                                <p>Grab the attention of employers by building best grab the attention ...</p>
+                                                <p>Grab the attention of employers by building best grab the attention ...
+                                                </p>
                                                 <a href="#" target="_blank">Read More<span><img
-                                                            src="{{ URL::asset(FRONTEND.'/assets/images/home/arrowsvgicon.svg')}}" /></span></a>
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/home/arrowsvgicon.svg') }}" /></span></a>
                                             </div>
                                         </div>
                                     </div>
@@ -283,14 +352,17 @@
                             <div class="user-dashboard-sidebar">
                                 <div class="user-information">
                                     <div class="edit-profile">
-                                        <a href="{{ route('profilecreation') }}" > <span><img src="{{ URL::asset(FRONTEND.'/assets/images/editprofileicon.svg')}}" /></span> Edit Profile</a>
+                                        <a href="{{ route('profilecreation') }}"> <span><img
+                                                    src="{{ URL::asset(FRONTEND . '/assets/images/editprofileicon.svg') }}" /></span>
+                                            Edit Profile</a>
                                     </div>
                                     <div class="personal-info">
                                         <div class="user-image">
-                                            <img style="height:70px;" src="{{ URL::asset(FRONTEND.'/assets/images/profile_pic.svg')}}" />
+                                            <img style="height:70px;"
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profile_pic.svg') }}" />
                                         </div>
                                         <div class="user-info">
-                                            <h3>{{ $userInfo[0]->user_firstname.' '. $userInfo[0]->user_lastname}}</h3>
+                                            <h3>{{ $userInfo[0]->user_firstname . ' ' . $userInfo[0]->user_lastname }}</h3>
                                             <h4>Senior product design engineer </h4>
                                             <h5>at ISOPARA engineering services ...</h5>
                                         </div>
@@ -298,15 +370,17 @@
                                     <div class="user-expectations">
                                         <div class="exp-icon">
                                             <div class="exp-icon-details">
-                                                <img src="{{ URL::asset(FRONTEND.'/assets/images/mappinicon.svg')}}" />
+                                                <img src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}" />
                                                 <p>Pune</p>
                                             </div>
                                             <div class="exp-icon-details">
-                                                <img src="{{ URL::asset(FRONTEND.'/assets/images/briefccaseicon.svg')}}" />
+                                                <img
+                                                    src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}" />
                                                 <p>2.6 Years</p>
                                             </div>
                                             <div class="exp-icon-details">
-                                                <img src="{{ URL::asset(FRONTEND.'/assets/images/rupeedashicon.svg')}}" />
+                                                <img
+                                                    src="{{ URL::asset(FRONTEND . '/assets/images/rupeedashicon.svg') }}" />
                                                 <p>5-6 Lakh</p>
                                             </div>
                                         </div>
@@ -363,18 +437,30 @@
                                         </label>
                                         <h4>Profile Active (Visible)</h4>
                                     </div>
-                                    <hr/>
+                                    <hr />
                                     <div class="userdashboard-information">
                                         <ul>
-                                            <li><span><img src="{{ URL::asset(FRONTEND.'/assets/images/mailicon.svg')}}" /> </span> My mail box (2) - <a href="#">View</a></li>
-                                            <li><span><img src="{{ URL::asset(FRONTEND.'/assets/images/tagicon.svg')}}" /> </span>Referal link  - <a href="#">Share</a></li>
-                                            <li><span><img src="{{ URL::asset(FRONTEND.'/assets/images/monitoricon.svg')}}" /> </span> My courses & services - <a href="#">View</a></li>
-                                            <li><span><img src="{{ URL::asset(FRONTEND.'/assets/images/bellicon.svg')}}" /> </span> Jobs notification alerts - <a href="#">Manage</a></li>
-                                            <li><span><img src="{{ URL::asset(FRONTEND.'/assets/images/gifticon.svg')}}" /> </span> My referal earn points  - 2</li>
-                                            <li><span><img src="{{ URL::asset(FRONTEND.'/assets/images/saveicon.svg')}}" /> </span> My saved jobs - <a href="#">View</a></li>
+                                            <li><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mailicon.svg') }}" />
+                                                </span> My mail box (2) - <a href="#">View</a></li>
+                                            <li><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/tagicon.svg') }}" />
+                                                </span>Referal link - <a href="#">Share</a></li>
+                                            <li><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/monitoricon.svg') }}" />
+                                                </span> My courses & services - <a href="#">View</a></li>
+                                            <li><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/bellicon.svg') }}" />
+                                                </span> Jobs notification alerts - <a href="#">Manage</a></li>
+                                            <li><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/gifticon.svg') }}" />
+                                                </span> My referal earn points - 2</li>
+                                            <li><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/saveicon.svg') }}" />
+                                                </span> My saved jobs - <a href="#">View</a></li>
                                         </ul>
                                     </div>
-                                    <hr/>
+                                    <hr />
                                     <div class="user-data-selection">
                                         <form>
                                             <label>Current Working In</label>
@@ -399,25 +485,25 @@
                             <div class="top-hiring-recruiter">
                                 <h2>Top Hiring Recruiters </h2>
                                 <div class="top-hiring-recruiter-icon">
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/tc1.svg')}}" />
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/tc2.svg')}}" />
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/tc1.svg') }}" />
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/tc2.svg') }}" />
                                 </div>
                                 <div class="top-hiring-recruiter-icon">
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/tc3.svg')}}" />
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/tc4.svg')}}" />
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/tc3.svg') }}" />
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/tc4.svg') }}" />
                                 </div>
                                 <div class="top-hiring-recruiter-icon">
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/tc5.svg')}}" />
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/tc6.svg')}}" />
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/tc5.svg') }}" />
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/tc6.svg') }}" />
                                 </div>
                                 <div class="top-hiring-recruiter-icon">
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/tc7.svg')}}" />
-                                    <img src="{{ URL::asset(FRONTEND.'/assets/images/tc8.svg')}}" />
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/tc7.svg') }}" />
+                                    <img src="{{ URL::asset(FRONTEND . '/assets/images/tc8.svg') }}" />
                                 </div>
                             </div>
                             <div class="mech-advertisment">
                                 <span>ad</span>
-                                <h2>Makeover your skill <br/>
+                                <h2>Makeover your skill <br />
                                     using our online courses</h2>
                                 <ul>
                                     <li>CAD Courses</li>

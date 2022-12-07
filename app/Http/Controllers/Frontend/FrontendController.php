@@ -164,17 +164,29 @@ class FrontendController extends Controller
         // echo '<pre>';
         // print_r($userKeySkilInfo);
 
-        if(count($userKeySkilInfo)){
-            foreach($userKeySkilInfo as $skil){
-                $skilJob = HelperController::GetUserSkilBasedJobs($skil->user_key_skil_text);
-                if(count($skilJob)){
-                    $jobData = json_decode(json_encode($skilJob),true);
-
-                    array_push($skilMatchJobs,$jobData);
+        if($request->input('skil') == ''){
+            if(count($userKeySkilInfo)){
+                foreach($userKeySkilInfo as $skil){
+                    $skilJob = HelperController::GetUserSkilBasedJobs($skil->user_key_skil_text);
+                    if(count($skilJob)){
+                        $jobData = json_decode(json_encode($skilJob),true);
+                        array_push($skilMatchJobs,$jobData);
+                    }
                 }
             }
-            if(count($skilMatchJobs)) $skilMatchJobs = $skilMatchJobs[0];
         }
+
+        // $skilMatchJobs = json_decode(json_encode($skilMatchJobs), FALSE);
+
+        if($request->input('skil') != ''){
+            $location = $request->input('location');
+            $searchSkil = HelperController::GetUserSearchJobs($request->input('skil'),$request->input('location'),$request->input('experience'));
+            if(count($searchSkil)){
+                array_push($skilMatchJobs,json_decode(json_encode($searchSkil),true));
+            }
+        }
+
+        if(count($skilMatchJobs)) $skilMatchJobs = $skilMatchJobs[0];
 
         // Stop($skilMatchJobs);
         return view('frontend.jobseeker.job_search', compact('skilMatchJobs'));
