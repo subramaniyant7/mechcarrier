@@ -46,7 +46,7 @@
                     <div class="col-md-4">
                         <div class="d-flex">
                             <div style="position:relative" class="autocomplete_ui_parent">
-                                <input type="text" placeholder="Select Preferred State" name="user_preferred_state[]"
+                                <input type="text" placeholder="Select State" name="user_preferred_state[]"
                                     class="form-control autocomplete_actual_id user_preferred_state" required
                                     value="{{ $preferredState }}" />
                                 <input type="hidden" name="preferred_state_id[]"
@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-md-4">
                         <div style="position:relative" class="autocomplete_ui_parent">
-                            <input type="text" placeholder="Select Preferred City" name="user_preferred_city[]"
+                            <input type="text" placeholder="Select City" name="user_preferred_city[]"
                                 class="form-control autocomplete_actual_id user_preferred_city"
                                 {{ count($data) && $stateId[$l] == 0 ? '' : 'required' }} value="{{ $preferredCity }}"
                                 style="display: {{ count($data) && $stateId[$l] == 0 ? 'none' : 'block' }}" />

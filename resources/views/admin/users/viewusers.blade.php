@@ -66,7 +66,7 @@
 
                                 <td>
                                     <span
-                                        class="shadow-none badge {{ loginStatusClass()[$user->user_email_verified - 1] }}">
+                                        class="shadow-none badge {{ $user->user_email_verified != '' ? loginStatusClass()[$user->user_email_verified - 1] : '' }}">
                                         <i class="fa fa-{{ $user->user_email_verified == 1 ? 'check' : 'times' }}"
                                             aria-hidden="true"></i>
                                     </span>
@@ -74,14 +74,14 @@
 
                                 <td>
                                     <span
-                                        class="shadow-none badge {{ loginStatusClass()[$user->user_phonenumber_verified - 1] }}">
+                                        class="shadow-none badge {{ $user->user_phonenumber_verified != '' ? loginStatusClass()[$user->user_phonenumber_verified - 1] : '' }}">
                                         <i class="fa fa-{{ $user->user_phonenumber_verified == 1 ? 'check' : 'times' }}"
                                             aria-hidden="true"></i>
                                     </span>
                                 </td>
                                 <td> {{ registeredFrom()[$user->user_register_type - 1] }} </td>
                                 <td>
-                                    <span class="shadow-none badge {{ loginStatusClass()[$user->user_logged_in - 1] }}">
+                                    <span class="shadow-none badge {{ $user->user_logged_in != '' ? loginStatusClass()[$user->user_logged_in - 1] : '' }}">
                                         {{ loginStatus()[$user->user_logged_in - 1] }}
                                     </span>
                                 </td>

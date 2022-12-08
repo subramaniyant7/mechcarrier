@@ -57,7 +57,7 @@
                         @forelse($employerspost as $k => $employerspost)
                             @php
                                 $class = $employerspost->status == 1 ? 'badge-light-success' : '';
-                                $employerName = $stateName = $cityName = '';
+                                $employerName = $stateName = $cityName = $educationName = '';
                                 $employerInfo = App\Http\Controllers\Admin\Helper\CommonHelperController::getEmployers($employerspost->employer_post_employee_id);
                                 if (count($employerInfo)) {
                                     $employerName = $employerInfo[0]->employer_company_name;
@@ -71,9 +71,13 @@
                                     foreach ($citySplit as $k => $cities) {
                                         $cityInfo = App\Http\Controllers\Admin\Helper\CommonHelperController::getCity($cities);
                                         if (count($cityInfo)) {
-                                            $cityName .= $cityInfo[0]->city_name . (count($citySplit) != ($k + 1) ? ',' : '');
+                                            $cityName .= $cityInfo[0]->city_name . (count($citySplit) != $k + 1 ? ',' : '');
                                         }
                                     }
+                                }
+                                $educationInfo = App\Http\Controllers\Admin\Helper\CommonHelperController::getEducation($employerspost->employer_post_qualification);
+                                if (count($educationInfo)) {
+                                    $educationName = $educationInfo[0]->education_name;
                                 }
                             @endphp
                             <tr>
@@ -82,7 +86,7 @@
                                 <td> {{ $employerspost->employer_post_headline }} </td>
                                 <td> {{ employmentType()[$employerspost->employer_post_employement_type - 1] }} </td>
                                 <td> {{ $employerspost->employer_post_key_skils }} </td>
-                                <td> {{ education()[$employerspost->employer_post_qualification - 1] }} </td>
+                                <td> {{ $educationName }} </td>
                                 <td> {{ experienceGap()[$employerspost->employer_post_experience - 1] . ' Years' }} </td>
                                 <td> {{ SalaryLakhs()[$employerspost->employer_post_salary_range_from_lakhs - 1] }}L -
                                     {{ SalaryLakhs()[$employerspost->employer_post_salary_range_to_lakhs - 1] }}L </td>

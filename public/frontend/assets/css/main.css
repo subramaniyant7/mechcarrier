@@ -2625,19 +2625,19 @@ span.switch-handle {
 }
 
 .resume-upload.basic-details {
-    padding: 20px 30px 6px;
+    padding: 20px 30px 20px;
 }
 
 .resume-upload.keyskills {
-    padding: 20px 30px 6px;
+    padding: 20px 30px 20px;
 }
 
 .resume-upload.employement {
-    padding: 20px 30px 6px;
+    padding: 20px 30px 20px;
 }
 
 .resume-upload.education {
-    padding: 20px 30px 22px;
+    padding: 20px 30px;
 }
 
 .resume-upload.education .education-list .education-info {
@@ -2651,6 +2651,10 @@ span.switch-handle {
 .resume-upload.itskils,
 .resume-upload.certification {
     padding: 20px 30px 20px;
+}
+
+.resume-upload.certification .action_certification, .mb-10{
+    margin-bottom: 10px;
 }
 
 .resume-upload.certification .education-list .certification-list {
@@ -2760,7 +2764,7 @@ span.switch-handle {
 .resume-upload.resume-headline form .form-buttons {
     width: 100%;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .resume-upload.resume-headline form .form-buttons .btn-cancel {
@@ -2807,6 +2811,7 @@ span.switch-handle {
     padding-inline-start: 0px;
     margin-top: 5px;
     flex-wrap: wrap;
+    margin-bottom: 0;
 }
 
 .resume-upload.resume-headline.keyskills ul li {

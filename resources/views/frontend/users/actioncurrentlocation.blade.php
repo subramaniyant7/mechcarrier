@@ -23,7 +23,7 @@
         <div class="col-md-6">
             <div class="d-flex">
                 <div style="position:relative" class="autocomplete_ui_parent">
-                    <input type="text" placeholder="Select Current Country" name="user_current_state"
+                    <input type="text" placeholder="Select State" name="user_current_state"
                         class="form-control autocomplete_actual_id user_current_state" required
                         value="{{ $currentCountry }}" />
                     <input type="hidden" name="current_state_id" class="autocomplete_id"
@@ -35,7 +35,7 @@
         </div>
         <div class="col-md-6">
             <div style="position:relative" class="autocomplete_ui_parent">
-                <input type="text" placeholder="Select Current City" name="user_current_city"
+                <input type="text" placeholder="Select City" name="user_current_city"
                     class="form-control autocomplete_actual_id user_current_city" required
                     value="{{ $currentCity }}" />
                 <input type="hidden" name="current_city_id" class="autocomplete_id"
@@ -50,7 +50,7 @@
         <div class="col-md-12">
             <div class="form-buttons basicbtn">
                 <button type="button" class="btn btn-cancel cancel_current_location">Cancel</button>
-                <button type="submit" class="btn btn-save">Save</button>
+                <button type="submit" disabled class="btn btn-save">Save</button>
             </div>
         </div>
     </div>

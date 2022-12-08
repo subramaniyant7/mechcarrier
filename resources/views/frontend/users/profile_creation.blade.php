@@ -206,7 +206,7 @@
                             $percentage += 2;
                             array_push($verifiedPercentange, 'cerification');
                         }
-                        if (count($userInfo['userLanguages']) && $userInfo['userDetails'][0]->user_gender != '' && $userInfo['userDetails'][0]->user_marital_status != '' && $userInfo['userDetails'][0]->user_dob != '' ) {
+                        if (count($userInfo['userLanguages']) && $userInfo['userDetails'][0]->user_gender != '' && $userInfo['userDetails'][0]->user_marital_status != '' && $userInfo['userDetails'][0]->user_dob != '') {
                             $percentage += 6;
                             array_push($verifiedPercentange, 'personal_details');
                         }
@@ -255,7 +255,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3>Edit or create profile <span>( only completed profile recruiter shows interest to view )
+                            <h3>Edit or create profile <span>(Recruiters will show more interest on completed profile)
                                 </span></h3>
                         </div>
                     </div>
@@ -420,18 +420,20 @@
                                         </span>
                                     </div>
                                     <div class="basic-details-content">
-                                        <h5>
-                                            <p><span>Total Experience :
-                                                    {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_total_experience_year != '' && $userInfo['userProfile'][0]->user_total_experience_year != '' ? SalaryLakhs()[$userInfo['userProfile'][0]->user_total_experience_year - 1] . ($userInfo['userProfile'][0]->user_total_experience_year - 1 > 1 ? ' Years ' : ' Year ') . ExperienceMonths()[$userInfo['userProfile'][0]->user_total_experience_month - 1] . ($userInfo['userProfile'][0]->user_total_experience_month - 1 > 1 ? ' Months' : ' Month') : '-' }}</span>
-                                            <p><span>Current Annual Salary :
-                                                    {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_salary_year != '' && $userInfo['userProfile'][0]->user_current_salary_month != '' ? SalaryLakhs()[$userInfo['userProfile'][0]->user_current_salary_year - 1] . ' Lakh' . ($userInfo['userProfile'][0]->user_current_salary_year - 1 > 1 ? 's ' : ' ') . SalaryThousands()[$userInfo['userProfile'][0]->user_current_salary_month - 1] . ($userInfo['userProfile'][0]->user_current_salary_month - 1 > 1 ? ' Thousands ' : ' Thousand ') : '-' }}</span>
-                                            <p><span>Notice Period :
-                                                    {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_notice_period != '' ? noticePeriod()[$userInfo['userProfile'][0]->user_notice_period - 1] : '-' }}</span>
-                                            </p>
-                                        </h5>
+                                        @if (in_array('basic_profile', $verifiedPercentange))
+                                            <h5>
+                                                <p><span>Total Experience :
+                                                        {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_total_experience_year != '' && $userInfo['userProfile'][0]->user_total_experience_year != '' ? SalaryLakhs()[$userInfo['userProfile'][0]->user_total_experience_year - 1] . ($userInfo['userProfile'][0]->user_total_experience_year - 1 > 1 ? ' Years ' : ' Year ') . ExperienceMonths()[$userInfo['userProfile'][0]->user_total_experience_month - 1] . ($userInfo['userProfile'][0]->user_total_experience_month - 1 > 1 ? ' Months' : ' Month') : '-' }}</span>
+                                                <p><span>Current Annual Salary :
+                                                        {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_salary_year != '' && $userInfo['userProfile'][0]->user_current_salary_month != '' ? SalaryLakhs()[$userInfo['userProfile'][0]->user_current_salary_year - 1] . ' Lakh' . ($userInfo['userProfile'][0]->user_current_salary_year - 1 > 1 ? 's ' : ' ') . SalaryThousands()[$userInfo['userProfile'][0]->user_current_salary_month - 1] . ($userInfo['userProfile'][0]->user_current_salary_month - 1 > 1 ? ' Thousands ' : ' Thousand ') : '-' }}</span>
+                                                <p><span>Notice Period :
+                                                        {{ count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_notice_period != '' ? noticePeriod()[$userInfo['userProfile'][0]->user_notice_period - 1] : '-' }}</span>
+                                                </p>
+                                            </h5>
+                                        @endif
                                     </div>
 
-                                    <div class="basic-details-action"></div>
+                                    <div class="basic-details-action mb-10"></div>
                                 </div>
 
                                 <div class="resume-upload resume-headline keyskills" id="userKeySkils">
@@ -481,8 +483,7 @@
                                     <form action="#" id="update_profile_summary">
                                         <div class="text-left inline_text">{{ $summary }} </div>
                                         <textarea required class="inputinfo hide" name="user_profile_summary" rows="3" cols="30" minlength="100"
-                                            maxlength="1000"
-                                            placeholder="Add Profile Summary">{{ $summary }}</textarea>
+                                            maxlength="1000" placeholder="Add Profile Summary">{{ $summary }}</textarea>
                                         <span class="text_limit"> 0/1000 </span>
                                         <div class="form-buttons">
                                             <button type="button" class="btn btn-cancel cancelaction">Cancel</button>
@@ -531,7 +532,8 @@
                                                     {{ $companyName }} -
                                                     {{ $employment->user_employment_type == 1 ? 'Full Time' : 'Part Time' }}
                                                     -
-                                                    {{ $fromMonth }} {{ $fromYear }} to {{ $employment->user_employment_current_company == 1 ? 'Till Date' : $toMonth .' '.$toYear }}
+                                                    {{ $fromMonth }} {{ $fromYear }} to
+                                                    {{ $employment->user_employment_current_company == 1 ? 'Till Date' : $toMonth . ' ' . $toYear }}
                                                     ({{ $interval->format('%y years') }}
                                                     {{ $months }})
                                                     <span class="edit_employment pointer"

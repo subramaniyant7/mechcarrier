@@ -36,7 +36,7 @@
     <span class="chevron-up"><img
             src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/chevronup.svg') }}" /></span>
 @endif
-<form action="#" id="action_employment">
+<form action="#" id="action_employment" class="mb-10">
     <div class="row">
         @if ($type != 'add')
             <div class="col-md-12 delete">
@@ -82,14 +82,6 @@
                         {{ count($data) && $data[0]->user_employment_type == 2 ? 'checked' : '' }}>
                     <label class="form-check-label" for="flexCheckDefault">
                         Part-time
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="3" name="user_employment_type"
-                        {{ $type == 'add' ? 'required' : '' }}
-                        {{ count($data) && $data[0]->user_employment_type == 3 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Contract
                     </label>
                 </div>
             </div>
