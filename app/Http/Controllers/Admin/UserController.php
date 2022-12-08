@@ -68,20 +68,20 @@ class UserController extends Controller
                             'user_phonenumber' => $userData[3], 'user_email_verified' => 1, 'user_phonenumber_verified' => 1,
                             'user_register_type' => 5, 'user_ip_address' => $request->ip()
                         ];
-                        try {
-                            $emailContent = ['user_email' => $userData[2], 'user_password' => $password];
-                            Mail::send('frontend.email.jobseeker_password_template', $emailContent, function ($message) use ($emailContent) {
-                                $message->to($emailContent['user_email'], 'Admin')->subject('Jobseeker Account Credentials');
-                                $message->from(getenv('MAIL_USERNAME'), 'Admin');
-                            });
+                        // try {
+                        //     $emailContent = ['user_email' => $userData[2], 'user_password' => $password];
+                        //     Mail::send('frontend.email.jobseeker_password_template', $emailContent, function ($message) use ($emailContent) {
+                        //         $message->to($emailContent['user_email'], 'Admin')->subject('Jobseeker Account Credentials');
+                        //         $message->from(getenv('MAIL_USERNAME'), 'Admin');
+                        //     });
 
-                            Mail::send('frontend.email.jobseeker_account_created_template', $emailContent, function ($message) use ($emailContent) {
-                                $message->to($emailContent['user_email'], 'Admin')->subject('Welcome to MechCareer');
-                                $message->from(getenv('MAIL_USERNAME'), 'Admin');
-                            });
-                        } catch (\Exception $e) {
-                            return back()->with('error',$e->getMessage());
-                        }
+                        //     Mail::send('frontend.email.jobseeker_account_created_template', $emailContent, function ($message) use ($emailContent) {
+                        //         $message->to($emailContent['user_email'], 'Admin')->subject('Welcome to MechCareer');
+                        //         $message->from(getenv('MAIL_USERNAME'), 'Admin');
+                        //     });
+                        // } catch (\Exception $e) {
+                        //     return back()->with('error',$e->getMessage());
+                        // }
 
                         insertQuery('user_details', $userCreate);
                     }
