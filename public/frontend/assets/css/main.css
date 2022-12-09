@@ -2653,8 +2653,13 @@ span.switch-handle {
     padding: 20px 30px 20px;
 }
 
-.resume-upload.certification .action_certification, .mb-10{
+.resume-upload.certification .action_certification,
+.mb-10 {
     margin-bottom: 10px;
+}
+
+.mt-10 {
+    margin-top: 10px;
 }
 
 .resume-upload.certification .education-list .certification-list {
@@ -2662,7 +2667,7 @@ span.switch-handle {
 }
 
 .resume-upload.personal-details {
-    padding: 20px 30px 14px;
+    padding: 30px 30px;
 }
 
 .resume-upload .d-flex {

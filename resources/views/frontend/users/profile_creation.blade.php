@@ -732,7 +732,7 @@
                                             @endforeach
                                         @endif
                                     </div>
-                                    <div class="action_itskill"></div>
+                                    <div class="action_itskill mb-10"></div>
                                 </div>
 
                                 <div class="resume-upload resume-headline employement certification"

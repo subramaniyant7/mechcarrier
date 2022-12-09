@@ -25,7 +25,7 @@
                 <div style="position:relative" class="autocomplete_ui_parent">
                     <input type="text" placeholder="Select State" name="user_current_state"
                         class="form-control autocomplete_actual_id user_current_state" required
-                        value="{{ $currentCountry }}" />
+                        value="{{ $currentCountry }}" autocomplete="off" />
                     <input type="hidden" name="current_state_id" class="autocomplete_id"
                         value="{{ count($data) ? $data[0]->user_current_state : '' }}">
                     <div class="autocomplete-items" style="display:none">
@@ -37,7 +37,7 @@
             <div style="position:relative" class="autocomplete_ui_parent">
                 <input type="text" placeholder="Select City" name="user_current_city"
                     class="form-control autocomplete_actual_id user_current_city" required
-                    value="{{ $currentCity }}" />
+                    value="{{ $currentCity }}" autocomplete="off" />
                 <input type="hidden" name="current_city_id" class="autocomplete_id"
                     value="{{ count($data) ? $data[0]->user_current_city : '' }}">
                 <div class="autocomplete-items" style="display:none">

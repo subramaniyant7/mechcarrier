@@ -978,6 +978,7 @@ $(document).on('click', '.action_location', function (e) {
 
 $(document).on('keyup', '.user_current_state', function (e) {
     let val = $(this).val();
+    let rootParent = $(this).parents('.current-location-form');
     const currentParent = $(this).parents('.autocomplete_ui_parent');
     $(this).attr('required', 'required');
     if (val != '') {
@@ -1005,12 +1006,15 @@ $(document).on('keyup', '.user_current_state', function (e) {
                         currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
                     }
                     currentParent.find('.autocomplete_id').val('');
+
                 } else toastr.error(data.message);
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
             },
             complete: function () {
+                $(rootParent).find('.user_current_city').val('').attr('disabled', true);
+                $(rootParent).find("input[name='current_city_id']").val('');
                 $('.loader').hide();
             }
         });
@@ -1023,8 +1027,11 @@ $(document).on('keyup', '.user_current_state', function (e) {
 $(document).on('blur', '.user_current_state', function () {
     const rootParent = $(this).parents('.current-location-form');
     rootParent.find('.btn-save').attr('disabled', true);
+    rootParent.find('.user_current_state').val('');
+    rootParent.find("input[name='current_state_id']").val('');
     const currentParent = $(this).parents('.autocomplete_ui_parent');
     console.log('blur')
+
     setTimeout(() => {
         console.log('blur1')
         currentParent.find('.autocomplete-items').hide().html('');
@@ -1034,11 +1041,21 @@ $(document).on('blur', '.user_current_state', function () {
 $(document).on('click', '.custom_action', function() {
     console.log('custom_action')
     const rootParent = $(this).parents('.current-location-form');
+    const stateName = $(this).attr('data-id');
+    const stateId = $(this).val();
     rootParent.find('.btn-save').attr('disabled', false);
+
+    rootParent.find('.user_current_state').val(stateName);
+    rootParent.find("input[name='current_state_id']").val(stateId);
+
+    rootParent.find('.user_current_city').val('').attr('disabled', false);
+    rootParent.find("input[name='current_city_id']").val('');
 });
 
 $(document).on('keyup', '.user_current_city', function (e) {
     const stateId = $("input[name=current_state_id]").val();
+    const rootParent = $(this).parents('.current-location-form');
+    rootParent.find('.btn-save').attr('disabled', true);
     if (stateId == '') {
         toastr.error('Please Enter Valid State');
         return false;
@@ -1062,7 +1079,7 @@ $(document).on('keyup', '.user_current_city', function (e) {
                     let response = JSON.parse(data.data);
                     if (response.length) {
                         response.forEach(res => {
-                            html += "<div class='option_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
+                            html += "<div class='city_click option_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
                         })
                         currentParent.find('.autocomplete-items').css({
                             'height': '100px',
@@ -1089,10 +1106,23 @@ $(document).on('keyup', '.user_current_city', function (e) {
 });
 
 $(document).on('blur', '.user_current_city', function () {
+    const rootParent = $(this).parents('.current-location-form');
+    rootParent.find('.user_current_city').val('');
+    rootParent.find("input[name='current_city_id']").val('');
+
     const currentParent = $(this).parents('.autocomplete_ui_parent');
     setTimeout(() => {
         currentParent.find('.autocomplete-items').hide().html('');
     }, 500);
+});
+
+$(document).on('click', '.city_click', function() {
+    const rootParent = $(this).parents('.current-location-form');
+    const cityName = $(this).attr('data-id');
+    const cityId = $(this).val();
+    rootParent.find('.btn-save').attr('disabled', false);
+    rootParent.find('.user_current_city').val(cityName);
+    rootParent.find("input[name='current_city_id']").val(cityId);
 });
 
 $(document).on('submit', '#current-location-form', function (e) {

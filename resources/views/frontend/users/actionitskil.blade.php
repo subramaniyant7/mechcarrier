@@ -7,7 +7,7 @@
     <span class="chevron-up"><img
             src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/chevronup.svg') }}" /></span>
 @endif
-<form action="#" id="action_itskill">
+<form action="#" id="action_itskill" class="mt-10">
     @if ($type != 'add')
         <div class="row">
             <div class="col-md-12 delete">
