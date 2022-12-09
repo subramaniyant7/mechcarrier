@@ -54,15 +54,15 @@ class EmployerController extends Controller
             $formData['employer_verified'] = 1;
             $formData['employer_profile_completed'] = 2;
             $formData['employer_ipaddress'] = request()->ip();
-            try {
-                $emailContent = ['user_email' => $formData['employer_email'], 'user_password' => $password];
-                Mail::send('frontend.employer.email.employer_password', $emailContent, function ($message) use ($emailContent) {
-                    $message->to($emailContent['user_email'], 'Admin')->subject('Welcome Recruiter - MechCareer');
-                    $message->from(getenv('MAIL_USERNAME'), 'Admin');
-                });
-            } catch (\Exception $e) {
-                return back()->with('error', $e->getMessage());
-            }
+            // try {
+            //     $emailContent = ['user_email' => $formData['employer_email'], 'user_password' => $password];
+            //     Mail::send('frontend.employer.email.employer_password', $emailContent, function ($message) use ($emailContent) {
+            //         $message->to($emailContent['user_email'], 'Admin')->subject('Welcome Recruiter - MechCareer');
+            //         $message->from(getenv('MAIL_USERNAME'), 'Admin');
+            //     });
+            // } catch (\Exception $e) {
+            //     return back()->with('error', $e->getMessage());
+            // }
 
             $saveData = insertQuery('employer_details', $formData);
         } else {

@@ -994,7 +994,7 @@ $(document).on('keyup', '.user_current_state', function (e) {
                     let response = JSON.parse(data.data);
                     if (response.length) {
                         response.forEach(res => {
-                            html += "<div class='option_click' data-id='" + res.state_name + "'>" + res.state_name + '<input type="hidden" value="' + res.state_id + '"></div>'
+                            html += "<div class='custom_action option_click' data-id='" + res.state_name + "'>" + res.state_name + '<input type="hidden" value="' + res.state_id + '"></div>'
                         })
                         currentParent.find('.autocomplete-items').css({
                             'height': '100px',
@@ -1021,10 +1021,20 @@ $(document).on('keyup', '.user_current_state', function (e) {
 });
 
 $(document).on('blur', '.user_current_state', function () {
+    const rootParent = $(this).parents('.current-location-form');
+    rootParent.find('.btn-save').attr('disabled', true);
     const currentParent = $(this).parents('.autocomplete_ui_parent');
+    console.log('blur')
     setTimeout(() => {
+        console.log('blur1')
         currentParent.find('.autocomplete-items').hide().html('');
     }, 500);
+});
+
+$(document).on('click', '.custom_action', function() {
+    console.log('custom_action')
+    const rootParent = $(this).parents('.current-location-form');
+    rootParent.find('.btn-save').attr('disabled', false);
 });
 
 $(document).on('keyup', '.user_current_city', function (e) {

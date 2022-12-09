@@ -66,7 +66,7 @@ class UserController extends Controller
                         $userCreate = [
                             'user_firstname' => $userData[0], 'user_lastname' => $userData[1], 'user_email' => $userData[2], 'user_password' => md5($password),
                             'user_phonenumber' => $userData[3], 'user_email_verified' => 1, 'user_phonenumber_verified' => 1,
-                            'user_register_type' => 5, 'user_ip_address' => $request->ip()
+                            'user_register_type' => 5, 'user_ip_address' => $request->ip(),'user_logged_in' => 2
                         ];
                         // try {
                         //     $emailContent = ['user_email' => $userData[2], 'user_password' => $password];
