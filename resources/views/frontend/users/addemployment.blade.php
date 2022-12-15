@@ -290,7 +290,7 @@
             <div class="d-flex">
                 <select class="form-control" name="user_employment_current_salary_lakh"
                     aria-label="Default select example" required>
-                    <option selected value="">0 Lakh</option>
+                    <option selected value="">Select</option>
                     @foreach (SalaryLakhs() as $l => $lakh)
                         <option value="{{ $l + 1 }}"
                             {{ count($data) && $data[0]->user_employment_current_salary_lakh == $l + 1 ? 'selected' : '' }}>
@@ -299,7 +299,7 @@
                 </select>
                 <select class="form-control" name="user_employment_current_salary_thousand"
                     aria-label="Default select example" required>
-                    <option selected value="">0 Thousand </option>
+                    <option selected value="">Select </option>
                     @foreach (SalaryThousands() as $k => $thousand)
                         <option value="{{ $k + 1 }}"
                             {{ count($data) && $data[0]->user_employment_current_salary_thousand == $k + 1 ? 'selected' : '' }}>
@@ -308,6 +308,7 @@
                 </select>
             </div>
         </div>
+        @if((count($data) && $data[0]->user_employment_current_company == 1) || !count($data))
         <div class="col-md-6 notice_period">
             <label>Notice Period *</label>
             <div class="d-flex">
@@ -322,6 +323,7 @@
                 </select>
             </div>
         </div>
+        @endif
     </div>
 
     <div class="row">
@@ -353,8 +355,8 @@
             $("select[name=user_employment_notice_period]").attr('required');
             $('.worktill').hide();
             $('.notice_period').show();
-            $('.company_name').html('Current Company Name');
-            $('.company_designation').html('Current Designation');
+            $('.company_name').html('Current Company Name *');
+            $('.company_designation').html('Current Designation *');
         }
         if (this.value == 2) {
             $("select[name=user_employment_working_year]").attr('required', 'required');
@@ -362,8 +364,8 @@
             $("select[name=user_employment_notice_period]").removeAttr('required', 'required');
             $('.worktill').show();
             $('.notice_period').hide();
-            $('.company_name').html('Company Name');
-            $('.company_designation').html('Company Designation');
+            $('.company_name').html('Company Name *');
+            $('.company_designation').html('Designation *');
         }
         $("input[type=checkbox][name=user_employment_current_company]").each(function() {
             if (current != this) {

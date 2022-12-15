@@ -625,7 +625,6 @@
                                 <div class="resume-upload resume-headline employement location" id="location">
                                     @php
                                         $cLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_current_city != '' && $userInfo['userProfile'][0]->user_current_state != '';
-                                        $pLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_city != '' && $userInfo['userProfile'][0]->user_preferred_state != '';
                                     @endphp
                                     <div class="d-flex">
                                         <h4>Current Location </h4>
@@ -656,8 +655,14 @@
 
 
                                     <div class="action_currentlocation"></div>
+                                </div>
 
-                                    <div style="margin-top:15px;">
+
+                                <div class="resume-upload resume-headline employement location" id="location">
+                                    @php
+                                        $pLocationValid = count($userInfo['userProfile']) && $userInfo['userProfile'][0]->user_preferred_city != '' && $userInfo['userProfile'][0]->user_preferred_state != '';
+                                    @endphp
+                                    <div style="margin-top:1px;">
                                         <div class="d-flex">
                                             <h4>Preferred Location </h4>
                                             <span class="action_preferred_location pointer"
@@ -704,6 +709,9 @@
 
                                     </div>
                                 </div>
+
+
+
 
                                 <div class="resume-upload resume-headline employement itskils" id="userITSkils">
                                     <div class="d-flex">

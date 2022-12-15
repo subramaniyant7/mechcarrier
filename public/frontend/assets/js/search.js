@@ -66,40 +66,40 @@ $(document).on('click', '.city_click', function () {
 
 
 $('.employment_type').click(function () {
-    console.log($(this).val());
-    let type = $(this).val();
-    // if (!currentUrl.indexOf('?' + field + '=') != -1 && !currentUrl.indexOf('&' + field + '=') != -1) {
-    //     console.log('true')
-    //     url.searchParams.set('type', type);
-    // }
-
-    const url = new URL(window.location);
-    url.searchParams.set('type', type);
-    window.history.pushState(null, '', url.toString());
-
-    // var searchParams = new URLSearchParams(window.location.search);
-    // searchParams.set("type", type);
-    // window.history.pushState = searchParams.toString();
-
-
-    // if (type != '') {
-    //     $.ajax({
-    //         type: 'post',
-    //         url: `${siteurl}resendemailotp`,
-    //         data: {
-    //             type: type
-    //         },
-    //         dataType: 'json',
-    //         success: function (data) {
-    //             if (data.status) toastr.success(data.message);
-    //             else toastr.error(data.message);
-    //         },
-    //         error: function (data) {
-    //             toastr.error('Something went wrong. Please try again');
-    //         },
-    //         complete: function () {
-    //             $('.loader').hide();
-    //         }
-    //     });
-    // }
+    let typeVal = $(this).val();
+    if (typeVal != '') {
+        const url = new URL(window.location);
+        url.searchParams.set('type', typeVal);
+        window.history.pushState(null, '', url.toString());
+        $("input[name='employment_type']").each(function () {
+            if ($(this).val() != typeVal) $(this).prop('checked', false);
+        });
+        fetchSearchQuery();
+    }
 })
+
+
+const fetchSearchQuery = () => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    console.log('urlSearchParams', params)
+    if (Object.keys(params).length) {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}filterjob`,
+            data: params,
+            dataType: 'json',
+            success: function (data) {
+                console.log('data', data)
+                if (data.status) $('.job_list').html(data.html);
+                else { $('.job_list').html(''); toastr.error(data.message); }
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $('.loader').hide();
+            }
+        });
+    }
+}

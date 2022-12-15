@@ -303,9 +303,6 @@ class AjaxController extends Controller
         return $response;
     }
 
-
-
-
     public function GetEmploymentHtml(Request $request)
     {
         $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
@@ -455,8 +452,6 @@ class AjaxController extends Controller
         return $response;
     }
 
-
-
     public function GetCountry(Request $request)
     {
         $response = ['status' => false, 'message' => '', 'data' => json_encode([])];
@@ -486,7 +481,6 @@ class AjaxController extends Controller
         }
         return $response;
     }
-
 
     public function GetCity(Request $request)
     {
@@ -581,7 +575,6 @@ class AjaxController extends Controller
         return $response;
     }
 
-
     public function ActionBasicDetails(Request $request)
     {
         $response = ['status' => false, 'message' => ''];
@@ -636,7 +629,6 @@ class AjaxController extends Controller
         }
         return $response;
     }
-
 
     public function ActionPreferredLocationOnly(Request $request)
     {
@@ -711,10 +703,6 @@ class AjaxController extends Controller
         return $response;
     }
 
-
-
-
-
     public function ActionEducation(Request $request)
     {
         $response = ['status' => false, 'message' => ''];
@@ -744,8 +732,14 @@ class AjaxController extends Controller
                 return $response;
             }
 
+
+
             if ($grade == 4) {
                 $formData['user_education_mark'] = '';
+            }
+
+            if($formData['user_education_mark'] != ''){
+                $formData['user_education_mark'] = number_format($formData['user_education_mark'],2);
             }
 
             if ($grade == 1 && $marks > 10) {
@@ -1071,6 +1065,31 @@ class AjaxController extends Controller
                 $response = ['status' => false, 'message' => $e->getMessage()];
             }
         }
+        return $response;
+    }
+
+
+    // Search Job
+
+    public function FilterJob(Request $request){
+        $response = ['status' => false, 'message' => 'Something went wrong'];
+        $filterRequest = $request->all();
+        $filterQuery = ['employer_post_save_status' => 2,'employer_post_approval_status' => 1, 'status' => 1];
+        if(count($filterRequest)){
+            if(array_key_exists('type',$filterRequest)){
+                $filterQuery['employer_post_employement_type'] = $filterRequest['type'];
+            }
+            if(count($filterQuery)){
+                $data = HelperController::getFilterJob($filterQuery);
+                $html = '';
+                if(count($data)){
+                    $data = json_decode(json_encode($data),true);
+                }
+                $html = view('frontend.jobseeker.recommended_jobs', compact('data'))->render();
+                $response = ['status' => true, 'html' => $html];
+            }
+        }
+        // Stop($filterRequest);
         return $response;
     }
 }

@@ -359,6 +359,10 @@ class HelperController extends Controller
         return DB::table('employer_post')->where('employer_post_id', $postId)->get();
     }
 
+    static function getFilterJob($filter)
+    {
+        return DB::table('employer_post')->where($filter)->get();
+    }
 
 
 

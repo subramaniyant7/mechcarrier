@@ -48,6 +48,9 @@ Route::middleware(['globalvalidate'])->group(function () {
     Route::get('/jobsdetails', [FrontendController::class, 'JobsDetails'])->name('jobsdetails');
     //Route::get('/job_search', [FrontendController::class, 'JobSearch'])->name('jobsearch');
     Route::get('/job_search', [FrontendController::class, 'JobseekerJobSearch'])->name('jobsearch');
+
+    Route::post('/filterjob', [FAjaxController::class, 'FilterJob'])->name('filterjob');
+
     Route::get('/job_search2', [FrontendController::class, 'JobSearch2'])->name('jobsearch2');
 
     Route::get('/mycourse_services', [FrontendController::class, 'MyCourseandService'])->name('mycourseservice');

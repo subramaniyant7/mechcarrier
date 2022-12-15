@@ -239,7 +239,7 @@
         style="display: {{ count($data) && $data[0]->user_education_grade < 4 ? 'block' : 'none' }}">
         <div class="col-md-12">
             <label>Marks *</label>
-            <input type="number" step="0.1" placeholder="Enter Marks" class="form-control" name="user_education_mark"
+            <input type="number" step="0.01" placeholder="Enter Marks" class="form-control" name="user_education_mark"
                 {{ count($data) && $data[0]->user_education_grade != 4 ? 'required' : '' }}
                 value="{{ count($data) ? $data[0]->user_education_mark : '' }}">
         </div>

@@ -159,7 +159,7 @@ class FrontendController extends Controller
 
     public function JobseekerJobSearch(Request $request)
     {
-        $skilMatchJobs = [];
+        $data = [];
         $userKeySkilInfo = HelperController::getUserKeySkilByUserId($request->session()->get('frontend_userid'));
         // echo '<pre>';
         // print_r($userKeySkilInfo);
@@ -170,26 +170,26 @@ class FrontendController extends Controller
                     $skilJob = HelperController::GetUserSkilBasedJobs($skil->user_key_skil_text);
                     if(count($skilJob)){
                         $jobData = json_decode(json_encode($skilJob),true);
-                        array_push($skilMatchJobs,$jobData);
+                        array_push($data,$jobData);
                     }
                 }
             }
         }
 
-        // $skilMatchJobs = json_decode(json_encode($skilMatchJobs), FALSE);
+        // $data = json_decode(json_encode($data), FALSE);
 
         if($request->input('skil') != ''){
             $location = $request->input('location');
             $searchSkil = HelperController::GetUserSearchJobs($request->input('skil'),$request->input('location'),$request->input('experience'));
             if(count($searchSkil)){
-                array_push($skilMatchJobs,json_decode(json_encode($searchSkil),true));
+                array_push($data,json_decode(json_encode($searchSkil),true));
             }
         }
 
-        if(count($skilMatchJobs)) $skilMatchJobs = $skilMatchJobs[0];
+        if(count($data)) $data = $data[0];
 
         // Stop($skilMatchJobs);
-        return view('frontend.jobseeker.job_search', compact('skilMatchJobs'));
+        return view('frontend.jobseeker.job_search', compact('data'));
     }
 
     public function JobSearch2(Request $request)
