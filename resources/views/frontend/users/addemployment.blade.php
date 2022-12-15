@@ -308,8 +308,8 @@
                 </select>
             </div>
         </div>
-        @if((count($data) && $data[0]->user_employment_current_company == 1) || !count($data))
-        <div class="col-md-6 notice_period">
+
+        <div class="col-md-6 notice_period" style="display:{{((count($data) && $data[0]->user_employment_current_company == 1) || !count($data)) ? 'block' : 'none'}}">
             <label>Notice Period *</label>
             <div class="d-flex">
                 <select class="form-control" name="user_employment_notice_period" aria-label="Default select example"
@@ -323,7 +323,7 @@
                 </select>
             </div>
         </div>
-        @endif
+
     </div>
 
     <div class="row">

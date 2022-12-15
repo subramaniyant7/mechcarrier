@@ -533,11 +533,12 @@ class AjaxController extends Controller
                 }
                 return $a > $b ? -1 : 1;
             });
+            $currentCompanyExist = HelperController::getUserEmploymentCurrentCompany($request->session()->get('frontend_userid'));
             if ($formData['user_employment_current_company'] == 1) {
                 $formData['user_employment_working_year'] = array_search(date('Y'), $years) + 1;
                 $formData['user_employment_working_month'] = date('m');
                 if ($request->input('user_employment_id') == '') {
-                    $currentCompanyExist = HelperController::getUserEmploymentCurrentCompany($request->session()->get('frontend_userid'));
+
                     if (count($currentCompanyExist)) {
                         $response['message'] = 'Invalid action. Current Company already available';
                         return $response;
@@ -562,7 +563,16 @@ class AjaxController extends Controller
             // if (count($currentCompanyExist)) {
             //     $response['message'] = 'Invalid action. Current Company already available';
             // } else {
+
+            if($formData['user_employment_current_company'] == 2){
+                $formData['user_employment_notice_period'] = '';
+            }
+
             if ($request->input('user_employment_id') != '') {
+                if (count($currentCompanyExist) && $formData['user_employment_current_company'] == 1 && $currentCompanyExist[0]->user_employment_id != $request->input('user_employment_id')) {
+                    $response['message'] = 'Invalid action. Current Company already available';
+                    return $response;
+                }
                 updateQuery('user_employment', 'user_employment_id', decryption($request->input('user_employment_id')), $formData);
             } else {
                 insertQuery('user_employment', $formData);
