@@ -74,7 +74,8 @@
                                         <div class="similar-job-card-info">
                                             <p><span><img
                                                         src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
-                                                </span>{{ experienceGap()[$employerPostList->employer_post_experience - 1] }}
+                                                </span>{{ isset(SalaryLakhs()[$employerPostList->employer_post_experience_from - 1]) ? SalaryLakhs()[$employerPostList->employer_post_experience_from - 1] : '' }}-
+                                                {{ isset(SalaryLakhs()[$employerPostList->employer_post_experience_to - 1]) ? SalaryLakhs()[$employerPostList->employer_post_experience_to - 1] : '' }}
                                                 Years
                                             </p>
                                             <p class="cityname"><span><img

@@ -101,6 +101,7 @@ Route::middleware(['globalvalidate'])->group(function () {
     Route::post('/getstate', [FAjaxController::class, 'GetState'])->name('getstate');
     Route::post('/getstatecity', [FAjaxController::class, 'GetStateCity'])->name('getstatecity');
     Route::post('/getcity', [FAjaxController::class, 'GetCity'])->name('getcity');
+    Route::post('/getdesignation', [FAjaxController::class, 'GetDesignation'])->name('getdesignation');
 
     Route::middleware(['userloginvalidate'])->group(function () {
         Route::get('/user_dashboard', [FrontendController::class, 'UserDashboard'])->name('userdashboard');
@@ -144,7 +145,7 @@ Route::middleware(['globalvalidate'])->group(function () {
 
         Route::post('/actioncurrentlocation', [FAjaxController::class, 'ActionCurrentLocation'])->name('actioncurrentlocation');
         Route::post('/getcompany', [FAjaxController::class, 'GetCompany'])->name('getcompany');
-        Route::post('/getdesignation', [FAjaxController::class, 'GetDesignation'])->name('getdesignation');
+
         Route::post('/getspecialization', [FAjaxController::class, 'GetSpecialization'])->name('getspecialization');
 
 

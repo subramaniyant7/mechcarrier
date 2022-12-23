@@ -164,12 +164,16 @@ class EmployerController extends Controller
     }
 
     public function SaveEmployerJobPost(Request $request){
-        $formData = $request->except('_token','employer_post_location_state_id','employer_post_location_city_id');
+        $formData = $request->except('_token','employer_post_location_state_id','employer_post_location_city_id','current_designation_id');
 
         $keySkil = explode(',',$formData['employer_post_key_skils']);
 
         if(count($keySkil) <=4){
             return back()->withInput()->with('error', "Please add minimum 5 skils to create a job post");
+        }
+
+        if ($formData['employer_post_experience_from'] >  $formData['employer_post_experience_to']) {
+            return back()->withInput()->with('error', "Invalid Experience Range");
         }
 
         if ($formData['employer_post_salary_range_from_lakhs'] >  $formData['employer_post_salary_range_to_lakhs']) {
@@ -185,15 +189,32 @@ class EmployerController extends Controller
             $formData['employer_post_hidesalary'] = 2;
         }
 
+        $formData['employer_post_industry_name'] = $request->input('employer_post_industry_type') == 0 ? $formData['employer_post_industry_name'] : '';
+        $formData['employer_post_department_name'] = $request->input('employer_post_department') == 0 ? $formData['employer_post_department_name'] : '';
+
+        $formData['employer_post_designation'] = $request->input('current_designation_id') != '' ? $request->input('current_designation_id'): $formData['employer_post_industry_type'];
+
         if($request->input('employer_post_location_state_id') == ''){
             return back()->withInput()->with('error', 'Please Enter State');
         }
 
-
-
         if(!array_key_exists('employer_post_location_city', $formData) ||
             (array_key_exists('employer_post_location_city', $formData) && $request->input('employer_post_location_city_id') == '') ){
             return back()->withInput()->with('error', 'Please Enter City');
+        }
+
+        // Stop($formData);
+
+        if(array_key_exists('employer_post_walkin', $formData) && ($formData['employer_post_walkin_date'] == ''
+        || $formData['employer_post_walkin_time'] == '' || $formData['employer_post_walkin_address'] == '' )){
+            return back()->withInput()->with('error','Please Enter All Walkin Details');
+        }
+
+        if(!array_key_exists('employer_post_walkin', $formData)){
+            $formData['employer_post_walkin'] = 2;
+            $formData['employer_post_walkin_date'] = '';
+            $formData['employer_post_walkin_time'] = '';
+            $formData['employer_post_walkin_address'] = '';
         }
 
 
@@ -213,7 +234,7 @@ class EmployerController extends Controller
         $formData['employer_post_employee_id'] = $request->session()->get('employer_id');
         $formData['employer_post_createdby'] = 0;
 
-        // Stop($formData);
+
         $saveData = insertQuery('employer_post',$formData);
         $notify = notification($saveData);
         if($notify['type']){

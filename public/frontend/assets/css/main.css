@@ -28,6 +28,27 @@ body {
 }
 
 /* Custom Start */
+.pb-10{
+    padding-bottom: 10px;
+}
+.to {
+    justify-content: center;
+    display: flex;
+    padding-top: 8px;
+}
+
+.key_hint {
+    text-align: left;
+    padding-top: 0.5em;
+    font-size: 12px;
+}
+
+.background {
+    background: #F4F4F4;
+    box-shadow: 4px 4px 4px rgb(0 0 0 / 25%);
+    padding: 8px 23px 3px;
+    margin-bottom: 30px;
+}
 
 #personadetail .permanent_address {
     text-overflow: ellipsis;

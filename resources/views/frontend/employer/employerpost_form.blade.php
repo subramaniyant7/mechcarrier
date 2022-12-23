@@ -5,7 +5,7 @@
             <div class="form-outline">
                 <label>Job Post Headline *</label>
                 <input type="text" class="form-control" name="employer_post_headline" required
-                    placeholder="Add title which describe job role "
+                    placeholder="Add title which describe job role"
                     value="{{ isset($jobPost) ? $jobPost[0]->employer_post_headline : old('employer_post_headline') }}">
             </div>
         </div>
@@ -28,25 +28,31 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="form-group relative">
-                <label>Job Description *</label>
-                <textarea name="employer_post_description" required rows="5" minlength="10" maxlength="1000"
-                    placeholder="Describe activities in this job role " class="form-control">{{ isset($jobPost) ? $jobPost[0]->employer_post_description : old('employer_post_description') }}</textarea>
-                <div class="counter" id="the-count" style="font-weight: normal;">
-                    <span id="current"
-                        style="color: rgb(102, 102, 102);">{{ isset($jobPost) ? strlen($jobPost[0]->employer_post_description) : 0 }}</span>
-                    <span id="maximum" style="color: rgb(102, 102, 102);">/ 1000</span>
+            <div class="background">
+                <div class="form-group relative">
+                    <label>Job Description *</label>
+                    <textarea name="employer_post_description" required rows="5" minlength="10" maxlength="1000"
+                        placeholder="Describe activities in this job role " class="form-control">{{ isset($jobPost) ? $jobPost[0]->employer_post_description : old('employer_post_description') }}</textarea>
+                    <div class="counter" id="the-count" style="font-weight: normal;">
+                        <span id="current"
+                            style="color: rgb(102, 102, 102);">{{ isset($jobPost) ? strlen($jobPost[0]->employer_post_description) : 0 }}</span>
+                        <span id="maximum" style="color: rgb(102, 102, 102);">/ 1000</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="form-outline">
-                <label>Key Skill *</label>
-                <input type="text" required name="employer_post_key_skils" class="form-control"
-                    value="{{ isset($jobPost) ? $jobPost[0]->employer_post_key_skils : old('employer_post_key_skils') }}"
-                    placeholder="Add minimum 5 for better targeting candidates ( max 100 charactors )">
+            <div class="background">
+                <div class="pb-10">
+                    <label>Skill Keywords*</label>
+                    <input type="text" required name="employer_post_key_skils" class="form-control"
+                        value="{{ isset($jobPost) ? $jobPost[0]->employer_post_key_skils : old('employer_post_key_skils') }}"
+                        placeholder="Add minimum 5 for better targeting candidates ( max 200 charactors )"
+                        maxlength="200">
+                    <div class="key_hint">Note: Can add mutiple skills with comma(,) separator</div>
+                </div>
             </div>
         </div>
     </div>
@@ -54,113 +60,144 @@
     @php
         $educationInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getEducationInfo();
     @endphp
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <div class="form-outline">
-                    <label>Educational Qualification *</label>
-                    <select class="form-control" name="employer_post_qualification" required>
-                        <option selected="" value=""> Add Qualification</option>
-                        @foreach ($educationInfo as $education)
-                            <option value="{{ $education->education_id }}"
-                                {{ isset($jobPost) && $jobPost[0]->employer_post_qualification == $education->education_id ? 'selected' : '' }}>
-                                {{ $education->education_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        </div>
+    <div class="background">
+        <div class="row">
+            <div class="col-md-6">
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <div class="form-outline">
-                    <label>Experience *</label>
-                    <select class="form-control" name="employer_post_experience" required>
-                        <option selected="" value=""> Add Experience</option>
-                        @foreach (experienceGap() as $k => $experience)
-                            <option value="{{ $k + 1 }}"
-                                {{ isset($jobPost) && $jobPost[0]->employer_post_experience == $k + 1 ? 'selected' : '' }}>
-                                {{ $experience }}</option>
-                        @endforeach
-                    </select>
+                <label>Educational Qualification *</label>
+                <select class="form-control" name="employer_post_qualification" required>
+                    <option selected="" value=""> Add Qualification</option>
+                    @foreach ($educationInfo as $education)
+                        <option value="{{ $education->education_id }}"
+                            {{ isset($jobPost) && $jobPost[0]->employer_post_qualification == $education->education_id ? 'selected' : '' }}>
+                            {{ $education->education_name }}</option>
+                    @endforeach
+                </select>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <label>Total Experience *</label>
+                <div style="display: flex">
+                    <div class="row" style="position: relative;">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-outline">
+                                    <select class="form-control" name="employer_post_experience_from" required>
+                                        <option selected="" value="">Select</option>
+                                        @foreach (SalaryLakhs() as $l => $lakh)
+                                            <option value="{{ $l + 1 }}"
+                                                {{ isset($jobPost) && $jobPost[0]->employer_post_experience_from == $l + 1 ? 'selected' : '' }}>
+                                                {{ $lakh }} Year{{ $l > 0 ? 's' : '' }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-outline">
+                                    <select class="form-control" name="employer_post_experience_to" required>
+                                        <option selected="" value="">Select</option>
+                                        @foreach (SalaryLakhs() as $l => $lakh)
+                                            <option value="{{ $l + 1 }}"
+                                                {{ isset($jobPost) && $jobPost[0]->employer_post_experience_to == $l + 1 ? 'selected' : '' }}>
+                                                {{ $lakh }} Year{{ $l > 0 ? 's' : '' }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="position: absolute;left:48.5%;">
+                            <p class="to">To</p>
+                        </div>
+                    </div>
                 </div>
+
+
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-3 d-flex">
-            <p>Salary range *</p>
-        </div>
-        <div class="col-md-9">
-            <div class="form-group" style="margin-bottom:0;">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" name="employer_post_hidesalary"
-                        {{ isset($jobPost) && $jobPost[0]->employer_post_hidesalary == 1 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Hide from candidates
-                    </label>
+
+    <div class="background">
+        <div class="row">
+            <div class="col-md-3 d-flex">
+                <p>Salary range *</p>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group" style="margin-bottom:0;">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="1" name="employer_post_hidesalary"
+                            {{ isset($jobPost) && $jobPost[0]->employer_post_hidesalary == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Hide from candidates
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="form-group">
-                <div class="form-outline">
-                    <select class="form-control" name="employer_post_salary_range_from_lakhs" required>
-                        <option selected="" value="">Select</option>
-                        @foreach (SalaryLakhs() as $l => $lakh)
-                            <option value="{{ $l + 1 }}"
-                                {{ isset($jobPost) && $jobPost[0]->employer_post_salary_range_from_lakhs == $l + 1 ? 'selected' : '' }}>
-                                {{ $lakh }} Lakh{{ $l > 0 ? 's' : '' }}</option>
-                        @endforeach
-                    </select>
+        <div class="row" style="position: relative;">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="form-outline">
+                        <select class="form-control" name="employer_post_salary_range_from_lakhs" required>
+                            <option selected="" value="">Select</option>
+                            @foreach (SalaryLakhs() as $l => $lakh)
+                                <option value="{{ $l + 1 }}"
+                                    {{ isset($jobPost) && $jobPost[0]->employer_post_salary_range_from_lakhs == $l + 1 ? 'selected' : '' }}>
+                                    {{ $lakh }} Lakh{{ $l > 0 ? 's' : '' }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <div class="form-outline">
-                    <select class="form-control" name="employer_post_salary_range_from_thousands" required>
-                        <option selected="" value="">Select</option>
-                        @foreach (SalaryThousands() as $k => $thousand)
-                            <option value="{{ $k + 1 }}"
-                                {{ isset($jobPost) && $jobPost[0]->employer_post_salary_range_from_thousands == $k + 1 ? 'selected' : '' }}>
-                                {{ $thousand }} Thousand</option>
-                        @endforeach
-                    </select>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="form-outline">
+                        <select class="form-control" name="employer_post_salary_range_from_thousands" required>
+                            <option selected="" value="">Select</option>
+                            @foreach (SalaryThousands() as $k => $thousand)
+                                <option value="{{ $k + 1 }}"
+                                    {{ isset($jobPost) && $jobPost[0]->employer_post_salary_range_from_thousands == $k + 1 ? 'selected' : '' }}>
+                                    {{ $thousand }} Thousand</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-1">
-            <p>To</p>
-        </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                <div class="form-outline">
-                    <select class="form-control" name="employer_post_salary_range_to_lakhs" required>
-                        <option selected="" value="">Select</option>
-                        @foreach (SalaryLakhs() as $l => $lakh)
-                            <option value="{{ $l + 1 }}"
-                                {{ isset($jobPost) && $jobPost[0]->employer_post_salary_range_to_lakhs == $l + 1 ? 'selected' : '' }}>
-                                {{ $lakh }} Lakh{{ $l > 0 ? 's' : '' }}</option>
-                        @endforeach
-                    </select>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="form-outline">
+                        <select class="form-control" name="employer_post_salary_range_to_lakhs" required>
+                            <option selected="" value="">Select</option>
+                            @foreach (SalaryLakhs() as $l => $lakh)
+                                <option value="{{ $l + 1 }}"
+                                    {{ isset($jobPost) && $jobPost[0]->employer_post_salary_range_to_lakhs == $l + 1 ? 'selected' : '' }}>
+                                    {{ $lakh }} Lakh{{ $l > 0 ? 's' : '' }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <div class="form-outline">
-                    <select class="form-control" name="employer_post_salary_range_to_thousands" required>
-                        <option selected="" value="">Select</option>
-                        @foreach (SalaryThousands() as $k => $thousand)
-                            <option value="{{ $k + 1 }}"
-                                {{ isset($jobPost) && $jobPost[0]->employer_post_salary_range_to_thousands == $k + 1 ? 'selected' : '' }}>
-                                {{ $thousand }} Thousand</option>
-                        @endforeach
-                    </select>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="form-outline">
+                        <select class="form-control" name="employer_post_salary_range_to_thousands" required>
+                            <option selected="" value="">Select</option>
+                            @foreach (SalaryThousands() as $k => $thousand)
+                                <option value="{{ $k + 1 }}"
+                                    {{ isset($jobPost) && $jobPost[0]->employer_post_salary_range_to_thousands == $k + 1 ? 'selected' : '' }}>
+                                    {{ $thousand }} Thousand</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
+            </div>
+            <div style="position: absolute;left:48.5%;">
+                <p class="to">To</p>
             </div>
         </div>
     </div>
@@ -183,85 +220,222 @@
         }
     @endphp
     <input type="hidden" disabled class="city_text" value={{ $cityName }}>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <div style="position:relative" class="autocomplete_ui_parent">
-                    <label>Job Location State *</label>
-                    <input type="text" name="employer_post_location_state" required
-                        class="form-control employer_post_location_state autocomplete_actual_id"
-                        value="{{ $stateName }}" placeholder="Add job location state ">
-                    <input type="hidden" class="autocomplete_id" name="employer_post_location_state_id"
-                        value="{{ isset($jobPost) ? $jobPost[0]->employer_post_location_state : '' }}">
-                    <div class="autocomplete-items" style="display:none"></div>
+    <div class="background">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div style="position:relative" class="autocomplete_ui_parent">
+                        <label>Job Location State *</label>
+                        <input type="text" name="employer_post_location_state" required
+                            class="form-control employer_post_location_state autocomplete_actual_id"
+                            value="{{ $stateName }}" placeholder="Add job location state ">
+                        <input type="hidden" class="autocomplete_id" name="employer_post_location_state_id"
+                            value="{{ isset($jobPost) ? $jobPost[0]->employer_post_location_state : '' }}">
+                        <div class="autocomplete-items" style="display:none"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <div style="position:relative" class="autocomplete_ui_parent">
-                    <label>Job Location City *</label>
-                    <input type="text" name="employer_post_location_city"
-                        {{ isset($jobPost) && $jobPost[0]->employer_post_location_city != '' ? '' : 'required' }}
-                        {{ isset($jobPost) && $jobPost[0]->employer_post_location_state != '' ? '' : 'readonly' }}
-                        class="form-control employer_post_location_city autocomplete_actual_id" value=""
-                        placeholder="Add job location city ( maximum 3 ) ">
-                    <input type="hidden" class="autocomplete_id" name="employer_post_location_city_id"
-                        value="{{ isset($jobPost) ? $jobPost[0]->employer_post_location_city : '' }}">
-                    <div class="autocomplete-items" style="display:none"></div>
-                    <div class="selected_cities">
-                        @if (isset($jobPost) && count($cityNameArray))
-                            <ul class="selected_items">
-                                @foreach ($cityNameArray as $k => $cityList)
-                                    <li>
-                                        {{ $cityList }}
-                                        <img class="pointer clear_city" style="cursor:pointer"
-                                            data-index="{{ $k }}" data-id="{{ $cityIdArray[$k] }}"
-                                            src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/cancel.svg') }}">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div style="position:relative" class="autocomplete_ui_parent">
+                        <label>Job Location City *</label>
+                        <input type="text" name="employer_post_location_city"
+                            {{ isset($jobPost) && $jobPost[0]->employer_post_location_city != '' ? '' : 'required' }}
+                            {{ isset($jobPost) && $jobPost[0]->employer_post_location_state != '' ? '' : 'readonly' }}
+                            class="form-control employer_post_location_city autocomplete_actual_id" value=""
+                            placeholder="Add job location city ( maximum 3 ) ">
+                        <input type="hidden" class="autocomplete_id" name="employer_post_location_city_id"
+                            value="{{ isset($jobPost) ? $jobPost[0]->employer_post_location_city : '' }}">
+                        <div class="autocomplete-items" style="display:none"></div>
+                        <div class="selected_cities">
+                            @if (isset($jobPost) && count($cityNameArray))
+                                <ul class="selected_items">
+                                    @foreach ($cityNameArray as $k => $cityList)
+                                        <li>
+                                            {{ $cityList }}
+                                            <img class="pointer clear_city" style="cursor:pointer"
+                                                data-index="{{ $k }}" data-id="{{ $cityIdArray[$k] }}"
+                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/cancel.svg') }}">
 
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label>Add walkin details ( if need )</label>
-                <input type="text" name="employer_post_walkin_details"
-                    value="{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_details : old('employer_post_walkin_details') }}"
-                    class="form-control" placeholder="Add date, time and address">
+
+    <div class="background">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Industry type *</label>
+                    <select class="form-control" name="employer_post_industry_type"
+                        aria-label="Default select example" required
+                        onchange="showOther(this.value,'employer_post_industry_type')">
+                        <option value="">Select</option>
+                        @foreach (getActiveRecord('industry') as $industry)
+                            <option value="{{ $industry->industry_id }}"
+                                {{ isset($jobPost) && $jobPost[0]->employer_post_industry_type == $industry->industry_id ? 'selected' : '' }}>
+                                {{ $industry->industry_name }}</option>
+                        @endforeach
+                        <option value="0"
+                            {{ isset($jobPost) && $jobPost[0]->employer_post_industry_type == 0 ? 'selected' : '' }}>
+                            Other
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Department *</label>
+                    <select class="form-control" name="employer_post_department" aria-label="Default select example"
+                        required onchange="showOther(this.value,'employer_post_department')">
+                        <option value="">Select</option>
+                        @foreach (getActiveRecord('department') as $department)
+                            <option value="{{ $department->department_id }}"
+                                {{ isset($jobPost) && $jobPost[0]->employer_post_department == $department->department_id ? 'selected' : '' }}>
+                                {{ $department->department_name }}</option>
+                        @endforeach
+                        <option value="0"
+                            {{ isset($jobPost) && $jobPost[0]->employer_post_department == 0 ? 'selected' : '' }}>Other
+                        </option>
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input employer_post_external" type="checkbox" value="1"
-                        name="employer_post_external"
-                        {{ isset($jobPost) && $jobPost[0]->employer_post_external == 1 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="flexCheckDefault">
-                        External Apply
-                    </label>
+
+        <div class="row employer_post_industry_type" style="display: none">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Industry Name *</label>
+                    <input type="text" id="" placeholder="Add Industry name"
+                        name="employer_post_industry_name" class="form-control"
+                        value="{{ isset($jobPost) ? $jobPost[0]->employer_post_industry_name : '' }}" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row employer_post_department" style="display: none">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Department Name *</label>
+                    <input type="text" id="" placeholder="Add Industry name"
+                        name="employer_post_department_name" class="form-control"
+                        value="{{ isset($jobPost) ? $jobPost[0]->employer_post_department_name : '' }}" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="company_designation">
+                        Job Role / Designation *</label>
+                    <div style="position:relative" class="autocomplete_ui_parent">
+                        <input type="text" placeholder="Add Designation" name="employer_post_designation"
+                            class="form-control autocomplete_actual_id user_employment_current_designation employer_post_designation"
+                            required value="{{ isset($jobPost) ? $jobPost[0]->employer_post_designation : '' }}" />
+                        <input type="hidden" name="current_designation_id" class="autocomplete_id" value="">
+                        <div class="autocomplete-items" style="display:none">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Number of Vacancies *</label>
+                    <input type="number" id="" placeholder="Add Number of Vacancies"
+                        name="employer_post_vacancies" class="form-control" required
+                        value="{{ isset($jobPost) ? $jobPost[0]->employer_post_vacancies : '' }}" />
                 </div>
             </div>
         </div>
     </div>
-    <div class="row apply_link" style="display: {{ isset($jobPost) && $jobPost[0]->employer_post_external == 1 ? 'block' : 'none' }};">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label>Apply Link *</label>
-                <input type="url" name="employer_post_apply_link"
-                    value="{{ isset($jobPost) ? $jobPost[0]->employer_post_apply_link : old('employer_post_apply_link') }}"
-                    class="form-control" placeholder="Enter Apply URL">
+
+    <div class="background" style="padding-bottom:10px">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    <div class="form-check">
+                        <input class="form-check-input employer_post_walkin" type="checkbox" value="1"
+                            name="employer_post_walkin"
+                            {{ isset($jobPost) && $jobPost[0]->employer_post_walkin == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Add Walk-in Details (Optional)
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row walkin_details"
+            style="display: {{ isset($jobPost) && $jobPost[0]->employer_post_walkin == 1 ? 'flex' : 'none' }};padding-top:10px;">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Date *</label>
+                    <div class="d-flex">
+                        <input type="date" name="employer_post_walkin_date" placeholder="Date"
+                            class="form-control" date-format="DD MMMM YYYY"
+                            value="{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_date : '' }}">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Time *</label>
+                    <div class="d-flex">
+                        <input type="time" name="employer_post_walkin_time" placeholder="Time"
+                            class="form-control"
+                            value="{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_time : '' }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Address *</label>
+                    <textarea name="employer_post_walkin_address" placeholder="Add address" class="form-control">{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_address : '' }}</textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="background" style="padding-bottom:10px">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    <div class="form-check">
+                        <input class="form-check-input employer_post_external" type="checkbox" value="1"
+                            name="employer_post_external"
+                            {{ isset($jobPost) && $jobPost[0]->employer_post_external == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Add External Apply Link (Optional)
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row apply_link"
+            style="display: {{ isset($jobPost) && $jobPost[0]->employer_post_external == 1 ? 'block' : 'none' }}; padding-top:10px;">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="url" name="employer_post_apply_link"
+                        value="{{ isset($jobPost) ? $jobPost[0]->employer_post_apply_link : old('employer_post_apply_link') }}"
+                        class="form-control" placeholder="Enter Apply URL">
+                </div>
             </div>
         </div>
     </div>
+
     <input type="hidden" name="employer_post_save_status" value="1">
     <div class="row">
         <div class="col-md-12">
@@ -269,9 +443,21 @@
                 <button style="display:none" id="employer_post_submit" type="submit">Save</button>
                 <button id="employer_post_save" type="button" class="btn btn-primary">Save</button>
                 <button id="employer_post_save_publish" type="button" class="btn btn-primary">Save and
-                    publish</button>
+                    Preview</button>
             </div>
         </div>
     </div>
 
 </form>
+
+<script>
+    const showOther = (val, className) => {
+        if (val == 0) {
+            $('.' + className).show();
+            $('.' + className).find('input').attr('required', 'required');
+        } else {
+            $('.' + className).hide();
+            $('.' + className).find('input').removeAttr('required');
+        }
+    }
+</script>

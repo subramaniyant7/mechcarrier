@@ -2101,7 +2101,7 @@ $(document).on('keyup', '.employer_post_location_state', function (e) {
 });
 
 $(document).on('blur', '.employer_post_location_state', function () {
-    console.log('blur')
+    let current = $(this);
     const currentParent = $(this).parents('.autocomplete_ui_parent');
     $('.employer_post_location_city').attr('readonly', true);
     $('.selected_cities').html('');
@@ -2109,6 +2109,9 @@ $(document).on('blur', '.employer_post_location_state', function () {
     $(".city_text").val('');
     setTimeout(() => {
         const idVal = currentParent.find('.autocomplete_id').val();
+        if(idVal == ''){
+            current.val('')
+        }
         currentParent.find('.autocomplete-items').hide().html('');
     }, 500);
 
@@ -2184,7 +2187,11 @@ $(document).on('keyup', '.employer_post_location_city', function (e) {
 
 $(document).on('blur', '.employer_post_location_city', function () {
     const currentParent = $(this).parents('.autocomplete_ui_parent');
+    console.log('blur1')
+    $(this).prop('required', true)
     setTimeout(() => {
+        console.log('blur2')
+        $(this).val('')
         const idVal = currentParent.find('.autocomplete_id').val();
         currentParent.find('.autocomplete-items').hide().html('');
     }, 500);
@@ -2245,6 +2252,7 @@ $(document).on('click', '.clear_city', function () {
 });
 
 $(document).on('click', '.citycustom_click', function () {
+    console.log('click')
     const inputVal = $(this).find('input').val();
     const currentParent = $(this).parents('.autocomplete_ui_parent');
     currentParent.find('.autocomplete_actual_id').removeAttr('required');
@@ -2295,8 +2303,21 @@ $(document).on('click', '.citycustom_click', function () {
     selectedItems += '</ul>';
     $('.selected_cities').html(selectedItems);
     $('.city_text').val(cityText);
+    $('.employer_post_location_city').prop('required', false)
+});
 
-    $('.employer_post_location_city').val('')
+$(document).on('click', '.employer_post_walkin', function () {
+    let display = 'none';
+    let required = false;
+    if ($(this).prop("checked")) {
+        display = 'flex'
+        required = true
+    }
+    $(".walkin_details").css('display', display);
+    $(".walkin_details").find("input[name='employer_post_walkin_date']").attr('required', required)
+    $(".walkin_details").find("input[name='employer_post_walkin_time']").attr('required', required)
+    $(".walkin_details").find("textarea[name='employer_post_walkin_address']").attr('required', required)
+
 });
 
 $(document).on('click', '.employer_post_external', function () {
