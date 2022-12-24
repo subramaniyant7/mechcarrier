@@ -471,7 +471,7 @@
                             </div>
                         </div>
                         <div class="col-md-1" style="position: relative">
-                            <p class="to" style="position: absolute; top: 31px; left: 24px;">To</p>
+                            <p class="to" style="position: absolute; top: 31px; left: 10px;">To</p>
                         </div>
                         <div class="col-md-5">
                             <label style="visibility: hidden">Time *</label>
