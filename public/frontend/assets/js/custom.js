@@ -1038,7 +1038,7 @@ $(document).on('blur', '.user_current_state', function () {
     }, 500);
 });
 
-$(document).on('click', '.custom_action', function() {
+$(document).on('click', '.custom_action', function () {
     console.log('custom_action')
     const rootParent = $(this).parents('.current-location-form');
     const stateName = $(this).attr('data-id');
@@ -1116,7 +1116,7 @@ $(document).on('blur', '.user_current_city', function () {
     }, 500);
 });
 
-$(document).on('click', '.city_click', function() {
+$(document).on('click', '.city_click', function () {
     const rootParent = $(this).parents('.current-location-form');
     const cityName = $(this).attr('data-id');
     const cityId = $(this).val();
@@ -1952,7 +1952,7 @@ $(document).on('click', '.new_language', function (e) {
             if (data.status) {
                 $('.new_lan_html').append(data.data);
                 console.log('pppp', $('.parentlanguage').length)
-                if($('.parentlanguage').length == 10){
+                if ($('.parentlanguage').length == 10) {
                     console.log('hide');
                     $(currentthis).parents('.row.add-another').hide();
                 }
@@ -1970,7 +1970,7 @@ $(document).on('click', '.new_language', function (e) {
 
 $(document).on('click', '.delete_language', function (e) {
     $(this).parents('.parentlanguage').remove();
-    if($(this).parents('.parentlanguage').length <10){
+    if ($(this).parents('.parentlanguage').length < 10) {
         $('.row.add-another').show();
     }
 })
@@ -2058,8 +2058,15 @@ $(document).on('click', '#employer_post_save_publish', function () {
 $(document).on('keyup', '.employer_post_location_state', function (e) {
     let val = $(this).val();
     let current = this;
+    let root = $(this).parents('.location_main');
     const currentParent = $(this).parents('.autocomplete_ui_parent');
+
     $(this).attr('required', 'required');
+    root.find('.employer_post_location_city').attr({
+        readonly: true,
+        required: true
+    }).val('');
+
     if (val != '') {
         $.ajax({
             type: 'post',
@@ -2103,13 +2110,9 @@ $(document).on('keyup', '.employer_post_location_state', function (e) {
 $(document).on('blur', '.employer_post_location_state', function () {
     let current = $(this);
     const currentParent = $(this).parents('.autocomplete_ui_parent');
-    $('.employer_post_location_city').attr('readonly', true);
-    $('.selected_cities').html('');
-    $("input[name=employer_post_location_city_id]").val('');
-    $(".city_text").val('');
     setTimeout(() => {
         const idVal = currentParent.find('.autocomplete_id').val();
-        if(idVal == ''){
+        if (idVal == '') {
             current.val('')
         }
         currentParent.find('.autocomplete-items').hide().html('');
@@ -2118,28 +2121,31 @@ $(document).on('blur', '.employer_post_location_state', function () {
 });
 
 $(document).on('click', '.custom_click', function () {
-    $('.employer_post_location_city').attr({
-        'readonly': false,
+    let root = $(this).parents('.location_main');
+    root.find('.employer_post_location_city').attr({
+        readonly: false,
         required: true
-    });
+    }).val('');
 });
 
 $(document).on('keyup', '.employer_post_location_city', function (e) {
-    const stateId = $("input[name=employer_post_location_state_id]").val();
+    let root = $(this).parents('.location_main');
+    const stateId = root.find(".employer_post_location_state_id").val();
     if (stateId == '') {
         toastr.error('Please Enter Valid State');
         return false;
     }
+
     const currentParent = $(this).parents('.autocomplete_ui_parent');
 
-    let cityId = currentParent.find('.autocomplete_id').val();
-    if (cityId != '') {
-        let splitCityId = cityId.split(',');
-        if (splitCityId.length == 3) {
-            $(this).attr('readonly', true).val('');
-            return false;
-        }
-    }
+    // let cityId = currentParent.find('.autocomplete_id').val();
+    // if (cityId != '') {
+    //     let splitCityId = cityId.split(',');
+    //     if (splitCityId.length == 3) {
+    //         $(this).attr('readonly', true).val('');
+    //         return false;
+    //     }
+    // }
 
     $(this).attr('required', 'required');
     let val = $(this).val();
@@ -2168,7 +2174,7 @@ $(document).on('keyup', '.employer_post_location_city', function (e) {
                         html += "<div>No options found</div>";
                         currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
                     }
-                    // currentParent.find('.autocomplete_id').val('');
+                    currentParent.find('.autocomplete_id').val('');
                 } else toastr.error(data.message);
             },
             error: function (data) {
@@ -2186,19 +2192,16 @@ $(document).on('keyup', '.employer_post_location_city', function (e) {
 
 
 $(document).on('blur', '.employer_post_location_city', function () {
+    let thisElement = $(this);
     const currentParent = $(this).parents('.autocomplete_ui_parent');
     console.log('blur1')
-    $(this).prop('required', true)
     setTimeout(() => {
         console.log('blur2')
-        $(this).val('')
         const idVal = currentParent.find('.autocomplete_id').val();
-        currentParent.find('.autocomplete-items').hide().html('');
+        if (idVal == '') thisElement.val('')
+        currentParent.find('.autocomplete-items').html('').hide();
     }, 500);
 });
-
-
-
 
 
 
@@ -2252,58 +2255,60 @@ $(document).on('click', '.clear_city', function () {
 });
 
 $(document).on('click', '.citycustom_click', function () {
-    console.log('click')
+    console.log('ppp', $(this).attr('data-id'))
     const inputVal = $(this).find('input').val();
     const currentParent = $(this).parents('.autocomplete_ui_parent');
-    currentParent.find('.autocomplete_actual_id').removeAttr('required');
-    currentParent.find('.autocomplete-items').hide().html('');
+    currentParent.find('.autocomplete_id').val(inputVal);
+    currentParent.find('.autocomplete_actual_id').val($(this).attr('data-id'));
+    currentParent.find('.autocomplete-items').html('').hide();
 
-    let cityText = $('.city_text').val();
-    let newText = $(this).attr('data-id');
-    let cityId = currentParent.find('.autocomplete_id').val();
-    let newId = inputVal;
-    if (cityText != '') {
-        cityText = `${cityText},${newText}`;
-    } else {
-        cityText = newText;
-    }
 
-    if (cityId != '') {
-        let validateCity = cityId.split(',');
-        if (validateCity.length == 3) {
-            toastr.error('Reached maximum city limit');
-            return false;
-        }
-        if (validateCity.includes(newId)) {
-            $('.employer_post_location_city').val('')
-            toastr.error('City Already added')
-            return false
-        }
-        cityId = `${cityId},${newId}`;
-    } else {
-        cityId = newId;
-    }
+    // let cityText = $('.city_text').val();
+    // let newText = $(this).attr('data-id');
+    // let cityId = currentParent.find('.autocomplete_id').val();
+    // let newId = inputVal;
+    // if (cityText != '') {
+    //     cityText = `${cityText},${newText}`;
+    // } else {
+    //     cityText = newText;
+    // }
 
-    let imagePath = `${siteurl}frontend/assets/images/profilecreation/cancel.svg`
-    let newTextSplit = cityText.split(',');
-    let newCityIdSplit = cityId.split(',');
-    let selectedItems = '<ul class="selected_items">';
-    newTextSplit.forEach((element, index) => {
-        selectedItems += '<li>';
-        selectedItems += `${element}`;
-        selectedItems += '<img class="pointer clear_city" style="cursor:pointer" data-index="' + index + '" data-id="' + newCityIdSplit[index] + '" src="' + imagePath + '" >';
-        selectedItems += '</li>'
-    });
+    // if (cityId != '') {
+    //     let validateCity = cityId.split(',');
+    //     if (validateCity.length == 3) {
+    //         toastr.error('Reached maximum city limit');
+    //         return false;
+    //     }
+    //     if (validateCity.includes(newId)) {
+    //         $('.employer_post_location_city').val('')
+    //         toastr.error('City Already added')
+    //         return false
+    //     }
+    //     cityId = `${cityId},${newId}`;
+    // } else {
+    //     cityId = newId;
+    // }
 
-    currentParent.find('.autocomplete_id').val(cityId);
-    if (newCityIdSplit.length == 3) $('.employer_post_location_city').attr({
-        readonly: true,
-        required: false
-    });
-    selectedItems += '</ul>';
-    $('.selected_cities').html(selectedItems);
-    $('.city_text').val(cityText);
-    $('.employer_post_location_city').prop('required', false)
+    // let imagePath = `${siteurl}frontend/assets/images/profilecreation/cancel.svg`
+    // let newTextSplit = cityText.split(',');
+    // let newCityIdSplit = cityId.split(',');
+    // let selectedItems = '<ul class="selected_items">';
+    // newTextSplit.forEach((element, index) => {
+    //     selectedItems += '<li>';
+    //     selectedItems += `${element}`;
+    //     selectedItems += '<img class="pointer clear_city" style="cursor:pointer" data-index="' + index + '" data-id="' + newCityIdSplit[index] + '" src="' + imagePath + '" >';
+    //     selectedItems += '</li>'
+    // });
+
+    // currentParent.find('.autocomplete_id').val(cityId);
+    // if (newCityIdSplit.length == 3) $('.employer_post_location_city').attr({
+    //     readonly: true,
+    //     required: false
+    // });
+    // selectedItems += '</ul>';
+    // $('.selected_cities').html(selectedItems);
+    // $('.city_text').val(cityText);
+    // $('.employer_post_location_city').prop('required', false)
 });
 
 $(document).on('click', '.employer_post_walkin', function () {
@@ -2318,6 +2323,64 @@ $(document).on('click', '.employer_post_walkin', function () {
     $(".walkin_details").find("input[name='employer_post_walkin_time']").attr('required', required)
     $(".walkin_details").find("textarea[name='employer_post_walkin_address']").attr('required', required)
 
+});
+
+const showOther = (val, className) => {
+    if (val == 0) {
+        $('.' + className).show();
+        $('.' + className).find('input').attr('required', 'required');
+    } else {
+        $('.' + className).hide();
+        $('.' + className).find('input').removeAttr('required');
+    }
+}
+
+$(document).on('click', '.add_moreemployer span', function (e) {
+    let totalElement = $('.employer_post_location_state').length;
+    let current = $(this);
+    if (totalElement == 3) {
+        current.hide();
+        toastr.error('You cannot add more than 3');
+        return false;
+    }
+    $.ajax({
+        type: 'get',
+        url: `${siteurl}getaddmorelocationhtml`,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                $(".addnewelement").append(data.data).attr('style', 'padding-top:7px;');
+            } else {
+                $(".addnewelement").html('').removeAttr('style');
+                toastr.error(data.message);
+            }
+        },
+        error: function (data) {
+            $(".addnewelement").html('').removeAttr('style');
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            if (totalElement == 2) {
+                current.hide();
+            }
+            $('.loader').hide();
+        }
+    });
+
+    console.log(totalElement)
+});
+
+
+$(document).on('click', '.removelocationelement', function (e) {
+    $(this).parents('.location_main').remove();
+    let totalElement = $('.employer_post_location_state').length;
+    if (totalElement <= 2) {
+        $('.add_moreemployer span').show();
+    }
+
+    if (totalElement == 1) {
+        $(".addnewelement").html('').removeAttr('style');
+    }
 });
 
 $(document).on('click', '.employer_post_external', function () {

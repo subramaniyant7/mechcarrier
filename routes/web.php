@@ -188,10 +188,10 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::post('/save_employer_company', [EmployerController::class, 'SaveEmployerCompany'])->name('saveemployercompany');
         Route::middleware(['employerProfileValidate'])->group(function () {
             Route::get('/employer_jobpost', [EmployerController::class, 'EmployerJobPost'])->name('employerjobpost');
-            Route::get('/save_employer_jobpost', [EmployerController::class, 'SaveEmployerJobPost'])->name('saveemployerjobpost');
+            Route::post('/save_employer_jobpost', [EmployerController::class, 'SaveEmployerJobPost'])->name('saveemployerjobpost');
 
             Route::post('/employer_jobpost_prefil', [FAjaxController::class, 'EmployerJobPostPrefil'])->name('employerjobpostprefil');
-
+            Route::get('/getaddmorelocationhtml', [FAjaxController::class, 'GetAddMoreJobLocationHtml'])->name('getaddmorelocationhtml');
         });
         Route::get('/employer_logout', [EmployerController::class, 'EmployerLogout'])->name('employerlogout');
     });

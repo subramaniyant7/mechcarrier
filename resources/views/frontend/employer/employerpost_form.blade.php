@@ -1,4 +1,4 @@
-<form id="employer_post" action="{{ route('saveemployerjobpost') }}" methos="POST">
+<form id="employer_post" action="{{ route('saveemployerjobpost') }}" method="POST">
     @csrf
     <div class="row">
         <div class="col-md-8">
@@ -201,71 +201,135 @@
             </div>
         </div>
     </div>
-    @php
-        $stateName = $cityName = '';
-        $cityNameArray = $cityIdArray = [];
-        if (isset($jobPost)) {
-            $stateInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getStateById($jobPost[0]->employer_post_location_state);
-            if (count($stateInfo)) {
-                $stateName = $stateInfo[0]->state_name;
-                $cityIdArray = explode(',', $jobPost[0]->employer_post_location_city);
-                foreach ($cityIdArray as $k => $citysplitlist) {
-                    $cityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityById($citysplitlist);
-                    if (count($cityInfo)) {
-                        array_push($cityNameArray, $cityInfo[0]->city_name);
-                    }
-                }
-                $cityName = implode(',', $cityNameArray);
-            }
-        }
-    @endphp
-    <input type="hidden" disabled class="city_text" value={{ $cityName }}>
-    <div class="background">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div style="position:relative" class="autocomplete_ui_parent">
-                        <label>Job Location State *</label>
-                        <input type="text" name="employer_post_location_state" required
-                            class="form-control employer_post_location_state autocomplete_actual_id"
-                            value="{{ $stateName }}" placeholder="Add job location state ">
-                        <input type="hidden" class="autocomplete_id" name="employer_post_location_state_id"
-                            value="{{ isset($jobPost) ? $jobPost[0]->employer_post_location_state : '' }}">
-                        <div class="autocomplete-items" style="display:none"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div style="position:relative" class="autocomplete_ui_parent">
-                        <label>Job Location City *</label>
-                        <input type="text" name="employer_post_location_city"
-                            {{ isset($jobPost) && $jobPost[0]->employer_post_location_city != '' ? '' : 'required' }}
-                            {{ isset($jobPost) && $jobPost[0]->employer_post_location_state != '' ? '' : 'readonly' }}
-                            class="form-control employer_post_location_city autocomplete_actual_id" value=""
-                            placeholder="Add job location city ( maximum 3 ) ">
-                        <input type="hidden" class="autocomplete_id" name="employer_post_location_city_id"
-                            value="{{ isset($jobPost) ? $jobPost[0]->employer_post_location_city : '' }}">
-                        <div class="autocomplete-items" style="display:none"></div>
-                        <div class="selected_cities">
-                            @if (isset($jobPost) && count($cityNameArray))
-                                <ul class="selected_items">
-                                    @foreach ($cityNameArray as $k => $cityList)
-                                        <li>
-                                            {{ $cityList }}
-                                            <img class="pointer clear_city" style="cursor:pointer"
-                                                data-index="{{ $k }}" data-id="{{ $cityIdArray[$k] }}"
-                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/cancel.svg') }}">
 
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @endif
+    <div class="background">
+        @if (isset($jobPost) && count($jobPost))
+            @php
+                $allState = explode(',', $jobPost[0]->employer_post_location_state);
+                $allCity = explode(',', $jobPost[0]->employer_post_location_city);
+            @endphp
+            @foreach ($allState as $k => $state)
+                @php
+                    $stateName = $cityName = $stateId = $cityId = '';
+                    $stateInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getStateById($state);
+                    if (count($stateInfo)) {
+                        $stateId = $stateInfo[0]->state_id;
+                        $stateName = $stateInfo[0]->state_name;
+                        $cityInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getCityById($allCity[$k]);
+                        if (count($cityInfo)) {
+                            $cityId = $cityInfo[0]->city_id;
+                            $cityName = $cityInfo[0]->city_name;
+                        }
+                    }
+                @endphp
+                @if ($k == 1)
+                    <div class="addnewelement" style="padding-top:7px;">
+                @endif
+                <div class="row location_main" style ="padding : {{ $k > 0 ? '10px 0px' : ''}}">
+                    <div class="col-md-6">
+                        <div class="">
+                            <div style="position:relative" class="autocomplete_ui_parent">
+                                @if ($k == 0)
+                                    <label>Job Location *</label>
+                                @endif
+                                <input type="text" name="employer_post_location_state[]" required
+                                    class="form-control employer_post_location_state autocomplete_actual_id"
+                                    value="{{ $stateName }}" placeholder="Add State">
+                                <input type="hidden" class="autocomplete_id employer_post_location_state_id"
+                                    name="employer_post_location_state_id[]" value="{{ $stateId }}">
+                                <div class="autocomplete-items" style="display:none"></div>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-md-{{ $k > 0 ? 5 : 6}}">
+                        <div class="">
+                            <div style="position:relative" class="autocomplete_ui_parent">
+                                @if ($k == 0)
+                                    <label style="visibility: hidden">City *</label>
+                                @endif
+                                <input type="text" name="employer_post_location_city[]" required
+                                    class="form-control employer_post_location_city autocomplete_actual_id"
+                                    value="{{ $cityName }}" placeholder="Add City">
+                                <input type="hidden" class="autocomplete_id employer_post_location_city_id"
+                                    name="employer_post_location_city_id[]" value="{{ $cityId }}">
+                                <div class="autocomplete-items" style="display:none"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if ($k > 0)
+                        <div class="col-md-1">
+                            <div style="cursor: pointer;
+                        background: red;
+                        border-radius: 50%;
+                        position: absolute;
+                        top: 8px;
+                        left: 10px;
+                        color: #fff;
+                        padding: 2px 6px;
+                        font-size: 11px;"
+                                class="removelocationelement">X
+                            </div>
+                        </div>
+                    @endif
+
+                </div>
+                @if ($k+1 == count($allState))
+    </div>
+    @endif
+    @endforeach
+@else
+    <div class="row location_main">
+        <div class="col-md-6">
+            <div class="">
+                <div style="position:relative" class="autocomplete_ui_parent">
+                    <label>Job Location *</label>
+                    <input type="text" name="employer_post_location_state[]" required
+                        class="form-control employer_post_location_state autocomplete_actual_id" value=""
+                        placeholder="Add State">
+                    <input type="hidden" class="autocomplete_id employer_post_location_state_id"
+                        name="employer_post_location_state_id[]" value="">
+                    <div class="autocomplete-items" style="display:none"></div>
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="">
+                <div style="position:relative" class="autocomplete_ui_parent">
+                    <label style="visibility: hidden">City *</label>
+                    <input type="text" name="employer_post_location_city[]" required readonly
+                        class="form-control employer_post_location_city autocomplete_actual_id" value=""
+                        placeholder="Add City">
+                    <input type="hidden" class="autocomplete_id employer_post_location_city_id"
+                        name="employer_post_location_city_id[]" value="">
+                    <div class="autocomplete-items" style="display:none"></div>
+                    {{-- <div class="selected_cities">
+                                            @if (isset($jobPost) && count($cityNameArray))
+                                                <ul class="selected_items">
+                                                    @foreach ($cityNameArray as $k => $cityList)
+                                                        <li>
+                                                            {{ $cityList }}
+                                                            <img class="pointer clear_city" style="cursor:pointer"
+                                                                data-index="{{ $k }}" data-id="{{ $cityIdArray[$k] }}"
+                                                                src="{{ URL::asset(FRONTEND . '/assets/images/profilecreation/cancel.svg') }}">
+
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </div> --}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="addnewelement"></div>
+    @endif
+
+    <div class="add_moreemployer" style="text-align: left;padding:10px 0px;">
+        <span
+            style="color: #1D56BB;cursor:pointer;position:unset;font-size:14px;display: {{ isset($jobPost) && count($allState) == 3 ? 'none' : 'block' }}">Add
+            More</span>
+    </div>
     </div>
 
     <div class="background">
@@ -331,6 +395,15 @@
         </div>
 
 
+        @php
+            if(isset($jobPost)){
+
+                $designationInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getDesignationById($jobPost[0]->employer_post_designation);
+
+                $designationName = count($designationInfo) ? $designationInfo[0]->designation_name : $jobPost[0]->employer_post_designation;
+
+            }
+        @endphp
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -339,8 +412,8 @@
                     <div style="position:relative" class="autocomplete_ui_parent">
                         <input type="text" placeholder="Add Designation" name="employer_post_designation"
                             class="form-control autocomplete_actual_id user_employment_current_designation employer_post_designation"
-                            required value="{{ isset($jobPost) ? $jobPost[0]->employer_post_designation : '' }}" />
-                        <input type="hidden" name="current_designation_id" class="autocomplete_id" value="">
+                            required value="{{ isset($jobPost) ? $designationName : '' }}" />
+                        <input type="hidden" name="current_designation_id" class="autocomplete_id" value="{{ isset($jobPost) ? $jobPost[0]->employer_post_designation : '' }}">
                         <div class="autocomplete-items" style="display:none">
                         </div>
                     </div>
@@ -450,14 +523,4 @@
 
 </form>
 
-<script>
-    const showOther = (val, className) => {
-        if (val == 0) {
-            $('.' + className).show();
-            $('.' + className).find('input').attr('required', 'required');
-        } else {
-            $('.' + className).hide();
-            $('.' + className).find('input').removeAttr('required');
-        }
-    }
-</script>
+

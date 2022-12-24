@@ -166,7 +166,10 @@ class EmployerController extends Controller
     public function SaveEmployerJobPost(Request $request){
         $formData = $request->except('_token','employer_post_location_state_id','employer_post_location_city_id','current_designation_id');
 
+        $location = $request->only('employer_post_location_state_id','employer_post_location_city_id');
+
         $keySkil = explode(',',$formData['employer_post_key_skils']);
+
 
         if(count($keySkil) <=4){
             return back()->withInput()->with('error', "Please add minimum 5 skils to create a job post");
@@ -185,6 +188,42 @@ class EmployerController extends Controller
             return back()->withInput()->with('error', "Invalid Salary Range");
         }
 
+        if(!count($location['employer_post_location_state_id']) || !count($location['employer_post_location_city_id'])){
+            return back()->withInput()->with('Please enter valid State/City');
+        }
+
+        if(count($location['employer_post_location_state_id']) == count($location['employer_post_location_city_id'])){
+            $formData['employer_post_location_state'] = implode(',',$location['employer_post_location_state_id']);
+            $formData['employer_post_location_city'] = implode(',',$location['employer_post_location_city_id']);
+
+            $stateSplit = explode(',',$formData['employer_post_location_state']);
+
+            if(count($location['employer_post_location_state_id']) !== count(array_unique($location['employer_post_location_state_id']))
+                 && count($location['employer_post_location_city_id']) !== count(array_unique($location['employer_post_location_city_id'])))
+                {
+                    return back()->withInput()->with('Please enter valid State/City');
+                }
+
+            foreach($stateSplit as $stateInfo){
+                $stateData = HelperController::getStateById($stateInfo);
+                if(!count($stateData)) return back()->withInput()->with('Please Enter Valid State');
+            }
+
+            foreach(explode(',',$formData['employer_post_location_city']) as $k => $cityInfo){
+                $cityData = HelperController::getStateCityById($stateSplit[$k], $cityInfo);
+                if(!count($cityData)){
+                    return back()->withInput()->with('Please Enter Valid City');
+                }
+            }
+        }else{
+            return back()->withInput()->with('Please Enter Valid State and City');
+        }
+
+
+
+
+
+
         if(!array_key_exists('employer_post_hidesalary', $formData)){
             $formData['employer_post_hidesalary'] = 2;
         }
@@ -194,14 +233,11 @@ class EmployerController extends Controller
 
         $formData['employer_post_designation'] = $request->input('current_designation_id') != '' ? $request->input('current_designation_id'): $formData['employer_post_industry_type'];
 
-        if($request->input('employer_post_location_state_id') == ''){
-            return back()->withInput()->with('error', 'Please Enter State');
-        }
 
-        if(!array_key_exists('employer_post_location_city', $formData) ||
-            (array_key_exists('employer_post_location_city', $formData) && $request->input('employer_post_location_city_id') == '') ){
-            return back()->withInput()->with('error', 'Please Enter City');
-        }
+        // if(!array_key_exists('employer_post_location_city', $formData) ||
+        //     (array_key_exists('employer_post_location_city', $formData) && $request->input('employer_post_location_city_id') == '') ){
+        //     return back()->withInput()->with('error', 'Please Enter City');
+        // }
 
         // Stop($formData);
 
@@ -227,9 +263,6 @@ class EmployerController extends Controller
             $formData['employer_post_external'] = 2;
             $formData['employer_post_apply_link'] = '';
         }
-
-        $formData['employer_post_location_state'] = $request->input('employer_post_location_state_id');
-        $formData['employer_post_location_city'] = $request->input('employer_post_location_city_id');
 
         $formData['employer_post_employee_id'] = $request->session()->get('employer_id');
         $formData['employer_post_createdby'] = 0;
