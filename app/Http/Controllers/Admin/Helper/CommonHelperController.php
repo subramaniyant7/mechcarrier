@@ -198,6 +198,13 @@ class CommonHelperController extends Controller
         return $data->get();
     }
 
+    static function getEmploymentType($id = '')
+    {
+        $data = DB::table('employmenttype');
+        if ($id != '')  $data->where('employmenttype_id', $id);
+        return $data->get();
+    }
+
     static function getEducation($id = '')
     {
         $data = DB::table('education_info');

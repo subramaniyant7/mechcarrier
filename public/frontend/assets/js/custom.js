@@ -2320,7 +2320,8 @@ $(document).on('click', '.employer_post_walkin', function () {
     }
     $(".walkin_details").css('display', display);
     $(".walkin_details").find("input[name='employer_post_walkin_date']").attr('required', required)
-    $(".walkin_details").find("input[name='employer_post_walkin_time']").attr('required', required)
+    $(".walkin_details").find("input[name='employer_post_walkin_time_from']").attr('required', required)
+    $(".walkin_details").find("input[name='employer_post_walkin_time_to']").attr('required', required)
     $(".walkin_details").find("textarea[name='employer_post_walkin_address']").attr('required', required)
 
 });

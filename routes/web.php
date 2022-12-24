@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\DesignationController;
 use App\Http\Controllers\Admin\EmployerController as AdminEmployerController;
 use App\Http\Controllers\Admin\EmployerPost;
+use App\Http\Controllers\Admin\EmploymentTypeController;
 use App\Http\Controllers\Admin\WebpageContent\BannerContentController;
 use App\Http\Controllers\Admin\WebpageContent\CompanyManagementController;
 use App\Http\Controllers\Admin\WebpageContent\HomePageTrainingCenterController;
@@ -246,6 +247,12 @@ Route::middleware(['globalvalidate'])->group(function () {
             Route::get('/create_grade', [GradeController::class, 'ManageGrade'])->name('managegrade');
             Route::get('/action_grade/{option}/{id}', [GradeController::class, 'ActionGrade'])->name('actiongrade');
             Route::post('/save_grade', [GradeController::class, 'SaveGradeDetails'])->name('savegrade');
+
+            // Employment Type
+            Route::get('/view_employmenttype', [EmploymentTypeController::class, 'ViewEmploymentType'])->name('viewemploymenttype');
+            Route::get('/create_employmenttype', [EmploymentTypeController::class, 'ManageEmploymentType'])->name('manageemploymenttype');
+            Route::get('/action_employmenttype/{option}/{id}', [EmploymentTypeController::class, 'ActionEmploymentType'])->name('actionemploymenttype');
+            Route::post('/save_employmenttype', [EmploymentTypeController::class, 'SaveEmploymentType'])->name('saveemploymenttype');
 
             // Country
             Route::get('/view_country', [CountryController::class, 'ViewCountry'])->name('country');

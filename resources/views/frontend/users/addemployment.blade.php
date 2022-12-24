@@ -394,13 +394,5 @@
         });
     });
 
-    const showOther = (val, className) => {
-        if (val == 0) {
-            $('.' + className).show();
-            $('.' + className).find('input').attr('required', 'required');
-        } else {
-            $('.' + className).hide();
-            $('.' + className).find('input').removeAttr('required');
-        }
-    }
+
 </script>

@@ -242,14 +242,15 @@ class EmployerController extends Controller
         // Stop($formData);
 
         if(array_key_exists('employer_post_walkin', $formData) && ($formData['employer_post_walkin_date'] == ''
-        || $formData['employer_post_walkin_time'] == '' || $formData['employer_post_walkin_address'] == '' )){
+        || $formData['employer_post_walkin_time_from'] == '' || $formData['employer_post_walkin_time_to'] == '' || $formData['employer_post_walkin_address'] == '' )){
             return back()->withInput()->with('error','Please Enter All Walkin Details');
         }
 
         if(!array_key_exists('employer_post_walkin', $formData)){
             $formData['employer_post_walkin'] = 2;
             $formData['employer_post_walkin_date'] = '';
-            $formData['employer_post_walkin_time'] = '';
+            $formData['employer_post_walkin_time_from'] = '';
+            $formData['employer_post_walkin_time_to'] = '';
             $formData['employer_post_walkin_address'] = '';
         }
 

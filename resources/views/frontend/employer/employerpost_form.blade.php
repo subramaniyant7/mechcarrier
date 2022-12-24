@@ -15,10 +15,10 @@
                     <label>Employment Type *</label>
                     <select class="form-control" name="employer_post_employement_type" required>
                         <option selected="" value="">Select</option>
-                        @foreach (employmentType() as $k => $employmentType)
-                            <option value="{{ $k + 1 }}"
-                                {{ isset($jobPost) && $jobPost[0]->employer_post_employement_type == $k + 1 ? 'selected' : '' }}>
-                                {{ $employmentType }}
+                        @foreach (getActiveRecord('employmenttype') as $employmentType)
+                            <option value="{{ $employmentType->employmenttype_id }}"
+                                {{ isset($jobPost) && $jobPost[0]->employer_post_employement_type == $employmentType->employmenttype_id ? 'selected' : '' }}>
+                                {{ $employmentType->employmenttype_name }}
                             </option>
                         @endforeach
                     </select>
@@ -79,7 +79,7 @@
             <div class="col-md-6">
 
                 <label>Total Experience *</label>
-                <div style="display: flex">
+                <div >
                     <div class="row" style="position: relative;">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -111,7 +111,7 @@
                             </div>
                         </div>
 
-                        <div style="position: absolute;left:48.5%;">
+                        <div style="position: absolute;left:47.5%;">
                             <p class="to">To</p>
                         </div>
                     </div>
@@ -225,7 +225,7 @@
                 @if ($k == 1)
                     <div class="addnewelement" style="padding-top:7px;">
                 @endif
-                <div class="row location_main" style ="padding : {{ $k > 0 ? '10px 0px' : ''}}">
+                <div class="row location_main" style="padding : {{ $k > 0 ? '10px 0px' : '' }}">
                     <div class="col-md-6">
                         <div class="">
                             <div style="position:relative" class="autocomplete_ui_parent">
@@ -241,7 +241,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-{{ $k > 0 ? 5 : 6}}">
+                    <div class="col-md-{{ $k > 0 ? 5 : 6 }}">
                         <div class="">
                             <div style="position:relative" class="autocomplete_ui_parent">
                                 @if ($k == 0)
@@ -274,7 +274,7 @@
                     @endif
 
                 </div>
-                @if ($k+1 == count($allState))
+                @if ($k + 1 == count($allState))
     </div>
     @endif
     @endforeach
@@ -396,12 +396,10 @@
 
 
         @php
-            if(isset($jobPost)){
-
+            if (isset($jobPost)) {
                 $designationInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getDesignationById($jobPost[0]->employer_post_designation);
 
                 $designationName = count($designationInfo) ? $designationInfo[0]->designation_name : $jobPost[0]->employer_post_designation;
-
             }
         @endphp
         <div class="row">
@@ -413,7 +411,8 @@
                         <input type="text" placeholder="Add Designation" name="employer_post_designation"
                             class="form-control autocomplete_actual_id user_employment_current_designation employer_post_designation"
                             required value="{{ isset($jobPost) ? $designationName : '' }}" />
-                        <input type="hidden" name="current_designation_id" class="autocomplete_id" value="{{ isset($jobPost) ? $jobPost[0]->employer_post_designation : '' }}">
+                        <input type="hidden" name="current_designation_id" class="autocomplete_id"
+                            value="{{ isset($jobPost) ? $jobPost[0]->employer_post_designation : '' }}">
                         <div class="autocomplete-items" style="display:none">
                         </div>
                     </div>
@@ -448,7 +447,7 @@
 
         <div class="row walkin_details"
             style="display: {{ isset($jobPost) && $jobPost[0]->employer_post_walkin == 1 ? 'flex' : 'none' }};padding-top:10px;">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>Date *</label>
                     <div class="d-flex">
@@ -460,13 +459,29 @@
 
             </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Time *</label>
-                    <div class="d-flex">
-                        <input type="time" name="employer_post_walkin_time" placeholder="Time"
-                            class="form-control"
-                            value="{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_time : '' }}">
+            <div class="col-md-8">
+                <div class="form-group" style="position: relative;">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label>Time *</label>
+                            <div class="d-flex">
+                                <input type="time" name="employer_post_walkin_time_from" placeholder="Time"
+                                    class="form-control"
+                                    value="{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_time_from : '10:00' }}">
+                            </div>
+                        </div>
+                        <div class="col-md-1" style="position: relative">
+                            <p class="to" style="position: absolute; top: 31px; left: 24px;">To</p>
+                        </div>
+                        <div class="col-md-5">
+                            <label style="visibility: hidden">Time *</label>
+                            <div class="d-flex">
+                                <input type="time" name="employer_post_walkin_time_to" placeholder="Time"
+                                    class="form-control"
+                                    value="{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_time_to : '17:00' }}">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -522,5 +537,3 @@
     </div>
 
 </form>
-
-
