@@ -2425,6 +2425,14 @@ $('.form_prefil').click(function (e) {
     }
 });
 
+$('#publish_btn').click(function(e){
+    e.preventDefault();
+    if(confirm('Are you sure want to publish?')){
+        $('#job_publish').submit();
+    }
+});
+
+
 $(document).on('click', '.option_click', function () {
     console.log('Option')
     const inputVal = $(this).find('input').val();

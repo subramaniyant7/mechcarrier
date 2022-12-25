@@ -3796,6 +3796,123 @@ span.switch-handle {
 }
 
 
+/** Job Post Previews*/
+.job-post-previews {
+    padding-bottom: 60px;
+}
+.job-post-previews .breadcrumbs-bg {
+    background-color: #939393;
+    padding: 50px 0px;
+}
+.job-post-previews .job-post-previews-main {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 800px;
+}
+.job-post-previews .job-post-previews-main .job-card-info {
+    display: block;
+    width: 100%;
+}
+.job-post-previews .job-post-previews-main .job-card-designation {
+    position: relative;
+}
+.job-post-previews .job-post-previews-main .job-card-designation ul {
+    padding-inline-start: 0px;
+    display: flex;
+    justify-content: space-between;
+}
+.job-post-previews .job-post-previews-main .job-card-designation ul li {
+    list-style: none;
+    font-size: 13px;
+}
+.job-post-previews .job-post-previews-main .job-card-designation::before {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 1px;
+    background-color: #939393;
+    top: -14px;
+}
+.job-post-previews .job-post-previews-main .recomended-jobs {
+    padding-bottom: 15px;
+    margin-top: -45px;
+}
+.job-post-previews .job-post-previews-main .key-skills {
+    margin-top: 15px;
+}
+.job-post-previews .job-post-previews-main .key-skills h3 {
+    font-size: 16px;
+}
+.job-post-previews .job-post-previews-main .key-skills ul li {
+    font-size: 14px;
+}
+.job-post-previews .job-post-previews-main .job-description .education-details .d-flex,
+.job-post-previews .job-post-previews-main .job-description .walk-in-details .d-flex {
+    width: 100%;
+}
+.job-post-previews .job-post-previews-main .job-description .education-details .d-flex p,
+.job-post-previews .job-post-previews-main .job-description .walk-in-details .d-flex p {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+.job-post-previews .job-post-previews-main .job-description .education-details .d-flex p span,
+.job-post-previews .job-post-previews-main .job-description .walk-in-details .d-flex p span {
+    color: #939393;
+    display: flex;
+    justify-content: space-between;
+}
+.job-post-previews .job-post-previews-main .job-description .education-details .d-flex p:first-child,
+.job-post-previews .job-post-previews-main .job-description .walk-in-details .d-flex p:first-child {
+    width: 30%;
+    margin-right: 25px;
+}
+.job-post-previews .job-post-previews-main .job-description .education-details .d-flex p:last-child,
+.job-post-previews .job-post-previews-main .job-description .walk-in-details .d-flex p:last-child {
+    width: 70%;
+}
+.job-post-previews .job-post-previews-main .job-description h3 {
+    font-size: 16px;
+}
+.job-post-previews .job-post-previews-main .job-description ul {
+    padding-top: 10px;
+}
+.job-post-previews .job-post-previews-main .walk-in-details  {
+    margin-top: 30px;
+}
+.job-post-previews .job-post-previews-main .walk-in-details h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.job-post-previews .job-post-previews-main .job-description .external-apply-link {
+    padding: 30px 0px;
+}
+.job-post-previews .job-post-previews-main .job-description .external-apply-link h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.job-post-previews .job-post-previews-main .job-description .external-apply-link a {
+    color: #1D56BB;
+    font-size: 14px;
+}
+.job-post-previews-button .d-flex {
+    width: 100%;
+    justify-content: center;
+}
+.job-post-previews-button .d-flex button {
+    background: #1D56BB;
+    border: solid 1px #1D56BB;
+    border-radius: 4px;
+    padding: 8px 30px 8px 30px;
+    margin: 8px 0px;
+    font-size: 14px;
+}
+
+/** JOb post previews end*/
+
+
 
 /* 48em = 768px */
 

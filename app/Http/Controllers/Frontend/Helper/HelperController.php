@@ -275,6 +275,21 @@ class HelperController extends Controller
         return DB::table('education_grade')->where('education_id', $id)->get();
     }
 
+    static function getEducationById($id)
+    {
+        return DB::table('education_info')->where([['education_id', $id],['status', 1]])->get();
+    }
+
+    static function getIndutryById($id)
+    {
+        return DB::table('industry')->where([['industry_id', $id],['status', 1]])->get();
+    }
+
+    static function getDepartmentById($id)
+    {
+        return DB::table('department')->where([['department_id', $id],['status', 1]])->get();
+    }
+
     static function getEducationInfo($id = '')
     {
         $data = DB::table('education_info');
@@ -334,6 +349,11 @@ class HelperController extends Controller
         return DB::table('employer_details')->where('employer_detail_id', $id)->get();
     }
 
+    static function getEmployerById($id)
+    {
+        return DB::table('employer_details')->where([['employer_detail_id', $id],['status', 1]])->get();
+    }
+
     static function getEmployerInfoByEmail($email)
     {
         return DB::table('employer_details')->where('employer_email', $email)->get();
@@ -352,6 +372,11 @@ class HelperController extends Controller
     static function getEmployerPost($employerId)
     {
         return DB::table('employer_post')->where([['employer_post_employee_id', $employerId], ['status', 1]])->get();
+    }
+
+    static function getEmploymentTypeId($employmentId)
+    {
+        return DB::table('employmenttype')->where([['employmenttype_id', $employmentId], ['status', 1]])->get();
     }
 
     static function getJobPostById($postId)

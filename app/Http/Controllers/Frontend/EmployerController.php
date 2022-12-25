@@ -159,12 +159,21 @@ class EmployerController extends Controller
     public function EmployerJobPost(Request $request)
     {
         $employerPost = HelperController::getEmployerPost($request->session()->get('employer_id'));
-        // Stop($employerPost);
-        return view('frontend.employer.employer_jobpost', compact('employerPost'));
+        $data = ['employerPost' => $employerPost];
+        if($request->input('mode') == 'edit' && $request->input('id') != ''){
+            try{
+                $postId = decryption($request->input('id'));
+                $data['jobPost'] =  HelperController::getJobPostById($postId);
+                if(count($data['jobPost']) &&  $data['jobPost'][0]->employer_post_save_status == 2) return redirect()->route('employerjobpost')->with('error','Invalid Action');
+            }catch(\Exception $e){
+                return redirect()->route('employerjobpost')->with('error','Something went wrong');
+            }
+        }
+        return view('frontend.employer.employer_jobpost', $data);
     }
 
     public function SaveEmployerJobPost(Request $request){
-        $formData = $request->except('_token','employer_post_location_state_id','employer_post_location_city_id','current_designation_id');
+        $formData = $request->except('_token','employer_post_location_state_id','employer_post_location_city_id','current_designation_id','customid');
 
         $location = $request->only('employer_post_location_state_id','employer_post_location_city_id');
 
@@ -219,11 +228,6 @@ class EmployerController extends Controller
             return back()->withInput()->with('Please Enter Valid State and City');
         }
 
-
-
-
-
-
         if(!array_key_exists('employer_post_hidesalary', $formData)){
             $formData['employer_post_hidesalary'] = 2;
         }
@@ -231,15 +235,7 @@ class EmployerController extends Controller
         $formData['employer_post_industry_name'] = $request->input('employer_post_industry_type') == 0 ? $formData['employer_post_industry_name'] : '';
         $formData['employer_post_department_name'] = $request->input('employer_post_department') == 0 ? $formData['employer_post_department_name'] : '';
 
-        $formData['employer_post_designation'] = $request->input('current_designation_id') != '' ? $request->input('current_designation_id'): $formData['employer_post_industry_type'];
-
-
-        // if(!array_key_exists('employer_post_location_city', $formData) ||
-        //     (array_key_exists('employer_post_location_city', $formData) && $request->input('employer_post_location_city_id') == '') ){
-        //     return back()->withInput()->with('error', 'Please Enter City');
-        // }
-
-        // Stop($formData);
+        $formData['employer_post_designation'] = $request->input('current_designation_id') != '' ? $request->input('current_designation_id'): $formData['employer_post_designation'];
 
         if(array_key_exists('employer_post_walkin', $formData) && ($formData['employer_post_walkin_date'] == ''
         || $formData['employer_post_walkin_time_from'] == '' || $formData['employer_post_walkin_time_to'] == '' || $formData['employer_post_walkin_address'] == '' )){
@@ -254,8 +250,6 @@ class EmployerController extends Controller
             $formData['employer_post_walkin_address'] = '';
         }
 
-
-
         if(array_key_exists('employer_post_external', $formData) && $formData['employer_post_apply_link'] == ''){
             return back()->withInput()->with('error','Please Enter Apply Link');
         }
@@ -268,19 +262,67 @@ class EmployerController extends Controller
         $formData['employer_post_employee_id'] = $request->session()->get('employer_id');
         $formData['employer_post_createdby'] = 0;
 
+        if($formData['employer_post_save_status'] == 2) $formData['employer_post_save_status'] = 1;
 
-        $saveData = insertQuery('employer_post',$formData);
+        // Stop($formData);
+        if($request->input('customid') != ''){
+            try{
+                $postId = decryption($request->input('customid'));
+                updateQuery('employer_post','employer_post_id',$postId,$formData);
+                $saveData = $postId;
+            }catch(\Exception $e){
+                return back()->with('error', 'Something went wrong. Please try again');
+            }
+
+        }else{
+            $saveData = insertQueryId('employer_post',$formData);
+        }
         $notify = notification($saveData);
         if($notify['type']){
-            if($formData['employer_post_save_status'] == 1){
+            if($request->input('employer_post_save_status') == 1){
                 $notify['msg'] = 'Your job saved successfully';
             }
 
-            if($formData['employer_post_save_status'] == 2){
-                $notify['msg'] = 'Your job saved successfully. It will publish once admin reviewed/approved';
+            if($request->input('employer_post_save_status') == 2){
+                return redirect()->route('employerjobpostpreview',['id' => encryption($saveData)]);
+                // $notify['msg'] = 'Your job saved successfully. It will publish once admin reviewed/approved';
             }
         }
         return redirect()->route('employerjobpost')->with($notify['type'], $notify['msg']);
+    }
+
+    public function EmployerJobPostPreview(Request $request, $id){
+
+        // exit;
+        if($id == '') return redirect()->route('employerjobpost')->with('error','Invalid Action123');
+        try{
+            $postId = decryption($id);
+            $employerPostInfo = HelperController::getJobPostById($postId);
+            if(!count($employerPostInfo)) return redirect()->route('employerjobpost')->with('error','Jobpost not found');
+            if($employerPostInfo[0]->employer_post_save_status == 2) return redirect()->route('employerjobpost')->with('error','Invalid Action');
+            return view('frontend.employer.employerpost_preview', compact('employerPostInfo'));
+        }catch(\Exception $e){
+            return redirect()->route('employerjobpost')->with('error','Something went wrong');
+        }
+    }
+
+    public function PublishEmployerJobPost(Request $request){
+        $formData = $request->only('employer_post_id');
+        if($formData['employer_post_id'] == '') return back()->with('error','Something went wrong');
+        try{
+            $postId = decryption($formData['employer_post_id']);
+            $employerPostInfo = HelperController::getJobPostById($postId);
+            if(count($employerPostInfo)){
+                $saveData = updateQuery('employer_post','employer_post_id', $postId, ['employer_post_save_status' => 2]);
+                $notify = notification($saveData);
+                if($notify['type']){
+                    $notify['msg'] = 'Your job submitted for admin approval. It will publish once admin reviewed/approved';
+                }
+                return redirect()->route('employerjobpost')->with($notify['type'], $notify['msg']);
+            }
+        }catch(\Exception $e){
+            return back()->with('error','Something went wrong');
+        }
     }
 
 

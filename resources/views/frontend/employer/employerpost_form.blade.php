@@ -1,10 +1,10 @@
-<form id="employer_post" action="{{ route('saveemployerjobpost') }}" method="POST">
+<form id="employer_post" action="{{ route('saveemployerjobpost') }}" method="POST" autocomplete="off">
     @csrf
     <div class="row">
         <div class="col-md-8">
             <div class="form-outline">
                 <label>Job Post Headline *</label>
-                <input type="text" class="form-control" name="employer_post_headline" required
+                <input type="text" class="form-control" name="employer_post_headline" required autocomplete="off"
                     placeholder="Add title which describe job role"
                     value="{{ isset($jobPost) ? $jobPost[0]->employer_post_headline : old('employer_post_headline') }}">
             </div>
@@ -31,7 +31,7 @@
             <div class="background">
                 <div class="form-group relative">
                     <label>Job Description *</label>
-                    <textarea name="employer_post_description" required rows="5" minlength="10" maxlength="1000"
+                    <textarea autocomplete="off" name="employer_post_description" required rows="5" minlength="10" maxlength="1000"
                         placeholder="Describe activities in this job role " class="form-control">{{ isset($jobPost) ? $jobPost[0]->employer_post_description : old('employer_post_description') }}</textarea>
                     <div class="counter" id="the-count" style="font-weight: normal;">
                         <span id="current"
@@ -47,7 +47,7 @@
             <div class="background">
                 <div class="pb-10">
                     <label>Skill Keywords*</label>
-                    <input type="text" required name="employer_post_key_skils" class="form-control"
+                    <input  autocomplete="off" type="text" required name="employer_post_key_skils" class="form-control"
                         value="{{ isset($jobPost) ? $jobPost[0]->employer_post_key_skils : old('employer_post_key_skils') }}"
                         placeholder="Add minimum 5 for better targeting candidates ( max 200 charactors )"
                         maxlength="200">
@@ -232,7 +232,7 @@
                                 @if ($k == 0)
                                     <label>Job Location *</label>
                                 @endif
-                                <input type="text" name="employer_post_location_state[]" required
+                                <input autocomplete="off" type="text" name="employer_post_location_state[]" required
                                     class="form-control employer_post_location_state autocomplete_actual_id"
                                     value="{{ $stateName }}" placeholder="Add State">
                                 <input type="hidden" class="autocomplete_id employer_post_location_state_id"
@@ -247,7 +247,7 @@
                                 @if ($k == 0)
                                     <label style="visibility: hidden">City *</label>
                                 @endif
-                                <input type="text" name="employer_post_location_city[]" required
+                                <input autocomplete="off" type="text" name="employer_post_location_city[]" required
                                     class="form-control employer_post_location_city autocomplete_actual_id"
                                     value="{{ $cityName }}" placeholder="Add City">
                                 <input type="hidden" class="autocomplete_id employer_post_location_city_id"
@@ -284,7 +284,7 @@
             <div class="">
                 <div style="position:relative" class="autocomplete_ui_parent">
                     <label>Job Location *</label>
-                    <input type="text" name="employer_post_location_state[]" required
+                    <input autocomplete="off" type="text" name="employer_post_location_state[]" required
                         class="form-control employer_post_location_state autocomplete_actual_id" value=""
                         placeholder="Add State">
                     <input type="hidden" class="autocomplete_id employer_post_location_state_id"
@@ -297,7 +297,7 @@
             <div class="">
                 <div style="position:relative" class="autocomplete_ui_parent">
                     <label style="visibility: hidden">City *</label>
-                    <input type="text" name="employer_post_location_city[]" required readonly
+                    <input autocomplete="off" type="text" name="employer_post_location_city[]" required readonly
                         class="form-control employer_post_location_city autocomplete_actual_id" value=""
                         placeholder="Add City">
                     <input type="hidden" class="autocomplete_id employer_post_location_city_id"
@@ -372,22 +372,22 @@
             </div>
         </div>
 
-        <div class="row employer_post_industry_type" style="display: none">
+        <div class="row employer_post_industry_type" style="display: {{isset($jobPost) && $jobPost[0]->employer_post_industry_name != '' ? 'block' : 'none' }}">
             <div class="col-md-12">
                 <div class="form-group">
                     <label>Industry Name *</label>
-                    <input type="text" id="" placeholder="Add Industry name"
+                    <input autocomplete="off" type="text" id="" placeholder="Add Industry name"
                         name="employer_post_industry_name" class="form-control"
                         value="{{ isset($jobPost) ? $jobPost[0]->employer_post_industry_name : '' }}" />
                 </div>
             </div>
         </div>
 
-        <div class="row employer_post_department" style="display: none">
+        <div class="row employer_post_department" style="display: {{isset($jobPost) && $jobPost[0]->employer_post_industry_name != '' ? 'block' : 'none' }}">
             <div class="col-md-12">
                 <div class="form-group">
                     <label>Department Name *</label>
-                    <input type="text" id="" placeholder="Add Industry name"
+                    <input autocomplete="off" type="text" id="" placeholder="Add Industry name"
                         name="employer_post_department_name" class="form-control"
                         value="{{ isset($jobPost) ? $jobPost[0]->employer_post_department_name : '' }}" />
                 </div>
@@ -408,7 +408,7 @@
                     <label class="company_designation">
                         Job Role / Designation *</label>
                     <div style="position:relative" class="autocomplete_ui_parent">
-                        <input type="text" placeholder="Add Designation" name="employer_post_designation"
+                        <input autocomplete="off" type="text" placeholder="Add Designation" name="employer_post_designation"
                             class="form-control autocomplete_actual_id user_employment_current_designation employer_post_designation"
                             required value="{{ isset($jobPost) ? $designationName : '' }}" />
                         <input type="hidden" name="current_designation_id" class="autocomplete_id"
@@ -421,7 +421,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Number of Vacancies *</label>
-                    <input type="number" id="" placeholder="Add Number of Vacancies"
+                    <input autocomplete="off" type="number" id="" placeholder="Add Number of Vacancies"
                         name="employer_post_vacancies" class="form-control" required
                         value="{{ isset($jobPost) ? $jobPost[0]->employer_post_vacancies : '' }}" />
                 </div>
@@ -467,7 +467,7 @@
                             <div class="d-flex">
                                 <input type="time" name="employer_post_walkin_time_from" placeholder="Time"
                                     class="form-control"
-                                    value="{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_time_from : '10:00' }}">
+                                    value="{{ isset($jobPost) && $jobPost[0]->employer_post_walkin_time_from != '' ? $jobPost[0]->employer_post_walkin_time_from : '10:00' }}">
                             </div>
                         </div>
                         <div class="col-md-1" style="position: relative">
@@ -478,7 +478,7 @@
                             <div class="d-flex">
                                 <input type="time" name="employer_post_walkin_time_to" placeholder="Time"
                                     class="form-control"
-                                    value="{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_time_to : '17:00' }}">
+                                    value="{{ isset($jobPost) && $jobPost[0]->employer_post_walkin_time_to != '' ? $jobPost[0]->employer_post_walkin_time_to : '17:00' }}">
                             </div>
                         </div>
 
@@ -489,7 +489,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label>Address *</label>
-                    <textarea name="employer_post_walkin_address" placeholder="Add address" class="form-control">{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_address : '' }}</textarea>
+                    <textarea autocomplete="off" name="employer_post_walkin_address" placeholder="Add address" class="form-control">{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_address : '' }}</textarea>
                 </div>
             </div>
         </div>
@@ -516,7 +516,7 @@
             style="display: {{ isset($jobPost) && $jobPost[0]->employer_post_external == 1 ? 'block' : 'none' }}; padding-top:10px;">
             <div class="col-md-12">
                 <div class="form-group">
-                    <input type="url" name="employer_post_apply_link"
+                    <input autocomplete="off" type="url" name="employer_post_apply_link"
                         value="{{ isset($jobPost) ? $jobPost[0]->employer_post_apply_link : old('employer_post_apply_link') }}"
                         class="form-control" placeholder="Enter Apply URL">
                 </div>
@@ -525,6 +525,7 @@
     </div>
 
     <input type="hidden" name="employer_post_save_status" value="1">
+    <input type="hidden" name="customid" value="{{ request()->get('id') != '' ? request()->get('id') : ''}}" >
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
