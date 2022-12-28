@@ -8,7 +8,7 @@
         $employerInfo = \App\Http\Controllers\Frontend\Helper\HelperController::getEmployerById($employerPostInfo[0]->employer_post_employee_id);
         if (count($employerInfo)) {
             $employerName = $employerInfo[0]->employer_company_name;
-            $companyLogo = URL::asset('uploads/employer/company/' . $employerInfo[0]->employer_company_logo);
+            $companyLogo = $employerInfo[0]->employer_company_logo != '' ? URL::asset('uploads/employer/company/' . $employerInfo[0]->employer_company_logo) : $companyLogo;
         }
 
         $cityInfo = explode(',', $employerPostInfo[0]->employer_post_location_city);
@@ -68,7 +68,7 @@
                                                 <p><span><img
                                                             src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
                                                     </span>
-                                                    {{ SalaryLakhs()[$employerPostInfo[0]->employer_post_experience_from-1] }}-{{ SalaryLakhs()[$employerPostInfo[0]->employer_post_experience_to-1] }}
+                                                    {{ SalaryLakhs()[$employerPostInfo[0]->employer_post_experience_from - 1] }}-{{ SalaryLakhs()[$employerPostInfo[0]->employer_post_experience_to - 1] }}
                                                     Years
                                                 </p>
                                             </div>
@@ -81,7 +81,7 @@
                                             <div class="salary">
                                                 <p><span><img
                                                             src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                                    </span>{{ SalaryLakhs()[$employerPostInfo[0]->employer_post_salary_range_from_lakhs-1] }}-{{ SalaryLakhs()[$employerPostInfo[0]->employer_post_salary_range_to_lakhs-1] }}
+                                                    </span>{{ SalaryLakhs()[$employerPostInfo[0]->employer_post_salary_range_from_lakhs - 1] }}-{{ SalaryLakhs()[$employerPostInfo[0]->employer_post_salary_range_to_lakhs - 1] }}
                                                     Lakhs</p>
                                             </div>
                                         </div>
@@ -96,7 +96,12 @@
                             </div>
                             <div class="key-skills">
                                 <h3> Skill Keywords</h3>
-                                <ul>
+                                <ul
+                                    style="display: inline-flex;
+                                padding-inline-start: 0px;
+                                margin-top: 5px;
+                                flex-wrap: wrap;
+                                margin-bottom: 10px;">
                                     @foreach ($skils as $skil)
                                         <li>{{ $skil }}</li>
                                     @endforeach
@@ -177,4 +182,3 @@
     </main>
 
 @stop
-

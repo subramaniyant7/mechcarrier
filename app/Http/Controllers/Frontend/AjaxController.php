@@ -303,6 +303,25 @@ class AjaxController extends Controller
         return $response;
     }
 
+    public function GetEmployerAddress(Request $request){
+        $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
+        try {
+            if ($request->session()->get('employer_id') != '') {
+                $employerInfo = HelperController::getEmployerById($request->session()->get('employer_id'));
+                if(count($employerInfo)){
+                    $response = ['status' => true, 'message' => '', 'data' => $employerInfo[0]->employer_address];
+                }
+
+            }else{
+                $response['message'] = 'Something went wrong. Invalid access';
+            }
+        } catch (\Exception $e) {
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
     public function GetAddMoreJobLocationHtml(Request $request){
         $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
         try {

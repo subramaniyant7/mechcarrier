@@ -158,8 +158,29 @@ class EmployerController extends Controller
 
     public function EmployerJobPost(Request $request)
     {
-        $employerPost = HelperController::getEmployerPost($request->session()->get('employer_id'));
-        $data = ['employerPost' => $employerPost];
+        $page = $request->input('page') != '' ? $request->input('page') : 1;
+        $limit = 6;
+        $start = $request->input('page')  ? ($request->input('page') - 1) * $limit : 0;
+
+        $totalPagination = 0;
+        $totalPost = HelperController::getEmployerPost($request->session()->get('employer_id'));
+        $employerPost = HelperController::getEmployerPost($request->session()->get('employer_id'), $start ,$limit);
+
+        if(count($totalPost) > 6){
+            $totalPagination = count($totalPost)/$limit;
+            if(is_float($totalPagination) == 1){
+                $totalPagination = round($totalPagination)+1;
+            }
+        }
+
+        // echo '<pre>';
+        // print_r($employerPost);
+        // exit;
+
+        // $totalPostArray = count($totalPost) > $limit ? json_decode(json_encode($totalPost), true) : [];
+        // $employerPostNew =  array_slice($totalPostArray, -$limit, $limit, true);
+        $data = ['employerPost' => $employerPost, 'totalPost' => $totalPost, 'currentpage' => $page,'totalPagination' => $totalPagination];
+
         if($request->input('mode') == 'edit' && $request->input('id') != ''){
             try{
                 $postId = decryption($request->input('id'));
@@ -313,16 +334,25 @@ class EmployerController extends Controller
             $postId = decryption($formData['employer_post_id']);
             $employerPostInfo = HelperController::getJobPostById($postId);
             if(count($employerPostInfo)){
-                $saveData = updateQuery('employer_post','employer_post_id', $postId, ['employer_post_save_status' => 2]);
+                $saveData = updateQuery('employer_post','employer_post_id', $postId, ['employer_post_approval_status' => 1,
+            'employer_post_approvedby' => 0, 'employer_post_save_status' => 2]);
                 $notify = notification($saveData);
                 if($notify['type']){
-                    $notify['msg'] = 'Your job submitted for admin approval. It will publish once admin reviewed/approved';
+                    return redirect()->route('jobpostsuccess')->with('success','Your job submitted successfully');
+                    $notify['msg'] = 'Your job submitted successfully';
                 }
                 return redirect()->route('employerjobpost')->with($notify['type'], $notify['msg']);
             }
         }catch(\Exception $e){
             return back()->with('error','Something went wrong');
         }
+    }
+
+    public function EmployerJobPostSuccess(Request $request){
+        if($request->session()->get('success') != ''){
+            return view('frontend.employer.employer_jobpost_success');
+        }
+        return redirect()->route('employerjobpost');
     }
 
 

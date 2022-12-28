@@ -101,30 +101,43 @@
                                     </div>
                                 </div>
 
-                                <span class="job-post-mail">post on {{ date('d M Y', $postDate) }} by
+                                <span class="job-post-mail">saved on {{ date('d M Y', $postDate) }} by
                                     Email : {{ $employerEmail }}</span>
                             @empty
                                 <div> No Post / Saved Jobs found</div>
                             @endforelse
 
 
-                            @if (count($employerPost))
+                            @if ($totalPagination > 1 && $currentpage <= $totalPagination)
                                 <div class="pagination">
-                                    <nav aria-label="Page navigation example">
+                                    <nav aria-label="Page navigation">
                                         <ul class="pagination pg-blue justify-content-center">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" tabindex="-1"><span><img
-                                                            src="{{ URL::asset(FRONTEND . '/assets/images/arrowleft.svg') }}" /></span>
-                                                    Previous</a>
-                                            </li>
-                                            <li class="page-item"><a class="page-link">1</a></li>
-                                            <li class="page-item"><a class="page-link">2</a></li>
-                                            <li class="page-item active"><a class="page-link">3</a></li>
-                                            <li class="page-item"><a class="page-link">4</a></li>
-                                            <li class="page-item"><a class="page-link">5</a></li>
-                                            <li class="page-item"><a class="page-link">....</a></li>
                                             <li class="page-item">
-                                                <a class="page-link">Next <span><img
+                                                <a {{ $currentpage == 1 ? 'disabled' : '' }}
+                                                    style="cursor : {{ $currentpage == 1 ? 'not-allowed' : 'pointer' }}"
+                                                    class="page-link"
+                                                    href="{{ route('employerjobpost') . '?page=' . $currentpage - 1 }}">
+                                                    <span>
+                                                        <img
+                                                            src="{{ URL::asset(FRONTEND . '/assets/images/arrowleft.svg') }}" />
+                                                    </span>
+                                                    Previous
+                                                </a>
+                                            </li>
+                                            @for ($l = 1; $l <= $totalPagination; $l++)
+                                                <li class="page-item {{ $currentpage == $l ? 'active' : '' }}">
+                                                    <a href="{{ route('employerjobpost') . '?page=' . $l }}"
+                                                        class="page-link">{{ $l }}</a>
+                                                </li>
+                                            @endfor
+
+
+                                            <li class="page-item">
+                                                <a {{ $currentpage == $totalPagination ? 'disabled' : '' }}
+                                                    style="cursor : {{ $currentpage == $totalPagination ? 'not-allowed' : 'pointer' }}"
+                                                    class="page-link"
+                                                    href="{{ route('employerjobpost') . '?page=' . $currentpage + 1 }}">Next
+                                                    <span><img
                                                             src="{{ URL::asset(FRONTEND . '/assets/images/arrowleft.svg') }}" /></span></a>
                                             </li>
                                         </ul>

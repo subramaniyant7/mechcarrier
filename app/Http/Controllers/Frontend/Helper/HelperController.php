@@ -369,9 +369,11 @@ class HelperController extends Controller
         return DB::table('employer_details')->where([['employer_email', $email], ['employer_password', md5($password)]])->get();
     }
 
-    static function getEmployerPost($employerId)
+    static function getEmployerPost($employerId, $skip = 0, $take = '')
     {
-        return DB::table('employer_post')->where([['employer_post_employee_id', $employerId], ['status', 1]])->get();
+        $data = DB::table('employer_post')->where([['employer_post_employee_id', $employerId], ['status', 1]]);
+        if($skip != '' && $take != '') $data->skip($skip)->take($take);
+        return $data->get();
     }
 
     static function getEmploymentTypeId($employmentId)

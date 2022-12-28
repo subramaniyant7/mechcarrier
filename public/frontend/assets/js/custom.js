@@ -2425,9 +2425,34 @@ $('.form_prefil').click(function (e) {
     }
 });
 
-$('#publish_btn').click(function(e){
+$(document).on('click', '.use_address', function (e) {
+    if ($(this).prop("checked")) {
+        $.ajax({
+            type: 'get',
+            url: `${siteurl}getemployeraddress`,
+            dataType: 'json',
+            success: function (data) {
+                if (data.status) {
+                    $('.employer_post_walkin_address').val(data.data)
+                } else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+                $('.employer_post_walkin_address').val("");
+            },
+            complete: function () {
+                $('.loader').hide();
+
+            }
+        });
+    }else{
+        $('.employer_post_walkin_address').val("");
+    }
+})
+
+$('#publish_btn').click(function (e) {
     e.preventDefault();
-    if(confirm('Are you sure want to publish?')){
+    if (confirm('Are you sure want to publish?')) {
         $('#job_publish').submit();
     }
 });
