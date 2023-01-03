@@ -55,22 +55,47 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
+                        <div class="searchfilter-dflex">
+                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/filtericon.svg') }}" /></span>
+                                Filters</p>
+                            <h4>Clear all</h4>
+                        </div>
                         <div class="searchfilter-sidebar">
-                            <div class="searchfilter-dflex">
-                                <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/filtericon.svg') }}" /></span>
-                                    Filters</p>
-                                <h4>Clear all</h4>
-                            </div>
+
                             <div class="searchfilters-list">
-                                <h4>Job type </h4>
+                                <h4>Employment type </h4>
                                 <ul>
-                                    @foreach (employmentType() as $k => $employment)
+                                    @foreach (getActiveRecord('employmenttype') as $employment)
                                         <li>
                                             <div class="form-check">
                                                 <input class="form-check-input employment_type" name="employment_type"
-                                                    type="checkbox" value="{{ $k + 1 }}">
+                                                    type="checkbox" value="{{ $employment->employmenttype_id }}">
                                                 <label class="form-check-label">
-                                                    {{ $employment }}
+                                                    {{ $employment->employmenttype_name }}
+                                                </label>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="searchfilters-list" style="margin-bottom: 20px;">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <label class="form-check-label">
+                                        Show only walkin
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="searchfilters-list">
+                                <h4>Job posted at</h4>
+                                <ul>
+                                    @foreach (jobPostRange() as $j => $jobpostrange)
+                                        <li>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    value="{{ $j + 1 }}">
+                                                <label class="form-check-label">
+                                                    Last {{ $jobpostrange }} days
                                                 </label>
                                             </div>
                                         </li>
@@ -85,7 +110,7 @@
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="{{ $p }}"
                                                     id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
+                                                <label class="form-check-label">
                                                     {{ $type }}
                                                 </label>
                                             </div>
@@ -95,6 +120,23 @@
                                 </ul>
                             </div>
                             <div class="searchfilters-list">
+                                <h4>Salary</h4>
+                                <ul>
+                                    @foreach (salaryRange() as $s => $salaryrange)
+                                        <li>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="{{ $s + 1 }}"
+                                                    id="defaultCheck1">
+                                                <label class="form-check-label">
+                                                    {{ $salaryrange }} Lakhs
+                                                </label>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+
+                            <div class="searchfilters-list">
                                 <h4>Experience</h4>
                                 <ul>
                                     @foreach (experienceGap() as $l => $experiencegap)
@@ -102,7 +144,7 @@
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="{{ $l }}"
                                                     id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
+                                                <label class="form-check-label">
                                                     {{ $experiencegap }} Years
                                                 </label>
                                             </div>
@@ -113,13 +155,49 @@
                             <div class="searchfilters-list">
                                 <h4>Education</h4>
                                 <ul>
-                                    @foreach (getActiveRecord('education_info') as $education_info)
+                                    @foreach (getActiveRecord('education_info') as $k => $education_info)
+                                        @if ($k > 1)
+                                            <li>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        value="{{ $education_info->education_id }}">
+                                                    <label class="form-check-label">
+                                                        {{ $education_info->education_name }}
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+
+                            <div class="searchfilters-list">
+                                <h4>Industry Type</h4>
+                                <ul>
+                                    @foreach (getActiveRecord('industry') as $k => $industry)
                                         <li>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox"
-                                                    value="{{ $education_info->education_id }}" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    {{ $education_info->education_name }}
+                                                    value="{{ $industry->industry_id }}">
+                                                <label class="form-check-label">
+                                                    {{ $industry->industry_name }}
+                                                </label>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+
+                            <div class="searchfilters-list">
+                                <h4>Department</h4>
+                                <ul>
+                                    @foreach (getActiveRecord('department') as $k => $department)
+                                        <li>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    value="{{ $department->department_id }}">
+                                                <label class="form-check-label">
+                                                    {{ $department->department_name }}
                                                 </label>
                                             </div>
                                         </li>

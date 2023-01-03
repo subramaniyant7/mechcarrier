@@ -355,4 +355,12 @@ function experienceGap()
 }
 
 
+function salaryRange()
+{
+    return array('0 -3', '3 - 6','6 - 10','10 - 15','15 - 20','20 - 30','30 +');
+}
 
+function jobPostRange()
+{
+    return array(3, 5,7,15,30,60);
+}

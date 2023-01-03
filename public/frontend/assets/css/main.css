@@ -2327,6 +2327,18 @@ span.switch-handle {
     padding: 40px 0px 60px;
 }
 
+.job-search-page .searchfilter-dflex {
+    background: rgba(161, 161, 162, 0.16);
+    color: #fff;
+    padding: 10px 17px;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+}
+
+.job-search-page .searchfilter-dflex h4 {
+    margin: 0;
+    cursor: pointer;
+}
+
 .job-search-page h2 {
     color: #000000;
     font-size: 20px;
@@ -2413,7 +2425,7 @@ span.switch-handle {
     font-size: 15px;
     border-bottom: 0.5px solid #C1BFBF;
     padding-bottom: 5px;
-    margin-bottom: 23px;
+    margin-bottom: 8px;
     font-weight: bold;
 }
 

@@ -31,7 +31,9 @@
                     <div class="years">
                         <p><span><img
                                     src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
-                            </span>{{ experienceGap()[$skilMatchJob['employer_post_experience'] - 1] }}
+                            </span>
+                            {{ SalaryLakhs()[$skilMatchJob['employer_post_experience_from'] - 1] }}-{{ SalaryLakhs()[$skilMatchJob['employer_post_experience_to'] - 1] }}
+
                         </p>
                     </div>
 

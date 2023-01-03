@@ -103,3 +103,7 @@ const fetchSearchQuery = () => {
         });
     }
 }
+
+$(document).on('click','.searchfilter-dflex h4', function(e){
+    window.location = siteurl+'job_search';
+});

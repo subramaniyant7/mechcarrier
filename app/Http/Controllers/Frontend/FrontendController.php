@@ -188,7 +188,7 @@ class FrontendController extends Controller
 
         if(count($data)) $data = $data[0];
 
-        // Stop($skilMatchJobs);
+        // Stop($data);
         return view('frontend.jobseeker.job_search', compact('data'));
     }
 
