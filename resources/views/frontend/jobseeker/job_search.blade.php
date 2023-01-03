@@ -183,7 +183,10 @@
                                             <div class="form-check">
                                                 <input class="form-check-input search" type="checkbox"
                                                     value="{{ $industry->industry_id }}" name="industry">
-                                                <label class="form-check-label">
+                                                <label class="form-check-label" style="text-overflow: ellipsis;
+                                                white-space: nowrap;
+                                                overflow: hidden;
+                                                width: 255px;">
                                                     {{ $industry->industry_name }}
                                                 </label>
                                             </div>
