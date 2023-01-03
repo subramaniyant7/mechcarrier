@@ -1121,9 +1121,32 @@ class AjaxController extends Controller
         $filterRequest = $request->all();
         $filterQuery = ['employer_post_save_status' => 2,'employer_post_approval_status' => 1, 'status' => 1];
         if(count($filterRequest)){
+            if(array_key_exists('emptype',$filterRequest)){
+                $filterQuery['employer_post_employement_type'] = $filterRequest['emptype'];
+            }
+            if(array_key_exists('walkin',$filterRequest) && $filterRequest['walkin'] == 1){
+                $filterQuery['employer_post_walkin'] = $filterRequest['walkin'];
+            }
+
             if(array_key_exists('type',$filterRequest)){
                 $filterQuery['employer_post_employement_type'] = $filterRequest['type'];
             }
+
+            if(array_key_exists('education',$filterRequest)){
+                $filterQuery['employer_post_qualification'] = $filterRequest['education'];
+            }
+
+            if(array_key_exists('industry',$filterRequest)){
+                $filterQuery['employer_post_industry_type'] = $filterRequest['industry'];
+            }
+
+            if(array_key_exists('department',$filterRequest)){
+                $filterQuery['employer_post_department'] = $filterRequest['department'];
+            }
+
+
+            // Stop($filterQuery);
+
             if(count($filterQuery)){
                 $data = HelperController::getFilterJob($filterQuery);
                 $html = '';

@@ -24,7 +24,7 @@
                     <h3>{{ $skilMatchJob['employer_post_headline'] }}</h3>
                     <p> {{ $employerName }}</p>
                 </div>
-                <img style="width:10%;height:50px;" src="{{ URL::asset($companyLogo) }}">
+                <img style="width:12%;height:50px;" src="{{ URL::asset($companyLogo) }}">
             </div>
             <div class="job-card-details">
                 <div class="job-card-info">
@@ -32,16 +32,12 @@
                         <p><span><img
                                     src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
                             </span>
-                            {{ SalaryLakhs()[$skilMatchJob['employer_post_experience_from'] - 1] }}-{{ SalaryLakhs()[$skilMatchJob['employer_post_experience_to'] - 1] }}
+                            {{ SalaryLakhs()[$skilMatchJob['employer_post_experience_from'] - 1] }}-{{ SalaryLakhs()[$skilMatchJob['employer_post_experience_to'] - 1] }} Years
 
                         </p>
                     </div>
 
-                    <div class="location">
-                        <p><span><img
-                                    src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
-                            </span>{{ $stateName }}</p>
-                    </div>
+
                     @if ($skilMatchJob['employer_post_hidesalary'] == 2)
                         <div class="salary">
                             <p><span>
@@ -53,6 +49,12 @@
                             </p>
                         </div>
                     @endif
+
+                    <div class="location">
+                        <p><span><img
+                                    src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                            </span>{{ $stateName }}</p>
+                    </div>
                 </div>
                 <div class="job-posted-date">
                     <h4>Posted :
@@ -61,15 +63,18 @@
                 </div>
             </div>
             <div class="job-card-description">
-                <p>{{ $skilMatchJob['employer_post_description'] }} <span>more</span></p>
+                <p class="jobpost_desc searchdescription">
+                    {{ $skilMatchJob['employer_post_description'] }} </p>
+
+                    <span>{{ strlen($skilMatchJob['employer_post_description']) > 311 ? 'more' : ''}}</span>
             </div>
             <div class="job-card-apply">
-                <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}"> Key
-                    skill
-                    : <span>{{ $skilMatchJob['employer_post_key_skils'] }}</span>
+                <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}">
+                     Key
+                    skill :<span>{{ $skilMatchJob['employer_post_key_skils'] }}</span>
                 </h4>
                 <div class="job-card-button">
-                    <button type="button" class="btn btn-primary  bg-white">Save</button>
+                    <button type="button" class="btn btn-primary  bg-white" style="margin-right:0.5em">Save</button>
                     <button type="button" class="btn btn-primary">Apply</button>
                 </div>
             </div>

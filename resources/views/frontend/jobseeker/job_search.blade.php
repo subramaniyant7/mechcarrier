@@ -68,8 +68,9 @@
                                     @foreach (getActiveRecord('employmenttype') as $employment)
                                         <li>
                                             <div class="form-check">
-                                                <input class="form-check-input employment_type" name="employment_type"
-                                                    type="checkbox" value="{{ $employment->employmenttype_id }}">
+                                                <input class="form-check-input search" name="emptype" type="checkbox"
+                                                    value="{{ $employment->employmenttype_id }}"
+                                                    {{ request()->get('type') == $employment->employmenttype_id ? 'checked' : '' }}>
                                                 <label class="form-check-label">
                                                     {{ $employment->employmenttype_name }}
                                                 </label>
@@ -79,8 +80,10 @@
                                 </ul>
                             </div>
                             <div class="searchfilters-list" style="margin-bottom: 20px;">
+                                <h4>Walkin </h4>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="">
+                                    <input class="form-check-input walkin_post" type="checkbox" name="walkin_post"
+                                        value="" {{ request()->get('walkin') == 1 ? 'checked' : '' }}>
                                     <label class="form-check-label">
                                         Show only walkin
                                     </label>
@@ -92,8 +95,9 @@
                                     @foreach (jobPostRange() as $j => $jobpostrange)
                                         <li>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox"
-                                                    value="{{ $j + 1 }}">
+                                                <input class="form-check-input search" type="checkbox"
+                                                    value="{{ $j + 1 }}" name="post_range"
+                                                    {{ request()->get('post_at') == $j + 1 ? 'checked' : '' }}>
                                                 <label class="form-check-label">
                                                     Last {{ $jobpostrange }} days
                                                 </label>
@@ -108,8 +112,8 @@
                                     @foreach (typeOfCompany() as $p => $type)
                                         <li>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="{{ $p }}"
-                                                    id="defaultCheck1">
+                                                <input class="form-check-input search" type="checkbox"
+                                                    value="{{ $p }}" id="defaultCheck1" name="type">
                                                 <label class="form-check-label">
                                                     {{ $type }}
                                                 </label>
@@ -125,8 +129,8 @@
                                     @foreach (salaryRange() as $s => $salaryrange)
                                         <li>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="{{ $s + 1 }}"
-                                                    id="defaultCheck1">
+                                                <input class="form-check-input search" type="checkbox"
+                                                    value="{{ $s + 1 }}" id="defaultCheck1" name="salary">
                                                 <label class="form-check-label">
                                                     {{ $salaryrange }} Lakhs
                                                 </label>
@@ -142,8 +146,8 @@
                                     @foreach (experienceGap() as $l => $experiencegap)
                                         <li>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="{{ $l }}"
-                                                    id="defaultCheck1">
+                                                <input class="form-check-input search" type="checkbox"
+                                                    value="{{ $l }}" id="defaultCheck1" name="experience">
                                                 <label class="form-check-label">
                                                     {{ $experiencegap }} Years
                                                 </label>
@@ -159,8 +163,8 @@
                                         @if ($k > 1)
                                             <li>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        value="{{ $education_info->education_id }}">
+                                                    <input class="form-check-input search" type="checkbox"
+                                                        value="{{ $education_info->education_id }}" name="education">
                                                     <label class="form-check-label">
                                                         {{ $education_info->education_name }}
                                                     </label>
@@ -171,38 +175,47 @@
                                 </ul>
                             </div>
 
-                            <div class="searchfilters-list">
+                            <div class="searchfilters-list" style="position: relative">
                                 <h4>Industry Type</h4>
-                                <ul>
+                                <ul class="rootclass {{ count(getActiveRecord('industry')) > 4 ? 'expand restrictclass' : '' }}">
                                     @foreach (getActiveRecord('industry') as $k => $industry)
                                         <li>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox"
-                                                    value="{{ $industry->industry_id }}">
+                                                <input class="form-check-input search" type="checkbox"
+                                                    value="{{ $industry->industry_id }}" name="industry">
                                                 <label class="form-check-label">
                                                     {{ $industry->industry_name }}
                                                 </label>
                                             </div>
                                         </li>
                                     @endforeach
+
                                 </ul>
+                                @if (count(getActiveRecord('industry')) > 4)
+                                <span>more</span>
+                            @endif
                             </div>
 
-                            <div class="searchfilters-list">
+                            <div class="searchfilters-list" style="position: relative">
                                 <h4>Department</h4>
-                                <ul>
+                                <ul
+                                    class="rootclass {{ count(getActiveRecord('department')) > 4 ? 'expand restrictclass' : '' }}">
                                     @foreach (getActiveRecord('department') as $k => $department)
                                         <li>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox"
-                                                    value="{{ $department->department_id }}">
+                                                <input class="form-check-input search" type="checkbox"
+                                                    value="{{ $department->department_id }}" name="department">
                                                 <label class="form-check-label">
                                                     {{ $department->department_name }}
                                                 </label>
                                             </div>
                                         </li>
                                     @endforeach
+
                                 </ul>
+                                @if (count(getActiveRecord('department')) > 4)
+                                    <span>more</span>
+                                @endif
                             </div>
 
                         </div>

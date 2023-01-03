@@ -183,7 +183,7 @@ a {
 
 .header {
     background-color: #f4f4f4;
-    padding: 13px 0;
+    padding: 8px 0;
     display: flex;
     align-items: center;
 }
@@ -938,6 +938,8 @@ a {
     background-image: url(../images/home/homepagebanner.webp);
     background-repeat: no-repeat;
     background-position: center;
+    background-color: #0B0B0B;
+    background-size: cover;
 }
 
 .mech-banner h1 {
@@ -1032,7 +1034,7 @@ button.btn.btn-primary.dropdown-toggle {
     background: #1D56BB;
     border: solid 1px #1D56BB;
     border-radius: 4px;
-    padding: 10px 30px 10px 20px;
+    padding: 5px 30px 10px 20px;
 }
 
 .desktop-login-flex .desktop-login .notification-button .user-login .dropdown .dropdown-toggle::after {
@@ -1374,6 +1376,7 @@ a.btn.btn-primary {
     font-size: 13px;
     font-weight: 400;
     color: #555555;
+    margin: 0;
 }
 
 .job-card-apply {
@@ -1385,11 +1388,19 @@ a.btn.btn-primary {
 .job-card-apply h4 {
     color: #000000;
     font-size: 13px;
+    padding-top: 5px;
+    margin: 0;
 }
 
 .job-card-apply h4 span {
     color: #757575;
     font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 365px;
+    display: inline-block;
+    vertical-align: text-bottom;
 }
 
 .job-card-apply h4 img {
@@ -2393,6 +2404,22 @@ span.switch-handle {
     border-color: #0D82E1;
 }
 
+.recomended-jobs .job-card-description .searchdescription {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    margin: 0;
+}
+
+.recomended-jobs .job-card-description span {
+    font-size: 14px;
+    color: #1d56bb;
+    cursor: pointer;
+}
+
 .searchfilter-sidebar {
     background-color: #fff;
     padding: 20px 20px;
@@ -2427,6 +2454,24 @@ span.switch-handle {
     padding-bottom: 5px;
     margin-bottom: 8px;
     font-weight: bold;
+}
+
+.searchfilter-sidebar .searchfilters-list .restrictclass {
+    height: 120px;
+    overflow: hidden;
+}
+
+.searchfilter-sidebar .searchfilters-list .expand {
+    margin-bottom: 2.5rem;
+}
+
+.searchfilter-sidebar .searchfilters-list span{
+    font-size: 14px;
+    position: absolute;
+    bottom: -28px;
+    left: 14px;
+    color: #1d56bb;
+    cursor: pointer;
 }
 
 .searchfilter-sidebar .searchfilters-list ul {

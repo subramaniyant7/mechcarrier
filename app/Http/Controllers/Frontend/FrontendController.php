@@ -12,8 +12,11 @@ use Exception;
 
 class FrontendController extends Controller
 {
-    public function HomePage()
+    public function HomePage(Request $request)
     {
+        if($request->session()->get('employer_id') != '') return redirect()->route('employerdashboard');
+        if($request->session()->get('frontend_userid') != '') return redirect()->route('userdashboard');
+
         $whyWe = getActiveRecord('whywe');
         $trainingCenter = HelperController::GetHomeTrainingCenter();
         $main = CommonHelperController::getHomeCareerBuildMain();

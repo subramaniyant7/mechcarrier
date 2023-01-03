@@ -65,16 +65,38 @@ $(document).on('click', '.city_click', function () {
 });
 
 
-$('.employment_type').click(function () {
+$('.search').click(function () {
     let typeVal = $(this).val();
+    let name = $(this).attr('name');
     if (typeVal != '') {
         const url = new URL(window.location);
-        url.searchParams.set('type', typeVal);
+        url.searchParams.set(name, typeVal);
         window.history.pushState(null, '', url.toString());
-        $("input[name='employment_type']").each(function () {
+        $("input[name='"+name+"']").each(function () {
             if ($(this).val() != typeVal) $(this).prop('checked', false);
         });
         fetchSearchQuery();
+    }
+})
+
+$('.walkin_post').click(function () {
+    let typeVal = $(this).is(":checked") ? 1 : 2
+    const url = new URL(window.location);
+    url.searchParams.set('walkin', typeVal);
+    window.history.pushState(null, '', url.toString());
+    fetchSearchQuery();
+})
+
+$(document).on('click', '.searchfilters-list span', function(e){
+    let parent = $(this).parents('.searchfilters-list');
+    let targetMainElement = parent.find('.rootclass');
+    let targetElement = parent.find('.restrictclass');
+    if(targetElement.length){
+        targetElement.removeClass('restrictclass')
+        parent.find('span').html('hide')
+    }else{
+        targetMainElement.addClass('restrictclass')
+        parent.find('span').html('more')
     }
 })
 
@@ -92,7 +114,10 @@ const fetchSearchQuery = () => {
             success: function (data) {
                 console.log('data', data)
                 if (data.status) $('.job_list').html(data.html);
-                else { $('.job_list').html(''); toastr.error(data.message); }
+                else {
+                    $('.job_list').html('');
+                    toastr.error(data.message);
+                }
             },
             error: function (data) {
                 toastr.error('Something went wrong. Please try again');
@@ -104,6 +129,22 @@ const fetchSearchQuery = () => {
     }
 }
 
-$(document).on('click','.searchfilter-dflex h4', function(e){
-    window.location = siteurl+'job_search';
+$(document).on('click', '.searchfilter-dflex h4', function (e) {
+    window.location = siteurl + 'job_search';
+});
+
+$(document).on('click', '.job-card-description span', function (e) {
+    let parent = $(this).parents('.job-card-description');
+    let rootClass = parent.find('.jobpost_desc');
+    let validateClass = parent.find('.searchdescription');
+    console.log('click')
+    console.log('validateClass', validateClass)
+    console.log('validateClass', validateClass.length)
+    if (validateClass.length) {
+        validateClass.removeClass('searchdescription')
+        parent.find('span').html('hide')
+    } else {
+        rootClass.addClass('searchdescription')
+        parent.find('span').html('more')
+    }
 });

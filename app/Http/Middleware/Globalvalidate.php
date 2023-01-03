@@ -19,6 +19,7 @@ class Globalvalidate
         if (FRONTENDURL != SITEURL) {
             abort(404, 'Unauthorized Access');
         }
+
         return $next($request);
     }
 }
