@@ -54,7 +54,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($employerspost as $k => $employerspost)
+                        @forelse($employerspost as $p => $employerspost)
                             @php
                                 $class = $employerspost->status == 1 ? 'badge-light-success' : '';
                                 $employerName = $stateName = $cityName = $educationName = '';
@@ -86,7 +86,7 @@
                                 }
                             @endphp
                             <tr>
-                                <td> {{ $k + 1 }} </td>
+                                <td> {{ $p + 1 }} </td>
                                 <td> {{ $employerName }} </td>
                                 <td> {{ $employerspost->employer_post_headline }} </td>
                                 <td> {{ $empType }} </td>
