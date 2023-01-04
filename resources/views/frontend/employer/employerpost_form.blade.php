@@ -1,7 +1,7 @@
 <form id="employer_post" action="{{ route('saveemployerjobpost') }}" method="POST" autocomplete="off">
     @csrf
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="form-outline">
                 <label>Job Post Headline *</label>
                 <input type="text" class="form-control" name="employer_post_headline" required autocomplete="off"
@@ -9,7 +9,11 @@
                     value="{{ isset($jobPost) ? $jobPost[0]->employer_post_headline : old('employer_post_headline') }}">
             </div>
         </div>
-        <div class="col-md-4">
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
                 <div class="form-outline">
                     <label>Employment Type *</label>
@@ -25,7 +29,25 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="form-outline">
+                    <label>Job Type *</label>
+                    <select class="form-control" name="employer_post_job_type" required>
+                        <option selected="" value="">Select</option>
+                        @foreach (jobType() as $k => $jobtype)
+                            <option value="{{ $k + 1 }}"
+                                {{ isset($jobPost) && $jobPost[0]->employer_post_job_type == $k + 1 ? 'selected' : '' }}>
+                                {{ $jobtype }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
+
+
     <div class="row">
         <div class="col-md-12">
             <div class="background">
@@ -79,7 +101,7 @@
 
             <div class="col-md-6">
 
-                <label>Total Experience *</label>
+                <label>Experience Range*</label>
                 <div>
                     <div class="row" style="position: relative;">
                         <div class="col-md-6">
@@ -495,7 +517,8 @@
                         <label>Address *</label>
                         <span><input type="checkbox" class="use_address" />Use Current Address</span>
                     </div>
-                    <textarea autocomplete="off" name="employer_post_walkin_address" placeholder="Add address" class="form-control employer_post_walkin_address">{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_address : '' }}</textarea>
+                    <textarea autocomplete="off" name="employer_post_walkin_address" placeholder="Add address"
+                        class="form-control employer_post_walkin_address">{{ isset($jobPost) ? $jobPost[0]->employer_post_walkin_address : '' }}</textarea>
                 </div>
             </div>
         </div>
@@ -536,7 +559,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <button style="display:none" id="employer_post_submit" type="submit">Save</button>
-                <button id="employer_post_save" type="button" class="btn btn-primary">Save</button>
+                <button id="employer_post_save" type="button" class="btn btn-primary">Publish</button>
                 <button id="employer_post_save_publish" type="button" class="btn btn-primary">Save and
                     Preview</button>
             </div>

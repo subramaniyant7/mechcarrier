@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <ul>
-                        <li><a href="{{ route('jobseekerlogin') }}" class="active">Job Seekers</a></li>
+                        <li><a href="{{ route('home') }}" class="active">Job Seekers</a></li>
                         <li><a href="" target="_blank">For Colleges TPO</a></li>
                         <li><a href="" target="_blank">For training institutes</a></li>
                         <li><a href="{{ route('employerhome') }}" >For Employers</a></li>

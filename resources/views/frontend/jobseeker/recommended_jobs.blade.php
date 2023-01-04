@@ -38,17 +38,22 @@
                     </div>
 
 
-                    @if ($skilMatchJob['employer_post_hidesalary'] == 2)
+
                         <div class="salary">
                             <p><span>
                                     <img
                                         src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                </span>{{ SalaryLakhs()[$skilMatchJob['employer_post_salary_range_from_lakhs'] - 1] }}
-                                -{{ SalaryLakhs()[$skilMatchJob['employer_post_salary_range_to_lakhs'] - 1] }}
+                                </span>
+                                @if ($skilMatchJob['employer_post_hidesalary'] == 2)
+                                {{ SalaryLakhs()[$skilMatchJob['employer_post_salary_range_from_lakhs'] - 1] }}
+                                - {{ SalaryLakhs()[$skilMatchJob['employer_post_salary_range_to_lakhs'] - 1] }}
                                 Lakhs
+                                @else
+                                 Not disclosed
+                                @endif
                             </p>
                         </div>
-                    @endif
+
 
                     <div class="location">
                         <p><span><img

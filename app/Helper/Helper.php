@@ -333,6 +333,11 @@ function employmentType()
     return array('Permanent', 'Temporary');
 }
 
+function jobType()
+{
+    return array('Full Time', 'Part Time');
+}
+
 function YesNo()
 {
     return array('Yes', 'No');

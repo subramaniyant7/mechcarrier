@@ -201,8 +201,8 @@ class EmployerController extends Controller
         $keySkil = explode(',',$formData['employer_post_key_skils']);
 
 
-        if(count($keySkil) <=4){
-            return back()->withInput()->with('error', "Please add minimum 5 skils to create a job post");
+        if(count($keySkil) <=0){
+            return back()->withInput()->with('error', "Please add minimum 1 skils to create a job post");
         }
 
         if ($formData['employer_post_experience_from'] >  $formData['employer_post_experience_to']) {
@@ -283,7 +283,15 @@ class EmployerController extends Controller
         $formData['employer_post_employee_id'] = $request->session()->get('employer_id');
         $formData['employer_post_createdby'] = 0;
 
+        // Save and Publish
         if($formData['employer_post_save_status'] == 2) $formData['employer_post_save_status'] = 1;
+
+        // Publish
+        if($request->input('employer_post_save_status') == 1) {
+            $formData['employer_post_save_status'] = 2;
+            $formData['employer_post_approval_status'] = 1;
+            $formData['employer_post_approvedby'] = 0;
+        }
 
         // Stop($formData);
         if($request->input('customid') != ''){
@@ -302,6 +310,7 @@ class EmployerController extends Controller
         if($notify['type']){
             if($request->input('employer_post_save_status') == 1){
                 $notify['msg'] = 'Your job saved successfully';
+                return redirect()->route('jobpostsuccess')->with('success','Your job submitted successfully');
             }
 
             if($request->input('employer_post_save_status') == 2){
