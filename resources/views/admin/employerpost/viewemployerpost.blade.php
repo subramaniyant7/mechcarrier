@@ -79,15 +79,20 @@
                                 if (count($educationInfo)) {
                                     $educationName = $educationInfo[0]->education_name;
                                 }
+                                $empType = '';
+                                $empTypeInfo = App\Http\Controllers\Admin\Helper\CommonHelperController::getEmploymentType($employerspost->employer_post_employement_type);
+                                if (count($empTypeInfo)) {
+                                    $empType = $empTypeInfo[0]->employmenttype_name;
+                                }
                             @endphp
                             <tr>
                                 <td> {{ $k + 1 }} </td>
                                 <td> {{ $employerName }} </td>
                                 <td> {{ $employerspost->employer_post_headline }} </td>
-                                <td> {{ employmentType()[$employerspost->employer_post_employement_type - 1] }} </td>
+                                <td> {{ $empType }} </td>
                                 <td> {{ $employerspost->employer_post_key_skils }} </td>
                                 <td> {{ $educationName }} </td>
-                                <td> {{ experienceGap()[$employerspost->employer_post_experience - 1] . ' Years' }} </td>
+                                <td> {{ SalaryLakhs()[$employerspost->employer_post_experience_from - 1] .'-'.SalaryLakhs()[$employerspost->employer_post_experience_to - 1] . ' Years' }} </td>
                                 <td> {{ SalaryLakhs()[$employerspost->employer_post_salary_range_from_lakhs - 1] }}L -
                                     {{ SalaryLakhs()[$employerspost->employer_post_salary_range_to_lakhs - 1] }}L </td>
                                 <td> {{ $stateName . '/' . $cityName }} </td>
