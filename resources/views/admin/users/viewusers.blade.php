@@ -45,6 +45,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Mobile Number</th>
+                            <th>Profile Completed</th>
                             <th>Email Verified</th>
                             <th>Mobile Verified</th>
                             <th>Registered From</th>
@@ -63,6 +64,7 @@
                                 <td> {{ $user->user_firstname }} </td>
                                 <td> {{ $user->user_email }} </td>
                                 <td> {{ $user->user_phonenumber }} </td>
+                                <td> {{ profileCompletion($user->user_id).'%' }} </td>
 
                                 <td>
                                     <span

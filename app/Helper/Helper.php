@@ -369,3 +369,56 @@ function jobPostRange()
 {
     return array(3, 5,7,15,30,60);
 }
+
+
+function profileCompletion($userId){
+    $completion = 0;
+    if($userId != ''){
+        $userDetails  =  DB::table("user_details")->where('user_id', $userId)->get();
+        $userProfile  =  DB::table("user_profile")->where('user_id', $userId)->get();
+        $userEmployment  =  DB::table("user_employment")->where('user_id', $userId)->get();
+        $userEducation  =  DB::table("user_education")->where('user_id', $userId)->get();
+        $userItSkils  =  DB::table("user_education")->where('user_id', $userId)->get();
+        $userKeySkils  =  DB::table("user_key_skils")->where('user_id', $userId)->get();
+        $userCeritification  =  DB::table("user_certification")->where('user_id', $userId)->get();
+        $userLanguages  =  DB::table("user_languages")->where('user_id', $userId)->get();
+        if (count($userProfile) && $userProfile[0]->user_resume != '') {
+            $completion += 20;
+        }
+        if (count($userProfile) && $userProfile[0]->user_resume_headline != '') {
+            $completion += 10;
+        }
+        if (count($userProfile) && $userProfile[0]->user_current_salary_month != '' && $userProfile[0]->user_current_salary_year != '' && $userProfile[0]->user_total_experience_year != '' && $userProfile[0]->user_total_experience_month != '' && $userProfile[0]->user_notice_period != '') {
+            $completion += 10;
+        }
+        if (count($userKeySkils)) {
+            $completion += 15;
+        }
+        if ($userDetails[0]->user_phonenumber_verified == 1) {
+            $completion += 15;
+        }
+        if (count($userProfile) && $userProfile[0]->user_profile_summary != '') {
+            $completion += 5;
+        }
+        if (count($userEmployment)) {
+            $completion += 5;
+        }
+        if (count($userEducation)) {
+            $completion += 5;
+        }
+
+        if (count($userProfile) && $userProfile[0]->user_current_city != '' && $userProfile[0]->user_current_state != '' && $userProfile[0]->user_preferred_city != '' && $userProfile[0]->user_preferred_state != '') {
+            $completion += 5;
+        }
+        if (count($userItSkils)) {
+            $completion += 2;
+        }
+        if (count($userCeritification)) {
+            $completion += 2;
+        }
+        if (count($userLanguages) && $userDetails[0]->user_gender != '' && $userDetails[0]->user_marital_status != '' && $userDetails[0]->user_dob != '') {
+            $completion += 6;
+        }
+    }
+    return $completion;
+}

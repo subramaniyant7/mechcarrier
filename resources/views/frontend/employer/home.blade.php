@@ -3,24 +3,31 @@
 @section('content')
 
     <main>
-        <div class="mech-banner">
+        @php
+            $bannerContent = getActiveRecord('banner_content');
+            $title = $description = $bgImage = $companyName = $logo = '';
+            if (count($bannerContent)) {
+                $title = $bannerContent[0]->employer_banner_title;
+                $description = $bannerContent[0]->employer_banner_description != '' ? explode(',', $bannerContent[0]->employer_banner_description) : [];
+                $bgImage = $bannerContent[0]->employer_banner_image;
+            }
+        @endphp
+        <div class="mech-banner"
+            style="background-image: url({{ URL::asset('uploads/homepage/employer/' . $bgImage) }});background-color: #071021;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1> India’s 1st <span> Mechanical </span> Recruitment Solution </h1>
+                        <h1 style="width: 40%;margin-bottom: 20px;">
+                            {{ $title }}
+                        </h1>
+                        <a href="{{ route('employerlogin') }}"
+                            style="padding: 12px 30px;border-radius: 8px;color:#1D56BB;background: #FFFFFF;">Post Free
+                            Job</a>
                         <div class="banner-links">
                             <ul>
-                                <li>Design</li>
-                                <li>Quality</li>
-                                <li>Production</li>
-                                <li>R & D</li>
-                                <li>Maintenance</li>
-                                <li>CAE</li>
-                                <li>Service</li>
-                                <li>Sales</li>
-                                <li>Purchase</li>
-                                <li>Marketing</li>
-                                <li>Applications</li>
+                                @foreach ($description as $desc)
+                                    <li>{{ $desc }}</li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

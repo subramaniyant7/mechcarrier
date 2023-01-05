@@ -48,6 +48,35 @@
                         </div>
 
                         <div class="form-group row  mb-4">
+                            <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Employer Banner Title<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control form-control" name="employer_banner_title" placeholder="Employer Banner Title" required
+                                       value="{{ count($bannerInfo) ? $bannerInfo[0]->employer_banner_title : old('employer_banner_title') }}"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label for="colFormLabel" class="col-sm-3 col-form-label">Employer Banner Description<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control form-control" name="employer_banner_description" placeholder="Employer Banner Description" required
+                                       value="{{ count($bannerInfo) ? $bannerInfo[0]->employer_banner_description : old('employer_banner_description') }}"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group row  mb-4">
+                            <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Employer Banner Image<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control form-control" name="employer_banner_image" {{ isset($bannerInfo) && $bannerInfo[0]->employer_banner_image != '' ? '' : 'required' }}
+                                value="{{ isset($bannerInfo) ? $bannerInfo[0]->employer_banner_image : old('employer_banner_image') }}"
+                                >
+                                @if(isset($bannerInfo) && $bannerInfo[0]->employer_banner_image != '')
+                                    <span><img style="height: 200px;margin-top: 1em;" src="{{ URL::asset('uploads/homepage/employer/'.$bannerInfo[0]->employer_banner_image)}}"></span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row  mb-4">
                             <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Company Logo<span class="text-danger">*</span></label>
                             <div class="col-sm-9">
                                 <input type="file" class="form-control form-control" name="company_logo" {{ isset($bannerInfo) && $bannerInfo[0]->company_logo != '' ? '' : 'required' }}
@@ -76,6 +105,7 @@
                         </div>
                         <input type="hidden" name="banner_id" value="{{ count($bannerInfo) ? encryption($bannerInfo[0]->banner_id) : '' }}">
                         <input type="hidden" name="edit_bannerimage" value="{{ isset($bannerInfo) ? $bannerInfo[0]->banner_image : '' }}">
+                        <input type="hidden" name="edit_employerbannerimage" value="{{ isset($bannerInfo) ? $bannerInfo[0]->employer_banner_image : '' }}">
                         <input type="hidden" name="edit_companyimage" value="{{ isset($bannerInfo)  ? $bannerInfo[0]->company_logo : '' }}">
                     </form>
                 </div>
