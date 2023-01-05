@@ -50,19 +50,19 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="why-mech-card">
-                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech1.svg') }}" />
+                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech1.svg') }}" style="width:100%" />
                                 <p>Free 1 Job post / Month</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="why-mech-card">
-                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech2.svg') }}" />
+                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech2.svg') }}"  style="width:100%"/>
                                 <p>Free 50 Resume database / Month</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="why-mech-card">
-                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech3.svg') }}" />
+                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech3.svg') }}"  style="width:100%"/>
                                 <p>Ready screening candidate </p>
                             </div>
                         </div>
@@ -70,19 +70,19 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="why-mech-card">
-                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech4.svg') }}" />
+                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech4.svg') }}" style="width:100%" />
                                 <p>Graphical representation</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="why-mech-card">
-                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech5.svg') }}" />
+                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech5.svg') }}" style="width:100%" />
                                 <p>College student database</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="why-mech-card">
-                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech6.svg') }}" />
+                                <img src="{{ URL::asset(FRONTEND . '/assets/images/whymech6.svg') }}" style="width:100%"/>
                                 <p>Quality candidate and high exp.</p>
                             </div>
                         </div>
