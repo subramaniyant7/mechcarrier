@@ -1,5 +1,5 @@
 @extends('frontend.layout')
-@section('title', 'Home')
+@section('title', 'India’s 1st Job portal for Mechanical Engineer')
 @section('content')
     <main>
         @php
@@ -13,7 +13,7 @@
                 $logo = $bannerContent[0]->company_logo;
             }
         @endphp
-        <div class="mech-banner" style="background-image: url({{ URL::asset('uploads/homepage/'.$bgImage)}})">
+        <div class="mech-banner" style="background-image: url({{ URL::asset('uploads/homepage/' . $bgImage) }})">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -49,20 +49,18 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="search-form">
-                            <form>
+                            <form action="{{ route('jobsearch') }}" method="GET">
                                 <div class="form-outline">
-                                    <div class="d-flex">
+                                    <div class="d-flex" style="background:#fff;border-radius:24px;">
                                         <span><img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/home/searchicon.svg') }}" /></span>
-                                        <input type="text" id="form1Example1"
-                                            placeholder="Enter skills/ designation/ companies"
-                                            class="form-control form-skills" />
+                                        <input type="text" placeholder="Enter skills/ designation/ companies"
+                                            class="form-control form-skills" name="skil" required />
                                         <span class="map-icon">
                                             <img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/home/mapicon.svg') }}" /></span>
                                         <span class="line-border"></span>
-                                        <input type="text" id="form1Example1" placeholder="Enter Location"
-                                            class="form-control" />
+                                        <input type="text" name="location" placeholder="Enter Location" class="form-control" />
                                         <button type="submit" class="btn-prrimary">Search</button>
                                     </div>
                                 </div>

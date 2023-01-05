@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title','Manage User')
+@section('title','Manage Jobseeker')
 
 @section('content')
     <!-- BREADCRUMB -->
@@ -7,7 +7,7 @@
         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('analysisdashboard') }}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Manage User</li>
+                <li class="breadcrumb-item active" aria-current="page">Manage Jobseeker</li>
             </ol>
             <a href="{{ route('viewusers') }}" class="btn btn-primary btn-rounded mb-2 me-4"><i class="fa-solid fa-arrow-left"></i> Back</a>
         </nav>

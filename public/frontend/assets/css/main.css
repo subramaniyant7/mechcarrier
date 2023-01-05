@@ -918,6 +918,11 @@ a {
     top: 7px;
 }
 
+.search-form .d-flex .form-control:focus{
+    box-shadow :none
+}
+
+
 .search-form .d-flex button.btn-prrimary {
     background-color: #1d56bb;
     border: solid 1px #1d56bb;
@@ -928,7 +933,7 @@ a {
     height: 45px;
     position: relative;
     top: 1px;
-    right: 3px;
+    right: 1px;
     color: #fff;
     font-size: 18px;
 }

@@ -24,7 +24,7 @@
                     <h3>{{ $skilMatchJob['employer_post_headline'] }}</h3>
                     <p> {{ $employerName }}</p>
                 </div>
-                <img style="width:12%;height:50px;" src="{{ URL::asset($companyLogo) }}">
+                <img style="width:100px;height:50px;" src="{{ URL::asset($companyLogo) }}">
             </div>
             <div class="job-card-details">
                 <div class="job-card-info">

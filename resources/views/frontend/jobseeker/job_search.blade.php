@@ -81,13 +81,17 @@
                             </div>
                             <div class="searchfilters-list" style="margin-bottom: 20px;">
                                 <h4>Walkin </h4>
-                                <div class="form-check">
-                                    <input class="form-check-input walkin_post" type="checkbox" name="walkin_post"
-                                        value="" {{ request()->get('walkin') == 1 ? 'checked' : '' }}>
-                                    <label class="form-check-label">
-                                        Show only walkin
-                                    </label>
-                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="form-check">
+                                            <input class="form-check-input walkin_post" type="checkbox" name="walkin_post"
+                                                value="" {{ request()->get('walkin') == 1 ? 'checked' : '' }}>
+                                            <label class="form-check-label">
+                                                Show only walkin
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                             <div class="searchfilters-list">
                                 <h4>Job posted at</h4>
@@ -96,8 +100,8 @@
                                         <li>
                                             <div class="form-check">
                                                 <input class="form-check-input search" type="checkbox"
-                                                    value="{{ $j + 1 }}" name="post_range"
-                                                    {{ request()->get('post_at') == $j + 1 ? 'checked' : '' }}>
+                                                    value="{{ $jobpostrange }}" name="post_range"
+                                                    {{ request()->get('post_at') == $jobpostrange ? 'checked' : '' }}>
                                                 <label class="form-check-label">
                                                     Last {{ $jobpostrange }} days
                                                 </label>
@@ -177,13 +181,15 @@
 
                             <div class="searchfilters-list" style="position: relative">
                                 <h4>Industry Type</h4>
-                                <ul class="rootclass {{ count(getActiveRecord('industry')) > 4 ? 'expand restrictclass' : '' }}">
+                                <ul
+                                    class="rootclass {{ count(getActiveRecord('industry')) > 4 ? 'expand restrictclass' : '' }}">
                                     @foreach (getActiveRecord('industry') as $k => $industry)
                                         <li>
                                             <div class="form-check">
                                                 <input class="form-check-input search" type="checkbox"
                                                     value="{{ $industry->industry_id }}" name="industry">
-                                                <label class="form-check-label" style="text-overflow: ellipsis;
+                                                <label class="form-check-label"
+                                                    style="text-overflow: ellipsis;
                                                 white-space: nowrap;
                                                 overflow: hidden;
                                                 width: 255px;">
@@ -195,8 +201,8 @@
 
                                 </ul>
                                 @if (count(getActiveRecord('industry')) > 4)
-                                <span>more</span>
-                            @endif
+                                    <span>more</span>
+                                @endif
                             </div>
 
                             <div class="searchfilters-list" style="position: relative">

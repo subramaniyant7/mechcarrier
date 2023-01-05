@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'View Users')
+@section('title', 'View Jobseekers')
 @section('head')
 
     <head>
@@ -23,13 +23,13 @@
         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('analysisdashboard') }}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Users</li>
+                <li class="breadcrumb-item active" aria-current="page">Jobseekers</li>
             </ol>
             <div>
                 <a href="{{ route('importusers') }}" class="btn btn-primary btn-rounded mb-2 me-4"><i
                         class="fa-solid fa-upload"></i> Import</a>
                 <a href="{{ route('manageuser') }}" class="btn btn-primary btn-rounded mb-2 me-4"><i
-                        class="fa-solid fa-plus"></i> User</a>
+                        class="fa-solid fa-plus"></i> Jobseekers</a>
             </div>
         </nav>
     </div>
