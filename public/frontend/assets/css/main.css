@@ -29,6 +29,41 @@ body {
 
 /* Custom Start */
 
+
+.multiselect {
+    position: relative;
+}
+
+.multiselect #checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+    background: #fff;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    padding: 10px 15px;
+}
+
+.multiselect #checkboxes .form-checkbox {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.multiselect #checkboxes label {
+    display: block;
+    cursor: pointer;
+}
+
+
+.multiselect .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+
 .pb-10 {
     padding-bottom: 10px;
 }
@@ -918,8 +953,8 @@ a {
     top: 7px;
 }
 
-.search-form .d-flex .form-control:focus{
-    box-shadow :none
+.search-form .d-flex .form-control:focus {
+    box-shadow: none
 }
 
 
@@ -2469,7 +2504,7 @@ span.switch-handle {
     margin-bottom: 2.5rem;
 }
 
-.searchfilter-sidebar .searchfilters-list span{
+.searchfilter-sidebar .searchfilters-list span {
     font-size: 14px;
     position: absolute;
     bottom: -28px;

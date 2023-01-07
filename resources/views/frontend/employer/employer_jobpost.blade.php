@@ -53,73 +53,70 @@
                                 </form>
                             </div>
                             @forelse ($employerPost as $employerPostList)
-                                @if (request()->get('mode') != '' &&
-                                    request()->get('id') != '' &&
-                                    decryption(request()->get('id')) != $employerPostList->employer_post_id)
-                                    @php
-                                        $cities = explode(',', $employerPostList->employer_post_location_city);
-                                        $employerEmail = $cityName = '';
-                                        foreach ($cities as $k => $city) {
-                                            $location = \App\Http\Controllers\Frontend\Helper\HelperController::getActiveCityInfo($city);
-                                            if (count($location)) {
-                                                $cityName .= $location[0]->city_name . (count($cities) != $k + 1 ? ',' : '');
-                                            }
+
+                                @php
+                                    $cities = explode(',', $employerPostList->employer_post_location_city);
+                                    $employerEmail = $cityName = '';
+                                    foreach ($cities as $k => $city) {
+                                        $location = \App\Http\Controllers\Frontend\Helper\HelperController::getActiveCityInfo($city);
+                                        if (count($location)) {
+                                            $cityName .= $location[0]->city_name . (count($cities) != $k + 1 ? ',' : '');
                                         }
-                                        $postDate = strtotime($employerPostList->created_at);
-                                        $employerDetails = \App\Http\Controllers\Frontend\Helper\HelperController::getEmployerInfoById($employerPostList->employer_post_employee_id);
-                                        if (count($employerDetails)) {
-                                            $employerEmail = $employerDetails[0]->employer_email;
-                                        }
-                                    @endphp
-                                    <div class="similar-jobs-card">
-                                        <div class="similar-job-card-title">
-                                            <h4>{{ $employerPostList->employer_post_headline }}</h4>
-                                            <div class="similar-job-card-info">
-                                                <p><span><img
-                                                            src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
-                                                    </span>{{ isset(SalaryLakhs()[$employerPostList->employer_post_experience_from - 1]) ? SalaryLakhs()[$employerPostList->employer_post_experience_from - 1] : '' }}-
-                                                    {{ isset(SalaryLakhs()[$employerPostList->employer_post_experience_to - 1]) ? SalaryLakhs()[$employerPostList->employer_post_experience_to - 1] : '' }}
-                                                    Years
-                                                </p>
-                                                <p class="cityname"><span><img
-                                                            src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
-                                                    </span>{{ $cityName }}</p>
-                                                <p><span><img
-                                                            src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                                    </span>{{ $employerPostList->employer_post_salary_range_from_lakhs }} -
-                                                    {{ $employerPostList->employer_post_salary_range_to_lakhs }} Lakhs</p>
-                                            </div>
-                                            <div class="job-card-apply">
-                                                <h4 style="width:65%;"> Key skill : <span
-                                                        class="keyskill">{{ $employerPostList->employer_post_key_skils }}</span>
-                                                </h4>
+                                    }
+                                    $postDate = strtotime($employerPostList->created_at);
+                                    $employerDetails = \App\Http\Controllers\Frontend\Helper\HelperController::getEmployerInfoById($employerPostList->employer_post_employee_id);
+                                    if (count($employerDetails)) {
+                                        $employerEmail = $employerDetails[0]->employer_email;
+                                    }
+                                @endphp
+                                <div class="similar-jobs-card">
+                                    <div class="similar-job-card-title">
+                                        <h4>{{ $employerPostList->employer_post_headline }}</h4>
+                                        <div class="similar-job-card-info">
+                                            <p><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                                                </span>{{ isset(SalaryLakhs()[$employerPostList->employer_post_experience_from - 1]) ? SalaryLakhs()[$employerPostList->employer_post_experience_from - 1] : '' }}-
+                                                {{ isset(SalaryLakhs()[$employerPostList->employer_post_experience_to - 1]) ? SalaryLakhs()[$employerPostList->employer_post_experience_to - 1] : '' }}
+                                                Years
+                                            </p>
+                                            <p class="cityname"><span><img
+                                                        src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                                                </span>{{ $cityName }}</p>
+                                            <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                                                </span>{{ $employerPostList->employer_post_salary_range_from_lakhs }} -
+                                                {{ $employerPostList->employer_post_salary_range_to_lakhs }} Lakhs</p>
+                                        </div>
+                                        <div class="job-card-apply">
+                                            <h4 style="width:65%;"> Key skill : <span
+                                                    class="keyskill">{{ $employerPostList->employer_post_key_skils }}</span>
+                                            </h4>
 
 
-                                                <div class="job-card-button">
-                                                    @if ($employerPostList->employer_post_save_status == 1)
-                                                        <a style="padding: 6px 30px;
+                                            <div class="job-card-button">
+                                                @if ($employerPostList->employer_post_save_status == 1)
+                                                    <a style="padding: 6px 30px;
                                                         margin: 0;
                                                         font-size: 14px;
                                                         line-height: 1.5;"
-                                                            href="{{ route('employerjobpost') . '?mode=edit&id=' . encryption($employerPostList->employer_post_id) }}"
-                                                            data-post="{{ encryption($employerPostList->employer_post_id) }}"
-                                                            class="btn btn-primary">Edit</a>
-                                                    @elseif ($employerPostList->employer_post_save_status == 2)
-                                                        <button type="button"
-                                                            data-post="{{ encryption($employerPostList->employer_post_id) }}"
-                                                            class="btn btn-primary form_prefil">Prefill</button>
-                                                    @endif
-                                                </div>
-
+                                                        href="{{ route('employerjobpost') . '?mode=edit&id=' . encryption($employerPostList->employer_post_id) }}"
+                                                        data-post="{{ encryption($employerPostList->employer_post_id) }}"
+                                                        class="btn btn-primary">Edit</a>
+                                                @elseif ($employerPostList->employer_post_save_status == 2)
+                                                    <button type="button"
+                                                        data-post="{{ encryption($employerPostList->employer_post_id) }}"
+                                                        class="btn btn-primary form_prefil">Prefill</button>
+                                                @endif
                                             </div>
+
                                         </div>
                                     </div>
+                                </div>
 
-                                    <span
-                                        class="job-post-mail">{{ $employerPostList->employer_post_save_status == 1 ? 'saved' : 'posted' }}
-                                        on {{ date('d M Y', $postDate) }} by
-                                        Email : {{ $employerEmail }}</span>
-                                @endif
+                                <span
+                                    class="job-post-mail">{{ $employerPostList->employer_post_save_status == 1 ? 'saved' : 'posted' }}
+                                    on {{ date('d M Y', $postDate) }} by
+                                    Email : {{ $employerEmail }}</span>
+
                             @empty
                                 <div> No Post / Saved Jobs found</div>
                             @endforelse

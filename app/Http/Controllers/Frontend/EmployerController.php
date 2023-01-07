@@ -190,6 +190,11 @@ class EmployerController extends Controller
                 return redirect()->route('employerjobpost')->with('error','Something went wrong');
             }
         }
+
+        // echo '<pre>';
+        // print_r($data);
+        // exit;
+
         return view('frontend.employer.employer_jobpost', $data);
     }
 
@@ -282,6 +287,8 @@ class EmployerController extends Controller
 
         $formData['employer_post_employee_id'] = $request->session()->get('employer_id');
         $formData['employer_post_createdby'] = 0;
+
+        $formData['employer_post_qualification'] = implode(',',$formData['employer_post_qualification']);
 
         // Save and Publish
         if($formData['employer_post_save_status'] == 2) $formData['employer_post_save_status'] = 1;

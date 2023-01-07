@@ -109,9 +109,20 @@
                             </div>
                             <div class="job-description">
                                 <h3>Job description</h3>
-                                {{ $employerPostInfo[0]->employer_post_description }}
+                                @php
+                                    $desc = [];
+                                    $desc = explode('•', $employerPostInfo[0]->employer_post_description);
+                                @endphp
+                                <ul style="padding-top:5px;">
+                                    @foreach ($desc as $desc1)
+                                        @if ($desc1 != '')
+                                            <li> {{ $desc1 }} </li>
+                                        @endif
+                                    @endforeach
+                                </ul>
 
-                                <br />
+
+
                                 <div class="education-details">
                                     <div class="d-flex">
                                         <p><span>Education <span>:</span></span> </p>

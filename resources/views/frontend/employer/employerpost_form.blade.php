@@ -53,8 +53,8 @@
             <div class="background">
                 <div class="form-group relative">
                     <label>Job Description *</label>
-                    <textarea autocomplete="off" name="employer_post_description" required rows="5" minlength="10" maxlength="1000"
-                        placeholder="Describe activities in this job role " class="form-control">{{ isset($jobPost) ? $jobPost[0]->employer_post_description : old('employer_post_description') }}</textarea>
+                    <textarea onInput="handleInput(event)" autocomplete="off" name="employer_post_description" required rows="5"
+                        minlength="10" maxlength="1000" placeholder="Describe activities in this job role " class="form-control">{{ isset($jobPost) ? $jobPost[0]->employer_post_description : old('employer_post_description') }}</textarea>
                     <div class="counter" id="the-count" style="font-weight: normal;">
                         <span id="current"
                             style="color: rgb(102, 102, 102);">{{ isset($jobPost) ? strlen($jobPost[0]->employer_post_description) : 0 }}</span>
@@ -88,14 +88,49 @@
             <div class="col-md-6">
 
                 <label>Educational Qualification *</label>
-                <select class="form-control" name="employer_post_qualification" required>
-                    <option selected="" value=""> Add Qualification</option>
-                    @foreach ($educationInfo as $education)
-                        <option value="{{ $education->education_id }}"
-                            {{ isset($jobPost) && $jobPost[0]->employer_post_qualification == $education->education_id ? 'selected' : '' }}>
-                            {{ $education->education_name }}</option>
-                    @endforeach
-                </select>
+                <div class="multiselect" >
+                    <div class="selectBox"  onclick="showCheckboxes()" >
+                        <select class="form-control ttt employer_post_qualification" name="employer_post_qualification"
+                            required >
+                            <option value="">Add Qualification</option>
+                        </select>
+                        {{-- <select class="form-control" name="employer_post_qualification" required onchange="">
+                        <option selected="" value=""> Add Qualification</option>
+                        @foreach ($educationInfo as $k => $education)
+                            @if ($k > 1)
+                                <option value="{{ $education->education_id }}"
+                                    {{ isset($jobPost) && $jobPost[0]->employer_post_qualification == $education->education_id ? 'selected' : '' }}>
+                                    {{ $education->education_name }}</option>
+                            @endif
+                        @endforeach
+                    </select> --}}
+                        <div class="overSelect"></div>
+                    </div>
+
+                    <div id="checkboxes" >
+
+                        @foreach ($educationInfo as $k => $education)
+                            @if ($k > 1)
+                                @php
+
+                                    $post = [];
+                                    if (isset($jobPost)) {
+                                        $post = explode(',', $jobPost[0]->employer_post_qualification);
+                                    }
+
+                                @endphp
+                                <label>
+                                    <input onchange="handleSelect()" class="form-checkbox employer_education"
+                                        type="checkbox" name="employer_post_qualification[]"
+                                        value="{{ $education->education_id }}"
+                                        {{ isset($jobPost) && in_array($education->education_id, $post)  ? 'checked' : '' }} />
+                                    {{ $education->education_name }}
+                                </label>
+                            @endif
+
+                        @endforeach
+                    </div>
+                </div>
 
             </div>
 
@@ -153,7 +188,8 @@
             <div class="col-md-9">
                 <div class="form-group" style="margin-bottom:0;">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="1" name="employer_post_hidesalary"
+                        <input class="form-check-input" type="checkbox" value="1"
+                            name="employer_post_hidesalary"
                             {{ isset($jobPost) && $jobPost[0]->employer_post_hidesalary == 1 ? 'checked' : '' }}>
                         <label class="form-check-label" for="flexCheckDefault">
                             Hide from candidates
@@ -567,3 +603,50 @@
     </div>
 
 </form>
+
+<script>
+    let expanded = false;
+
+
+
+    const handleSelect = () => {
+        let checkboxes = document.getElementById("checkboxes");
+        // checkboxes.style.display = "block";
+        let selectedItems = document.getElementsByClassName("employer_education");
+        $('.employer_post_qualification').attr('required', true)
+        $(".employer_education").each(function() {
+            if ($(this).is(":checked")) {
+                $('.employer_post_qualification').attr('required', false)
+            }
+        })
+    }
+
+    function showCheckboxes() {
+        let checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+
+    let previousLength = 0;
+
+    const handleInput = (event) => {
+        const bullet = "\u2022";
+        const newLength = event.target.value.length;
+        const characterCode = event.target.value.substr(-1).charCodeAt(0);
+
+        if (newLength > previousLength) {
+            if (characterCode === 10) {
+                event.target.value = `${event.target.value}${bullet} `;
+            } else if (newLength === 1) {
+                event.target.value = `${bullet} ${event.target.value}`;
+            }
+        }
+
+        previousLength = newLength;
+    }
+</script>

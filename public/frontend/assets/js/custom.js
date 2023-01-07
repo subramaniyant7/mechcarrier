@@ -2457,6 +2457,11 @@ $('#publish_btn').click(function (e) {
     }
 });
 
+$(document).on('click', '.close_icon', function(){
+    window.location.href = siteurl+'employer_jobpost'
+})
+
+
 
 $(document).on('click', '.option_click', function () {
     console.log('Option')
