@@ -41,13 +41,15 @@ class HelperController extends Controller
     }
 
     // Search Page
-    static function GetUserSkilBasedJobs($skil)
+    static function GetUserSkilBasedJobs($skil, $limit = 0)
     {
-        return DB::table("employer_post")->where([['employer_post_key_skils', 'like', '%' . $skil . '%'],
-        ['employer_post_save_status',2],['employer_post_approval_status',1],['status', 1]])->orderBy('employer_post_id', 'desc')->get();
+        $data = DB::table("employer_post")->where([['employer_post_key_skils', 'like', '%' . $skil . '%'],
+        ['employer_post_save_status',2],['employer_post_approval_status',1],['status', 1]])->orderBy('employer_post_id', 'desc');
+        if($limit != '' && $limit > 0) $data->take($limit);
+        return $data->get();
     }
 
-    static function GetUserSearchJobs($skil,$location='',$experience='')
+    static function GetUserSearchJobs($skil,$location='',$experience='', $limit = 0)
     {
         $requestData = ['employer_post_key_skils', 'employer_post_description'];
 
@@ -57,7 +59,27 @@ class HelperController extends Controller
         })->where([['employer_post_save_status',2],['employer_post_approval_status',1],['status', 1]]);
 
         if($location != '') $response->where('employer_post_location_city', $location);
-        if($experience != '') $response->where('employer_post_experience', $experience);
+
+        if($experience != '') {
+            $from = $to = '';
+            $experienceRange = experienceGap()[$experience-1];
+            if($experienceRange != '') {
+                $range = explode("-", $experienceRange);
+                if(count($range) == 2){
+                    $from = trim($range[0]);
+                    $to = trim($range[1]);
+                }
+            }
+
+            $response->where([
+                ['employer_post_experience_from', '>=', $from ],
+                ['employer_post_experience_to','<=' ,$to]
+            ]);
+
+        }
+
+        if($limit != '' && $limit > 0) $response->take($limit);
+
         return $response->where([['employer_post_save_status',2],['employer_post_approval_status',1],['status', 1]])
             ->orderBy('employer_post_id', 'desc')->get();
     }
@@ -386,9 +408,63 @@ class HelperController extends Controller
         return DB::table('employer_post')->where('employer_post_id', $postId)->get();
     }
 
-    static function getFilterJob($filter)
+    static function getFilterJob($filter, $limit =0 )
     {
-        return DB::table('employer_post')->where($filter)->get();
+
+        $data = DB::table('employer_post');
+
+        $typeFilter = '';
+
+        if($limit != '' && $limit > 0) $data->take($limit);
+
+        if(array_key_exists('employer_post_key_skils', $filter)){
+            $data->where('employer_post_key_skils', 'like', "%{$filter['employer_post_key_skils']}%");
+            unset($filter['employer_post_key_skils']);
+        }
+
+        if(array_key_exists('employer_post_published_on', $filter)){
+            $data->whereBetween('created_at', $filter['employer_post_published_on'] );
+            unset($filter['employer_post_published_on']);
+        }
+
+        if(array_key_exists('employer_post_employmenttype', $filter)){
+            $typeFilter = $filter['employer_post_employmenttype'];
+            unset($filter['employer_post_employmenttype']);
+        }
+
+
+
+        if(array_key_exists('employer_post_salary_range', $filter)){
+            $data->where([
+                ['employer_post_salary_range_from_lakhs', '>=', $filter['employer_post_salary_range']['from'] ],
+                ['employer_post_salary_range_to_lakhs','<=' ,$filter['employer_post_salary_range']['to']],
+                ['employer_post_hidesalary', 2]
+            ]);
+            unset($filter['employer_post_salary_range']);
+        }
+
+        // Stop($filter);
+
+        if(array_key_exists('employer_post_experience_range', $filter)){
+            $data->where([
+                ['employer_post_experience_from', '>=', $filter['employer_post_experience_range']['from'] ],
+                ['employer_post_experience_to','<=' ,$filter['employer_post_experience_range']['to']]
+            ]);
+            unset($filter['employer_post_experience_range']);
+        }
+
+
+        if($typeFilter != ''){
+            return $data->join('employer_details', 'employer_post.employer_post_employee_id',  'employer_details.employer_detail_id')
+            ->where('employer_details.employer_company_type', $typeFilter)->orderBy('employer_post.employer_post_id')->get();
+        }
+
+        $data->where($filter);
+
+
+
+
+        return $data->orderBy('employer_post_id')->get();
     }
 
 

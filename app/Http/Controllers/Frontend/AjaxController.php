@@ -1121,6 +1121,17 @@ class AjaxController extends Controller
         $filterRequest = $request->all();
         $filterQuery = ['employer_post_save_status' => 2,'employer_post_approval_status' => 1, 'status' => 1];
         if(count($filterRequest)){
+
+            if(array_key_exists('skil',$filterRequest)){
+                $filterQuery['employer_post_key_skils'] = $filterRequest['skil'];
+            }
+
+            if(array_key_exists('location',$filterRequest)){
+                $filterQuery['employer_post_location_city'] = $filterRequest['location'];
+            }
+
+
+
             if(array_key_exists('emptype',$filterRequest)){
                 $filterQuery['employer_post_employement_type'] = $filterRequest['emptype'];
             }
@@ -1128,8 +1139,39 @@ class AjaxController extends Controller
                 $filterQuery['employer_post_walkin'] = $filterRequest['walkin'];
             }
 
+            if(array_key_exists('post_range',$filterRequest)){
+                $from = date('Y-m-d', strtotime('-'.$filterRequest['post_range'].' days'));
+                $filterQuery['employer_post_published_on'] = ['from' => $from, 'to' => date('Y-m-d')];
+            }
+
             if(array_key_exists('type',$filterRequest)){
-                $filterQuery['employer_post_employement_type'] = $filterRequest['type'];
+                $filterQuery['employer_post_employmenttype'] = $filterRequest['type'];
+            }
+
+            if(array_key_exists('salary',$filterRequest)){
+                $from = $to = '';
+                $salaryRange = salaryRange()[$filterRequest['salary']-1];
+                if($salaryRange != '') {
+                    $range = explode("-", $salaryRange);
+                    if(count($range) == 2){
+                        $from = trim($range[0]);
+                        $to = trim($range[1]);
+                    }
+                }
+                $filterQuery['employer_post_salary_range'] = ['from' => $from, 'to' => $to];
+            }
+
+            if(array_key_exists('experience',$filterRequest)){
+                $from = $to = '';
+                $experienceRange = experienceGap()[$filterRequest['experience']-1];
+                if($experienceRange != '') {
+                    $range = explode("-", $experienceRange);
+                    if(count($range) == 2){
+                        $from = trim($range[0]);
+                        $to = trim($range[1]);
+                    }
+                }
+                $filterQuery['employer_post_experience_range'] = ['from' => $from, 'to' => $to];
             }
 
             if(array_key_exists('education',$filterRequest)){
@@ -1147,12 +1189,18 @@ class AjaxController extends Controller
 
             // Stop($filterQuery);
 
+            // echo '<pre>';
+            // print_r($filterQuery);
+
+
             if(count($filterQuery)){
-                $data = HelperController::getFilterJob($filterQuery);
+                $data = HelperController::getFilterJob($filterQuery, 10);
                 $html = '';
                 if(count($data)){
                     $data = json_decode(json_encode($data),true);
                 }
+
+                // Stop($data);
                 $html = view('frontend.jobseeker.recommended_jobs', compact('data'))->render();
                 $response = ['status' => true, 'html' => $html];
             }

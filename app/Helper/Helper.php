@@ -356,13 +356,13 @@ function Stop($value){
 
 function experienceGap()
 {
-    return array('0 -1', '1 - 3','3 - 5','5 - 10','10 - 15','15 +');
+    return array('0 - 1', '1 - 3','3 - 5','5 - 10','10 - 15','15 +');
 }
 
 
 function salaryRange()
 {
-    return array('0 -3', '3 - 6','6 - 10','10 - 15','15 - 20','20 - 30','30 +');
+    return array('0 - 3', '3 - 6','6 - 10','10 - 15','15 - 20','20 - 30','30 +');
 }
 
 function jobPostRange()

@@ -46,9 +46,10 @@ Route::middleware(['globalvalidate'])->group(function () {
         return view('frontend.home');
     });
 
-    Route::get('/jobsdetails', [FrontendController::class, 'JobsDetails'])->name('jobsdetails');
+
     //Route::get('/job_search', [FrontendController::class, 'JobSearch'])->name('jobsearch');
     Route::get('/job_search', [FrontendController::class, 'JobseekerJobSearch'])->name('jobsearch');
+    Route::get('/jobsdetails/{id}', [FrontendController::class, 'JobsDetails'])->name('jobsdetails');
 
     Route::post('/filterjob', [FAjaxController::class, 'FilterJob'])->name('filterjob');
 
@@ -188,6 +189,7 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::get('/employer_company', [EmployerController::class, 'EmployerCompanyAction'])->name('employercompany');
         Route::post('/save_employer_company', [EmployerController::class, 'SaveEmployerCompany'])->name('saveemployercompany');
         Route::middleware(['employerProfileValidate'])->group(function () {
+            Route::get('/employer_search_resume', [EmployerController::class, 'EmployerSearchResume'])->name('employersearchresume');
             Route::get('/employer_jobpost', [EmployerController::class, 'EmployerJobPost'])->name('employerjobpost');
             Route::post('/save_employer_jobpost', [EmployerController::class, 'SaveEmployerJobPost'])->name('saveemployerjobpost');
             Route::get('/employer_jobpost_preview/{id}', [EmployerController::class, 'EmployerJobPostPreview'])->name('employerjobpostpreview');

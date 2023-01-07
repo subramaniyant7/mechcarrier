@@ -24,7 +24,7 @@
                     <h3>{{ $skilMatchJob['employer_post_headline'] }}</h3>
                     <p> {{ $employerName }}</p>
                 </div>
-                <img style="width:100px;height:50px;" src="{{ URL::asset($companyLogo) }}">
+                <a href="{{ route('jobsdetails',['id' => encryption($skilMatchJob['employer_post_id']) ]) }}"><img style="width:100px;height:50px;" src="{{ URL::asset($companyLogo) }}"></a>
             </div>
             <div class="job-card-details">
                 <div class="job-card-info">
@@ -71,12 +71,13 @@
                 <p class="jobpost_desc searchdescription">
                     {{ $skilMatchJob['employer_post_description'] }} </p>
 
+
                     <span>{{ strlen($skilMatchJob['employer_post_description']) > 311 ? 'more' : ''}}</span>
             </div>
             <div class="job-card-apply">
                 <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}">
                      Key
-                    skill :<span>{{ $skilMatchJob['employer_post_key_skils'] }}</span>
+                    skill : <span class="skills">{{ $skilMatchJob['employer_post_key_skils'] }}</span>
                 </h4>
                 <div class="job-card-button">
                     <button type="button" class="btn btn-primary  bg-white" style="margin-right:0.5em">Save</button>

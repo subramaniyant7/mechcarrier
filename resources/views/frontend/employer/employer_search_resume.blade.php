@@ -1,5 +1,5 @@
 @extends('frontend.employer.layout')
-
+@section('title', 'Search Resume')
 
 @section('content')
 
@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-7">
                         <div class="search-resume-database-title">
-                            <h1>Search resume database</h1>
+                            <h1>Search Resume</h1>
                         </div>
                         <div class="form">
                             <form>
@@ -19,32 +19,34 @@
                                             <label>Resume database name * <span>Its help you to find
                                                     later</span></label>
                                             <input type="text" class="form-control"
-                                                placeholder="e.g. BIW design engineer 2 to 5 year seach - pune">
+                                                placeholder="e.g. BIW design engineer 2 to 5 year seach - pune" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-outline">
-                                            <label>All keyword *</label>
-                                            <input type="text" class="form-control"
-                                                placeholder="Skill, designation role seperated by comma">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label>Total Year Experience *</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
+                                <div style="background: rgba(161, 161, 162, 0.16);">
+                                    <div class="row">
+                                        <div class="col-md-12">
                                             <div class="form-outline">
-                                                <select class="form-control">
-                                                    <option selected=""> Minimum</option>
-                                                    <option value="1"> Add qualification</option>
-                                                    <option value="2"> Add qualification</option>
-                                                    <option value="3"> Add qualification</option>
-                                                </select>
+                                                <label>All keyword *</label>
+                                                <input type="text" class="form-control"
+                                                    placeholder="Skill, designation role seperated by comma" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Total Year Experience *</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-outline">
+                                                    <select class="form-control" required>
+                                                        <option selected=""> Minimum</option>
+                                                        <option value="1"> Add qualification</option>
+                                                        <option value="2"> Add qualification</option>
+                                                        <option value="3"> Add qualification</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -226,7 +228,7 @@
                     </div>
                     <div class="col-md-5 job-post">
                         <div class="search-image">
-                            <img src="assets/images/searchresume.svg" alt="search" />
+                            <img src="{{ URL::asset(FRONTEND . '/assets/images/searchresume.svg') }}" alt="search" />
                         </div>
                         <h3>Resume search History</h3>
                         <div class="similar-jobs">
@@ -242,10 +244,13 @@
                                     <h4>Lead Engineer | Senior Lead Engineer Product Design Collins Aerospace and BIW design
                                         pune...</h4>
                                     <div class="similar-job-card-info">
-                                        <p><span><img src="assets/images/briefccaseicon.svg"> </span>5-10 Years
+                                        <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                                            </span>5-10 Years
                                         </p>
-                                        <p><span><img src="assets/images/mappinicon.svg"> </span>Banglore</p>
-                                        <p><span><img src="assets/images/rupeeicon.svg"> </span>5-6 Lakhs</p>
+                                        <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                                            </span>Banglore</p>
+                                        <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                                            </span>5-6 Lakhs</p>
                                     </div>
                                     <div class="job-card-apply">
                                         <h4> Key skill : <span>SAP, PLM, CATIA</span></h4>
@@ -257,65 +262,7 @@
                             </div>
                             <span class="job-post-mail">post on 25 Apr, 2022 by Email : hr@isopara.com</span>
 
-                            <div class="similar-jobs-card">
-                                <div class="similar-job-card-title">
-                                    <h4>Lead Engineer | Senior Lead Engineer Product Design Collins Aerospace and BIW design
-                                        pune...</h4>
-                                    <div class="similar-job-card-info">
-                                        <p><span><img src="assets/images/briefccaseicon.svg"> </span>5-10 Years
-                                        </p>
-                                        <p><span><img src="assets/images/mappinicon.svg"> </span>Banglore</p>
-                                        <p><span><img src="assets/images/rupeeicon.svg"> </span>5-6 Lakhs</p>
-                                    </div>
-                                    <div class="job-card-apply">
-                                        <h4> Key skill : <span>SAP, PLM, CATIA</span></h4>
-                                        <div class="job-card-button">
-                                            <button type="button" class="btn btn-primary">Prefill</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="job-post-mail">post on 25 Apr, 2022 by Email : hr@isopara.com</span>
 
-                            <div class="similar-jobs-card">
-                                <div class="similar-job-card-title">
-                                    <h4>Lead Engineer | Senior Lead Engineer Product Design Collins Aerospace and BIW design
-                                        pune...</h4>
-                                    <div class="similar-job-card-info">
-                                        <p><span><img src="assets/images/briefccaseicon.svg"> </span>5-10 Years
-                                        </p>
-                                        <p><span><img src="assets/images/mappinicon.svg"> </span>Banglore</p>
-                                        <p><span><img src="assets/images/rupeeicon.svg"> </span>5-6 Lakhs</p>
-                                    </div>
-                                    <div class="job-card-apply">
-                                        <h4> Key skill : <span>SAP, PLM, CATIA</span></h4>
-                                        <div class="job-card-button">
-                                            <button type="button" class="btn btn-primary">Prefill</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="job-post-mail">post on 25 Apr, 2022 by Email : hr@isopara.com</span>
-
-                            <div class="similar-jobs-card">
-                                <div class="similar-job-card-title">
-                                    <h4>Lead Engineer | Senior Lead Engineer Product Design Collins Aerospace and BIW design
-                                        pune...</h4>
-                                    <div class="similar-job-card-info">
-                                        <p><span><img src="assets/images/briefccaseicon.svg"> </span>5-10 Years
-                                        </p>
-                                        <p><span><img src="assets/images/mappinicon.svg"> </span>Banglore</p>
-                                        <p><span><img src="assets/images/rupeeicon.svg"> </span>5-6 Lakhs</p>
-                                    </div>
-                                    <div class="job-card-apply">
-                                        <h4> Key skill : <span>SAP, PLM, CATIA</span></h4>
-                                        <div class="job-card-button">
-                                            <button type="button" class="btn btn-primary">Prefill</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="job-post-mail">post on 25 Apr, 2022 by Email : hr@isopara.com</span>
                         </div>
                     </div>
                 </div>

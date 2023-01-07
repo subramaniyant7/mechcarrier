@@ -68,24 +68,54 @@ $(document).on('click', '.city_click', function () {
 $('.search').click(function () {
     let typeVal = $(this).val();
     let name = $(this).attr('name');
-    if (typeVal != '') {
-        const url = new URL(window.location);
+
+    const url = new URL(window.location);
+
+
+    if($(this).is(':checked') && typeVal != ''){
+        console.log('checked')
+
         url.searchParams.set(name, typeVal);
         window.history.pushState(null, '', url.toString());
         $("input[name='"+name+"']").each(function () {
             if ($(this).val() != typeVal) $(this).prop('checked', false);
         });
         fetchSearchQuery();
+    }else{
+        url.searchParams.delete(name)
+        window.history.pushState(null, '', url.toString());
     }
+
 })
 
 $('.walkin_post').click(function () {
-    let typeVal = $(this).is(":checked") ? 1 : 2
-    const url = new URL(window.location);
-    url.searchParams.set('walkin', typeVal);
-    window.history.pushState(null, '', url.toString());
-    fetchSearchQuery();
+    if($(this).is(":checked")){
+        const url = new URL(window.location);
+        url.searchParams.set('walkin', 1);
+        window.history.pushState(null, '', url.toString());
+        fetchSearchQuery();
+    }else{
+        url.searchParams.delete('walkin')
+        window.history.pushState(null, '', url.toString());
+    }
+
 })
+
+$(document).on('click', '.show_default_search', function(e){
+    $(this).hide()
+    $('.advanced_search').hide();
+    $('.skillsearch').find('button').show()
+    $('.advance_input').val('')
+    $('.show_advanced_search').show()
+});
+
+$(document).on('click', '.show_advanced_search', function(e){
+    $(this).hide()
+    $('.advanced_search').show();
+    $('.skillsearch').find('button').hide()
+    $('.advance_input').val(1)
+    $('.show_default_search').show()
+});
 
 $(document).on('click', '.searchfilters-list span', function(e){
     let parent = $(this).parents('.searchfilters-list');
@@ -93,7 +123,7 @@ $(document).on('click', '.searchfilters-list span', function(e){
     let targetElement = parent.find('.restrictclass');
     if(targetElement.length){
         targetElement.removeClass('restrictclass')
-        parent.find('span').html('hide')
+        parent.find('span').html('less')
     }else{
         targetMainElement.addClass('restrictclass')
         parent.find('span').html('more')

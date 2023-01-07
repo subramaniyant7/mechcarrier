@@ -155,6 +155,9 @@ class EmployerController extends Controller
         return back()->withInput()->with('error','Please enter all mandatory fields');
     }
 
+    public function EmployerSearchResume(Request $request){
+        return view('frontend.employer.employer_search_resume');
+    }
 
     public function EmployerJobPost(Request $request)
     {
@@ -298,6 +301,7 @@ class EmployerController extends Controller
             $formData['employer_post_save_status'] = 2;
             $formData['employer_post_approval_status'] = 1;
             $formData['employer_post_approvedby'] = 0;
+            $formData['employer_post_published_on'] = date('Y-m-d');
         }
 
         // Stop($formData);

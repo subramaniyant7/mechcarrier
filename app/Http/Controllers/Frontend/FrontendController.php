@@ -150,9 +150,19 @@ class FrontendController extends Controller
 
 
 
-    public function JobsDetails(Request $request)
+    public function JobsDetails(Request $request, $id)
     {
-        return view('frontend.jobsdetails');
+        try{
+            $postId = decryption($id);
+            $postInfo = HelperController::getJobPostById($postId);
+            if(count($postInfo)){
+                return view('frontend.jobsdetails', compact('postInfo'));
+            }
+            return redirect()->route('jobsearch');
+        }catch(\Exception $e){
+
+        }
+
     }
 
     public function JobSearch(Request $request)
@@ -163,31 +173,105 @@ class FrontendController extends Controller
     public function JobseekerJobSearch(Request $request)
     {
         $data = [];
+        $filterRequest = $request->all();
         $userKeySkilInfo = HelperController::getUserKeySkilByUserId($request->session()->get('frontend_userid'));
         // echo '<pre>';
         // print_r($userKeySkilInfo);
-
-        if($request->input('skil') == ''){
+        // Stop($filterRequest);
+        $limit = 8;
+        if(!count($filterRequest)){
             if(count($userKeySkilInfo)){
                 foreach($userKeySkilInfo as $skil){
-                    $skilJob = HelperController::GetUserSkilBasedJobs($skil->user_key_skil_text);
+                    $skilJob = HelperController::GetUserSkilBasedJobs($skil->user_key_skil_text, $limit);
                     if(count($skilJob)){
                         $jobData = json_decode(json_encode($skilJob),true);
                         array_push($data,$jobData);
                     }
                 }
             }
+        }else{
+            $filterRequest = $request->all();
+            if(array_key_exists('skil',$filterRequest)){
+                $filterQuery['employer_post_key_skils'] = $filterRequest['skil'];
+            }
+
+            if(array_key_exists('location',$filterRequest) && $filterRequest['location'] != '' ){
+                $filterQuery['employer_post_location_city'] = $filterRequest['location'];
+            }
+
+            if(array_key_exists('emptype',$filterRequest)){
+                $filterQuery['employer_post_employement_type'] = $filterRequest['emptype'];
+            }
+
+            if(array_key_exists('walkin',$filterRequest) && $filterRequest['walkin'] == 1){
+                $filterQuery['employer_post_walkin'] = $filterRequest['walkin'];
+            }
+
+            if(array_key_exists('post_range',$filterRequest)){
+                $from = date('Y-m-d', strtotime('-'.$filterRequest['post_range'].' days'));
+                $filterQuery['employer_post_published_on'] = ['from' => $from, 'to' => date('Y-m-d')];
+            }
+
+            if(array_key_exists('type',$filterRequest)){
+                $filterQuery['employer_post_employmenttype'] = $filterRequest['type'];
+            }
+
+            if(array_key_exists('salary',$filterRequest)){
+                $from = $to = '';
+                $salaryRange = salaryRange()[$filterRequest['salary']-1];
+                if($salaryRange != '') {
+                    $range = explode("-", $salaryRange);
+                    if(count($range) == 2){
+                        $from = trim($range[0]);
+                        $to = trim($range[1]);
+                    }
+                }
+                $filterQuery['employer_post_salary_range'] = ['from' => $from, 'to' => $to];
+            }
+
+            if(array_key_exists('experience',$filterRequest) && $filterRequest['experience'] != ''){
+                $from = $to = '';
+                $experienceRange = experienceGap()[$filterRequest['experience']-1];
+                if($experienceRange != '') {
+                    $range = explode("-", $experienceRange);
+                    if(count($range) == 2){
+                        $from = trim($range[0]);
+                        $to = trim($range[1]);
+                    }
+                }
+                $filterQuery['employer_post_experience_range'] = ['from' => $from, 'to' => $to];
+            }
+
+            if(array_key_exists('education',$filterRequest)){
+                $filterQuery['employer_post_qualification'] = $filterRequest['education'];
+            }
+
+            if(array_key_exists('industry',$filterRequest)){
+                $filterQuery['employer_post_industry_type'] = $filterRequest['industry'];
+            }
+
+            if(array_key_exists('department',$filterRequest)){
+                $filterQuery['employer_post_department'] = $filterRequest['department'];
+            }
+
+            $searchSkil = HelperController::getFilterJob($filterQuery, 10);
+
+            // Stop($searchSkil);
+            if(count($searchSkil)){
+                array_push($data,json_decode(json_encode($searchSkil),true));
+            }
+
         }
 
         // $data = json_decode(json_encode($data), FALSE);
 
-        if($request->input('skil') != ''){
-            $location = $request->input('location');
-            $searchSkil = HelperController::GetUserSearchJobs($request->input('skil'),$request->input('location'),$request->input('experience'));
-            if(count($searchSkil)){
-                array_push($data,json_decode(json_encode($searchSkil),true));
-            }
-        }
+        // if($request->input('skil') != ''){
+        //     $location = $request->input('location');
+        //     $searchSkil = HelperController::GetUserSearchJobs($request->input('skil'),$request->input('location'),$request->input('experience'), $limit);
+        //     if(count($searchSkil)){
+        //         array_push($data,json_decode(json_encode($searchSkil),true));
+        //     }
+        // }
 
         if(count($data)) $data = $data[0];
 
