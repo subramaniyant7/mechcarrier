@@ -198,7 +198,7 @@ function Year()
 function restrictedMonths()
 {
     $month = [];
-    for ($t = 0; $t <= date('m'); $t++) {
+    for ($t = 0; $t <= 12; $t++) {
         array_push($month, $t);
     }
     return $month;

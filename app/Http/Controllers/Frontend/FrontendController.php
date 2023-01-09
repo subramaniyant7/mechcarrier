@@ -199,7 +199,7 @@ class FrontendController extends Controller
                 $filterQuery['employer_post_location_city'] = $filterRequest['location'];
             }
 
-            if(array_key_exists('emptype',$filterRequest)){
+            if(array_key_exists('emptype',$filterRequest) && $filterRequest['emptype'] != ''){
                 $filterQuery['employer_post_employement_type'] = $filterRequest['emptype'];
             }
 
@@ -207,16 +207,16 @@ class FrontendController extends Controller
                 $filterQuery['employer_post_walkin'] = $filterRequest['walkin'];
             }
 
-            if(array_key_exists('post_range',$filterRequest)){
+            if(array_key_exists('post_range',$filterRequest) && $filterRequest['post_range'] != ''){
                 $from = date('Y-m-d', strtotime('-'.$filterRequest['post_range'].' days'));
                 $filterQuery['employer_post_published_on'] = ['from' => $from, 'to' => date('Y-m-d')];
             }
 
-            if(array_key_exists('type',$filterRequest)){
+            if(array_key_exists('type',$filterRequest) && $filterRequest['type'] != ''){
                 $filterQuery['employer_post_employmenttype'] = $filterRequest['type'];
             }
 
-            if(array_key_exists('salary',$filterRequest)){
+            if(array_key_exists('salary',$filterRequest) && $filterRequest['salary'] != ''){
                 $from = $to = '';
                 $salaryRange = salaryRange()[$filterRequest['salary']-1];
                 if($salaryRange != '') {
@@ -242,15 +242,15 @@ class FrontendController extends Controller
                 $filterQuery['employer_post_experience_range'] = ['from' => $from, 'to' => $to];
             }
 
-            if(array_key_exists('education',$filterRequest)){
+            if(array_key_exists('education',$filterRequest) && $filterRequest['education'] != ''){
                 $filterQuery['employer_post_qualification'] = $filterRequest['education'];
             }
 
-            if(array_key_exists('industry',$filterRequest)){
+            if(array_key_exists('industry',$filterRequest) && $filterRequest['industry'] != ''){
                 $filterQuery['employer_post_industry_type'] = $filterRequest['industry'];
             }
 
-            if(array_key_exists('department',$filterRequest)){
+            if(array_key_exists('department',$filterRequest) && $filterRequest['department'] != ''){
                 $filterQuery['employer_post_department'] = $filterRequest['department'];
             }
 
