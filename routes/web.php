@@ -190,6 +190,9 @@ Route::middleware(['globalvalidate'])->group(function () {
         Route::post('/save_employer_company', [EmployerController::class, 'SaveEmployerCompany'])->name('saveemployercompany');
         Route::middleware(['employerProfileValidate'])->group(function () {
             Route::get('/employer_search_resume', [EmployerController::class, 'EmployerSearchResume'])->name('employersearchresume');
+            Route::get('/getadvancedsearchhtml', [FAjaxController::class, 'GetAdvancedSearchHtml'])->name('getadvancedsearchhtml');
+            Route::post('/employer_search_data', [EmployerController::class, 'EmployerSearchResumeData'])->name('employersearchresponse');
+
             Route::get('/employer_jobpost', [EmployerController::class, 'EmployerJobPost'])->name('employerjobpost');
             Route::post('/save_employer_jobpost', [EmployerController::class, 'SaveEmployerJobPost'])->name('saveemployerjobpost');
             Route::get('/employer_jobpost_preview/{id}', [EmployerController::class, 'EmployerJobPostPreview'])->name('employerjobpostpreview');

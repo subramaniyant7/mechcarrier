@@ -322,6 +322,25 @@ class AjaxController extends Controller
         return $response;
     }
 
+    public function GetAdvancedSearchHtml(Request $request){
+        $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
+        try {
+            if ($request->session()->get('employer_id') != '') {
+                $html = view('frontend.employer.employer_resume_advanced_html')->render();
+                $response = ['status' => true, 'message' => '', 'data' => $html];
+            }else{
+                $response['message'] = 'Something went wrong. Invalid access';
+            }
+        } catch (\Exception $e) {
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+
+
+
     public function GetAddMoreJobLocationHtml(Request $request){
         $response = ['status' => false, 'message' => 'Something went wrong.', 'data' => ''];
         try {

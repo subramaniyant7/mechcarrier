@@ -4065,38 +4065,45 @@ span.switch-handle {
 .search-resume-database {
     padding: 60px 0px;
 }
+
 .search-resume-database .search-resume-database-title h1 {
     font-size: 28px;
     padding-bottom: 35px;
 }
+
 .search-resume-database label {
     font-size: 14px;
     padding-bottom: 3px;
     display: flex;
     justify-content: space-between;
 }
+
 .search-resume-database label span {
     color: #707070;
     font-size: 11px;
 }
+
 .search-resume-database ::placeholder,
 .search-resume-database select {
     font-size: 13px;
     color: #707070;
 }
+
 .search-resume-database .form .row {
     padding-bottom: 18px;
 }
 
-.search-resume-database .form .row.d-flex-salary .col-md-12{
+.search-resume-database .form .row.d-flex-salary .col-md-12 {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .search-resume-database .form .row.d-flex-salary .col-md-12 .form-group,
-.search-resume-database .form .row.d-flex-salary  p{
+.search-resume-database .form .row.d-flex-salary p {
     margin-right: 10px;
 }
+
 .search-resume-database .form .btn {
     background: #1D56BB;
     border-radius: 4px;
@@ -4105,42 +4112,71 @@ span.switch-handle {
     font-size: 14px;
     margin-right: 40px;
 }
+
 .search-resume-database .form a {
     color: #03539D;
 }
-.search-resume-database .form  input[type="checkbox"] {
+
+.search-resume-database .form input[type="checkbox"] {
     margin-left: 10px;
     position: unset;
 }
+
 .search-resume-database .form .row .d-flex {
     align-items: center;
 }
+
 .search-resume-database .form .row .d-flex label {
     position: relative;
     top: 3px;
     left: 5px;
 }
+
 .search-resume-database .job-post {
     padding: 0px;
+    padding-top: 5rem;
 }
+
 .search-resume-database .similar-jobs {
     background: #F0F0F0;
 }
+
 .search-resume-database .job-post .similar-jobs .form-control::placeholder {
     text-align: left;
 }
+
 .search-resume-database .job-post h3 {
     font-size: 18px;
     padding-bottom: 10px;
 }
+
 .search-resume-database .job-post .search-image {
     text-align: center;
     margin-bottom: 35px;
 }
+
 .search-resume-database .job-post .search-image img {
     width: auto;
 }
 
+.search-resume-database .search_form .show_advancedresume_search {
+    color: #1d56bb;
+    cursor: pointer;
+    display: block;
+    margin-top: 15px;
+}
+
+.search-resume-database .search_form  .advance_checkbox{
+    margin-right: 10px;
+    margin-left: 0;
+}
+
+.background_design{
+    padding: 10px 25px;
+    background: #F7F7F7;
+    border: 0.5px solid #A5A0A0;
+    box-shadow: 2px 2px 2px rgb(0 0 0 / 10%);
+}
 
 
 /* 48em = 768px */

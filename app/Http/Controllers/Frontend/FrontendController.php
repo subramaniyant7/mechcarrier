@@ -191,7 +191,7 @@ class FrontendController extends Controller
             }
         }else{
             $filterRequest = $request->all();
-            if(array_key_exists('skil',$filterRequest)){
+            if(array_key_exists('skil',$filterRequest) && $filterRequest['skil'] != ''){
                 $filterQuery['employer_post_key_skils'] = $filterRequest['skil'];
             }
 

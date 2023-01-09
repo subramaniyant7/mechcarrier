@@ -159,6 +159,37 @@ const fetchSearchQuery = () => {
     }
 }
 
+$(document).on('click', '.show_advancedresume_search', function (e) {
+
+   let checkbox = $(this).find('.advance_checkbox');
+   if(!checkbox.is(':checked')){
+    $(checkbox).attr('checked', true)
+    $.ajax({
+        type: 'get',
+        url: `${siteurl}getadvancedsearchhtml`,
+        dataType: 'json',
+        success: function (data) {
+            console.log('data', data)
+            if (data.status) $('.advance_content').html(data.data);
+            else {
+                $('.advance_content').html('');
+                toastr.error(data.message);
+            }
+        },
+        error: function (data) {
+            toastr.error('Something went wrong. Please try again');
+        },
+        complete: function () {
+            $('.loader').hide();
+        }
+    });
+   }else{
+    $(checkbox).attr('checked', false)
+        $('.advance_content').html('');
+   }
+});
+
+
 $(document).on('click', '.searchfilter-dflex h4', function (e) {
     window.location = siteurl + 'job_search';
 });

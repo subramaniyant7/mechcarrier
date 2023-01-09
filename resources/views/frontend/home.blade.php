@@ -1,5 +1,6 @@
 @extends('frontend.layout')
 @section('title', 'India’s 1st Job portal for Mechanical Engineer')
+@section('description', 'Best job portal for mechanical fresher & experienced candidates. Free register & apply for a job in the mechanical industry for design, quality, production, maintenance, etc.')
 @section('content')
     <main>
         @php

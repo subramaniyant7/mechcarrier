@@ -36,7 +36,8 @@
                                         <a class="nav-link" href="{{ route('employerjobpost') }}">Free Job Post</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Free Resume Datebase</a>
+                                        <a class="nav-link" href="{{ route('employersearchresume') }}">Free Resume
+                                            Datebase</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">Ready Screening Candidate </a>
@@ -51,8 +52,7 @@
                         <div class="notification-button">
                             @if (session('employer_id'))
                                 <div class="user-login">
-                                    <a href="{{ route('employerdashboard') }}"
-                                        class="register-button">Dashboard</a>
+                                    <a href="{{ route('employerdashboard') }}" class="register-button">Dashboard</a>
                                     <div class="dropdown">
                                         <button class="btn btn-primary dropdown-toggle" type="button"
                                             data-toggle="dropdown">Profile

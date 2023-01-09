@@ -159,6 +159,19 @@ class EmployerController extends Controller
         return view('frontend.employer.employer_search_resume');
     }
 
+    public function EmployerSearchResumeData(Request $request){
+        $formData = $request->except('_token');
+
+        $data = HelperController::getSearchforResume($formData);
+
+        return view('frontend.employer.employer_resume_data', compact('data'));
+        // echo '<pre>';
+        // print_r($data);
+        // print_r($formData);
+    }
+
+
+
     public function EmployerJobPost(Request $request)
     {
         $page = $request->input('page') != '' ? $request->input('page') : 1;
@@ -333,9 +346,7 @@ class EmployerController extends Controller
     }
 
     public function EmployerJobPostPreview(Request $request, $id){
-
-        // exit;
-        if($id == '') return redirect()->route('employerjobpost')->with('error','Invalid Action123');
+        if($id == '') return redirect()->route('employerjobpost')->with('error','Invalid Action');
         try{
             $postId = decryption($id);
             $employerPostInfo = HelperController::getJobPostById($postId);

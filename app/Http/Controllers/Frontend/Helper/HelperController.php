@@ -408,6 +408,49 @@ class HelperController extends Controller
         return DB::table('employer_post')->where('employer_post_id', $postId)->get();
     }
 
+
+    static function getSearchforResume($filter, $limit =0 )
+    {
+        $data = DB::table('user_key_skils');
+
+        if($limit != '' && $limit > 0) $data->take($limit);
+
+        // $requestData = ['user_resume_headline', 'user_profile_summary'];
+
+
+
+        if(array_key_exists('employer_post_key_skils', $filter) && $filter['employer_post_key_skils'] !=''){
+
+            // $data->join('user_profile', 'user_details.user_id', '=', 'user_profile.user_id');
+
+            $skilDesignation = explode(',',$filter['employer_post_key_skils']);
+            foreach($skilDesignation as $skil){
+                $data->leftjoin('user_profile', 'user_key_skils.user_id', '=', 'user_profile.user_id');
+                $data->where('user_key_skils.user_key_skil_text', 'like', "%{$skil}%");
+                // $data->orWhere('user_profile.user_resume_headline', 'like', "%{$skil}%");
+            }
+        }
+
+
+        $data->join('user_details', 'user_key_skils.user_id', '=', 'user_details.user_id');
+
+        // $data->groupBy('user_key_skils.user_id');
+
+
+        // $data->where(function($q) use($requestData, $skil) {
+        //     foreach ($requestData as $field)
+        //        $q->orWhere($field, 'like', "%{$skil}%");
+        // })->where([['user_details.user_id', 'user_profile.user_id'],['user_details.status',1]]);
+
+        // $data->whereBetween('user_profile.user_total_experience_year', [$filter['employer_post_experience_from'], $filter['employer_post_experience_to']] );
+
+
+        // $data->where([['user_details.user_id', 'user_profile.user_id'],['user_details.status',1]]);
+
+        return $data->orderBy('user_details.user_id', 'desc')->get();
+    }
+
+
     static function getFilterJob($filter, $limit =0 )
     {
 
