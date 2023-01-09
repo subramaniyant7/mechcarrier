@@ -4253,31 +4253,38 @@ span.switch-handle {
 .search-resume-database.resume-database-view .job-card {
     box-shadow: none;
 }
+
 .search-resume-database.resume-database-view .d-flex-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
 }
+
 .search-resume-database.resume-database-view .d-flex-title h1 {
     font-size: 24px;
 }
+
 .search-resume-database.resume-database-view .d-flex-title a {
     color: #0029FF;
     position: relative;
     top: 16px;
 }
-.search-resume-database.resume-database-view .user-progress-bar  {
+
+.search-resume-database.resume-database-view .user-progress-bar {
     justify-content: center;
     margin-top: 30px;
 }
+
 .search-resume-database.resume-database-view .user-progress-bar .d-flex {
     margin-top: 14px;
 }
+
 .search-resume-database.resume-database-view .user-progress-bar .d-flex p {
     font-family: 'ubuntu';
     font-size: 20px;
 }
+
 .search-resume-database.resume-database-view .user-progress-bar .d-flex h6 {
     font-family: 'ubuntu';
     font-size: 20px;
@@ -4285,45 +4292,56 @@ span.switch-handle {
     margin-left: 10px;
     margin-top: 3px;
 }
-.search-resume-database.resume-database-view  hr {
+
+.search-resume-database.resume-database-view hr {
     margin-top: 30px;
     margin-bottom: 30px;
 }
+
 .search-resume-database.resume-database-view .similar-jobs .similar-jobs-card {
     border: 0.4px solid #555555;
     border-radius: 0px;
 }
+
 .search-resume-database.resume-database-view .job-post .similar-jobs .similar-jobs-card {
     margin-top: 10px;
 }
+
 .search-resume-database.resume-database-view .job-post .similar-jobs .similar-jobs-card .similar-job-card-title .d-flex {
     justify-content: space-between;
 }
-.search-resume-database.resume-database-view .job-post .d-flex:first-child   {
+
+.search-resume-database.resume-database-view .job-post .d-flex:first-child {
     justify-content: space-between;
     align-items: center;
 }
+
 .search-resume-database.resume-database-view .job-post .d-flex:first-child a {
     color: #1D56BB;
     text-decoration: underline !important;
 }
+
 .search-resume-database.resume-database-view .pagination {
     margin-top: 15px;
     width: 100%;
     padding-inline-start: 0px;
     justify-content: space-between;
 }
+
 .search-resume-database.resume-database-view .page-item .page-link {
     border: 0px;
     background-color: transparent;
 }
+
 .search-resume-database.resume-database-view .page-item.active .page-link {
     color: #fff;
     background-color: #1D56BB;
 }
-.search-resume-database.resume-database-view .page-item.active .page-link:hover{
+
+.search-resume-database.resume-database-view .page-item.active .page-link:hover {
     color: #fff;
 }
+
 .search-resume-database.resume-database-view .page-item:first-child a {
     display: flex;
     justify-content: space-between;
@@ -4331,19 +4349,21 @@ span.switch-handle {
     font-size: 14px;
 }
 
-.search-resume-database.resume-database-view .page-item:last-child a{
+.search-resume-database.resume-database-view .page-item:last-child a {
     display: flex;
     justify-content: space-between;
     color: #000;
     font-size: 14px;
 }
+
 .search-resume-database.resume-database-view .page-item:first-child a span img {
     margin-left: 2px;
     width: auto;
     position: relative;
     left: -6px;
 }
-.search-resume-database.resume-database-view .page-item:last-child a span img{
+
+.search-resume-database.resume-database-view .page-item:last-child a span img {
     margin-left: 2px;
     width: auto;
     position: relative;
@@ -4354,18 +4374,22 @@ span.switch-handle {
 .search-resume-database.resume-database-view nav {
     width: 100%;
 }
+
 .resume-database-cardview .d-flex-title {
     display: flex;
     width: 100%;
 }
+
 .resume-database-cardview .d-flex-title h3 {
     width: 74%;
     font-size: 18px;
 }
+
 .resume-database-cardview .d-flex-title h3 span {
     color: #776B6B;
     font-size: 16px;
 }
+
 .resume-database-cardview select.form-control {
     width: auto;
     font-size: 13px;
@@ -4373,10 +4397,12 @@ span.switch-handle {
     border-radius: 0;
     padding: 5px 5px;
 }
+
 .resume-database-cardview .d-flex-title label {
     margin-bottom: 0px;
     margin-right: 10px;
 }
+
 .resume-database-cardview .database-dflex .resume-view-card {
     background: #E8EEF8;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
@@ -4385,29 +4411,38 @@ span.switch-handle {
     margin-bottom: 20px;
 }
 
-.resume-database-cardview .database-dflex .resume-view-card .d-flex.card-header   {
+.resume-database-cardview .database-dflex .resume-view-card .job-card-info {
+    width: 90%;
+}
+
+.resume-database-cardview .database-dflex .resume-view-card .d-flex.card-header {
     padding: 0px;
     background-color: transparent;
     width: 100%;
     border: 0px;
 }
+
 .resume-database-cardview .database-dflex .resume-view-card .d-flex.card-header h4 {
     width: 40%;
     font-size: 18px;
 }
+
 .resume-progress {
     width: 60%;
     margin-top: -8px;
 }
+
 .resume-progress .progress {
     width: 100%;
     background-color: #fff;
     height: 8px;
     margin-bottom: 6px;
 }
+
 .resume-progress .progress .progress-bar {
-     background-color: #005CFF;
+    background-color: #005CFF;
 }
+
 .resume-database-cardview .database-dflex .resume-view-card .d-flex.card-header label {
     font-size: 11px;
     text-align: right;
@@ -4417,12 +4452,15 @@ span.switch-handle {
     top: -4px;
     margin-bottom: 0px;
 }
+
 .resume-progress .d-flex {
     width: 100%;
 }
+
 .resume-progress .d-flex label {
     width: 40%;
 }
+
 .resume-progress .d-flex .progress {
     width: 60%;
     margin-bottom: -4px;
@@ -4433,35 +4471,60 @@ span.switch-handle {
 .resume-database-cardview .card-flex .candidate-details ul {
     padding-inline-start: 0px;
 }
+
 .resume-database-cardview .card-flex .candidate-details ul li {
     list-style: none;
     font-size: 12px;
     width: 100%;
     line-height: 23px;
 }
+
+
+
 .resume-database-cardview .card-flex .candidate-details ul li span {
     width: 28%;
     display: inline-flex;
     color: #757575;
     justify-content: space-between;
 }
+
+.resume-database-cardview .card-flex .candidate-details ul li span.title {
+    width: 58%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+}
+
 .resume-database-cardview .card-flex {
     display: flex;
     width: 100%;
     justify-content: space-between;
 }
+
 .resume-database-cardview .card-flex .candidate-details {
     width: 75%;
 }
+
 .resume-database-cardview .card-flex .candidate-photo {
     width: 20%;
     text-align: center;
     position: relative;
     left: -55px;
 }
+
 .resume-database-cardview .job-card-info p {
     margin-bottom: 10px;
 }
+
+.resume-database-cardview .job-card-info .location p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 90%;
+}
+
 .resume-database-cardview .card-flex .candidate-photo button {
     background: #1D56BB;
     border-radius: 4px;
@@ -4472,9 +4535,11 @@ span.switch-handle {
     margin: 10px 0px;
     color: #fff;
 }
+
 .resume-database-cardview .card-flex .candidate-photo span {
     font-size: 9px;
 }
+
 .resume-database-cardview .card-save {
     position: absolute;
     bottom: 16px;

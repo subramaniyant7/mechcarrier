@@ -75,7 +75,7 @@
                     <div class="col-md-7">
                         <div class="resume-database-cardview">
                             <div class="d-flex-title">
-                                <h3>Resume Database : <span>351 Cadndidate found</span> </h3>
+                                <h3>Resume Database : <span>{{ count($data) }} Cadndidate found</span> </h3>
                                 <label>Filter </label>
                                 <select class="form-control" aria-label="Default select example">
                                     <option selected>Top Matched</option>
@@ -103,7 +103,7 @@
                                 <div class="database-dflex">
                                     <div class="resume-view-card">
                                         <div class="d-flex card-header">
-                                            <h4>{{ $data->user_firstname.' '.$data->user_lastname }}</h4>
+                                            <h4>{{ $data->user_firstname . ' ' . $data->user_lastname }}</h4>
                                             <div class="resume-progress">
                                                 <div class="d-flex">
                                                     <label>Profile Match</label>
@@ -121,49 +121,58 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="job-card-details">
                                             <div class="job-card-info">
-                                                <div class="years">
-                                                    {{-- <p><span><img
-                                                                src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
-                                                        </span>{{ SalaryLakhs()[$data->user_total_experience_year - 1] }}
-                                                        - {{ SalaryLakhs()[$data->user_total_experience_month - 1] }} Years
-                                                    </p> --}}
-                                                </div>
+                                                @if ($data->user_total_experience_year != '' && $data->user_total_experience_month != '')
+                                                    <div class="years">
+                                                        <p><span><img
+                                                                    src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                                                            </span>{{ SalaryLakhs()[$data->user_total_experience_year - 1] }} Year
+                                                             {{ SalaryLakhs()[$data->user_total_experience_month - 1] }} Months
+
+                                                        </p>
+                                                    </div>
+                                                @endif
                                                 <div class="location">
                                                     <p><span><img
                                                                 src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
                                                         </span>{{ $cityName }}</p>
                                                 </div>
-                                                <div class="salary">
-                                                    <p><span><img
-                                                                src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                                        </span>
+                                                @if ($data->user_current_salary_year != '' && $data->user_current_salary_month != '')
+                                                    <div class="salary">
+                                                        <p><span><img
+                                                                    src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                                                            </span>
 
-                                                            {{-- {{ SalaryLakhs()[$data->user_current_salary_year - 1] }}
-                                                            -
-                                                            {{ SalaryLakhs()[$data->user_current_salary_month - 1] }} --}}
-                                                            Lakhs
+                                                            {{ SalaryLakhs()[$data->user_current_salary_year - 1] }} Lakhs
 
-                                                    </p>
-                                                </div>
+                                                            {{ SalaryLakhs()[$data->user_current_salary_month - 1] }}
+                                                            Thousands
+
+                                                        </p>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="card-flex">
                                             <div class="candidate-details">
                                                 <ul>
                                                     <li><span>Title <span> : </span> </span>
-                                                        {{ $data->user_resume_headline }} </li>
+                                                        <span title="{{ $data->user_resume_headline }}"
+                                                            class="title">{{ $data->user_resume_headline }}</span>
+                                                    </li>
                                                     <li><span>Education <span> : </span></span>
                                                     </li>
-                                                    <li><span>Pref Location <span> : </span> </span> Pune, chennai</li>
-                                                    <li><span>Key Skill <span> : </span> </span> Catia, Plastic domain,
-                                                        Automotive</li>
+                                                    <li><span>Pref Location <span> : </span> </span> {{ $cityName}}</li>
+                                                    <li><span>Key Skill <span> : </span> </span>
+                                                        {{ $data->user_key_skil_text }}</li>
                                                     <li><span>Also Know <span> : </span></span> NX, BW, Tool design</li>
                                                 </ul>
                                             </div>
                                             <div class="candidate-photo">
-                                                <img src="assets/images/useravatar.svg" alt="image" />
+                                                <img src="{{ URL::asset(FRONTEND . '/assets/images/useravatar.svg') }}"
+                                                    alt="image" />
                                                 <button class="btn view">View Mobile/Resume</button>
                                                 <span>Last active : 25 Apr, 2022</span>
                                             </div>

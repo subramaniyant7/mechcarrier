@@ -165,9 +165,9 @@ class EmployerController extends Controller
         $data = HelperController::getSearchforResume($formData);
 
         return view('frontend.employer.employer_resume_data', compact('data'));
-        // echo '<pre>';
-        // print_r($data);
-        // print_r($formData);
+        echo '<pre>';
+        print_r($data);
+        print_r($formData);
     }
 
 

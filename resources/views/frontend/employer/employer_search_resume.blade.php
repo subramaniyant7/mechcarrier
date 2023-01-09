@@ -12,8 +12,7 @@
                             <h1>Search Resume</h1>
                         </div>
                         <div class="form">
-                            <form class="search_form" action="{{ route('employersearchresponse') }}" method="POST">
-                                @csrf
+                            <form class="search_form" action="{{ route('employersearchresponse') }}" method="GET">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-outline">
