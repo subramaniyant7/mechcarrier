@@ -155,6 +155,7 @@ class HelperController extends Controller
         return DB::table('user_employment')->where('user_employment_id', $id)->get();
     }
 
+
     static function getUserEmploymentCurrentCompany($userid, $empId = '')
     {
         $data = DB::table('user_employment')->where([['user_id', $userid], ['user_employment_current_company', 1]]);

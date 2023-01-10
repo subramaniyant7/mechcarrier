@@ -39,8 +39,37 @@ class FrontendController extends Controller
 
     public function UserDashboard(Request $request)
     {
+        $data = [];
         $userInfo = HelperController::getUserInfo($request->session()->get('frontend_userid'));
-        return view('frontend.users.userdashboard', compact('userInfo'));
+
+        $userCurrentEmployment = HelperController::getUserCurrentEmployment($request->session()->get('frontend_userid'));
+
+        $userProfile = HelperController::getUserProfile($request->session()->get('frontend_userid'));
+
+        $userKeySkilInfo = HelperController::getUserKeySkilByUserId($request->session()->get('frontend_userid'));
+        // echo '<pre>';
+        // print_r($userKeySkilInfo);
+        // Stop($filterRequest);
+        $limit = 8;
+        if(count($userKeySkilInfo)){
+            foreach($userKeySkilInfo as $skil){
+                $skilJob = HelperController::GetUserSkilBasedJobs($skil->user_key_skil_text, $limit);
+                if(count($skilJob)){
+                    $jobData = json_decode(json_encode($skilJob),true);
+                    array_push($data,$jobData);
+                }
+            }
+        }
+
+        // echo '<pre>';
+        // print_r($userCurrentEmployment);
+        // print_r($data);
+
+        // exit;
+
+        // Stop($data);
+        if(count($data)) $data = $data[0];
+        return view('frontend.users.userdashboard', compact('userCurrentEmployment','userProfile','data','userInfo'));
     }
 
     public function ProfileCreation(Request $request)
@@ -170,6 +199,19 @@ class FrontendController extends Controller
         return view('frontend.jobseeker_job_search');
     }
 
+    public function JobseekerHomeJobSearch(Request $request){
+        $filterRequest = $request->all();
+        if($filterRequest['current_city_id'] !=''){
+            $filterRequest['location'] = $filterRequest['current_city_id'];
+            unset($filterRequest['current_city_id']);
+        }
+
+        return redirect('job_search'.'?skil='.$filterRequest['skil'].'&location='.$filterRequest['location']);
+        // Stop(json_encode($filterRequest));
+        // Stop($filterRequest);
+
+    }
+
     public function JobseekerJobSearch(Request $request)
     {
         $data = [];
@@ -178,6 +220,7 @@ class FrontendController extends Controller
         // echo '<pre>';
         // print_r($userKeySkilInfo);
         // Stop($filterRequest);
+
         $limit = 8;
         if(!count($filterRequest)){
             if(count($userKeySkilInfo)){
@@ -191,6 +234,12 @@ class FrontendController extends Controller
             }
         }else{
             $filterRequest = $request->all();
+
+            if(isset($filterRequest['current_city_id']) && $filterRequest['current_city_id'] !=''){
+                $filterRequest['location'] = $filterRequest['current_city_id'];
+                unset($filterRequest['current_city_id']);
+            }
+
             if(array_key_exists('skil',$filterRequest) && $filterRequest['skil'] != ''){
                 $filterQuery['employer_post_key_skils'] = $filterRequest['skil'];
             }
@@ -254,6 +303,8 @@ class FrontendController extends Controller
                 $filterQuery['employer_post_department'] = $filterRequest['department'];
             }
 
+
+            // Stop($filterRequest);
             $searchSkil = HelperController::getFilterJob($filterQuery, 10);
 
             // Stop($searchSkil);

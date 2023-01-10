@@ -1501,6 +1501,8 @@ a.btn.btn-primary {
     margin: 0;
 }
 
+
+
 .job-card-apply h4 .skills {
     color: #757575;
     font-size: 13px;
@@ -1510,6 +1512,10 @@ a.btn.btn-primary {
     width: 365px;
     display: inline-block;
     vertical-align: text-bottom;
+}
+
+.recomended-jobs.dashboard .job-card-apply h4 .skills{
+    width: 275px;
 }
 
 .job-card-apply h4 img {

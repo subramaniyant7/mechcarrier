@@ -2463,6 +2463,89 @@ $(document).on('click', '.close_icon', function(){
 
 
 
+
+
+
+
+$(document).on('keyup', '.home_location', function (e) {
+    let val = $(this).val();
+    let rootParent = $(this).parents('.current-location-form');
+    const currentParent = $(this).parents('.home-search');
+    $(this).attr('required', 'required');
+    $('.home-searchbtn').attr('disabled', true).css('opacity', '0.5');
+    if (val != '') {
+        $.ajax({
+            type: 'post',
+            url: `${siteurl}getcity`,
+            data: {
+                name: val
+            },
+            dataType: 'json',
+            success: function (data) {
+                let html = '';
+                if (data.status) {
+                    let response = JSON.parse(data.data);
+                    if (response.length) {
+                        response.forEach(res => {
+                            html += "<div class='search_click option_click' data-id='" + res.city_name + "'>" + res.city_name + '<input type="hidden" value="' + res.city_id + '"></div>'
+                        })
+                        currentParent.find('.autocomplete-items').css({
+                            'height': '100px',
+                            'background': '#fff',
+                            'width': '50%',
+                            'top' :'48px',
+                            'right' :'0'
+                        }).html(html).show();
+                    } else {
+                        html += "<div>No options found</div>";
+                        currentParent.find('.autocomplete-items').css('height', '42px').html(html).show();
+                    }
+                    currentParent.find('.autocomplete_id').val('');
+
+                } else toastr.error(data.message);
+            },
+            error: function (data) {
+                toastr.error('Something went wrong. Please try again');
+            },
+            complete: function () {
+                $(rootParent).find('.user_current_city').val('').attr('disabled', true);
+                $(rootParent).find("input[name='current_city_id']").val('');
+                $('.loader').hide();
+            }
+        });
+    } else {
+        currentParent.find('.autocomplete-items').html('').hide();
+        currentParent.find('.autocomplete_id').val('')
+        $('.home-searchbtn').attr('disabled', false).css('opacity', '1');
+    }
+});
+
+
+$(document).on('click', '.search_click', function () {
+    console.log('p1')
+    let root = $(this).parents('.home-search');
+    root.find('.autocomplete-items').html('').hide();
+    const inputVal = $(this).find('input').val();
+    const inputValText = $(this).attr('data-id');
+    root.find('.home_location').val(inputValText);
+    root.find('.autocomplete_id').val(inputVal);
+    $('.home-searchbtn').attr('disabled', false).css('opacity', '1');
+});
+
+$(document).on('blur', '.home_location', function () {
+    const currentParent = $(this).parents('.home-search');
+    currentParent.find('.autocomplete_id').val('');
+
+    currentParent.find('.home_location').val('');
+
+    setTimeout(() => {
+        if(currentParent.find('.home_location').val() == '') $('.home-searchbtn').attr('disabled', false).css('opacity', '1');
+        currentParent.find('.autocomplete-items').hide().html('');
+    }, 500);
+
+});
+
+
 $(document).on('click', '.option_click', function () {
     console.log('Option')
     const inputVal = $(this).find('input').val();

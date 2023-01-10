@@ -48,6 +48,7 @@ Route::middleware(['globalvalidate'])->group(function () {
 
 
     //Route::get('/job_search', [FrontendController::class, 'JobSearch'])->name('jobsearch');
+    Route::get('/job_homesearch', [FrontendController::class, 'JobseekerHomeJobSearch'])->name('jobhomesearch');
     Route::get('/job_search', [FrontendController::class, 'JobseekerJobSearch'])->name('jobsearch');
     Route::get('/jobsdetails/{id}', [FrontendController::class, 'JobsDetails'])->name('jobsdetails');
 

@@ -1,6 +1,8 @@
 @extends('frontend.layout')
 @section('title', 'India’s 1st Job portal for Mechanical Engineer')
-@section('description', 'Best job portal for mechanical fresher & experienced candidates. Free register & apply for a job in the mechanical industry for design, quality, production, maintenance, etc.')
+@section('description',
+    'Best job portal for mechanical fresher & experienced candidates. Free register & apply for a
+    job in the mechanical industry for design, quality, production, maintenance, etc.')
 @section('content')
     <main>
         @php
@@ -50,19 +52,31 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="search-form">
-                            <form action="{{ route('jobsearch') }}" method="GET">
-                                <div class="form-outline">
+                            <form action="{{ route('jobhomesearch') }}"  method="GET" autocomplete="off">
+                                <div class="form-outline home-search">
                                     <div class="d-flex" style="background:#fff;border-radius:24px;">
                                         <span><img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/home/searchicon.svg') }}" /></span>
                                         <input type="text" placeholder="Enter skills/ designation/ companies"
-                                            class="form-control form-skills" name="skil" required />
+                                            class="form-control form-skills" name="skil" required autocomplete="off"/>
                                         <span class="map-icon">
                                             <img
                                                 src="{{ URL::asset(FRONTEND . '/assets/images/home/mapicon.svg') }}" /></span>
                                         <span class="line-border"></span>
-                                        <input type="text" name="location" placeholder="Enter Location" class="form-control" />
-                                        <button type="submit" class="btn-prrimary">Search</button>
+
+
+                                        <input type="text" placeholder="Enter Location" name="location"
+                                            class="form-control autocomplete_actual_id home_location" required
+                                            value="" autocomplete="off" />
+                                        <input type="hidden" name="current_city_id" class="autocomplete_id" value="">
+                                        <div class="autocomplete-items" style="display:none">
+                                        </div>
+
+
+
+                                        {{-- <input type="text" name="location" placeholder="Enter Location"
+                                            class="form-control" /> --}}
+                                        <button type="submit" style="cursor: pointer;" class="home-searchbtn btn-prrimary">Search</button>
                                     </div>
                                 </div>
                             </form>

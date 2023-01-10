@@ -577,7 +577,11 @@ class AjaxController extends Controller
             }
 
             if ($request->input('current_designation_id') != '') {
-                $formData['user_employment_current_designation'] = $request->input('current_designation_id');
+                $designationId = '';
+                $designationExist = HelperController::getDesignationById($request->input('current_designation_id'));
+                if(count($designationExist)) $designationId = $request->input('current_designation_id');
+                $userData['user_employment_current_designation_other'] = $request->input('user_employment_current_designation');
+                $formData['user_employment_current_designation'] = $designationId;
             }
 
             $years = Year();
@@ -587,7 +591,8 @@ class AjaxController extends Controller
                 }
                 return $a > $b ? -1 : 1;
             });
-            $currentCompanyExist = HelperController::getUserEmploymentCurrentCompany($request->session()->get('frontend_userid'));
+            $id = $request->input('user_employment_id') != '' ? decryption($request->input('user_employment_id')) : '';
+            $currentCompanyExist = HelperController::getUserEmploymentCurrentCompany($request->session()->get('frontend_userid'),$id);
             if ($formData['user_employment_current_company'] == 1) {
                 $formData['user_employment_working_year'] = array_search(date('Y'), $years) + 1;
                 $formData['user_employment_working_month'] = date('m');
