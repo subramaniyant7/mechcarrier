@@ -50,6 +50,10 @@ Route::middleware(['globalvalidate'])->group(function () {
     //Route::get('/job_search', [FrontendController::class, 'JobSearch'])->name('jobsearch');
     Route::get('/job_homesearch', [FrontendController::class, 'JobseekerHomeJobSearch'])->name('jobhomesearch');
     Route::get('/job_search', [FrontendController::class, 'JobseekerJobSearch'])->name('jobsearch');
+
+    Route::get('/my_saved_jobs', [FrontendController::class, 'JobseekerSavesJobs'])->name('mysavedjobs');
+    Route::post('/savejob', [FrontendController::class, 'SaveJob'])->name('savejob');
+
     Route::get('/jobsdetails/{id}', [FrontendController::class, 'JobsDetails'])->name('jobsdetails');
 
     Route::post('/filterjob', [FAjaxController::class, 'FilterJob'])->name('filterjob');

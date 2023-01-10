@@ -392,6 +392,17 @@ class HelperController extends Controller
         return DB::table('employer_details')->where([['employer_email', $email], ['employer_password', md5($password)]])->get();
     }
 
+    static function mySavedPostExist($userid)
+    {
+        return DB::table('user_saved_jobs')->where('user_id', $userid)->get();
+    }
+
+    static function checkUserSavedPostExist($userid, $postid)
+    {
+        return DB::table('user_saved_jobs')->where([['user_id', $userid], ['user_saved_post_id', $postid]])->get();
+    }
+
+
     static function getEmployerPost($employerId, $skip = 0, $take = '')
     {
         $data = DB::table('employer_post')->where([['employer_post_employee_id', $employerId], ['status', 1]]);
@@ -450,6 +461,8 @@ class HelperController extends Controller
 
         return $data->orderBy('user_details.user_id', 'desc')->get();
     }
+
+
 
 
     static function getFilterJob($filter, $limit =0 )

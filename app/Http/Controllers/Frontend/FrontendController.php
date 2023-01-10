@@ -212,6 +212,32 @@ class FrontendController extends Controller
 
     }
 
+    public function JobseekerSavesJobs(Request $request)
+    {
+        $savedJobs = HelperController::mySavedPostExist($request->session()->get('frontend_userid'));
+        return view('frontend.jobseeker_saved_jobs', compact('savedJobs'));
+    }
+
+
+
+    public function SaveJob(Request $request)
+    {
+        try{
+            $postId = decryption($request->input('post_id'));
+            $checkPostExist = HelperController::checkUserSavedPostExist($request->session()->get('frontend_userid'),$postId);
+            if(!count($checkPostExist)){
+                $formData = ['user_id' => $request->session()->get('frontend_userid'), 'user_saved_post_id' => $postId,
+                'user_saved_on' => date('Y-m-d')];
+                $saveData = insertQuery('user_saved_jobs', $formData);
+                $notify = notification($saveData);
+                return redirect()->route('mysavedjobs')->with($notify['type'], $notify['msg']);
+            }
+        }catch(\Exception $e){
+            return redirect()->route('jobsearch')->with('error','Something went wrong');
+        }
+
+    }
+
     public function JobseekerJobSearch(Request $request)
     {
         $data = [];
@@ -336,7 +362,7 @@ class FrontendController extends Controller
 
     public function JobSearch2(Request $request)
     {
-        return view('frontend.jobseeker_job_search2');
+        return view('frontend.jobseeker_saved_jobs');
     }
 
 

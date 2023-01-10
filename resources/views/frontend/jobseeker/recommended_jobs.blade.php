@@ -24,40 +24,39 @@
                     <h3>{{ $skilMatchJob['employer_post_headline'] }}</h3>
                     <p> {{ $employerName }}</p>
                 </div>
-                <a href="{{ route('jobsdetails',['id' => encryption($skilMatchJob['employer_post_id']) ]) }}"><img style="width:100px;height:50px;" src="{{ URL::asset($companyLogo) }}"></a>
+                <a href="{{ route('jobsdetails', ['id' => encryption($skilMatchJob['employer_post_id'])]) }}"><img
+                        style="width:100px;height:50px;" src="{{ URL::asset($companyLogo) }}"></a>
             </div>
             <div class="job-card-details">
                 <div class="job-card-info">
                     <div class="years">
-                        <p><span><img
-                                    src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
+                        <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/briefccaseicon.svg') }}">
                             </span>
-                            {{ SalaryLakhs()[$skilMatchJob['employer_post_experience_from'] - 1] }}-{{ SalaryLakhs()[$skilMatchJob['employer_post_experience_to'] - 1] }} Years
+                            {{ SalaryLakhs()[$skilMatchJob['employer_post_experience_from'] - 1] }}-{{ SalaryLakhs()[$skilMatchJob['employer_post_experience_to'] - 1] }}
+                            Years
 
                         </p>
                     </div>
 
 
 
-                        <div class="salary">
-                            <p><span>
-                                    <img
-                                        src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
-                                </span>
-                                @if ($skilMatchJob['employer_post_hidesalary'] == 2)
+                    <div class="salary">
+                        <p><span>
+                                <img src="{{ URL::asset(FRONTEND . '/assets/images/rupeeicon.svg') }}">
+                            </span>
+                            @if ($skilMatchJob['employer_post_hidesalary'] == 2)
                                 {{ SalaryLakhs()[$skilMatchJob['employer_post_salary_range_from_lakhs'] - 1] }}
                                 - {{ SalaryLakhs()[$skilMatchJob['employer_post_salary_range_to_lakhs'] - 1] }}
                                 Lakhs
-                                @else
-                                 Not disclosed
-                                @endif
-                            </p>
-                        </div>
+                            @else
+                                Not disclosed
+                            @endif
+                        </p>
+                    </div>
 
 
                     <div class="location">
-                        <p><span><img
-                                    src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
+                        <p><span><img src="{{ URL::asset(FRONTEND . '/assets/images/mappinicon.svg') }}">
                             </span>{{ $stateName }}</p>
                     </div>
                 </div>
@@ -72,15 +71,21 @@
                     {{ $skilMatchJob['employer_post_description'] }} </p>
 
 
-                    <span>{{ strlen($skilMatchJob['employer_post_description']) > 311 ? 'more' : ''}}</span>
+                <span>{{ strlen($skilMatchJob['employer_post_description']) > 311 ? 'more' : '' }}</span>
             </div>
             <div class="job-card-apply">
                 <h4><img src="{{ URL::asset(FRONTEND . '/assets/images/filetexticon.svg') }}">
-                     Key
+                    Key
                     skill : <span class="skills">{{ $skilMatchJob['employer_post_key_skils'] }}</span>
                 </h4>
                 <div class="job-card-button">
-                    <button type="button" class="btn btn-primary  bg-white" style="margin-right:0.5em">Save</button>
+                    <form action="{{ route('savejob') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <input type="hidden" name="post_id"
+                            value="{{ encryption($skilMatchJob['employer_post_id']) }}">
+                        <button type="submit" class="btn btn-primary  bg-white"
+                            style="margin-right:0.5em">Save</button>
+                    </form>
                     <button type="button" class="btn btn-primary">Apply</button>
                 </div>
             </div>
