@@ -123,16 +123,16 @@
                         <div class="searchfilter-sidebar">
 
                             <div class="searchfilters-list">
-                                <h4>Employment type </h4>
+                                <h4>Job Type </h4>
                                 <ul>
-                                    @foreach (getActiveRecord('employmenttype') as $employment)
+                                    @foreach (jobType() as $k => $jobtype)
                                         <li>
                                             <div class="form-check">
-                                                <input class="form-check-input search" name="emptype" type="checkbox"
-                                                    value="{{ $employment->employmenttype_id }}"
-                                                    {{ request()->get('emptype') == $employment->employmenttype_id ? 'checked' : '' }}>
+                                                <input class="form-check-input search" name="jobtype" type="checkbox"
+                                                    value="{{ $k+1 }}"
+                                                    {{ request()->get('jobtype') == $k+1 ? 'checked' : '' }}>
                                                 <label class="form-check-label">
-                                                    {{ $employment->employmenttype_name }}
+                                                    {{ $jobtype }}
                                                 </label>
                                             </div>
                                         </li>
@@ -154,6 +154,26 @@
                                     </li>
                                 </ul>
                             </div>
+
+                            <div class="searchfilters-list">
+                                <h4>Employment Type </h4>
+                                <ul>
+                                    @foreach (getActiveRecord('employmenttype') as $employment)
+                                        <li>
+                                            <div class="form-check">
+                                                <input class="form-check-input search" name="emptype" type="checkbox"
+                                                    value="{{ $employment->employmenttype_id }}"
+                                                    {{ request()->get('emptype') == $employment->employmenttype_id ? 'checked' : '' }}>
+                                                <label class="form-check-label">
+                                                    {{ $employment->employmenttype_name }}
+                                                </label>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+
+
 
                             <div class="searchfilters-list">
                                 <h4>Job posted at</h4>

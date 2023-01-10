@@ -248,6 +248,10 @@ class FrontendController extends Controller
                 $filterQuery['employer_post_location_city'] = $filterRequest['location'];
             }
 
+            if(array_key_exists('jobtype',$filterRequest) && $filterRequest['jobtype'] != ''){
+                $filterQuery['employer_post_job_type'] = $filterRequest['jobtype'];
+            }
+
             if(array_key_exists('emptype',$filterRequest) && $filterRequest['emptype'] != ''){
                 $filterQuery['employer_post_employement_type'] = $filterRequest['emptype'];
             }
